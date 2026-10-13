@@ -121,7 +121,7 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28p
 
 <nav id="nav">
  <div class="nav-inner">
-  <a class="logo i18n" href="index.html" data-en="Luca Helgert" data-ja="ルカ・ヘルゲルト">Luca Helgert</a>
+  <a class="logo i18n" href="index.html" data-en="Luca Helgert" data-ja="ヘルゲルト・ルカ">Luca Helgert</a>
   <div class="nav-right">
    <div class="nav-links">
     <a class="i18n" href="index.html" data-en="Top" data-ja="トップ">Top</a>
@@ -187,6 +187,7 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28p
    <h2 class="i18n" data-en="Technique, and how it looks." data-ja="技術と、見た目と。">Technique, and how it looks.</h2>
    <p class="i18n" data-en="I’m not only about the technical side. My brother is an artist, and since I was a child he has taught me 3D software, photography and editing. Because of him I care not just about making things work, but about making them look beautiful." data-ja="私は技術だけの人間ではありません。兄はアーティストで、子どもの頃から3Dソフトや写真の撮り方、編集を教えてくれました。その影響で、物を動かすだけでなく、どうすればきれいに見えるかも大切にしています。">I’m not only about the technical side. My brother is an artist, and since I was a child he has taught me 3D software, photography and editing. Because of him I care not just about making things work, but about making them look beautiful.</p>
    <p class="i18n" data-en="I work across systems, design and visuals, and I like owning every part of what I make." data-ja="システム、デザイン、ビジュアルまで、自分が作るもののあらゆる部分を自分の手で作ることを大切にしています。">I work across systems, design and visuals, and I like owning every part of what I make.</p>
+   <p class="i18n" data-en="I see myself as an artist first. I'm studying game programming at TECH.C., and I don't mind working as a game programmer. But technical art is what excites me most: using Unity, Unreal Engine and code as tools to make games look beautiful through shaders, lighting, effects and environments." data-ja="私は自分を、まずアーティストだと思っています。TECH.C.ではゲームプログラミングを学んでおり、ゲームプログラマーとして働くことにも抵抗はありません。ただ、一番ワクワクするのはテクニカルアートです。UnityやUnreal Engine、コードを道具として、シェーダー、ライティング、エフェクト、環境でゲームを美しく見せることに情熱を注いでいます。">I see myself as an artist first. I'm studying game programming at TECH.C., and I don't mind working as a game programmer. But technical art is what excites me most: using Unity, Unreal Engine and code as tools to make games look beautiful through shaders, lighting, effects and environments.</p>
   </div>
   <div class="pic"><img src="me4.jpg" alt="Luca Helgert" loading="lazy"></div>
  </div>
@@ -284,7 +285,7 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28p
 
 <footer>
  <div class="footer-inner">
-  <span class="i18n" data-en="© 2026 Luca Helgert" data-ja="© 2026 ルカ・ヘルゲルト">© 2026 Luca Helgert</span>
+  <span class="i18n" data-en="© 2026 Luca Helgert" data-ja="© 2026 ヘルゲルト・ルカ">© 2026 Luca Helgert</span>
   <span class="i18n" data-en="Tokyo, Japan" data-ja="東京、日本">Tokyo, Japan</span>
  </div>
 </footer>
@@ -295,7 +296,7 @@ window.addEventListener("scroll",()=>nav.classList.toggle("scrolled",window.scro
 const vio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.play().catch(()=>{})}else{e.target.pause()}}),{threshold:.35});
 document.querySelectorAll(".pic video").forEach(v=>{v.muted=true;vio.observe(v)});
 const btn=document.getElementById("langToggle");
-const titles={en:"More about me — Luca Helgert",ja:"私について — ルカ・ヘルゲルト"};
+const titles={en:"More about me — Luca Helgert",ja:"私について — ヘルゲルト・ルカ"};
 let lang="ja"; /* starts in Japanese */
 function apply(l){
  lang=l;
