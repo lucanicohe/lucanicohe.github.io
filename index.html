@@ -206,7 +206,31 @@ html.lang-ja .tool-row .team-chip:not(:last-child)::after{content:"、"}
 .skills-title{margin:0 0 .5em;font-size:clamp(2.6rem,5.5vw,5rem);line-height:1;letter-spacing:-.06em;font-weight:500}
 .skills-lead{max-width:640px;margin:0 0 70px;font-size:clamp(17px,1.7vw,21px);line-height:1.6;color:var(--muted);letter-spacing:-.015em}
 .sd-highlights{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-bottom:18px}
-.sd-stat{margin:0 0 14px;font-size:clamp(3.5rem,7vw,6rem);font-weight:500;line-height:1;letter-spacing:-.06em}
+.sd-highlights .team-card{display:flex;flex-direction:column}
+.sd-stat{margin:0 0 14px;font-size:clamp(2.6rem,4.4vw,3.8rem);font-weight:500;line-height:1;letter-spacing:-.06em}
+
+/* LANGUAGE CARD (big to small: Japanese > English > German) */
+.lang-list{margin:0 0 26px}
+.lang-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;border-top:1px solid var(--line)}
+.lang-row:first-child{border-top:0;padding-top:0}
+.lang-name{line-height:1.05;letter-spacing:-.045em;font-weight:600}
+.lang-level{padding:6px 14px;border-radius:999px;background:rgba(17,17,17,.07);color:var(--text);font-size:14px;font-weight:600;letter-spacing:-.005em;white-space:nowrap}
+.lang-row.l1 .lang-name{font-size:clamp(2.6rem,4.6vw,3.9rem);color:var(--text)}
+.lang-row.l1 .lang-level{background:var(--text);color:#fff;padding:7px 16px;font-size:15px}
+.lang-row.l2 .lang-name{font-size:clamp(1.8rem,3vw,2.5rem);color:#4a4a47}
+.lang-row.l3 .lang-name{font-size:clamp(1.35rem,2.1vw,1.7rem);color:var(--muted)}
+.lang-row.l3 .lang-level{color:var(--muted)}
+.lang-caption{margin:auto 0 0}
+
+/* CERTIFICATION CARD (AI-900 hero, JHMA secondary) */
+.cert-list{display:flex;flex-direction:column;flex:1}
+.cert-item .team-card-text{margin:0}
+.cert-item.primary .sd-stat{font-size:clamp(3.4rem,6.4vw,5.6rem);margin-bottom:16px;letter-spacing:-.07em}
+.cert-item.primary .team-card-text{font-size:clamp(17px,1.5vw,19px);line-height:1.45;color:var(--text);font-weight:500}
+.cert-item.secondary{margin-top:auto;padding-top:26px;border-top:1px solid var(--line)}
+.cert-item.secondary .sd-stat{font-size:clamp(1.5rem,2.3vw,1.9rem);margin-bottom:8px;letter-spacing:-.04em;color:#4a4a47}
+.cert-item.secondary .team-card-text{font-size:14.5px;line-height:1.5}
+.cert-spacer{flex:1;min-height:36px}
 .sd-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
 .sd-grid .team-card-text{margin-bottom:22px}
 .sd-sub{margin:110px 0 0;padding:18px 0;border-top:1px solid var(--line);font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
@@ -216,6 +240,7 @@ html.lang-ja .tool-row .team-chip:not(:last-child)::after{content:"、"}
 .tl-title{margin:0 0 6px;font-size:clamp(20px,2.2vw,26px);line-height:1.2;letter-spacing:-.03em;font-weight:600}
 .tl-text{margin:0;max-width:620px;font-size:16px;line-height:1.6;color:var(--muted)}
 html.lang-ja .tl-text,html.lang-ja .team-card-text{line-height:1.8}
+html.lang-ja .cert-item.primary .team-card-text{line-height:1.6}
 
 /* CONTACT */
 .contact{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:120px 0 110px;border-top:1px solid var(--line)}
@@ -403,7 +428,7 @@ html{scroll-behavior:auto}
 
 <!-- Toy Pair -->
 <article class="team-feature"><div class="team-head"><div class="team-feature-eyebrow i18n" data-en="Team of 21 · 6 months" data-ja="21人チーム · 6か月">Team of 21 · 6 months</div><h3 class="team-feature-title i18n" data-en="Toy Pair" data-ja="トイ・ペア">Toy Pair</h3><div class="team-badges"><span class="team-badge i18n" data-en="Exhibited at Tokyo Game Show" data-ja="東京ゲームショウ出展">Exhibited at Tokyo Game Show</span></div></div><div class="team-body"><div class="team-video"><video data-src="toypair.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Toy Pair gameplay video"></video></div><div class="team-shot"><img src="toypair1.jpg" alt="Toy Pair" loading="lazy"></div><div class="team-shot"><img src="toypair2.jpg" alt="Toy Pair" loading="lazy"></div><div class="team-card"><div class="team-card-label i18n" data-en="My role" data-ja="自分の役割">My role</div><h4 class="team-card-title i18n" data-en="Programmer" data-ja="プログラマー">Programmer</h4><p class="team-card-text i18n" data-en="A Switch game with a heavy focus on teamplay. It was featured at the Tokyo Game Show as the top exhibition of our school." data-ja="チームプレイを重視したSwitchゲームです。東京ゲームショウで、学校のトップ展示として出展されました。">A Switch game with a heavy focus on teamplay. It was featured at the Tokyo Game Show as the top exhibition of our school.</p></div><div class="team-card"><div class="team-card-label i18n" data-en="My own contributions to this project" data-ja="このプロジェクトでの自分の貢献">My own contributions to this project</div>
-<div class="tool-row"><span class="tool-tag strong">C#</span><span class="team-chip i18n" data-en="Rotating and moving lifts" data-ja="回転・移動リフト">Rotating and moving lifts</span><span class="team-chip i18n" data-en="Extending piston" data-ja="伸びるピストン">Extending piston</span><span class="team-chip i18n" data-en="Ball gimmick" data-ja="ボールの仕掛け">Ball gimmick</span><span class="team-chip i18n" data-en="2 player lift" data-ja="2人用リフト">2 player lift</span></div></div><div class="team-card"><div class="team-card-label i18n" data-en="Difficulties" data-ja="難しかったこと">Difficulties</div><ul class="team-list"><li class="i18n" data-en="Working in a team with 21 people" data-ja="21人のチームで作業すること">Working in a team with 21 people</li><li class="i18n" data-en="Organizing everything in such a large group" data-ja="これだけ大人数のグループですべてをまとめること">Organizing everything in such a large group</li></ul><div class="ai-usage"><div class="ai-meter l1"><span class="ai-bars"><i></i><i></i><i></i><i></i></span><span class="ai-value i18n" data-en="AI assisted" data-ja="AI支援">AI assisted</span></div><p class="ai-note i18n" data-en="AI was used to help with problems and debugging." data-ja="AIは、問題の解決とデバッグの補助に使いました。">AI was used to help with problems and debugging.</p></div></div></div></article>
+<div class="tool-row"><span class="tool-tag strong">C#</span><span class="team-chip i18n" data-en="Rotating and moving lifts" data-ja="回転・移動リフト">Rotating and moving lifts</span><span class="team-chip i18n" data-en="Extending piston" data-ja="伸びるピストン">Extending piston</span><span class="team-chip i18n" data-en="Ball gimmick" data-ja="ボールの仕掛け">Ball gimmick</span><span class="team-chip i18n" data-en="2 player lift" data-ja="2人用リフト">2 player lift</span></div></div><div class="team-card"><div class="team-card-label i18n" data-en="Difficulties" data-ja="難しかったこと">Difficulties</div><ul class="team-list"><li class="i18n" data-en="Working in a team with 21 people" data-ja="21人のチームで作業すること">Working in a team with 21 people</li><li class="i18n" data-en="Organizing everything in such a large group" data-ja="これだけ大人数のグループですべてをまとめること">Organizing everything in such a large group</li></ul><div class="ai-usage"><div class="ai-meter l1"><span class="ai-bars"><i></i><i></i><i></i><i></i></span><span class="ai-value i18n" data-en="AI assisted" data-ja="AI支援">AI assisted</span></div><p class="ai-note i18n" data-en="AI was only asked as a helper tool to speed up work rather than to replace human engineering." data-ja="AIは、人間のエンジニアリングを置き換えるためではなく、作業を速めるための補助ツールとしてのみ使いました。">AI was only asked as a helper tool to speed up work rather than to replace human engineering.</p></div></div></div></article>
 
 <div class="see-more-wrap" id="seeMoreTeamWrap"><button class="see-more" id="seeMoreTeamButton" type="button">See more</button></div>
 <div class="team-extra" id="extraTeam">
@@ -493,8 +518,19 @@ html{scroll-behavior:auto}
 <p class="skills-lead i18n" data-en="The skill bars at the top are only a selection. Depending on what a project needs, I work across a much wider range of technical and creative areas. Darker tags mark my strongest tools." data-ja="冒頭のスキルバーは、スキルの一部です。プロジェクトに必要なことに合わせて、さらに幅広い技術・クリエイティブ分野に対応しています。濃い色のタグは、特に得意なツールです。">The skill bars at the top are only a selection. Depending on what a project needs, I work across a much wider range of technical and creative areas. Darker tags mark my strongest tools.</p>
 
 <div class="sd-highlights">
-<div class="team-card"><div class="team-card-label i18n" data-en="Language" data-ja="言語">Language</div><div class="sd-stat">N2</div><p class="team-card-text i18n" data-en="Japanese, Level N2. Completed at Kai Language School in 2025." data-ja="日本語能力 N2レベル。2025年にKai日本語スクールで修了しました。">Japanese, Level N2. Completed at Kai Language School in 2025.</p></div>
-<div class="team-card"><div class="team-card-label i18n" data-en="Certification" data-ja="資格">Certification</div><div class="sd-stat">AI-900</div><p class="team-card-text i18n" data-en="Microsoft Azure AI." data-ja="Microsoft Azure AI（AI-900）。">Microsoft Azure AI.</p></div>
+<div class="team-card"><div class="team-card-label i18n" data-en="Language" data-ja="言語">Language</div>
+<div class="lang-list">
+<div class="lang-row l1"><span class="lang-name i18n" data-en="Japanese" data-ja="日本語">Japanese</span><span class="lang-level">JLPT N2</span></div>
+<div class="lang-row l2"><span class="lang-name i18n" data-en="English" data-ja="英語">English</span><span class="lang-level">B2 (CEFR)</span></div>
+<div class="lang-row l3"><span class="lang-name i18n" data-en="German" data-ja="ドイツ語">German</span><span class="lang-level i18n" data-en="Native" data-ja="ネイティブ">Native</span></div>
+</div>
+<p class="team-card-text lang-caption i18n" data-en="Japanese at JLPT N2 level, completed at Kai Language School in 2025." data-ja="日本語能力試験 N2レベル。2025年にKai日本語スクールで修了しました。">Japanese at JLPT N2 level, completed at Kai Language School in 2025.</p></div>
+<div class="team-card"><div class="team-card-label i18n" data-en="Certification" data-ja="資格">Certification</div>
+<div class="cert-list">
+<div class="cert-item primary"><div class="sd-stat">AI-900</div><p class="team-card-text i18n" data-en="Microsoft Azure AI&lt;br&gt;Fundamentals" data-ja="Microsoft Azure AI&lt;br&gt;Fundamentals">Microsoft Azure AI<br>Fundamentals</p></div>
+<div class="cert-spacer"></div>
+<div class="cert-item secondary"><div class="sd-stat">JHMA</div><p class="team-card-text i18n" data-en="Hospitality certification by the NPO Japan Hospitality Promotion Association" data-ja="NPO法人 日本ホスピタリティ推進協会（JHMA）認定のホスピタリティ資格">Hospitality certification by the NPO Japan Hospitality Promotion Association</p></div>
+</div></div>
 </div>
 
 <div class="sd-grid">
