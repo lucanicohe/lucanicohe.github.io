@@ -690,7 +690,7 @@ document.querySelectorAll(".team-video video").forEach((video) => {
        0 = No AI used | 1 = AI assisted | 2-3 = AI usage | 4 = All AI */
 const soloProjectTags = {
     "Artwork Restoration":         { dim: "3D", tools: ["Photoshop"], ai: 0 },
-    "Lost in the Cold":            { dim: "3D", tools: [], ai: 3 },
+    "Lost in the Cold":            { dim: "3D", tools: ["World Machine"], ai: 3 },
     "Earth is a Toy":              { dim: "3D", tools: [], ai: 1 },
     "Only Bad Guys on the Train":  { dim: "3D", tools: ["Blender"], ai: 0 },
     "Olympus Dodge":               { dim: "3D", tools: ["World Machine"], ai: 1 },
@@ -708,7 +708,7 @@ const aiWords = {
     ja: ["AI不使用", "AI支援", "AI活用", "AI活用", "すべてAI"]
 };
 const aiMeterHTML = (level) =>
-    `<div class="ai-usage"><div class="ai-meter l${level}"><span class="ai-bars"><i></i><i></i><i></i><i></i></span><span class="ai-value i18n" data-en="${aiWords.en[level]}" data-ja="${aiWords.ja[level]}">${aiWords.en[level]}</span></div></div>`;
+    `<div class="ai-usage"><div class="ai-meter"><span class="ai-value i18n" data-en="${aiWords.en[level]}" data-ja="${aiWords.ja[level]}">${aiWords.en[level]}</span></div></div>`;
 document.querySelectorAll("#solo-projects .game").forEach((g) => {
     const cfg = soloProjectTags[g.querySelector("img").alt] || { dim: "3D", tools: [], ai: 1 };
     const chips = [
