@@ -765,22 +765,64 @@ langToggle.addEventListener("click", () => {
 });
 
 /* TEAM VIDEOS
-   - src is only attached while a video is near the screen (saves memory and bandwidth on phones)
-   - plays while on screen, pauses when scrolled away
-   - if the browser blocks autoplay (e.g. iOS Low Power Mode), native controls appear so a tap works */
+   Goal: a video is never a black box and never waits behind another download.
+   - every video shows a still poster (<name>-poster.jpg, made by optimize-videos.sh) until its first frame is painted
+   - the video nearest to the screen always gets the bandwidth first; background warm-up only runs when nothing near is still loading
+   - once loaded, a video stays loaded (no re-buffering when you scroll back); on phones only the closest few are kept to protect memory
+   - stalled or failed downloads are retried automatically
+   - plays while on screen, pauses when scrolled away */
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const teamVideos = [...document.querySelectorAll(".team-video video")];
+const conn = navigator.connection || {};
+const slowNet = !!conn.saveData || /(^|-)2g$/.test(conn.effectiveType || "");
+const smallDevice = window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 800;
+const MAX_LOADED = smallDevice ? 5 : teamVideos.length;
+
+const isLoaded = (v) => !!v.getAttribute("src");
+const isReady = (v) => v.readyState >= 3;
+function distanceToScreen(v) {
+    if (!v.offsetParent) return 1e9 + teamVideos.indexOf(v); /* hidden behind "See more": after everything visible, in page order */
+    const r = v.getBoundingClientRect();
+    return Math.abs((r.top + r.bottom) / 2 - window.innerHeight / 2);
+}
 
 function loadVideo(v) {
-    if (!v.getAttribute("src")) { v.preload = reduceMotion ? "metadata" : "auto"; v.src = v.dataset.src; v.load(); }
+    if (isLoaded(v)) return;
+    v.preload = reduceMotion ? "metadata" : "auto";
+    v.src = v.dataset.src;
+    v.load();
+    trimLoaded(v);
 }
 function unloadVideo(v) {
-    if (v.getAttribute("src")) { v.pause(); v.removeAttribute("src"); v.load(); }
+    if (isLoaded(v)) { v.pause(); v.removeAttribute("src"); v.load(); }
+}
+/* phones: keep only the closest MAX_LOADED videos in memory */
+function trimLoaded(keep) {
+    const loaded = teamVideos.filter(isLoaded);
+    if (loaded.length <= MAX_LOADED) return;
+    loaded.filter((v) => v !== keep && !v._visible && !v._near)
+          .sort((a, b) => distanceToScreen(b) - distanceToScreen(a))
+          .slice(0, loaded.length - MAX_LOADED)
+          .forEach(unloadVideo);
 }
 function tryPlay(v) {
     loadVideo(v);
     const p = v.play();
     if (p && p.catch) p.catch(() => { v.dataset.blocked = "1"; }); /* retried on the next tap, never shows a player */
+}
+
+/* watchdog: if a video that should be playing is stuck buffering or errored, start its download again (resumes at the same spot) */
+function restartVideo(v) {
+    if (!isLoaded(v) || (v._retries || 0) >= 4) return;
+    v._retries = (v._retries || 0) + 1;
+    const t = v.currentTime || 0;
+    v.pause(); v.removeAttribute("src"); v.load();
+    v.src = v.dataset.src; v.load();
+    v.addEventListener("loadedmetadata", () => { try { if (t > 0.2) v.currentTime = t; } catch (e) {} if (v._visible) tryPlay(v); }, { once: true });
+}
+function armWatchdog(v) {
+    clearTimeout(v._watchdog);
+    v._watchdog = setTimeout(() => { if ((v._visible || v._near) && !isReady(v)) restartVideo(v); }, 6000 + (v._retries || 0) * 3000);
 }
 
 teamVideos.forEach((v) => {
@@ -795,8 +837,15 @@ teamVideos.forEach((v) => {
     v.controls = false;
     v.removeAttribute("controls");
     v.setAttribute("controlslist", "nodownload nofullscreen noremoteplayback");
+    v.poster = v.dataset.src.replace(/\.mp4.*$/i, "-poster.jpg"); /* shown instead of black until the first frame is ready */
     v._visible = false;
-    v.addEventListener("playing", () => { delete v.dataset.blocked; });
+    v._near = false;
+    v._retries = 0;
+    v.addEventListener("playing", () => { delete v.dataset.blocked; v._retries = 0; clearTimeout(v._watchdog); });
+    v.addEventListener("canplay", () => { clearTimeout(v._watchdog); if (v._visible && !reduceMotion && v.paused) tryPlay(v); });
+    v.addEventListener("waiting", () => { if (v._visible) armWatchdog(v); });
+    v.addEventListener("stalled", () => { if (v._visible || v._near) armWatchdog(v); });
+    v.addEventListener("error", () => { if (isLoaded(v) && (v._visible || v._near)) setTimeout(() => restartVideo(v), 1200); });
     /* if anything pauses a video that is on screen (system, browser, another app), start it again */
     v.addEventListener("pause", () => {
         if (v._visible && !document.hidden && !reduceMotion && !v.ended) setTimeout(() => { if (v._visible) tryPlay(v); }, 60);
@@ -808,45 +857,44 @@ document.addEventListener("visibilitychange", () => {
     if (!document.hidden && !reduceMotion) teamVideos.forEach((v) => { if (v._visible) tryPlay(v); });
 });
 
+/* start loading well before a video arrives (about two screens ahead) */
 const loadObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => { if (entry.isIntersecting) loadVideo(entry.target); });
-}, { rootMargin: "150% 0px" });
-
-/* only free a video once it is about four screens away */
-const unloadObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => { if (!entry.isIntersecting && entry.boundingClientRect.width > 0) unloadVideo(entry.target); });
-}, { rootMargin: "400% 0px" });
+    entries.forEach((entry) => {
+        entry.target._near = entry.isIntersecting;
+        if (entry.isIntersecting) { loadVideo(entry.target); armWatchdog(entry.target); }
+    });
+}, { rootMargin: "200% 0px" });
 
 const playObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         entry.target._visible = entry.isIntersecting;
-        if (entry.isIntersecting) tryPlay(entry.target);
+        if (entry.isIntersecting) { tryPlay(entry.target); if (!isReady(entry.target)) armWatchdog(entry.target); }
         else entry.target.pause();
     });
 }, { threshold: .35 });
 
 teamVideos.forEach((v) => {
     loadObserver.observe(v);
-    unloadObserver.observe(v);
     if (reduceMotion) return; /* visitors who ask for reduced motion see the still first frame instead */
     playObserver.observe(v);
 });
 
-/* every team video, including the ones hidden behind "See more", starts downloading in page order as soon as the
-   browser is idle, one after another, so they are already buffered when you open them
+/* background warm-up: when the browser is idle, fetch the remaining videos one at a time, nearest to the screen first.
+   It always waits while any video near the screen is still loading, so it never slows down what you are looking at.
    (skipped on Data Saver or very slow connections) */
-const conn = navigator.connection || {};
-if (!conn.saveData && !/(^|-)2g$/.test(conn.effectiveType || "")) {
-    const warmList = teamVideos;
-    let warmIndex = 0;
+if (!slowNet) {
     const warmNext = () => {
-        if (warmIndex >= warmList.length) return;
-        const v = warmList[warmIndex++];
+        const waiting = teamVideos.some((v) => (v._visible || v._near) && isLoaded(v) && !isReady(v));
+        if (waiting) { setTimeout(warmNext, 400); return; }
+        if (teamVideos.filter(isLoaded).length >= MAX_LOADED) return;
+        const v = teamVideos.filter((x) => !isLoaded(x) && !x._warmed).sort((a, b) => distanceToScreen(a) - distanceToScreen(b))[0];
+        if (!v) return;
+        v._warmed = true;
         let advanced = false;
         const advance = () => { if (!advanced) { advanced = true; warmNext(); } };
         v.addEventListener("canplaythrough", advance, { once: true });
         v.addEventListener("error", advance, { once: true });
-        setTimeout(advance, 5000);
+        setTimeout(advance, 8000);
         loadVideo(v);
     };
     (window.requestIdleCallback || ((fn) => setTimeout(fn, 300)))(warmNext);
