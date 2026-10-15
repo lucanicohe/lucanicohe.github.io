@@ -145,6 +145,14 @@ html.lang-ja .ai-note{line-height:1.8}
 .team-video{grid-column:1/-1;position:relative;aspect-ratio:16/9;border-radius:26px;overflow:hidden;background:#111;box-shadow:0 20px 60px rgba(0,0,0,.18)}
 .team-video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;background:#111}
 .team-video img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+/* videos are pure picture: no player, no clicks, no pausing, no native play button (even on iPhone Low Power Mode) */
+.team-video{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.team-video video{pointer-events:none}
+.team-video video::-webkit-media-controls,
+.team-video video::-webkit-media-controls-enclosure,
+.team-video video::-webkit-media-controls-panel,
+.team-video video::-webkit-media-controls-overlay-play-button,
+.team-video video::-webkit-media-controls-start-playback-button{display:none!important;-webkit-appearance:none;opacity:0;pointer-events:none}
 
 .team-card{min-width:0;padding:36px 32px 40px;border-radius:28px;background:#fff}
 .team-card-label{margin-bottom:18px;font-size:15px;font-weight:600;letter-spacing:-.01em;color:var(--text)}
@@ -764,7 +772,7 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
 const teamVideos = [...document.querySelectorAll(".team-video video")];
 
 function loadVideo(v) {
-    if (!v.getAttribute("src")) { v.preload = "auto"; v.src = v.dataset.src; v.load(); }
+    if (!v.getAttribute("src")) { v.preload = reduceMotion ? "metadata" : "auto"; v.src = v.dataset.src; v.load(); }
 }
 function unloadVideo(v) {
     if (v.getAttribute("src")) { v.pause(); v.removeAttribute("src"); v.load(); }
@@ -772,7 +780,7 @@ function unloadVideo(v) {
 function tryPlay(v) {
     loadVideo(v);
     const p = v.play();
-    if (p && p.catch) p.catch(() => { v.controls = true; v.dataset.blocked = "1"; });
+    if (p && p.catch) p.catch(() => { v.dataset.blocked = "1"; }); /* retried on the next tap, never shows a player */
 }
 
 teamVideos.forEach((v) => {
@@ -783,7 +791,21 @@ teamVideos.forEach((v) => {
     v.setAttribute("playsinline", "");
     v.setAttribute("webkit-playsinline", "");
     v.disablePictureInPicture = true;
+    v.disableRemotePlayback = true;
+    v.controls = false;
+    v.removeAttribute("controls");
+    v.setAttribute("controlslist", "nodownload nofullscreen noremoteplayback");
+    v._visible = false;
     v.addEventListener("playing", () => { delete v.dataset.blocked; });
+    /* if anything pauses a video that is on screen (system, browser, another app), start it again */
+    v.addEventListener("pause", () => {
+        if (v._visible && !document.hidden && !reduceMotion && !v.ended) setTimeout(() => { if (v._visible) tryPlay(v); }, 60);
+    });
+    v.addEventListener("contextmenu", (e) => e.preventDefault());
+    v.parentElement.addEventListener("contextmenu", (e) => e.preventDefault());
+});
+document.addEventListener("visibilitychange", () => {
+    if (!document.hidden && !reduceMotion) teamVideos.forEach((v) => { if (v._visible) tryPlay(v); });
 });
 
 const loadObserver = new IntersectionObserver((entries) => {
@@ -797,6 +819,7 @@ const unloadObserver = new IntersectionObserver((entries) => {
 
 const playObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
+        entry.target._visible = entry.isIntersecting;
         if (entry.isIntersecting) tryPlay(entry.target);
         else entry.target.pause();
     });
@@ -805,7 +828,7 @@ const playObserver = new IntersectionObserver((entries) => {
 teamVideos.forEach((v) => {
     loadObserver.observe(v);
     unloadObserver.observe(v);
-    if (reduceMotion) { v.controls = true; return; } /* no autoplay if the visitor prefers reduced motion */
+    if (reduceMotion) return; /* visitors who ask for reduced motion see the still first frame instead */
     playObserver.observe(v);
 });
 
@@ -829,7 +852,7 @@ if (!conn.saveData && !/(^|-)2g$/.test(conn.effectiveType || "")) {
 }
 
 /* if autoplay was blocked, the first tap on the page starts the videos that are on screen */
-["touchend", "click"].forEach((type) => window.addEventListener(type, () => {
+["touchend", "pointerdown", "click"].forEach((type) => window.addEventListener(type, () => {
     teamVideos.forEach((v) => {
         if (!v.dataset.blocked) return;
         const r = v.getBoundingClientRect();
