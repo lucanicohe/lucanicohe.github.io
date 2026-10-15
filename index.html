@@ -764,7 +764,7 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
 const teamVideos = [...document.querySelectorAll(".team-video video")];
 
 function loadVideo(v) {
-    if (!v.getAttribute("src")) { v.src = v.dataset.src; v.load(); }
+    if (!v.getAttribute("src")) { v.preload = "auto"; v.src = v.dataset.src; v.load(); }
 }
 function unloadVideo(v) {
     if (v.getAttribute("src")) { v.pause(); v.removeAttribute("src"); v.load(); }
@@ -787,11 +787,13 @@ teamVideos.forEach((v) => {
 });
 
 const loadObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) loadVideo(entry.target);
-        else unloadVideo(entry.target);
-    });
-}, { rootMargin: "400px 0px" });
+    entries.forEach((entry) => { if (entry.isIntersecting) loadVideo(entry.target); });
+}, { rootMargin: "150% 0px" });
+
+/* only free a video once it is about four screens away */
+const unloadObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => { if (!entry.isIntersecting) unloadVideo(entry.target); });
+}, { rootMargin: "400% 0px" });
 
 const playObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -802,9 +804,29 @@ const playObserver = new IntersectionObserver((entries) => {
 
 teamVideos.forEach((v) => {
     loadObserver.observe(v);
+    unloadObserver.observe(v);
     if (reduceMotion) { v.controls = true; return; } /* no autoplay if the visitor prefers reduced motion */
     playObserver.observe(v);
 });
+
+/* the first three team videos start downloading as soon as the browser is idle, one after another
+   (skipped on Data Saver or very slow connections) */
+const conn = navigator.connection || {};
+if (!conn.saveData && !/(^|-)2g$/.test(conn.effectiveType || "")) {
+    const warmList = teamVideos.slice(0, 3);
+    let warmIndex = 0;
+    const warmNext = () => {
+        if (warmIndex >= warmList.length) return;
+        const v = warmList[warmIndex++];
+        let advanced = false;
+        const advance = () => { if (!advanced) { advanced = true; warmNext(); } };
+        v.addEventListener("canplaythrough", advance, { once: true });
+        v.addEventListener("error", advance, { once: true });
+        setTimeout(advance, 5000);
+        loadVideo(v);
+    };
+    (window.requestIdleCallback || ((fn) => setTimeout(fn, 300)))(warmNext);
+}
 
 /* if autoplay was blocked, the first tap on the page starts the videos that are on screen */
 ["touchend", "click"].forEach((type) => window.addEventListener(type, () => {
