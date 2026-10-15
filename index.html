@@ -814,7 +814,7 @@ const loadObserver = new IntersectionObserver((entries) => {
 
 /* only free a video once it is about four screens away */
 const unloadObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => { if (!entry.isIntersecting) unloadVideo(entry.target); });
+    entries.forEach((entry) => { if (!entry.isIntersecting && entry.boundingClientRect.width > 0) unloadVideo(entry.target); });
 }, { rootMargin: "400% 0px" });
 
 const playObserver = new IntersectionObserver((entries) => {
@@ -832,11 +832,12 @@ teamVideos.forEach((v) => {
     playObserver.observe(v);
 });
 
-/* the first three team videos start downloading as soon as the browser is idle, one after another
+/* every team video, including the ones hidden behind "See more", starts downloading in page order as soon as the
+   browser is idle, one after another, so they are already buffered when you open them
    (skipped on Data Saver or very slow connections) */
 const conn = navigator.connection || {};
 if (!conn.saveData && !/(^|-)2g$/.test(conn.effectiveType || "")) {
-    const warmList = teamVideos.slice(0, 3);
+    const warmList = teamVideos;
     let warmIndex = 0;
     const warmNext = () => {
         if (warmIndex >= warmList.length) return;
