@@ -53,6 +53,7 @@ p{margin:0 0 1.3em;max-width:620px;font-size:clamp(17px,1.7vw,21px);line-height:
 /* SPLIT + PICTURES */
 .split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(50px,8vw,130px);align-items:center}
 .split.rev .pic{order:-1}
+.pic{isolation:isolate;transform:translateZ(0)}
 .pic img,.pic video{display:block;width:100%;aspect-ratio:3/4;max-height:92vh;object-fit:cover;object-position:center top;border-radius:28px}
 
 /* RESUME */
@@ -141,7 +142,7 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28p
   <p class="i18n" data-en="Who I am, where I come from, and where I’m going." data-ja="私という人間、これまでの歩み、そしてこれから。">Who I am, where I come from, and where I’m going.</p>
   <a class="pill i18n" href="index.html#skills" data-en="View my skills" data-ja="スキルを見る">View my skills</a>
  </div>
- <div class="pic"><img src="me1.jpg" alt="Luca Helgert"></div>
+ <div class="pic"><img decoding="async" fetchpriority="high" src="me1.jpg" alt="Luca Helgert"></div>
 </header>
 
 <!-- ORIGINS -->
@@ -154,7 +155,7 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28p
    <p class="i18n" data-en="Growing up on anime, I fell in love with Japanese culture and history. Living in Japan and one day contributing something back has been a dream for a long time. Game development is where my technical skills and creativity meet, so that is the path I’m building." data-ja="子どもの頃からアニメを見て育ち、日本の文化や歴史に惹かれました。日本に住み、いつか日本に貢献することは昔からの夢です。ゲーム制作は技術とクリエイティブな力を組み合わせられる分野なので、この道を選びました。">Growing up on anime, I fell in love with Japanese culture and history. Living in Japan and one day contributing something back has been a dream for a long time. Game development is where my technical skills and creativity meet, so that is the path I’m building.</p>
    <p class="i18n" data-en="In 2023 I made the move to Japan." data-ja="2023年、日本へ移り住みました。">In 2023 I made the move to Japan.</p>
   </div>
-  <div class="pic"><video src="me2.mp4" muted loop playsinline preload="metadata" aria-label="Luca Helgert"></video></div>
+  <div class="pic"><video data-src="me2.mp4#t=0.1" poster="me2-poster.jpg" muted loop playsinline preload="none" aria-label="Luca Helgert"></video></div>
  </div>
 </section>
 
@@ -173,7 +174,7 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28p
     <div class="tl-row"><div class="tl-date i18n" data-en="2017" data-ja="2017年">2017</div><div><h3 class="tl-title">OTH Regensburg</h3><p class="tl-text i18n" data-en="Began university studies at Ostbayerische Technische Hochschule Regensburg." data-ja="OTHレーゲンスブルク（Ostbayerische Technische Hochschule Regensburg）で大学での学びを始めました。">Began university studies at Ostbayerische Technische Hochschule Regensburg.</p></div></div>
     <div class="tl-row"><div class="tl-date i18n" data-en="Until 2017" data-ja="〜2017年">Until 2017</div><div><h3 class="tl-title">Gustav-von-Schlör-Schule</h3><p class="tl-text i18n" data-en="Finished school with the Abitur, after Grundschule and Realschule in Germany." data-ja="ドイツの小学校（Grundschule）と実科学校（Realschule）を経て、アビトゥーアを取得して卒業。">Finished school with the Abitur, after Grundschule and Realschule in Germany.</p></div></div>
    </div>
-   <div class="pic"><img src="me3.jpg" alt="Luca Helgert" loading="lazy"></div>
+   <div class="pic"><img decoding="async" src="me3.jpg" alt="Luca Helgert" loading="lazy"></div>
   </div>
  </div>
 </section>
@@ -188,7 +189,7 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28p
    <p class="i18n" data-en="I work across systems, design and visuals, and I like owning every part of what I make." data-ja="システム、デザイン、ビジュアルまで、自分が作るもののあらゆる部分を自分の手で作ることを大切にしています。">I work across systems, design and visuals, and I like owning every part of what I make.</p>
    <p class="i18n" data-en="I see myself as an artist first. I'm studying game programming at TECH.C., and I don't mind working as a game programmer. But technical art is what excites me most: using Unity, Unreal Engine and code as tools to make games look beautiful through shaders, lighting, effects and environments." data-ja="私は自分を、まずアーティストだと思っています。TECH.C.ではゲームプログラミングを学んでおり、ゲームプログラマーとして働くことにも抵抗はありません。ただ、一番ワクワクするのはテクニカルアートです。UnityやUnreal Engine、コードを道具として、シェーダー、ライティング、エフェクト、環境でゲームを美しく見せることに情熱を注いでいます。">I see myself as an artist first. I'm studying game programming at TECH.C., and I don't mind working as a game programmer. But technical art is what excites me most: using Unity, Unreal Engine and code as tools to make games look beautiful through shaders, lighting, effects and environments.</p>
   </div>
-  <div class="pic"><img src="me4.jpg" alt="Luca Helgert" loading="lazy"></div>
+  <div class="pic"><img decoding="async" src="me4.jpg" alt="Luca Helgert" loading="lazy"></div>
  </div>
 </section>
 
@@ -223,7 +224,7 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28p
    <p class="i18n" data-en="After moving to Japan in 2023, I enrolled at Kai Language School and studied Japanese for two years, finishing at Level N2 in 2025." data-ja="2023年に来日してKai日本語スクールに入学し、2年間日本語を学びました。2025年にN2レベルで修了しました。">After moving to Japan in 2023, I enrolled at Kai Language School and studied Japanese for two years, finishing at Level N2 in 2025.</p>
    <p class="i18n" data-en="It opened the door to the next step: entering a Japanese technical college." data-ja="それが次の一歩につながりました。日本の専門学校に入ることです。">It opened the door to the next step: entering a Japanese technical college.</p>
   </div>
-  <div class="pic"><video src="me5.mp4" muted loop playsinline preload="metadata" aria-label="Luca Helgert"></video></div>
+  <div class="pic"><video data-src="me5.mp4#t=0.1" poster="me5-poster.jpg" muted loop playsinline preload="none" aria-label="Luca Helgert"></video></div>
  </div>
 </section>
 
@@ -237,7 +238,7 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28p
    <p class="i18n" data-en="Ideas are easy. Building them, solving the problems and finishing them is the hard part. I make games to practice exactly that: taking an idea all the way to something people can actually play, and making it fun and memorable for others, not just for me." data-ja="アイデアを出すのは簡単ですが、実際に作り、問題を解決し、最後まで完成させるのは難しいことです。私は、アイデアを人が実際に遊べる形まで仕上げるために、そして自分だけでなく他の人にも楽しく記憶に残るものにするために、ゲームを作り続けています。">Ideas are easy. Building them, solving the problems and finishing them is the hard part. I make games to practice exactly that: taking an idea all the way to something people can actually play, and making it fun and memorable for others, not just for me.</p>
    <p class="i18n" data-en="Every project teaches me at least one new thing." data-ja="作品ごとに、新しいことを一つは学ぶようにしています。">Every project teaches me at least one new thing.</p>
   </div>
-  <div class="pic"><img src="me6.jpg" alt="Luca Helgert" loading="lazy"></div>
+  <div class="pic"><img decoding="async" src="me6.jpg" alt="Luca Helgert" loading="lazy"></div>
  </div>
 </section>
 
@@ -249,7 +250,7 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28p
   <p class="i18n" data-en="AI can now do much of what people used to do by hand, so I don’t want to rely on technical skill alone. I invest in a wider range of abilities, and in creativity: the ability to make things that are well made and look beautiful." data-ja="今ではAIが人の手作業の多くをできるようになっています。そのため、技術だけに頼りたくありません。幅広い力と、きちんと作られていて見た目も美しいものを生み出すクリエイティビティを大切にしています。">AI can now do much of what people used to do by hand, so I don’t want to rely on technical skill alone. I invest in a wider range of abilities, and in creativity: the ability to make things that are well made and look beautiful.</p>
   <p class="i18n" data-en="Without a creative direction, much of today’s AI-made work ends up looking alike. I want to bring my own ideas and personality, so what I make feels like a person made it." data-ja="クリエイティブな方向性がなければ、AIによる作品は似たものになりがちです。私は、自分の考えや個性を込めて、人が作ったと感じられるものを作りたいです。">Without a creative direction, much of today’s AI-made work ends up looking alike. I want to bring my own ideas and personality, so what I make feels like a person made it.</p>
   </div>
-  <div class="pic"><img src="me7.jpg" alt="Luca Helgert" loading="lazy"></div>
+  <div class="pic"><img decoding="async" src="me7.jpg" alt="Luca Helgert" loading="lazy"></div>
  </div>
 </section>
 
@@ -261,7 +262,7 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28p
   <h2 class="i18n" data-en="Three places to learn." data-ja="学びの3つの場所。">Three places to learn.</h2>
   <p class="i18n" data-en="Making things look good isn’t only about the right tools. It’s about judgment, and that’s what I’m training." data-ja="物をきれいに見せることは、正しいツールを使うだけではありません。自分で判断する力を、日々鍛えています。">Making things look good isn’t only about the right tools. It’s about judgment, and that’s what I’m training.</p>
    </div>
-   <div class="pic"><img src="me8.jpg" alt="Luca Helgert" loading="lazy"></div>
+   <div class="pic"><img decoding="async" src="me8.jpg" alt="Luca Helgert" loading="lazy"></div>
   </div>
   <div class="cards">
    <div class="card"><div class="card-label i18n" data-en="01" data-ja="01">01</div><h3 class="i18n" data-en="School" data-ja="学校">School</h3><p class="i18n" data-en="I practice what my teachers show me and put it straight into my own projects." data-ja="先生から教わったことを練習し、すぐに自分の制作で使います。">I practice what my teachers show me and put it straight into my own projects.</p></div>
@@ -280,7 +281,7 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28p
   <p class="i18n" data-en="I don’t think of myself as one job title. I’m a creator first, and I want to make things only I could make." data-ja="私は自分を一つの肩書きに収まる人間だとは思っていません。まずクリエイターでありたい。そして、自分にしか作れないものを作りたいです。">I don’t think of myself as one job title. I’m a creator first, and I want to make things only I could make.</p>
   <a class="pill solid i18n" style="background:#f5f5f2;color:#111;border-color:#f5f5f2" href="index.html#contact" data-en="Let’s build something together" data-ja="一緒に、何かをつくりましょう">Let’s build something together</a>
   </div>
-  <div class="pic"><img src="me9.jpg" alt="Luca Helgert" loading="lazy"></div>
+  <div class="pic"><img decoding="async" src="me9.jpg" alt="Luca Helgert" loading="lazy"></div>
  </div>
 </section>
 
@@ -294,8 +295,126 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28p
 <script>
 const nav=document.getElementById("nav");
 window.addEventListener("scroll",()=>nav.classList.toggle("scrolled",window.scrollY>20),{passive:true});
-const vio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.play().catch(()=>{})}else{e.target.pause()}}),{threshold:.35});
-document.querySelectorAll(".pic video").forEach(v=>{v.muted=true;vio.observe(v)});
+/* MEDIA LOADING (same system as the main page)
+   posters in the HTML -> idle first-frame warm-up -> full buffering when near -> play when on screen, rewind when away.
+   Nothing is cancelled or restarted; iOS/iPadOS (which never preload video) starts downloading when play() is called. */
+const reduceMotion=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const vids=[...document.querySelectorAll(".pic video")];
+const conn=navigator.connection||{};
+const saveData=!!conn.saveData||/(^|-)2g$/.test(conn.effectiveType||"");
+const isPhone=window.matchMedia("(pointer: coarse)").matches; /* phones and tablets (iPad included) */
+const smallScreen=isPhone||window.innerWidth<900; /* these get the lighter name-m.mp4 file (made by optimize-media.sh) */
+const srcFor=v=>(smallScreen&&!v._full)?v.dataset.src.replace(/\.mp4(?=#|$)/,"-m.mp4"):v.dataset.src;
+function attach(v,mode){
+  if(!v.getAttribute("src")){v.preload=mode;v.src=srcFor(v);v.load();}
+  else if(mode==="auto"&&v.preload!=="auto"){v.preload="auto";}
+}
+function playVideo(v){
+  attach(v,"auto");
+  const p=v.play();
+  if(p&&p.catch)p.catch(()=>{v.dataset.blocked="1";});
+}
+function distanceToScreen(el){
+  if(!el.offsetParent)return 1e9;
+  const r=el.getBoundingClientRect();
+  return Math.abs((r.top+r.bottom)/2-window.innerHeight/2);
+}
+vids.forEach(v=>{
+  v.muted=true;v.defaultMuted=true;v.loop=true;
+  v.setAttribute("playsinline","");v.setAttribute("webkit-playsinline","");
+  v.disablePictureInPicture=true;v.disableRemotePlayback=true;v.controls=false;
+  v._visible=false;v._errors=0;v._kicks=0;
+  v.addEventListener("playing",()=>{delete v.dataset.blocked;v._errors=0;v._kicks=0;});
+  v.addEventListener("canplay",()=>{if(v._visible&&!reduceMotion&&v.paused)playVideo(v);});
+  v.addEventListener("error",()=>{
+    if(!v.getAttribute("src"))return;
+    if(!v._full&&/-m\.mp4/.test(v.getAttribute("src"))){
+      v._full=true;v.removeAttribute("src");v.load();
+      attach(v,v._visible?"auto":"metadata");
+      if(v._visible&&!reduceMotion)playVideo(v);
+      return;
+    }
+    if(v._errors>=2)return;
+    v._errors++;
+    setTimeout(()=>{
+      v.removeAttribute("src");v.load();
+      attach(v,v._visible?"auto":"metadata");
+      if(v._visible&&!reduceMotion)playVideo(v);
+    },1500*v._errors);
+  });
+  v.addEventListener("pause",()=>{
+    if(v._visible&&!document.hidden&&!reduceMotion&&!v.ended&&v._kicks<3){
+      v._kicks++;
+      setTimeout(()=>{if(v._visible&&v.paused)playVideo(v);},120);
+    }
+  });
+});
+document.addEventListener("visibilitychange",()=>{
+  if(!document.hidden&&!reduceMotion)vids.forEach(v=>{if(v._visible)playVideo(v);});
+});
+const nearObserver=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting)attach(e.target,"auto");});
+},{rootMargin:"200% 0px"});
+const playObserver=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    const v=e.target;
+    v._visible=e.isIntersecting;
+    if(e.isIntersecting){
+      v._kicks=0;
+      try{if(v.currentTime>0.3)v.currentTime=0;}catch(err){}
+      playVideo(v);
+    }else{
+      v.pause();
+      try{if(v.currentTime>0.2)v.currentTime=0;}catch(err){}
+    }
+  });
+},{rootMargin:"8% 0px",threshold:0.01});
+vids.forEach(v=>{
+  nearObserver.observe(v);
+  if(!reduceMotion)playObserver.observe(v);
+});
+function warmImages(){
+  const reach=isPhone?window.innerHeight*4:Infinity;
+  const queue=[...document.images].filter(i=>!i.complete||i.loading==="lazy")
+    .map(i=>({i,d:distanceToScreen(i)})).filter(o=>o.d<reach)
+    .sort((a,b)=>a.d-b.d).map(o=>o.i);
+  let active=0;
+  const pump=()=>{
+    while(active<3&&queue.length){
+      const img=queue.shift();
+      img.loading="eager";
+      active++;
+      const done=()=>{active--;pump();};
+      if(img.decode)img.decode().then(done,done);
+      else{img.addEventListener("load",done,{once:true});img.addEventListener("error",done,{once:true});}
+    }
+  };
+  pump();
+}
+document.querySelectorAll(".pic img").forEach(img=>{
+  if(img.complete&&img.naturalWidth)return;
+  img.style.opacity="0";
+  const show=()=>{img.style.transition="opacity .45s ease";img.style.opacity="1";};
+  img.addEventListener("load",show,{once:true});
+  img.addEventListener("error",show,{once:true});
+});
+if(!saveData){
+  const start=()=>{
+    warmImages();
+    setTimeout(()=>vids.filter(v=>!v.getAttribute("src"))
+      .sort((a,b)=>distanceToScreen(a)-distanceToScreen(b))
+      .forEach((v,i)=>setTimeout(()=>attach(v,"metadata"),i*120)),400);
+  };
+  const afterLoad=()=>(window.requestIdleCallback||(fn=>setTimeout(fn,200)))(start,{timeout:1500});
+  if(document.readyState==="complete")afterLoad();else window.addEventListener("load",afterLoad,{once:true});
+}
+["touchend","pointerdown","click"].forEach(t=>window.addEventListener(t,()=>{
+  vids.forEach(v=>{
+    if(!v.dataset.blocked)return;
+    const r=v.getBoundingClientRect();
+    if(r.bottom>0&&r.top<window.innerHeight)playVideo(v);
+  });
+},{passive:true}));
 const btn=document.getElementById("langToggle");
 const titles={en:"More about me — Luca Helgert",ja:"私について — ヘルゲルト・ルカ"};
 let lang="ja"; /* starts in Japanese */
