@@ -852,7 +852,11 @@ const playObserver = new IntersectionObserver((entries) => {
         const v = entry.target;
         v._visible = entry.isIntersecting;
         if (entry.isIntersecting) { v._kicks = 0; playVideo(v); }
-        else v.pause();
+        else {
+            /* scrolled away: stop, and rewind so it starts from the beginning next time (the start is always already buffered) */
+            v.pause();
+            try { if (v.currentTime > 0.2) v.currentTime = 0; } catch (e) {}
+        }
     });
 }, { rootMargin: "8% 0px", threshold: 0.01 });
 
