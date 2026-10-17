@@ -83,6 +83,30 @@ p{margin:0 0 1.3em;max-width:620px;font-size:clamp(17px,1.7vw,21px);line-height:
 .stat-cards{display:grid;gap:18px}
 .stat{margin:0;font-size:clamp(3.5rem,7vw,6rem);font-weight:500;line-height:1;letter-spacing:-.06em;color:var(--text)}
 
+/* HOBBIES (dark section, Apple-style card rail) */
+.hob-block{margin-top:clamp(64px,8vw,110px);padding-top:clamp(40px,5vw,64px);border-top:1px solid rgba(245,245,242,.14)}
+.hob-block.first{margin-top:clamp(40px,5vw,64px);padding-top:0;border-top:0}
+.hob-head{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(24px,6vw,100px);align-items:start}
+.hob-title{margin:0;font-size:clamp(1.8rem,3.2vw,2.8rem);font-weight:600;line-height:1.1;letter-spacing:-.045em;color:#f5f5f2}
+html.lang-ja .hob-title{line-height:1.4}
+.hob-head p{margin:0;max-width:640px;font-size:clamp(16px,1.45vw,19px)}
+.rail{display:flex;gap:18px;margin-top:clamp(36px,4vw,56px);overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.rail::-webkit-scrollbar{display:none}
+.fav{flex:0 0 clamp(170px,21vw,260px);scroll-snap-align:start;margin:0}
+.fav-pic{aspect-ratio:3/4;border-radius:24px;overflow:hidden;background:#2a2a28}
+.fav-pic img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.fav:hover .fav-pic img{transform:scale(1.04)}
+.fav-title{margin:16px 0 4px;font-size:clamp(15px,1.3vw,17px);font-weight:600;line-height:1.3;letter-spacing:-.02em;color:#f5f5f2}
+.fav-meta{font-size:13.5px;line-height:1.4;color:#8a8a85}
+.rail-nav{display:flex;justify-content:flex-end;gap:10px;margin-top:26px}
+.rail-nav button{width:44px;height:44px;border:0;border-radius:50%;background:rgba(245,245,242,.14);color:#f5f5f2;font-family:inherit;font-size:24px;line-height:1;padding:0 0 3px;cursor:pointer;transition:background .2s,opacity .2s}
+.rail-nav button:hover:not([disabled]){background:rgba(245,245,242,.26)}
+.rail-nav button[disabled]{opacity:.3;cursor:default}
+.dark .pill:not(.solid){border-color:rgba(245,245,242,.3);color:#f5f5f2}
+.dark .pill:not(.solid):hover{background:#f5f5f2;color:#111}
+@media(max-width:800px){.hob-head{grid-template-columns:1fr;gap:16px}}
+@media(max-width:600px){.rail{gap:14px}}
+
 footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28px 0 35px}
 .footer-inner{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
 
@@ -180,14 +204,14 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28p
 </section>
 
 <!-- CRAFT -->
-<section class="sec">
+<section class="sec dark">
  <div class="wrap split rev">
   <div>
    <div class="eyebrow i18n" data-en="Craft" data-ja="ものづくり">Craft</div>
    <h2 class="i18n" data-en="Technique, and how it looks." data-ja="技術と、見た目と。">Technique, and how it looks.</h2>
    <p class="i18n" data-en="I’m not only about the technical side. My brother is an artist, and since I was a child he has taught me 3D software, photography and editing. Because of him I care not just about making things work, but about making them look beautiful." data-ja="私は技術だけの人間ではありません。兄はアーティストで、子どもの頃から3Dソフトや写真の撮り方、編集を教えてくれました。その影響で、物を動かすだけでなく、どうすればきれいに見えるかも大切にしています。">I’m not only about the technical side. My brother is an artist, and since I was a child he has taught me 3D software, photography and editing. Because of him I care not just about making things work, but about making them look beautiful.</p>
    <p class="i18n" data-en="I work across systems, design and visuals, and I like owning every part of what I make." data-ja="システム、デザイン、ビジュアルまで、自分が作るもののあらゆる部分を自分の手で作ることを大切にしています。">I work across systems, design and visuals, and I like owning every part of what I make.</p>
-   <p class="i18n" data-en="I see myself as an artist first. I'm studying game programming at TECH.C., and I don't mind working as a game programmer. But technical art is what excites me most: using Unity, Unreal Engine and code as tools to make games look beautiful through shaders, lighting, effects and environments." data-ja="私は自分を、まずアーティストだと思っています。TECH.C.ではゲームプログラミングを学んでおり、ゲームプログラマーとして働くことにも抵抗はありません。ただ、一番ワクワクするのはテクニカルアートです。UnityやUnreal Engine、コードを道具として、シェーダー、ライティング、エフェクト、環境でゲームを美しく見せることに情熱を注いでいます。">I see myself as an artist first. I'm studying game programming at TECH.C., and I don't mind working as a game programmer. But technical art is what excites me most: using Unity, Unreal Engine and code as tools to make games look beautiful through shaders, lighting, effects and environments.</p>
+   <p class="i18n" data-en="I see myself as an artist first. I'm studying game programming at TECH.C., and I don't mind working as a game programmer. But technical art is what excites me most: using Unity, Unreal Engine and code as tools to make games look beautiful through shaders, lighting, effects and environments. I'm also very interested in design roles, where I can shape the look and feel of a game." data-ja="私は自分を、まずアーティストだと思っています。TECH.C.ではゲームプログラミングを学んでおり、ゲームプログラマーとして働くことにも抵抗はありません。ただ、一番ワクワクするのはテクニカルアートです。UnityやUnreal Engine、コードを道具として、シェーダー、ライティング、エフェクト、環境でゲームを美しく見せることに情熱を注いでいます。ゲームの見た目や雰囲気をつくるデザインの仕事にも、強い関心があります。">I see myself as an artist first. I'm studying game programming at TECH.C., and I don't mind working as a game programmer. But technical art is what excites me most: using Unity, Unreal Engine and code as tools to make games look beautiful through shaders, lighting, effects and environments. I'm also very interested in design roles, where I can shape the look and feel of a game.</p>
   </div>
   <div class="pic"><img decoding="async" src="me4.jpg" alt="Luca Helgert" loading="lazy"></div>
  </div>
@@ -216,7 +240,7 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28p
 </section>
 
 <!-- LANGUAGE SCHOOL -->
-<section class="sec">
+<section class="sec dark">
  <div class="wrap split rev">
   <div>
    <div class="eyebrow i18n" data-en="Language school · 2023 – 2025" data-ja="日本語学校 · 2023年〜2025年">Language school · 2023 – 2025</div>
@@ -242,45 +266,56 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28p
  </div>
 </section>
 
+<!-- HOBBIES -->
 <section class="sec dark">
+ <div class="wrap">
+  <div class="eyebrow i18n" data-en="Hobbies" data-ja="趣味">Hobbies</div>
+  <h2 class="big i18n" data-en="My hobbies." data-ja="私の趣味。">My hobbies.</h2>
+  <div class="hob-block first">
+   <div class="hob-head"><h3 class="hob-title i18n" data-en="Games" data-ja="ゲーム">Games</h3><p class="i18n" data-en="I have played games since I was young. One day my dad gave me his old work computer, and I started exploring, beginning with an old Star Wars game. Over time, I found my way to Japanese games." data-ja="子どもの頃から、ずっとゲームで遊んできました。ある日、父が昔使っていた仕事用のパソコンをくれて、そこから探検が始まりました。最初は古いスター・ウォーズのゲーム。やがて、日本のゲームにたどり着きました。">I have played games since I was young. One day my dad gave me his old work computer, and I started exploring, beginning with an old Star Wars game. Over time, I found my way to Japanese games.</p></div>
+   <div class="rail-wrap">
+    <div class="rail">
+   <figure class="fav"><div class="fav-pic"><img decoding="async" src="skyrim.jpg" alt="Skyrim" loading="lazy"></div><div class="fav-title i18n" data-en="Skyrim" data-ja="スカイリム">Skyrim</div><div class="fav-meta i18n" data-en="Bethesda Game Studios" data-ja="ベセスダ・ゲームスタジオ">Bethesda Game Studios</div></figure>
+   <figure class="fav"><div class="fav-pic"><img decoding="async" src="kotor.jpg" alt="Star Wars: Knights of the Old Republic" loading="lazy"></div><div class="fav-title i18n" data-en="Star Wars: Knights of the Old Republic" data-ja="Star Wars: Knights of the Old Republic">Star Wars: Knights of the Old Republic</div><div class="fav-meta i18n" data-en="BioWare" data-ja="バイオウェア">BioWare</div></figure>
+   <figure class="fav"><div class="fav-pic"><img decoding="async" src="nier.jpg" alt="NieR:Automata" loading="lazy"></div><div class="fav-title i18n" data-en="NieR:Automata" data-ja="ニーア オートマタ">NieR:Automata</div><div class="fav-meta i18n" data-en="PlatinumGames" data-ja="プラチナゲームズ">PlatinumGames</div></figure>
+   <figure class="fav"><div class="fav-pic"><img decoding="async" src="yakuza0.jpg" alt="Yakuza 0" loading="lazy"></div><div class="fav-title i18n" data-en="Yakuza 0" data-ja="龍が如く0 誓いの場所">Yakuza 0</div><div class="fav-meta i18n" data-en="SEGA" data-ja="セガ">SEGA</div></figure>
+   <figure class="fav"><div class="fav-pic"><img decoding="async" src="darksouls.jpg" alt="Dark Souls" loading="lazy"></div><div class="fav-title i18n" data-en="Dark Souls" data-ja="ダークソウル">Dark Souls</div><div class="fav-meta i18n" data-en="FromSoftware" data-ja="フロム・ソフトウェア">FromSoftware</div></figure>
+   <figure class="fav"><div class="fav-pic"><img decoding="async" src="danganronpa.jpg" alt="Danganronpa" loading="lazy"></div><div class="fav-title i18n" data-en="Danganronpa" data-ja="ダンガンロンパ">Danganronpa</div><div class="fav-meta i18n" data-en="Spike Chunsoft" data-ja="スパイク・チュンソフト">Spike Chunsoft</div></figure>
+    </div>
+    <div class="rail-nav"><button class="prev" type="button" aria-label="Previous" disabled>&lsaquo;</button><button class="next" type="button" aria-label="Next">&rsaquo;</button></div>
+   </div>
+  </div>
+  <div class="hob-block">
+   <div class="hob-head"><h3 class="hob-title i18n" data-en="D.LEAGUE" data-ja="D.LEAGUE">D.LEAGUE</h3><p class="i18n" data-en="An artist friend I know from Instagram, who works with a company involved in D.LEAGUE, invited me and showed it to me. I found it fascinating, especially because of its connection to game companies like SEGA (SEGA SAMMY LUX) and KADOKAWA (KADOKAWA DREAMS)." data-ja="Instagramで知り合ったアーティストの友人が、D.LEAGUEに関わる会社で働いていて、私を招待して見せてくれました。特に、SEGA（SEGA SAMMY LUX）やKADOKAWA（KADOKAWA DREAMS）といったゲーム会社とのつながりがあることに惹かれ、とても面白いと感じました。">An artist friend I know from Instagram, who works with a company involved in D.LEAGUE, invited me and showed it to me. I found it fascinating, especially because of its connection to game companies like SEGA (SEGA SAMMY LUX) and KADOKAWA (KADOKAWA DREAMS).</p></div>
+  </div>
+ </div>
+</section>
+
+<!-- AI / PERSPECTIVE -->
+<section class="sec">
  <div class="wrap split rev">
   <div>
   <div class="eyebrow i18n" data-en="Perspective" data-ja="考え方">Perspective</div>
   <h2 class="big i18n" data-en="Well made is now easy. Character is not." data-ja="上手に作ることは、もう難しくない。個性は、そうはいかない。">Well made is now easy. Character is not.</h2>
-  <p class="i18n" data-en="AI can write code, draw, model and texture, and it does all of it well. Making something look good is no longer the hard part. Giving it a character of its own is." data-ja="AIはコードを書き、絵を描き、モデルやテクスチャも作れます。しかも、どれも高い水準です。見た目を整えることは、もう難しいことではありません。難しいのは、そこに自分だけの個性を宿らせることです。">AI can write code, draw, model and texture, and it does all of it well. Making something look good is no longer the hard part. Giving it a character of its own is.</p>
-  <p class="i18n" data-en="You feel the difference within seconds. Something made by a person carries character, a mood, a feeling that belongs to one maker. People notice, and more and more they look for exactly that: they come for how something feels, not only for what it does." data-ja="その違いは、数秒で伝わります。人が作ったものには、個性や空気感、そして作り手ひとりのものである感覚が宿ります。それに気づく人は確実にいて、これからはますます、それを求めるようになります。機能だけでなく、それがもたらす感覚のために選ぶのです。">You feel the difference within seconds. Something made by a person carries character, a mood, a feeling that belongs to one maker. People notice, and more and more they look for exactly that: they come for how something feels, not only for what it does.</p>
-  <p class="i18n" data-en="That’s why I see myself as an artist. Someday AI will do everything, except be someone. So I put myself into everything I make, something no one else can copy, because there is only one of me. AI can make music, yet 15,000 people choose mine. It can make videos, yet 3,000 want my opinions. It can make games, yet 1,000 come for mine." data-ja="だから私は、自分をアーティストだと考えています。いつかAIは何でもできるようになります。ただひとつ、「誰か」であることを除いて。だから私は、作るものすべてに自分を込めます。世界に私はひとりしかいないから、それは誰にもコピーできません。AIは音楽を作れます。それでも1万5千人が、私の音楽を選んでくれます。動画も作れます。それでも3千人が、私の意見を聞きにきてくれます。ゲームも作れます。それでも1千人が、私のゲームを見にきてくれます。">That’s why I see myself as an artist. Someday AI will do everything, except be someone. So I put myself into everything I make, something no one else can copy, because there is only one of me. AI can make music, yet 15,000 people choose mine. It can make videos, yet 3,000 want my opinions. It can make games, yet 1,000 come for mine.</p>
+  <p class="i18n" data-en="AI can write code, draw, model and texture, and it does it all well. Making something look good is no longer the hard part. Giving it a character of its own is." data-ja="AIはコードを書き、絵を描き、モデルやテクスチャも作れます。しかも、どれも高い水準です。見た目を整えることは、もう難しくありません。難しいのは、そこに自分だけの個性を宿らせることです。">AI can write code, draw, model and texture, and it does it all well. Making something look good is no longer the hard part. Giving it a character of its own is.</p>
+  <p class="i18n" data-en="That&#x27;s why I see myself as an artist. Someday AI will do everything, except be someone. So I put myself into everything I make, something no one else can copy, because there is only one of me." data-ja="だから私は、自分をアーティストだと考えています。いつかAIは何でもできるようになります。ただひとつ、「誰か」であることを除いて。だから私は、作るものすべてに自分を込めます。世界に私はひとりしかいないから、それは誰にもコピーできません。">That's why I see myself as an artist. Someday AI will do everything, except be someone. So I put myself into everything I make, something no one else can copy, because there is only one of me.</p>
   </div>
   <div class="pic"><img decoding="async" src="me7.jpg" alt="Luca Helgert" loading="lazy"></div>
  </div>
 </section>
 
-<section class="sec">
- <div class="wrap">
-  <div class="split">
-   <div>
-  <div class="eyebrow i18n" data-en="Learning" data-ja="学び方">Learning</div>
-  <h2 class="i18n" data-en="Three places to learn." data-ja="学びの3つの場所。">Three places to learn.</h2>
-  <p class="i18n" data-en="Making things look good isn’t only about the right tools. It’s about judgment, and that’s what I’m training." data-ja="物をきれいに見せることは、正しいツールを使うだけではありません。自分で判断する力を、日々鍛えています。">Making things look good isn’t only about the right tools. It’s about judgment, and that’s what I’m training.</p>
-   </div>
-   <div class="pic"><img decoding="async" src="me8.jpg" alt="Luca Helgert" loading="lazy"></div>
-  </div>
-  <div class="cards">
-   <div class="card"><div class="card-label i18n" data-en="01" data-ja="01">01</div><h3 class="i18n" data-en="School" data-ja="学校">School</h3><p class="i18n" data-en="I practice what my teachers show me and put it straight into my own projects." data-ja="先生から教わったことを練習し、すぐに自分の制作で使います。">I practice what my teachers show me and put it straight into my own projects.</p></div>
-   <div class="card"><div class="card-label i18n" data-en="02" data-ja="02">02</div><h3 class="i18n" data-en="My own projects" data-ja="自分の制作">My own projects</h3><p class="i18n" data-en="When something in class interests me, I keep going until I know how to use it in real work." data-ja="授業で興味を持ったことは、実際の制作でどう使えるかまで掘り下げます。">When something in class interests me, I keep going until I know how to use it in real work.</p></div>
-   <div class="card"><div class="card-label i18n" data-en="03" data-ja="03">03</div><h3 class="i18n" data-en="Other creators" data-ja="他のクリエイター">Other creators</h3><p class="i18n" data-en="I study games, films and art to understand why something looks good and what decisions were made, not to copy it." data-ja="ゲームや映画、アートを見て、なぜ良く見えるのか、作り手がどう判断したのかを学びます。真似ではなく理解のためです。">I study games, films and art to understand why something looks good and what decisions were made, not to copy it.</p></div>
-  </div>
- </div>
-</section>
-
+<!-- NEXT -->
 <section class="sec dark">
  <div class="wrap split rev">
   <div>
   <div class="eyebrow i18n" data-en="Next" data-ja="これから">Next</div>
   <h2 class="big i18n" data-en="A Japanese company first. Then my own." data-ja="将来は、日本の会社へ。そして、自分の会社へ。">A Japanese company first. Then my own.</h2>
-  <p class="i18n" data-en="I want to learn how professional teams work, then start my own company and create things that many people love, while contributing something to Japan, where I have long wanted to live." data-ja="まず日本の会社で、プロのチームがどのように仕事をするのかを学びたいです。そして最終的には自分の会社を作り、多くの人に愛されるものを生み出しながら、昔から住みたかった日本に貢献したいです。">I want to learn how professional teams work, then start my own company and create things that many people love, while contributing something to Japan, where I have long wanted to live.</p>
-  <p class="i18n" data-en="I don’t think of myself as one job title. I’m a creator first, and I want to make things only I could make." data-ja="私は自分を一つの肩書きに収まる人間だとは思っていません。まずクリエイターでありたい。そして、自分にしか作れないものを作りたいです。">I don’t think of myself as one job title. I’m a creator first, and I want to make things only I could make.</p>
-  <a class="pill solid i18n" style="background:#f5f5f2;color:#111;border-color:#f5f5f2" href="index.html#contact" data-en="Let’s build something together" data-ja="一緒に、何かをつくりましょう">Let’s build something together</a>
+  <p class="i18n" data-en="I&#x27;d like to join a company first and learn how professional teams work. One day I want to start my own, make things many people love, and give something back to Japan." data-ja="まずは日本の会社に入って、プロのチームの働き方を学びたいです。いつか自分の会社を作り、多くの人に愛されるものをつくって、日本に恩返しがしたいです。">I'd like to join a company first and learn how professional teams work. One day I want to start my own, make things many people love, and give something back to Japan.</p>
+  <p class="i18n" data-en="I&#x27;m open to part-time work now and full-time work from 2028." data-ja="現在はアルバイト、2028年からはフルタイムのお仕事をお待ちしています。">I'm open to part-time work now and full-time work from 2028.</p>
+  <div class="pills">
+   <a class="pill solid i18n" style="background:#f5f5f2;color:#111;border-color:#f5f5f2" href="mailto:luca.helgert@icloud.com" data-en="Get in touch" data-ja="お問い合わせ">Get in touch</a>
+   <a class="pill i18n" href="index.html#resume" data-en="View resume" data-ja="履歴書を見る">View resume</a>
+  </div>
   </div>
   <div class="pic"><img decoding="async" src="me9.jpg" alt="Luca Helgert" loading="lazy"></div>
  </div>
@@ -416,6 +451,16 @@ if(!saveData){
     if(r.bottom>0&&r.top<window.innerHeight)playVideo(v);
   });
 },{passive:true}));
+document.querySelectorAll(".rail-wrap").forEach(w=>{
+  const r=w.querySelector(".rail"),p=w.querySelector(".prev"),n=w.querySelector(".next");
+  const step=()=>(r.querySelector(".fav").getBoundingClientRect().width+18)*2;
+  const upd=()=>{p.disabled=r.scrollLeft<4;n.disabled=r.scrollLeft+r.clientWidth>=r.scrollWidth-4;};
+  p.addEventListener("click",()=>r.scrollBy({left:-step(),behavior:"smooth"}));
+  n.addEventListener("click",()=>r.scrollBy({left:step(),behavior:"smooth"}));
+  r.addEventListener("scroll",upd,{passive:true});
+  window.addEventListener("resize",upd);
+  upd();
+});
 const btn=document.getElementById("langToggle");
 const titles={en:"More about me — Luca Helgert",ja:"私について — ヘルゲルト・ルカ"};
 let lang="ja"; /* starts in Japanese */
