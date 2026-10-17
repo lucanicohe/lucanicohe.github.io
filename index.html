@@ -938,24 +938,24 @@ if (!saveData) {
 }, { passive: true }));
 
 /* SOLO PROJECT TAGS (keyed by the project's image alt text)
-   dim: "3D" or "2D" label | tools: extra dark tags after Unity + C#
+   tools: extra tags after Unity + C# (only tools listed in the Skills section)
    ai: number of filled bars, 0 to 4
        0 = No AI used | 1 = AI assisted | 2-3 = AI usage | 4 = Fully AI */
 const soloProjectTags = {
-    "Fat Cat":                     { dim: "3D", tools: ["Codex"], ai: 4 },
-    "Artwork Restoration":         { dim: "3D", tools: ["Photoshop"], ai: 0 },
-    "Lost in the Cold":            { dim: "3D", tools: ["World Machine"], ai: 3 },
-    "Earth is a Toy":              { dim: "3D", tools: [], ai: 1 },
-    "Only Bad Guys on the Train":  { dim: "3D", tools: ["Blockbench"], ai: 0 },
-    "Olympus Dodge":               { dim: "3D", tools: ["World Machine"], ai: 1 },
-    "Frog Kamizumo":               { dim: "3D", tools: [], ai: 3 },
-    "Underwater Pinball":          { dim: "3D", tools: ["Blender"], ai: 1 },
-    "Bongo 3D":                    { dim: "3D", tools: ["Blender"], ai: 1 },
-    "Bow and Bones":               { dim: "2D", tools: ["Clip Studio Paint"], ai: 1 },
-    "Zero Gravity Bowling":        { dim: "3D", tools: ["Blender"], ai: 3 },
-    "The Floor Is Lava":           { dim: "3D", tools: [], ai: 3 },
-    "Tron Rhythm":                 { dim: "3D", tools: ["Photoshop"], ai: 3 },
-    "The Universe":                { dim: "2D", tools: ["Clip Studio Paint"], ai: 1 }
+    "Fat Cat":                     { tools: ["Codex"], ai: 4 },
+    "Artwork Restoration":         { tools: ["Photoshop"], ai: 0 },
+    "Lost in the Cold":            { tools: ["World Machine"], ai: 3 },
+    "Earth is a Toy":              { tools: [], ai: 1 },
+    "Only Bad Guys on the Train":  { tools: ["Blockbench"], ai: 0 },
+    "Olympus Dodge":               { tools: ["World Machine"], ai: 1 },
+    "Frog Kamizumo":               { tools: [], ai: 3 },
+    "Underwater Pinball":          { tools: ["Blender"], ai: 1 },
+    "Bongo 3D":                    { tools: ["Blender"], ai: 1 },
+    "Bow and Bones":               { tools: ["Clip Studio Paint"], ai: 1 },
+    "Zero Gravity Bowling":        { tools: ["Blender"], ai: 3 },
+    "The Floor Is Lava":           { tools: [], ai: 3 },
+    "Tron Rhythm":                 { tools: ["Photoshop"], ai: 3 },
+    "The Universe":                { tools: ["Clip Studio Paint"], ai: 1 }
 };
 /* only tools marked strong in the Skills section get the dark tag */
 const strongTools = ["Unity", "Unreal Engine", "C#", "Shader Graph", "HLSL", "World Machine", "Photoshop", "GIMP", "Blender", "Blockbench", "Clip Studio Paint", "Claude", "Google Antigravity", "Codex", "GitHub", "WebGL", "HTML", "Logic Pro X"];
@@ -966,9 +966,8 @@ const aiWords = {
 const aiMeterHTML = (level) =>
     `<div class="ai-usage"><div class="ai-meter"><span class="ai-value i18n" data-en="${aiWords.en[level]}" data-ja="${aiWords.ja[level]}">${aiWords.en[level]}</span></div></div>`;
 document.querySelectorAll("#solo-projects .game").forEach((g) => {
-    const cfg = soloProjectTags[g.querySelector("img").alt] || { dim: "3D", tools: [], ai: 1 };
+    const cfg = soloProjectTags[g.querySelector("img").alt] || { tools: [], ai: 1 };
     const chipList = [
-        { name: cfg.dim, strong: false },
         { name: "Unity", strong: true },
         { name: "C#", strong: true },
         ...cfg.tools.map((name) => ({ name, strong: strongTools.includes(name) }))
