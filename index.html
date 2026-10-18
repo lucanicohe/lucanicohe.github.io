@@ -19,7 +19,7 @@ html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--text);font-family:"Inter","Noto Sans JP",sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{display:block;max-width:100%}
 a{color:inherit}
-#work,#about,#skills,#contact{scroll-margin-top:76px}
+#work,#about,#skills,#skill-bars,#contact{scroll-margin-top:76px}
 
 /* JAPANESE TYPOGRAPHY */
 html.lang-ja *{letter-spacing:0!important}
@@ -41,6 +41,20 @@ nav.scrolled{border-color:var(--line)}
 .nav-links{display:flex;gap:34px}
 .nav-links a{font-size:14px;color:var(--muted);text-decoration:none;transition:color .2s ease}
 .nav-links a:hover,.nav-links a.current{color:var(--text)}
+/* ABOUT DROPDOWN */
+.nav-dd{position:relative;display:flex;align-items:center}
+.nav-dd-btn{display:inline-flex;align-items:center;gap:6px;padding:0;border:0;background:none;font:inherit;font-size:14px;color:var(--muted);cursor:pointer;transition:color .2s ease}
+.nav-dd-btn::after{content:"";width:5px;height:5px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .2s ease}
+.nav-dd-btn:hover,.nav-dd-btn.current,.nav-dd.open .nav-dd-btn{color:var(--text)}
+.nav-dd.open .nav-dd-btn::after{transform:translateY(1px) rotate(225deg)}
+.nav-dd-panel{position:absolute;top:calc(100% + 20px);left:50%;min-width:250px;padding:8px;border:1px solid rgba(17,17,17,.08);border-radius:18px;background:rgba(255,255,255,.97);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 18px 50px rgba(0,0,0,.12);opacity:0;visibility:hidden;transform:translate(-50%,-6px);transition:opacity .18s ease,transform .18s ease,visibility .18s}
+.nav-dd.small .nav-dd-panel{min-width:190px}
+.nav-dd-panel::before{content:"";position:absolute;left:0;right:0;top:-22px;height:22px}
+.nav-dd.open .nav-dd-panel{opacity:1;visibility:visible;transform:translate(-50%,0)}
+@media (hover:hover){.nav-dd:hover .nav-dd-panel{opacity:1;visibility:visible;transform:translate(-50%,0)}.nav-dd:hover .nav-dd-btn{color:var(--text)}}
+.nav-links .nav-dd-panel a{display:block;padding:10px 14px;border-radius:11px;font-size:14px!important;color:var(--text);text-decoration:none;white-space:nowrap}
+.nav-links .nav-dd-panel a:hover,.nav-links .nav-dd-panel a:focus-visible{background:rgba(17,17,17,.06);outline:0}
+@media (max-width:600px){.nav-dd-panel{position:fixed;top:70px;right:12px;left:auto;min-width:0;width:min(270px,calc(100vw - 24px));max-height:calc(100vh - 90px);overflow:auto;transform:translateY(-6px)}.nav-dd.open .nav-dd-panel{transform:none}}
 .lang-toggle{height:36px;padding:0 18px;border:1px solid rgba(17,17,17,.18);border-radius:18px;background:transparent;color:var(--text);font-family:inherit;font-size:13px;font-weight:500;letter-spacing:-.01em;cursor:pointer;transition:background .2s ease,color .2s ease}
 .lang-toggle:hover{background:var(--text);color:var(--bg)}
 
@@ -75,6 +89,15 @@ html.lang-ja .skills-intro{line-height:1.9}
 .skill-row-top{display:flex;align-items:baseline;justify-content:space-between;gap:20px}
 .skill-name{font-size:17px;font-weight:500;letter-spacing:-.025em}
 .skill-details{font-size:16px;line-height:1.5;color:var(--muted);letter-spacing:-.01em;text-align:right;flex-shrink:0}
+.skill-level{color:var(--text);font-weight:500}
+.skill-level::after{content:"·";margin:0 9px;font-weight:400;color:var(--muted)}
+.skill-legend{margin-top:30px;padding-top:20px;border-top:1px solid var(--line)}
+.skill-legend-note{margin:0 0 12px;font-size:13px;line-height:1.5;color:var(--muted)}
+.skill-legend-list{margin:0;padding:0}
+.skill-legend-list>div{display:grid;grid-template-columns:92px minmax(0,1fr);gap:14px;padding:5px 0}
+.skill-legend-list dt{margin:0;font-size:13px;font-weight:600;letter-spacing:-.01em}
+.skill-legend-list dd{margin:0;font-size:13px;line-height:1.45;color:var(--muted)}
+html.lang-ja .skill-legend-list dd,html.lang-ja .skill-legend-note{line-height:1.7}
 .skill-bar{margin-top:16px;height:4px;border-radius:2px;background:rgba(17,17,17,.08);overflow:hidden}
 .skill-bar-fill{display:block;width:0%;height:100%;border-radius:2px;background:var(--text);transition:width 1.3s cubic-bezier(.16,.8,.2,1)}
 .skill-bar-fill.filled{width:var(--pct)}
@@ -293,15 +316,13 @@ html.lang-ja .resume-text{line-height:1.9}
 footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28px 0 35px}
 .footer-inner{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)}
 
-/* HERO FACTS (Apple-style 2x2 info cards) */
-.hero-facts{max-width:540px;margin:40px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.fact{display:flex;flex-direction:column;justify-content:space-between;gap:14px;min-width:0;padding:16px 18px 18px;border-radius:20px;background:#fff}
-.fact:last-child:nth-child(odd){grid-column:1/-1}
-.fact dt{margin:0;font-size:12.5px;font-weight:600;letter-spacing:-.005em;color:var(--muted)}
-.fact dd{margin:0;font-size:clamp(20px,2vw,26px);font-weight:600;line-height:1.08;letter-spacing:-.04em;overflow-wrap:anywhere}
-.fact-sub{display:block;margin-top:6px;font-size:13px;font-weight:400;line-height:1.4;letter-spacing:-.005em;color:var(--muted)}
+/* HERO FACTS (same-size white info boxes) */
+.hero-facts{max-width:660px;margin:40px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+@media (max-width:600px),(min-width:901px) and (max-width:1180px){.hero-facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.fact{display:flex;flex-direction:column;justify-content:space-between;gap:10px;min-width:0;min-height:76px;padding:12px 14px 13px;border-radius:15px;background:#fff}
+.fact dt{margin:0;font-size:11.5px;font-weight:600;letter-spacing:-.005em;color:var(--muted)}
+.fact dd{margin:0;font-size:clamp(15px,1.45vw,18px);font-weight:600;line-height:1.2;letter-spacing:-.03em;overflow-wrap:anywhere}
 html.lang-ja .fact dd{line-height:1.3}
-html.lang-ja .fact-sub{line-height:1.6}
 
 /* PROJECT PANELS, NOTES */
 .project-panel{padding-top:48px}
@@ -369,7 +390,7 @@ nav{background:rgba(245,245,242,.97);backdrop-filter:none;-webkit-backdrop-filte
 nav{height:64px}
 .nav-right{gap:14px}
 .nav-links{gap:14px}
-.nav-links a{font-size:13px}
+.nav-links a,.nav-links .nav-dd-btn{font-size:13px}
 .lang-toggle{height:32px;padding:0 13px;font-size:12px}
 .hero{padding-top:100px;padding-bottom:80px}
 .hero h1{font-size:clamp(4rem,18vw,6rem)}
@@ -418,20 +439,20 @@ nav{height:64px}
 .logo{display:none}
 .nav-inner{justify-content:flex-end}
 .nav-links{gap:12px}
-.nav-links a{font-size:12px}
+.nav-links a,.nav-links .nav-dd-btn{font-size:12px}
 }
 
 /* VERY SMALL PHONES */
 @media (max-width:380px){
 .nav-right{gap:10px}
 .nav-links{gap:10px}
-.nav-links a{font-size:11.5px}
+.nav-links a,.nav-links .nav-dd-btn{font-size:11.5px}
 .hero h1{font-size:3.8rem}
 .contact-item{align-items:flex-start;padding:16px 0}
 .contact-item-value{max-width:62%}
 }
 
-@media (max-width:600px){.fact{padding:14px 14px 16px;gap:12px;border-radius:18px}.fact dd{font-size:clamp(18px,5.6vw,22px)}.fact-sub{font-size:12.5px}.hero-facts{margin-top:32px;gap:8px}.project-panel{padding-top:36px}.pdf-viewer{padding:20px 0 70px;border-radius:20px}.pdf-stage{padding:0 12px}.pdf-nav{top:auto;bottom:12px;transform:none;width:42px;height:42px}.pdf-nav:hover:not([disabled]){transform:scale(1.06)}.pdf-nav.prev{left:14px}.pdf-nav.next{right:14px}.pdf-bar{bottom:19px}}
+@media (max-width:600px){.fact{padding:10px 12px 11px;gap:6px;border-radius:14px;min-height:68px}.fact dd{font-size:clamp(15px,4.4vw,17px)}.hero-facts{margin-top:28px;gap:6px}.project-panel{padding-top:36px}.pdf-viewer{padding:20px 0 70px;border-radius:20px}.pdf-stage{padding:0 12px}.pdf-nav{top:auto;bottom:12px;transform:none;width:42px;height:42px}.pdf-nav:hover:not([disabled]){transform:scale(1.06)}.pdf-nav.prev{left:14px}.pdf-nav.next{right:14px}.pdf-bar{bottom:19px}}
 @media (max-width:400px){.project-switcher button{font-size:12px}}
 
 /* REDUCED MOTION */
@@ -453,8 +474,8 @@ html{scroll-behavior:auto}
 <div class="nav-links">
 <a class="i18n" href="#top" data-en="Top" data-ja="トップ">Top</a>
 <a class="i18n" href="#work" data-en="Works" data-ja="作品">Works</a>
-<a class="i18n" href="#skills" data-en="Skills" data-ja="スキル">Skills</a>
-<a class="i18n" href="#about" data-en="About" data-ja="私について">About</a>
+<div class="nav-dd small"><button type="button" class="nav-dd-btn i18n" aria-haspopup="true" aria-expanded="false" data-target="#skill-bars" data-en="Skills" data-ja="スキル">Skills</button><div class="nav-dd-panel" role="menu"><a class="i18n" role="menuitem" href="#skill-bars" data-en="Skill bars" data-ja="スキルバー">Skill bars</a><a class="i18n" role="menuitem" href="#skills" data-en="Skills in detail" data-ja="スキルの詳細">Skills in detail</a></div></div>
+<div class="nav-dd"><button type="button" class="nav-dd-btn i18n" aria-haspopup="true" aria-expanded="false" data-target="#about" data-en="About" data-ja="私について">About</button><div class="nav-dd-panel" role="menu"><a class="i18n" role="menuitem" href="about.html" data-en="Overview" data-ja="概要">Overview</a><a class="i18n" role="menuitem" href="about.html#origins" data-en="Origins" data-ja="ルーツ">Origins</a><a class="i18n" role="menuitem" href="about.html#background" data-en="Background" data-ja="これまでの歩み">Background</a><a class="i18n" role="menuitem" href="about.html#craft" data-en="Craft" data-ja="制作スタイル">Craft</a><a class="i18n" role="menuitem" href="about.html#social" data-en="Music, Instagram &amp; YouTube" data-ja="音楽・Instagram・YouTube">Music, Instagram &amp; YouTube</a><a class="i18n" role="menuitem" href="about.html#japanese" data-en="Learning Japanese" data-ja="日本語学習">Learning Japanese</a><a class="i18n" role="menuitem" href="about.html#now" data-en="Now at TECH.C." data-ja="現在のTECH.C.">Now at TECH.C.</a><a class="i18n" role="menuitem" href="about.html#games" data-en="Games" data-ja="ゲーム">Games</a><a class="i18n" role="menuitem" href="about.html#dleague" data-en="D.LEAGUE" data-ja="D.LEAGUE">D.LEAGUE</a><a class="i18n" role="menuitem" href="about.html#perspective" data-en="Perspective" data-ja="考え方">Perspective</a><a class="i18n" role="menuitem" href="about.html#next" data-en="Next" data-ja="これから">Next</a></div></div>
 <a class="i18n" href="#contact" data-en="Contact" data-ja="お問い合わせ">Contact</a>
 </div>
 <button type="button" id="langToggle" class="lang-toggle" aria-label="Switch language">日本語</button>
@@ -469,13 +490,14 @@ html{scroll-behavior:auto}
 <div class="hero-content">
 <div class="eyebrow i18n" data-en="Technical Artist / Game Programmer" data-ja="テクニカルアーティスト / ゲームプログラマー">Technical Artist / Game Programmer</div>
 <h1 class="i18n" data-en="Luca&lt;br&gt;Helgert" data-ja="ヘルゲルト&lt;br&gt;ルカ">Luca<br>Helgert</h1>
-<div class="hero-badge i18n" data-en="1st place out of 7 teams · Corporate collaboration project" data-ja="企業連携プロジェクト · 7チーム中 1位">1st place out of 7 teams · Corporate collaboration project</div>
-<p class="hero-description i18n" data-en="Technical artist and game programming student at TECH.C., graduating in 2028. I build games from concept to playable experience, with a focus on how they look and feel: 3D art, shaders, lighting and procedural worlds in Unity and Unreal Engine." data-ja="TECH.C.でゲームプログラミングを学ぶテクニカルアーティスト。2028年卒業予定。コンセプトから遊べる体験まで、3Dアート、シェーダー、ライティング、プロシージャルなワールドなど、ゲームの見た目と手触りにこだわって、UnityとUnreal Engineで制作しています。">Technical artist and game programming student at TECH.C., graduating in 2028. I build games from concept to playable experience, with a focus on how they look and feel: 3D art, shaders, lighting and procedural worlds in Unity and Unreal Engine.</p>
+<p class="hero-description i18n" data-en="Hello, I'm Luca Helgert, a game programming student at TECH.C., graduating in 2028. I build games from concept to playable experience, with a focus on how they look and feel. I speak Japanese, English and German." data-ja="はじめまして。ヘルゲルト・ルカと申します。現在、東京デザインテクノロジーセンター専門学校でゲームプログラミングを学んでおり、2028年に卒業予定です。コンセプトから遊べる体験まで、ゲームの見た目と手触りにこだわって制作しています。日本語、英語、ドイツ語が話せます。">Hello, I'm Luca Helgert, a game programming student at TECH.C., graduating in 2028. I build games from concept to playable experience, with a focus on how they look and feel. I speak Japanese, English and German.</p>
 <dl class="hero-facts">
-<div class="fact"><dt class="i18n" data-en="Social media" data-ja="SNS">Social media</dt><dd class="i18n" data-en="19k followers&lt;span class=&quot;fact-sub&quot;&gt;4M+ views on one video&lt;/span&gt;" data-ja="フォロワー1.9万人&lt;span class=&quot;fact-sub&quot;&gt;最大400万回再生&lt;/span&gt;">19k followers<span class="fact-sub">4M+ views on one video</span></dd></div>
-<div class="fact"><dt class="i18n" data-en="Japanese" data-ja="日本語">Japanese</dt><dd class="i18n" data-en="JLPT N2&lt;span class=&quot;fact-sub&quot;&gt;Completed 2025&lt;/span&gt;" data-ja="JLPT N2&lt;span class=&quot;fact-sub&quot;&gt;2025年修了&lt;/span&gt;">JLPT N2<span class="fact-sub">Completed 2025</span></dd></div>
-<div class="fact"><dt class="i18n" data-en="Lives in" data-ja="居住地">Lives in</dt><dd class="i18n" data-en="Tokyo, Japan&lt;span class=&quot;fact-sub&quot;&gt;Since 2023&lt;/span&gt;" data-ja="東京、日本&lt;span class=&quot;fact-sub&quot;&gt;2023年から&lt;/span&gt;">Tokyo, Japan<span class="fact-sub">Since 2023</span></dd></div>
-<div class="fact"><dt class="i18n" data-en="Born in" data-ja="出身国">Born in</dt><dd class="i18n" data-en="Germany&lt;span class=&quot;fact-sub&quot;&gt;Weiden, Bayern&lt;/span&gt;" data-ja="ドイツ&lt;span class=&quot;fact-sub&quot;&gt;バイエルン州ヴァイデン&lt;/span&gt;">Germany<span class="fact-sub">Weiden, Bayern</span></dd></div>
+<div class="fact f-name"><dt class="i18n" data-en="Nickname" data-ja="ニックネーム">Nickname</dt><dd class="i18n" data-en="Luca" data-ja="るか">Luca</dd></div>
+<div class="fact f-age"><dt class="i18n" data-en="Age" data-ja="年齢">Age</dt><dd class="i18n" data-en="28" data-ja="28歳">28</dd></div>
+<div class="fact f-lives"><dt class="i18n" data-en="Lives in" data-ja="住所">Lives in</dt><dd class="i18n" data-en="Tokyo" data-ja="東京都">Tokyo</dd></div>
+<div class="fact f-born"><dt class="i18n" data-en="Born in" data-ja="出身地">Born in</dt><dd class="i18n" data-en="Germany" data-ja="ドイツ">Germany</dd></div>
+<div class="fact f-sns"><dt class="i18n" data-en="SNS" data-ja="SNS">SNS</dt><dd class="i18n" data-en="19k total" data-ja="合計1.9万人">19k total</dd></div>
+<div class="fact f-award"><dt class="i18n" data-en="Corporate project" data-ja="企業連携プロジェクト">Corporate project</dt><dd class="i18n" data-en="1st of 7 teams" data-ja="7チーム中1位">1st of 7 teams</dd></div>
 </dl>
 </div>
 <div class="hero-image"><img fetchpriority="high" decoding="async" src="profile.jpg" alt="Luca Helgert"></div>
@@ -494,7 +516,7 @@ html{scroll-behavior:auto}
 <!-- TEAM PROJECTS -->
 <div class="project-panel active" id="team-projects">
 <div class="team-feature-list">
-<article class="team-feature"><div class="team-head"><h3 class="team-feature-title i18n" data-en="Guilty Lane" data-ja="ギルティ・レーン">Guilty Lane</h3><div class="team-badges"><span class="team-badge i18n" data-en="Best work 2025-2026 across all years" data-ja="2025〜2026年度 最優秀作品（全学年）">Best work 2025-2026 across all years</span></div><div class="team-actions"><a class="text-link" href="https://github.com/lucanicohe/Hackason4-GuiltyLane" target="_blank" rel="noopener"><span class="i18n" data-en="View code on GitHub" data-ja="GitHubでコードを見る">View code on GitHub</span></a><a class="text-link" href="https://lucahelgert.itch.io/guilty-lane-ver2" target="_blank" rel="noopener"><span class="i18n" data-en="Download" data-ja="ダウンロード">Download</span></a></div></div><div class="team-body"><div class="team-video"><video data-src="guiltylane.mp4#t=0.1" poster="guiltylane-poster.jpg" muted loop playsinline preload="none" aria-label="Guilty Lane gameplay video"></video></div><div class="team-shot"><img decoding="async" src="guilty1.jpg" alt="Guilty Lane" loading="lazy"></div><div class="team-shot"><img decoding="async" src="guilty2.jpg" alt="Guilty Lane" loading="lazy"></div><div class="team-card"><div class="team-card-label i18n" data-en="My role" data-ja="自分の役割">My role</div><h4 class="team-card-title i18n" data-en="Programmer +&lt;br&gt;Technical artist" data-ja="プログラマー +&lt;br&gt;テクニカルアーティスト">Programmer +<br>Technical artist</h4><div class="team-card-meta i18n" data-en="Team of 5 · 3 months" data-ja="5人チーム · 3か月">Team of 5 · 3 months</div><p class="team-card-text i18n" data-en="A first-person train game that was selected as the best work of 2025-2026 across all game programming courses, from 1st to 4th year. A trolley problem turned into a game: you decide who to kill, left or right. I worked on programming, art, and music." data-ja="一人称視点の電車ゲームで、ゲームプログラミング専攻の全学年（1〜4年生）の作品の中から、2025〜2026年度の最優秀作品に選ばれました。トロッコ問題をゲームにしたもので、左右どちらを犠牲にするかを選びます。プログラミング、アート、音楽を担当しました。">A first-person train game that was selected as the best work of 2025-2026 across all game programming courses, from 1st to 4th year. A trolley problem turned into a game: you decide who to kill, left or right. I worked on programming, art, and music.</p></div><div class="team-card"><div class="team-card-label i18n" data-en="My own contributions to this project" data-ja="このプロジェクトでの自分の貢献">My own contributions to this project</div>
+<article class="team-feature"><div class="team-head"><h3 class="team-feature-title i18n" data-en="Guilty Lane" data-ja="ギルティ・レーン">Guilty Lane</h3><div class="team-badges"><span class="team-badge i18n" data-en="Best work 2025-2026 across all years" data-ja="2025〜2026年度 最優秀作品（全学年）">Best work 2025-2026 across all years</span></div><div class="team-actions"><a class="text-link" href="https://github.com/lucanicohe/Hackason4-GuiltyLane" target="_blank" rel="noopener"><span class="i18n" data-en="View code on GitHub" data-ja="GitHubでコードを見る">View code on GitHub</span></a><a class="text-link" href="https://lucahelgert.itch.io/guilty-lane-ver2" target="_blank" rel="noopener"><span class="i18n" data-en="Download" data-ja="ダウンロード">Download</span></a></div></div><div class="team-body"><div class="team-video"><video data-src="guiltylane.mp4#t=0.1" poster="guiltylane-poster.jpg" muted loop playsinline preload="none" aria-label="Guilty Lane gameplay video"></video></div><div class="team-shot"><img decoding="async" src="guilty1.jpg" alt="Guilty Lane" loading="lazy"></div><div class="team-shot"><img decoding="async" src="guilty2.jpg" alt="Guilty Lane" loading="lazy"></div><div class="team-card"><div class="team-card-label i18n" data-en="My role" data-ja="自分の役割">My role</div><h4 class="team-card-title i18n" data-en="Programmer +&lt;br&gt;Technical artist" data-ja="プログラマー +&lt;br&gt;テクニカルアーティスト">Programmer +<br>Technical artist</h4><div class="team-card-meta i18n" data-en="Team of 5 · 6 months" data-ja="5人チーム · 6か月">Team of 5 · 6 months</div><p class="team-card-text i18n" data-en="A first-person train game that was selected as the best work of 2025-2026 across all game programming courses, from 1st to 4th year. A trolley problem turned into a game: you decide who to kill, left or right. I worked on programming, art, and music." data-ja="一人称視点の電車ゲームで、ゲームプログラミング専攻の全学年（1〜4年生）の作品の中から、2025〜2026年度の最優秀作品に選ばれました。トロッコ問題をゲームにしたもので、左右どちらを犠牲にするかを選びます。プログラミング、アート、音楽を担当しました。">A first-person train game that was selected as the best work of 2025-2026 across all game programming courses, from 1st to 4th year. A trolley problem turned into a game: you decide who to kill, left or right. I worked on programming, art, and music.</p></div><div class="team-card"><div class="team-card-label i18n" data-en="My own contributions to this project" data-ja="このプロジェクトでの自分の貢献">My own contributions to this project</div>
 <div class="tool-row"><span class="tool-tag strong">Unity</span><span class="team-chip i18n" data-en="UI" data-ja="UI">UI</span><span class="team-chip i18n" data-en="Visual effects" data-ja="ビジュアルエフェクト">Visual effects</span><span class="team-chip i18n" data-en="Lighting" data-ja="ライティング">Lighting</span><span class="team-chip i18n" data-en="Post process" data-ja="ポストプロセス">Post process</span></div>
 <div class="tool-row"><span class="tool-tag strong">C#</span><span class="team-chip i18n" data-en="Train controller" data-ja="電車のコントローラー">Train controller</span><span class="team-chip i18n" data-en="Track spawn system" data-ja="線路の生成システム">Track spawn system</span></div>
 <div class="tool-row"><span class="tool-tag strong">Blender</span><span class="team-chip i18n" data-en="Train 3D model" data-ja="電車の3Dモデル">Train 3D model</span><span class="team-chip i18n" data-en="Plants" data-ja="植物">Plants</span></div>
@@ -508,7 +530,7 @@ html{scroll-behavior:auto}
 <div class="tool-row"><span class="tool-tag strong">World Machine</span><span class="team-chip i18n" data-en="Mongolia map terrain" data-ja="モンゴルのマップ地形">Mongolia map terrain</span><span class="team-chip i18n" data-en="Map texture" data-ja="マップのテクスチャ">Map texture</span><span class="team-chip i18n" data-en="Clouds" data-ja="雲">Clouds</span></div>
 <div class="tool-row"><span class="tool-tag strong">Photoshop</span><span class="team-chip i18n" data-en="Mongolian tent texture" data-ja="ゲルのテクスチャ">Mongolian tent texture</span><span class="team-chip i18n" data-en="Ring texture" data-ja="リングのテクスチャ">Ring texture</span></div></div><div class="team-card"><div class="team-card-label i18n" data-en="Difficulties" data-ja="難しかったこと">Difficulties</div><ul class="team-list"><li class="i18n" data-en="Working together with no clearly assigned roles" data-ja="役割が明確に決まっていない中で協力して作業すること">Working together with no clearly assigned roles</li><li class="i18n" data-en="Roles overlapped at first, so I moved to technical artist and excelled there" data-ja="当初は役割が重複していたため、テクニカルアーティストに転向し、力を発揮しました">Roles overlapped at first, so I moved to technical artist and excelled there</li></ul><div class="ai-usage"><div class="ai-meter l0"><span class="ai-bars"><i></i><i></i><i></i><i></i></span><span class="ai-value i18n" data-en="No AI used" data-ja="AI不使用">No AI used</span></div><p class="ai-note i18n" data-en="All 3D models, textures and visual effects were made by myself, without any AI." data-ja="3Dモデル、テクスチャ、ビジュアルエフェクトはすべて自分で制作し、AIは使っていません。">All 3D models, textures and visual effects were made by myself, without any AI.</p></div></div></div></article>
 
-<article class="team-feature"><div class="team-head"><h3 class="team-feature-title i18n" data-en="Lots of Big Ones" data-ja="デカめの一杯">Lots of Big Ones</h3><div class="team-badges"><span class="team-badge i18n" data-en="School tournament winner" data-ja="学内大会 優勝">School tournament winner</span></div><div class="team-actions"><a class="text-link" href="https://lucahelgert.itch.io/dekameippai" target="_blank" rel="noopener"><span class="i18n" data-en="Play" data-ja="プレイ">Play</span></a></div></div><div class="team-body"><div class="team-video"><video data-src="dekamenoippai.mp4#t=0.1" poster="dekamenoippai-poster.jpg" muted loop playsinline preload="none" aria-label="Lots of Big Ones gameplay video"></video></div><div class="team-shot"><img decoding="async" src="dekame1.jpg" alt="Lots of Big Ones" loading="lazy"></div><div class="team-shot"><img decoding="async" src="dekame2.jpg" alt="Lots of Big Ones" loading="lazy"></div><div class="team-card"><div class="team-card-label i18n" data-en="My role" data-ja="自分の役割">My role</div><h4 class="team-card-title i18n" data-en="Programmer +&lt;br&gt;Technical artist" data-ja="プログラマー +&lt;br&gt;テクニカルアーティスト">Programmer +<br>Technical artist</h4><div class="team-card-meta i18n" data-en="Team of 5 · 2 months" data-ja="5人チーム · 2か月">Team of 5 · 2 months</div><p class="team-card-text i18n" data-en="A fishing simulator that won a tournament at our school. I wrote the fish behavior scripts and made the art, sound, and lighting. This was one of my first projects ever, made in my 1st year." data-ja="学内の大会で優勝した釣りシミュレーターです。魚の動きのスクリプトを書き、アート、サウンド、ライティングも作りました。1年生のときに作った、初めてのプロジェクトのひとつです。">A fishing simulator that won a tournament at our school. I wrote the fish behavior scripts and made the art, sound, and lighting. This was one of my first projects ever, made in my 1st year.</p></div><div class="team-card"><div class="team-card-label i18n" data-en="My own contributions to this project" data-ja="このプロジェクトでの自分の貢献">My own contributions to this project</div>
+<article class="team-feature"><div class="team-head"><h3 class="team-feature-title i18n" data-en="Lots of Big Ones" data-ja="デカめの一杯">Lots of Big Ones</h3><div class="team-badges"><span class="team-badge i18n" data-en="Hackathon winner" data-ja="ハッカソン優勝">Hackathon winner</span></div><div class="team-actions"><a class="text-link" href="https://lucahelgert.itch.io/dekameippai" target="_blank" rel="noopener"><span class="i18n" data-en="Play" data-ja="プレイ">Play</span></a></div></div><div class="team-body"><div class="team-video"><video data-src="dekamenoippai.mp4#t=0.1" poster="dekamenoippai-poster.jpg" muted loop playsinline preload="none" aria-label="Lots of Big Ones gameplay video"></video></div><div class="team-shot"><img decoding="async" src="dekame1.jpg" alt="Lots of Big Ones" loading="lazy"></div><div class="team-shot"><img decoding="async" src="dekame2.jpg" alt="Lots of Big Ones" loading="lazy"></div><div class="team-card"><div class="team-card-label i18n" data-en="My role" data-ja="自分の役割">My role</div><h4 class="team-card-title i18n" data-en="Programmer +&lt;br&gt;Technical artist" data-ja="プログラマー +&lt;br&gt;テクニカルアーティスト">Programmer +<br>Technical artist</h4><div class="team-card-meta i18n" data-en="Team of 5 · 2 months" data-ja="5人チーム · 2か月">Team of 5 · 2 months</div><p class="team-card-text i18n" data-en="A fishing simulator that won the hackathon at our school. I wrote the fish behavior scripts and made the art, sound, and lighting. This was one of my first projects ever, made in my 1st year." data-ja="学内のハッカソンで優勝した釣りシミュレーターです。魚の動きのスクリプトを書き、アート、サウンド、ライティングも作りました。1年生のときに作った、初めてのプロジェクトのひとつです。">A fishing simulator that won the hackathon at our school. I wrote the fish behavior scripts and made the art, sound, and lighting. This was one of my first projects ever, made in my 1st year.</p></div><div class="team-card"><div class="team-card-label i18n" data-en="My own contributions to this project" data-ja="このプロジェクトでの自分の貢献">My own contributions to this project</div>
 <div class="tool-row"><span class="tool-tag strong">Unity</span><span class="team-chip i18n" data-en="Lighting" data-ja="ライティング">Lighting</span><span class="team-chip i18n" data-en="Music" data-ja="音楽">Music</span><span class="team-chip i18n" data-en="Sound effects" data-ja="効果音">Sound effects</span></div>
 <div class="tool-row"><span class="tool-tag strong">C#</span><span class="team-chip i18n" data-en="Fish behavior scripts" data-ja="魚の動きのスクリプト">Fish behavior scripts</span><span class="team-chip i18n" data-en="Spawn and catch system" data-ja="出現・釣りシステム">Spawn and catch system</span></div>
 <div class="tool-row"><span class="tool-tag strong">Blender</span><span class="team-chip i18n" data-en="Boat 3D model" data-ja="ボートの3Dモデル">Boat 3D model</span></div>
@@ -517,7 +539,7 @@ html{scroll-behavior:auto}
 <div class="see-more-wrap" id="seeMoreTeamWrap"><button class="see-more" id="seeMoreTeamButton" type="button">See more</button></div>
 <div class="team-extra" id="extraTeam">
 
-<article class="team-feature"><div class="team-head"><h3 class="team-feature-title i18n" data-en="Squid to the Max" data-ja="イカイカす">Squid to the Max</h3><div class="team-badges"><span class="team-badge i18n" data-en="Praised by teachers for its visual design" data-ja="ビジュアルデザインが先生方から高評価">Praised by teachers for its visual design</span></div></div><div class="team-body"><div class="team-video"><video data-src="ikaikasu.mp4#t=0.1" poster="ikaikasu-poster.jpg" muted loop playsinline preload="none" aria-label="Squid to the Max gameplay video"></video></div><div class="team-shot"><img decoding="async" src="ikaikasu1.jpg" alt="Squid to the Max" loading="lazy"></div><div class="team-shot"><img decoding="async" src="ikaikasu2.jpg" alt="Squid to the Max" loading="lazy"></div><div class="team-card"><div class="team-card-label i18n" data-en="My role" data-ja="自分の役割">My role</div><h4 class="team-card-title i18n" data-en="Technical artist" data-ja="テクニカルアーティスト">Technical artist</h4><div class="team-card-meta i18n" data-en="Team of 5 · 2 months" data-ja="5人チーム · 2か月">Team of 5 · 2 months</div><p class="team-card-text i18n" data-en="An underwater squid simulator. As the technical artist, I built the water environment in Unity to look realistic with shaders, refraction and lighting, and I did the 3D modeling and textures." data-ja="水中のイカシミュレーターです。テクニカルアーティストとして、シェーダー、屈折、ライティングを使い、Unityで水の環境をリアルに見えるように作り込み、3Dモデリングとテクスチャも担当しました。">An underwater squid simulator. As the technical artist, I built the water environment in Unity to look realistic with shaders, refraction and lighting, and I did the 3D modeling and textures.</p></div><div class="team-card"><div class="team-card-label i18n" data-en="My own contributions to this project" data-ja="このプロジェクトでの自分の貢献">My own contributions to this project</div>
+<article class="team-feature"><div class="team-head"><h3 class="team-feature-title i18n" data-en="Squid to the Max" data-ja="イカイカす">Squid to the Max</h3><div class="team-badges"><span class="team-badge i18n" data-en="Praised by teachers for its visual design" data-ja="ビジュアルデザインが先生方から高評価">Praised by teachers for its visual design</span></div></div><div class="team-body"><div class="team-video"><video data-src="ikaikasu.mp4#t=0.1" poster="ikaikasu-poster.jpg" muted loop playsinline preload="none" aria-label="Squid to the Max gameplay video"></video></div><div class="team-shot"><img decoding="async" src="ikaikasu1.jpg" alt="Squid to the Max" loading="lazy"></div><div class="team-shot"><img decoding="async" src="ikaikasu2.jpg" alt="Squid to the Max" loading="lazy"></div><div class="team-card"><div class="team-card-label i18n" data-en="My role" data-ja="自分の役割">My role</div><h4 class="team-card-title i18n" data-en="Technical artist" data-ja="テクニカルアーティスト">Technical artist</h4><div class="team-card-meta i18n" data-en="Team of 5 · 2 months · Hackathon" data-ja="5人チーム · 2か月 · ハッカソン">Team of 5 · 2 months · Hackathon</div><p class="team-card-text i18n" data-en="An underwater squid simulator. As the technical artist, I built the water environment in Unity to look realistic with shaders, refraction and lighting, and I did the 3D modeling and textures." data-ja="水中のイカシミュレーターです。テクニカルアーティストとして、シェーダー、屈折、ライティングを使い、Unityで水の環境をリアルに見えるように作り込み、3Dモデリングとテクスチャも担当しました。">An underwater squid simulator. As the technical artist, I built the water environment in Unity to look realistic with shaders, refraction and lighting, and I did the 3D modeling and textures.</p></div><div class="team-card"><div class="team-card-label i18n" data-en="My own contributions to this project" data-ja="このプロジェクトでの自分の貢献">My own contributions to this project</div>
 <div class="tool-row"><span class="tool-tag strong">Unity</span><span class="team-chip i18n" data-en="Lighting" data-ja="ライティング">Lighting</span><span class="team-chip i18n" data-en="Post process" data-ja="ポストプロセス">Post process</span></div>
 <div class="tool-row"><span class="tool-tag strong">Shader Graph</span><span class="team-chip i18n" data-en="Shaders" data-ja="シェーダー">Shaders</span><span class="team-chip i18n" data-en="Water refraction + distortion" data-ja="水の屈折と歪み">Water refraction + distortion</span></div>
 <div class="tool-row"><span class="tool-tag strong">Blender</span><span class="team-chip i18n" data-en="Squid model" data-ja="イカのモデル">Squid model</span><span class="team-chip i18n" data-en="Environment models" data-ja="環境モデル">Environment models</span></div>
@@ -535,12 +557,12 @@ html{scroll-behavior:auto}
 <div class="tool-row"><span class="tool-tag i18n" data-en="Leadership" data-ja="リーダーシップ">Leadership</span><span class="team-chip i18n" data-en="Led a team of 5" data-ja="5人チームのリーダー">Led a team of 5</span><span class="team-chip i18n" data-en="Planning and coordination" data-ja="計画とチーム調整">Planning and coordination</span></div>
 <div class="tool-row"><span class="tool-tag strong">Logic Pro X</span><span class="team-chip i18n" data-en="Music" data-ja="音楽">Music</span></div></div><div class="team-card"><div class="team-card-label i18n" data-en="Difficulties" data-ja="難しかったこと">Difficulties</div><ul class="team-list"><li class="i18n" data-en="Leading the team and making sure everyone does their part, doesn't slack, and doesn't work on the wrong thing" data-ja="チームを率いて、全員が自分の役割を果たし、サボらず、間違った作業をしないようにすること">Leading the team and making sure everyone does their part, doesn't slack, and doesn't work on the wrong thing</li><li class="i18n" data-en="Finishing everything in time before the deadline" data-ja="締め切りまでにすべてを間に合わせること">Finishing everything in time before the deadline</li></ul><div class="ai-usage"><div class="ai-meter l2"><span class="ai-bars"><i></i><i></i><i></i><i></i></span><span class="ai-value i18n" data-en="AI usage" data-ja="AI活用">AI usage</span></div><p class="ai-note i18n" data-en="Music, 3D models and textures are all handmade. AI was used for code to reach the deadline." data-ja="音楽、3Dモデル、テクスチャはすべて自作です。AIは、締め切りに間に合わせるためのコードに使いました。">Music, 3D models and textures are all handmade. AI was used for code to reach the deadline.</p></div></div></div></article>
 
-<article class="team-feature"><div class="team-head"><h3 class="team-feature-title i18n" data-en="Bouzou Cart" data-ja="ボウゾウ・カート">Bouzou Cart</h3><div class="team-actions"><a class="text-link" href="https://lucahelgert.itch.io/bousou-cart" target="_blank" rel="noopener"><span class="i18n" data-en="Play" data-ja="プレイ">Play</span></a></div></div><div class="team-body"><div class="team-video"><video data-src="bouzocart.mp4#t=0.1" poster="bouzocart-poster.jpg" muted loop playsinline preload="none" aria-label="Bouzou Cart gameplay video"></video></div><div class="team-shot"><img decoding="async" src="bouzocart1.jpg" alt="Bouzou Cart" loading="lazy"></div><div class="team-shot"><img decoding="async" src="bouzocart2.jpg" alt="Bouzou Cart" loading="lazy"></div><div class="team-card"><div class="team-card-label i18n" data-en="My role" data-ja="自分の役割">My role</div><h4 class="team-card-title i18n" data-en="Technical artist" data-ja="テクニカルアーティスト">Technical artist</h4><div class="team-card-meta i18n" data-en="Team of 4 · 2 months" data-ja="4人チーム · 2か月">Team of 4 · 2 months</div><p class="team-card-text i18n" data-en="A game inspired by 90s video games. As the technical artist, I designed the overall look and made everything feel like an old-school 90s game." data-ja="90年代のビデオゲームに影響を受けて作ったゲームです。テクニカルアーティストとして全体のビジュアルを設計し、すべてが90年代のオールドスクールなゲームらしく感じられるように仕上げました。">A game inspired by 90s video games. As the technical artist, I designed the overall look and made everything feel like an old-school 90s game.</p></div><div class="team-card"><div class="team-card-label i18n" data-en="My own contributions to this project" data-ja="このプロジェクトでの自分の貢献">My own contributions to this project</div>
+<article class="team-feature"><div class="team-head"><h3 class="team-feature-title i18n" data-en="Bouzou Cart" data-ja="ボウゾウ・カート">Bouzou Cart</h3><div class="team-actions"><a class="text-link" href="https://lucahelgert.itch.io/bousou-cart" target="_blank" rel="noopener"><span class="i18n" data-en="Play" data-ja="プレイ">Play</span></a></div></div><div class="team-body"><div class="team-video"><video data-src="bouzocart.mp4#t=0.1" poster="bouzocart-poster.jpg" muted loop playsinline preload="none" aria-label="Bouzou Cart gameplay video"></video></div><div class="team-shot"><img decoding="async" src="bouzocart1.jpg" alt="Bouzou Cart" loading="lazy"></div><div class="team-shot"><img decoding="async" src="bouzocart2.jpg" alt="Bouzou Cart" loading="lazy"></div><div class="team-card"><div class="team-card-label i18n" data-en="My role" data-ja="自分の役割">My role</div><h4 class="team-card-title i18n" data-en="Technical artist" data-ja="テクニカルアーティスト">Technical artist</h4><div class="team-card-meta i18n" data-en="Team of 4 · 2 months · Hackathon" data-ja="4人チーム · 2か月 · ハッカソン">Team of 4 · 2 months · Hackathon</div><p class="team-card-text i18n" data-en="A game inspired by 90s video games. As the technical artist, I designed the overall look and made everything feel like an old-school 90s game." data-ja="90年代のビデオゲームに影響を受けて作ったゲームです。テクニカルアーティストとして全体のビジュアルを設計し、すべてが90年代のオールドスクールなゲームらしく感じられるように仕上げました。">A game inspired by 90s video games. As the technical artist, I designed the overall look and made everything feel like an old-school 90s game.</p></div><div class="team-card"><div class="team-card-label i18n" data-en="My own contributions to this project" data-ja="このプロジェクトでの自分の貢献">My own contributions to this project</div>
 <div class="tool-row"><span class="tool-tag strong">Unity</span><span class="team-chip i18n" data-en="Low-res render texture" data-ja="低解像度レンダーテクスチャ">Low-res render texture</span><span class="team-chip i18n" data-en="Retro shaders" data-ja="レトロ風シェーダー">Retro shaders</span><span class="team-chip i18n" data-en="Environment map" data-ja="環境マップ">Environment map</span></div>
 <div class="tool-row"><span class="tool-tag strong">Blender</span><span class="team-chip i18n" data-en="Low-poly models" data-ja="ローポリモデル">Low-poly models</span></div>
 <div class="tool-row"><span class="tool-tag strong">World Machine</span><span class="team-chip i18n" data-en="Map" data-ja="マップ">Map</span></div></div><div class="team-card"><div class="team-card-label i18n" data-en="Difficulties" data-ja="難しかったこと">Difficulties</div><ul class="team-list"><li class="i18n" data-en="My first try was a pixel style with a pixel shader, like in Kumo vs. Mahou, but it did not work" data-ja="最初は「クモ vs. マホウ」のようにピクセルシェーダーでピクセル風にしようとしましたが、うまくいきませんでした">My first try was a pixel style with a pixel shader, like in Kumo vs. Mahou, but it did not work</li><li class="i18n" data-en="I switched to a low-resolution render texture, like real old-school games" data-ja="そこで、本物のオールドスクールゲームのように、低解像度のレンダーテクスチャに切り替えました">I switched to a low-resolution render texture, like real old-school games</li></ul><div class="ai-usage"><div class="ai-meter l0"><span class="ai-bars"><i></i><i></i><i></i><i></i></span><span class="ai-value i18n" data-en="No AI used" data-ja="AI不使用">No AI used</span></div><p class="ai-note i18n" data-en="The whole retro look, from the low-res render texture to the shaders, was built by hand in Unity without AI." data-ja="低解像度レンダーテクスチャからシェーダーまで、レトロな見た目のすべてをUnityで手作業で作り、AIは使っていません。">The whole retro look, from the low-res render texture to the shaders, was built by hand in Unity without AI.</p></div></div></div></article>
 
-<article class="team-feature"><div class="team-head"><h3 class="team-feature-title i18n" data-en="Mystery Box" data-ja="ミステリーボックス">Mystery Box</h3><div class="team-actions"><a class="text-link" href="https://github.com/NathanAung/MysteryBox" target="_blank" rel="noopener"><span class="i18n" data-en="View code on GitHub" data-ja="GitHubでコードを見る">View code on GitHub</span></a></div></div><div class="team-body"><div class="team-video"><video data-src="mysterybox.mp4#t=0.1" poster="mysterybox-poster.jpg" muted loop playsinline preload="none" aria-label="Mystery Box gameplay video"></video></div><div class="team-shot"><img decoding="async" src="mysterybox1.jpg" alt="Mystery Box" loading="lazy"></div><div class="team-shot"><img decoding="async" src="mysterybox2.jpg" alt="Mystery Box" loading="lazy"></div><div class="team-card"><div class="team-card-label i18n" data-en="My role" data-ja="自分の役割">My role</div><h4 class="team-card-title i18n" data-en="Programmer +&lt;br&gt;Technical artist" data-ja="プログラマー +&lt;br&gt;テクニカルアーティスト">Programmer +<br>Technical artist</h4><div class="team-card-meta i18n" data-en="Team of 5 · 2 months" data-ja="5人チーム · 2か月">Team of 5 · 2 months</div><p class="team-card-text i18n" data-en="My first Unreal Engine team project. I made the environment feel like Tron, building the Blueprints, materials and overall design." data-ja="初めてのUnreal Engineチームプロジェクトです。環境をTron風の雰囲気に仕上げ、Blueprint、マテリアル、全体のデザインを担当しました。">My first Unreal Engine team project. I made the environment feel like Tron, building the Blueprints, materials and overall design.</p></div><div class="team-card"><div class="team-card-label i18n" data-en="My own contributions to this project" data-ja="このプロジェクトでの自分の貢献">My own contributions to this project</div>
+<article class="team-feature"><div class="team-head"><h3 class="team-feature-title i18n" data-en="Mystery Box" data-ja="ミステリーボックス">Mystery Box</h3><div class="team-actions"><a class="text-link" href="https://github.com/NathanAung/MysteryBox" target="_blank" rel="noopener"><span class="i18n" data-en="View code on GitHub" data-ja="GitHubでコードを見る">View code on GitHub</span></a></div></div><div class="team-body"><div class="team-video"><video data-src="mysterybox.mp4#t=0.1" poster="mysterybox-poster.jpg" muted loop playsinline preload="none" aria-label="Mystery Box gameplay video"></video></div><div class="team-shot"><img decoding="async" src="mysterybox1.jpg" alt="Mystery Box" loading="lazy"></div><div class="team-shot"><img decoding="async" src="mysterybox2.jpg" alt="Mystery Box" loading="lazy"></div><div class="team-card"><div class="team-card-label i18n" data-en="My role" data-ja="自分の役割">My role</div><h4 class="team-card-title i18n" data-en="Programmer +&lt;br&gt;Technical artist" data-ja="プログラマー +&lt;br&gt;テクニカルアーティスト">Programmer +<br>Technical artist</h4><div class="team-card-meta i18n" data-en="Team of 5 · 2 months · Hackathon" data-ja="5人チーム · 2か月 · ハッカソン">Team of 5 · 2 months · Hackathon</div><p class="team-card-text i18n" data-en="My first Unreal Engine team project. I made the environment feel like Tron, building the Blueprints, materials and overall design." data-ja="初めてのUnreal Engineチームプロジェクトです。環境をTron風の雰囲気に仕上げ、Blueprint、マテリアル、全体のデザインを担当しました。">My first Unreal Engine team project. I made the environment feel like Tron, building the Blueprints, materials and overall design.</p></div><div class="team-card"><div class="team-card-label i18n" data-en="My own contributions to this project" data-ja="このプロジェクトでの自分の貢献">My own contributions to this project</div>
 <div class="tool-row"><span class="tool-tag strong">Unreal Engine</span><span class="team-chip i18n" data-en="Blueprint gameplay" data-ja="Blueprintのゲームプレイ">Blueprint gameplay</span><span class="team-chip i18n" data-en="Materials" data-ja="マテリアル">Materials</span><span class="team-chip i18n" data-en="Environment" data-ja="環境">Environment</span><span class="team-chip i18n" data-en="Game menu" data-ja="ゲームメニュー">Game menu</span></div>
 <div class="tool-row"><span class="tool-tag strong">Blender</span><span class="team-chip i18n" data-en="3D models" data-ja="3Dモデル">3D models</span></div></div><div class="team-card"><div class="team-card-label i18n" data-en="Difficulties" data-ja="難しかったこと">Difficulties</div><ul class="team-list"><li class="i18n" data-en="Making a game in Unreal Engine for the first time" data-ja="初めてUnreal Engineでゲームを作ること">Making a game in Unreal Engine for the first time</li><li class="i18n" data-en="Getting used to the engine" data-ja="エンジンに慣れること">Getting used to the engine</li></ul><div class="ai-usage"><div class="ai-meter l0"><span class="ai-bars"><i></i><i></i><i></i><i></i></span><span class="ai-value i18n" data-en="No AI used" data-ja="AI不使用">No AI used</span></div><p class="ai-note i18n" data-en="The Blueprints, materials and Tron-style environment were all built by hand, without AI." data-ja="Blueprint、マテリアル、Tron風の環境のすべてを手作業で制作し、AIは使っていません。">The Blueprints, materials and Tron-style environment were all built by hand, without AI.</p></div></div></div></article>
 
@@ -620,15 +642,23 @@ html{scroll-behavior:auto}
 <h2 class="i18n" data-en="Code meets art.&lt;span&gt;Games bring them together.&lt;/span&gt;" data-ja="コードと、アート。&lt;span&gt;それをひとつにするのが、ゲーム。&lt;/span&gt;">Code meets art.<span>Games bring them together.</span></h2>
 <div class="statement-info">
 
-<div class="skills">
+<div class="skills" id="skill-bars">
 <div class="skills-heading i18n" data-en="My Skills" data-ja="スキル">My Skills</div>
 <p class="skills-intro i18n" data-en="I grew up with 3D thanks to my brother, who taught me from a young age. At school I studied Unity and Unreal Engine, and at home I keep improving by learning new programs like World Machine and Blender." data-ja="兄の影響で、子どもの頃から3Dに親しんできました。学校ではUnityとUnreal Engineを学び、家では World Machine や Blender など新しいソフトを学びながら、日々スキルを磨いています。">I grew up with 3D thanks to my brother, who taught me from a young age. At school I studied Unity and Unreal Engine, and at home I keep improving by learning new programs like World Machine and Blender.</p>
-<div class="skill-row"><div class="skill-row-top"><div class="skill-name i18n" data-en="3D" data-ja="3D">3D</div><div class="skill-details i18n" data-en="5 years+" data-ja="5年以上">5 years+</div></div><div class="skill-bar"><div class="skill-bar-fill" style="--pct: 100%;"></div></div></div>
-<div class="skill-row"><div class="skill-row-top"><div class="skill-name i18n" data-en="Unity" data-ja="Unity">Unity</div><div class="skill-details i18n" data-en="3 years" data-ja="3年">3 years</div></div><div class="skill-bar"><div class="skill-bar-fill" style="--pct: 85%;"></div></div></div>
-<div class="skill-row"><div class="skill-row-top"><div class="skill-name i18n" data-en="C#" data-ja="C#">C#</div><div class="skill-details i18n" data-en="3 years" data-ja="3年">3 years</div></div><div class="skill-bar"><div class="skill-bar-fill" style="--pct: 85%;"></div></div></div>
-<div class="skill-row"><div class="skill-row-top"><div class="skill-name i18n" data-en="HTML" data-ja="HTML">HTML</div><div class="skill-details i18n" data-en="2 years" data-ja="2年">2 years</div></div><div class="skill-bar"><div class="skill-bar-fill" style="--pct: 70%;"></div></div></div>
-<div class="skill-row"><div class="skill-row-top"><div class="skill-name i18n" data-en="Unreal Engine" data-ja="Unreal Engine">Unreal Engine</div><div class="skill-details i18n" data-en="1 year" data-ja="1年">1 year</div></div><div class="skill-bar"><div class="skill-bar-fill" style="--pct: 55%;"></div></div></div>
-<div class="skill-row"><div class="skill-row-top"><div class="skill-name i18n" data-en="C++" data-ja="C++">C++</div><div class="skill-details i18n" data-en="1 year" data-ja="1年">1 year</div></div><div class="skill-bar"><div class="skill-bar-fill" style="--pct: 55%;"></div></div></div>
+<div class="skill-row"><div class="skill-row-top"><div class="skill-name i18n" data-en="3D" data-ja="3D">3D</div><div class="skill-details i18n" data-en="&lt;span class=&quot;skill-level&quot;&gt;Advanced&lt;/span&gt;5 years+" data-ja="&lt;span class=&quot;skill-level&quot;&gt;上級&lt;/span&gt;5年以上"><span class="skill-level">Advanced</span>5 years+</div></div><div class="skill-bar"><div class="skill-bar-fill" style="--pct: 100%;"></div></div></div>
+<div class="skill-row"><div class="skill-row-top"><div class="skill-name i18n" data-en="Unity" data-ja="Unity">Unity</div><div class="skill-details i18n" data-en="&lt;span class=&quot;skill-level&quot;&gt;Advanced&lt;/span&gt;3 years" data-ja="&lt;span class=&quot;skill-level&quot;&gt;上級&lt;/span&gt;3年"><span class="skill-level">Advanced</span>3 years</div></div><div class="skill-bar"><div class="skill-bar-fill" style="--pct: 85%;"></div></div></div>
+<div class="skill-row"><div class="skill-row-top"><div class="skill-name i18n" data-en="C#" data-ja="C#">C#</div><div class="skill-details i18n" data-en="&lt;span class=&quot;skill-level&quot;&gt;Advanced&lt;/span&gt;3 years" data-ja="&lt;span class=&quot;skill-level&quot;&gt;上級&lt;/span&gt;3年"><span class="skill-level">Advanced</span>3 years</div></div><div class="skill-bar"><div class="skill-bar-fill" style="--pct: 85%;"></div></div></div>
+<div class="skill-row"><div class="skill-row-top"><div class="skill-name i18n" data-en="HTML" data-ja="HTML">HTML</div><div class="skill-details i18n" data-en="&lt;span class=&quot;skill-level&quot;&gt;Proficient&lt;/span&gt;2 years" data-ja="&lt;span class=&quot;skill-level&quot;&gt;中級&lt;/span&gt;2年"><span class="skill-level">Proficient</span>2 years</div></div><div class="skill-bar"><div class="skill-bar-fill" style="--pct: 70%;"></div></div></div>
+<div class="skill-row"><div class="skill-row-top"><div class="skill-name i18n" data-en="Unreal Engine" data-ja="Unreal Engine">Unreal Engine</div><div class="skill-details i18n" data-en="&lt;span class=&quot;skill-level&quot;&gt;Developing&lt;/span&gt;1 year" data-ja="&lt;span class=&quot;skill-level&quot;&gt;習得中&lt;/span&gt;1年"><span class="skill-level">Developing</span>1 year</div></div><div class="skill-bar"><div class="skill-bar-fill" style="--pct: 55%;"></div></div></div>
+<div class="skill-row"><div class="skill-row-top"><div class="skill-name i18n" data-en="C++" data-ja="C++">C++</div><div class="skill-details i18n" data-en="&lt;span class=&quot;skill-level&quot;&gt;Developing&lt;/span&gt;1 year" data-ja="&lt;span class=&quot;skill-level&quot;&gt;習得中&lt;/span&gt;1年"><span class="skill-level">Developing</span>1 year</div></div><div class="skill-bar"><div class="skill-bar-fill" style="--pct: 55%;"></div></div></div>
+<div class="skill-legend">
+<p class="skill-legend-note i18n" data-en="The bar shows my level. The time shows how long I have used it." data-ja="バーは自己評価のレベル、期間は使ってきた年数です。">The bar shows my level. The time shows how long I have used it.</p>
+<dl class="skill-legend-list">
+<div><dt class="i18n" data-en="Advanced" data-ja="上級">Advanced</dt><dd class="i18n" data-en="Confident, used across many projects." data-ja="自信を持って、多くの制作で使っています。">Confident, used across many projects.</dd></div>
+<div><dt class="i18n" data-en="Proficient" data-ja="中級">Proficient</dt><dd class="i18n" data-en="Comfortable working on my own." data-ja="ひとりで問題なく扱えます。">Comfortable working on my own.</dd></div>
+<div><dt class="i18n" data-en="Developing" data-ja="習得中">Developing</dt><dd class="i18n" data-en="Still learning, already used in projects." data-ja="学習中ですが、制作ではすでに使っています。">Still learning, already used in projects.</dd></div>
+</dl>
+</div>
 </div>
 
 </div>
@@ -734,8 +764,9 @@ html{scroll-behavior:auto}
 <script>
 /* NAVIGATION: border on scroll + highlight the current section */
 const nav = document.getElementById("nav");
-const navLinks = [...document.querySelectorAll('.nav-links a[href^="#"]')];
-const navSections = navLinks.map((a) => a.getAttribute("href") === "#top" ? null : document.querySelector(a.getAttribute("href")));
+const navLinks = [...document.querySelectorAll('.nav-links > a[href^="#"], .nav-links > .nav-dd > .nav-dd-btn')];
+const navTarget = (a) => a.getAttribute("href") || a.dataset.target;
+const navSections = navLinks.map((a) => navTarget(a) === "#top" ? null : document.querySelector(navTarget(a)));
 function updateNav() {
     nav.classList.toggle("scrolled", window.scrollY > 20);
     let active = 0;
@@ -746,6 +777,21 @@ function updateNav() {
 }
 window.addEventListener("scroll", updateNav, { passive: true });
 updateNav();
+
+/* NAV DROPDOWNS (hover on desktop, tap on touch, Esc / outside click closes; opening one closes the others) */
+(()=>{
+  const dds=[...document.querySelectorAll(".nav-dd")].map(dd=>{
+    const btn=dd.querySelector(".nav-dd-btn");
+    const set=o=>{dd.classList.toggle("open",o);btn.setAttribute("aria-expanded",o);};
+    return {dd,btn,set};
+  });
+  dds.forEach(({dd,btn,set})=>{
+    btn.addEventListener("click",e=>{e.stopPropagation();const o=!dd.classList.contains("open");dds.forEach(x=>x.set(false));set(o);});
+    dd.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>set(false)));
+  });
+  document.addEventListener("click",e=>{dds.forEach(x=>{if(!x.dd.contains(e.target))x.set(false);});});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")dds.forEach(x=>{if(x.dd.classList.contains("open")){x.set(false);x.btn.focus();}});});
+})();
 
 /* SKILL BARS */
 const skillBarObserver = new IntersectionObserver((entries) => {
@@ -1046,6 +1092,8 @@ const PDFJS_SOURCES = [
     "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/",
     "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/"
 ];
+/* fonts + Japanese character maps for text that is not embedded in the PDF (without these, text goes missing) */
+const PDFJS_ASSETS = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/";
 let pdfjsReady;
 function loadScript(src) {
     return new Promise((resolve, reject) => {
@@ -1111,7 +1159,7 @@ document.querySelectorAll(".pdf-viewer").forEach((box) => {
             canvas.style.width = vp.width / dpr + "px";
             canvas.style.height = vp.height / dpr + "px";
             canvas.getContext("2d").drawImage(off, 0, 0);
-        } catch (e) { /* keep the last page on screen */ }
+        } catch (e) { console.error("PDF page failed:", e); /* keep the last page on screen */ }
     }
     function fail(err) {
         const ja = currentLang === "ja";
@@ -1133,7 +1181,13 @@ document.querySelectorAll(".pdf-viewer").forEach((box) => {
         if (started) return;
         started = true;
         Promise.all([loadPdfJs(), fetchPdfData(box.dataset.pdf)])
-            .then(([lib, data]) => lib.getDocument({ data }).promise)
+            .then(([lib, data]) => lib.getDocument({
+                data,
+                cMapUrl: PDFJS_ASSETS + "cmaps/",
+                cMapPacked: true,
+                standardFontDataUrl: PDFJS_ASSETS + "standard_fonts/",
+                useSystemFonts: true
+            }).promise)
             .then((doc) => {
                 pdf = doc;
                 box.classList.add("ready");

@@ -6,7 +6,12 @@
 #   ./optimize-media.sh --max-seconds 12     same, but also cuts every video to its first 12 s (the biggest saver for long clips)
 #   ./optimize-media.sh --lossless           keeps the main videos' picture bit-for-bit (only moves the index to the front); phone files are still made
 #
-# Originals are copied to ./originals/ first and are never overwritten; running it again is safe.
+# Originals are copied to ./originals/ first; running it again is safe.
+# The script remembers what it already optimized (.optimize-state), so a second run skips finished files and only
+# processes NEW or REPLACED ones (put a new video with the same name in the folder and only that one is redone).
+#   ./optimize-media.sh --mark-done  one time only: tell the script that everything already in the folder is optimized (no encoding)
+#   ./optimize-media.sh --redo artwork.mp4   you replaced this file with a NEW version: treat the file in the folder as the new original and redo it
+#   ./optimize-media.sh --force    redo everything again from ./originals/ (e.g. after changing --max-seconds)
 #
 # WHY THESE SETTINGS (the site shows each video at most 1200 px wide, muted, looping)
 #   - 30 fps max: screen recordings are often 60 fps, which costs about 40% more bytes and nobody sees it in a looping clip
@@ -22,10 +27,13 @@
 # PICTURES
 #   any jpg wider than 1600 px or bigger than 300 KB -> 1600 px wide, high quality, same file name (no HTML change needed)
 set -euo pipefail
-LOSSLESS=0; TRIM=0
+LOSSLESS=0; TRIM=0; FORCE=0; MARK=0; REDO=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --lossless) LOSSLESS=1 ;;
+    --force) FORCE=1 ;;
+    --mark-done) MARK=1 ;;
+    --redo) REDO="$REDO|${2:?--redo needs a file name}|"; shift ;;
     --max-seconds) TRIM="${2:?--max-seconds needs a number}"; shift ;;
     --max-seconds=*) TRIM="${1#*=}" ;;
     *) echo "Unknown option: $1"; exit 1 ;;
@@ -35,13 +43,23 @@ done
 TFLAG=""; if [[ "$TRIM" != "0" ]]; then TFLAG="-t $TRIM"; fi
 
 mkdir -p originals
+# leftovers of an interrupted run (Ctrl+C) must never be treated as real files
+find . -maxdepth 1 -name 'tmp_*' -delete 2>/dev/null || true
 fsize() { stat -c%s "$1" 2>/dev/null || stat -f%z "$1"; }
+STATE=".optimize-state"; touch "$STATE"
+recorded() { awk -F'\t' -v n="$1" '$1==n{print $2}' "$STATE"; }
+record() { awk -F'\t' -v n="$1" '$1!=n' "$STATE" > "$STATE.tmp"; printf '%s\t%s\n' "$1" "$2" >> "$STATE.tmp"; mv "$STATE.tmp" "$STATE"; }
+# keep ./originals/ in sync: copy when missing, and replace it when the file in the folder is a NEW version of an earlier one
+sync_original() { # file key currentsize
+  local rec; rec=$(recorded "$2")
+  if [[ ! -f "originals/$1" ]] || { [[ -n "$rec" ]] && [[ "$rec" != "$3" ]]; }; then cp "$1" "originals/$1"; fi
+}
 mb() { awk -v b="$1" 'BEGIN{printf "%.1f MB", b/1000000}'; }
 # scale so the LONG side is at most $1 px (works for landscape and portrait), keep even dimensions
 fit() { echo "scale='if(gt(iw,ih),min($1,iw),-2)':'if(gt(iw,ih),-2,min($1,ih))':flags=lanczos"; }
 # adds ",fps=30" only when the source is faster than 30 fps
 fpscap() {
-  local r; r=$(ffprobe -v error -select_streams v:0 -show_entries stream=avg_frame_rate -of csv=p=0 "$1")
+  local r; r=$(ffprobe -v error -select_streams v:0 -show_entries stream=avg_frame_rate -of csv=p=0 "$1" | head -n1 | tr -d ',')
   awk -v r="$r" 'BEGIN{split(r,a,"/"); f=(a[2]>0)?a[1]/a[2]:a[1]; if (f>30.5) printf ",fps=30"}'
 }
 enc() { # in out maxside crf maxrate bufsize
@@ -51,12 +69,45 @@ enc() { # in out maxside crf maxrate bufsize
          -g 60 -movflags +faststart "$2"
 }
 
+# --redo name.ext : forget everything about that file so the one in the folder counts as a brand new original
+if [[ -n "$REDO" ]]; then
+  IFS='|' read -ra _r <<< "$REDO"
+  for n in "${_r[@]}"; do
+    [[ -n "$n" ]] || continue
+    [[ -f "$n" ]] || { echo "redo: $n not found in this folder"; continue; }
+    b="${n%.*}"
+    rm -f "originals/$n" "$b-m.mp4" "$b-poster.jpg"
+    awk -F'\t' -v n="$n" '$1!=n' "$STATE" > "$STATE.tmp" && mv "$STATE.tmp" "$STATE"
+    echo "redo   $n: the file in this folder is used as the new original"
+  done
+fi
+
+if [[ $MARK == 1 ]]; then
+  # trust only files that were really processed before: the original backup exists (videos also need -m + poster)
+  for f in *.mp4; do
+    [[ -e "$f" && "$f" != *-m.mp4 && "$f" != tmp_* ]] || continue
+    b="${f%.mp4}"
+    if [[ -f "originals/$f" && -f "$b-m.mp4" && -f "$b-poster.jpg" ]]; then record "$f" "$(fsize "$f")"; echo "marked $f"
+    else echo "NOT marked $f (not optimized yet, it will be processed on the next normal run)"; fi
+  done
+  for f in *.jpg *.jpeg; do
+    [[ -e "$f" && "$f" != *-poster.jpg ]] || continue
+    if [[ -f "originals/$f" ]]; then record "$f" "$(fsize "$f")"; echo "marked $f"; fi
+  done
+  echo "Done. Everything above counts as optimized now. Run it normally from now on."; exit 0
+fi
+
 for f in *.mp4; do
   [[ -e "$f" ]] || continue
   [[ "$f" == *-m.mp4 ]] && continue
-  [[ -f "originals/$f" ]] || cp "$f" "originals/$f"
-  src="originals/$f"; size=$(fsize "$src"); base="${f%.mp4}"
-  codec=$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of csv=p=0 "$src")
+  [[ "$f" == tmp_* ]] && continue
+  base="${f%.mp4}"; cur=$(fsize "$f")
+  if [[ $FORCE == 0 && "$(recorded "$f")" == "$cur" && -f "$base-m.mp4" && -f "$base-poster.jpg" ]]; then
+    echo "skip   $f (already optimized)"; continue
+  fi
+  sync_original "$f" "$f" "$cur"
+  src="originals/$f"; size=$(fsize "$src")
+  codec=$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of csv=p=0 "$src" | head -n1 | tr -d ',')
 
   # desktop file
   if [[ $LOSSLESS == 1 && "$codec" == "h264" ]]; then
@@ -69,7 +120,7 @@ for f in *.mp4; do
     fi
   fi
   mv "tmp_$f" "$f"
-  out=$(fsize "$f")
+  out=$(fsize "$f"); record "$f" "$out"
   echo "video  $f: $(mb "$size") -> $(mb "$out") ($how)"
   if (( out > 10000000 )); then echo "       tip: still big. Try  ./optimize-media.sh --max-seconds 12  (short loops start instantly)"; fi
 
@@ -84,13 +135,19 @@ done
 for f in *.jpg *.jpeg; do
   [[ -e "$f" ]] || continue
   [[ "$f" == *-poster.jpg ]] && continue
-  w=$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=p=0 "$f")
+  [[ "$f" == tmp_* ]] && continue
   size=$(fsize "$f")
+  [[ $FORCE == 0 && "$(recorded "$f")" == "$size" ]] && continue   # already done
+  w=$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=p=0 "$f" | head -n1 | tr -dc '0-9'); w=${w:-0}
   if (( w > 1600 || size > 300000 )); then
-    [[ -f "originals/$f" ]] || cp "$f" "originals/$f"
-    ffmpeg -y -loglevel error -i "originals/$f" -vf "scale='min(1600,iw)':-2:flags=lanczos" -map_metadata -1 -q:v 4 "tmp_$f"
+    sync_original "$f" "$f" "$size"
+    # -map 0:v:0 = only the main picture (phone photos can carry extra images that confuse ffmpeg)
+    if ! ffmpeg -y -loglevel error -i "originals/$f" -map 0:v:0 -vf "scale='min(1600,iw)':-2:flags=lanczos" -map_metadata -1 -q:v 4 "tmp_$f"; then
+      rm -f "tmp_$f"; echo "image  $f: could not be compressed, kept as is"; record "$f" "$size"; continue
+    fi
     if (( $(fsize "tmp_$f") < size )); then mv "tmp_$f" "$f"; echo "image  $f: $((size/1000)) KB -> $(( $(fsize "$f")/1000 )) KB"
     else rm "tmp_$f"; echo "image  $f: already small, kept"; fi
+    record "$f" "$(fsize "$f")"
   fi
 done
 echo "Done. Upload ALL new .mp4 (including the -m ones), *-poster.jpg and .jpg files next to index.html."
