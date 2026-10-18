@@ -234,6 +234,8 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28p
 /* D.LEAGUE: video left, text right */
 .hob-row .hob-media{order:-1}
 @media(max-width:800px){.hob-row .hob-media{order:0}}
+/* JA titles: break only between phrases, never inside a word */
+html.lang-ja h1,html.lang-ja h2,html.lang-ja h3,html.lang-ja h4,html.lang-ja .team-badge{word-break:keep-all;line-break:strict;overflow-wrap:anywhere}
 </style>
 </head>
 <body>
@@ -268,7 +270,7 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28p
  <div class="wrap split rev">
   <div>
    <div class="eyebrow i18n" data-en="Origins" data-ja="ルーツ">Origins</div>
-   <h2 class="i18n" data-en="From the countryside to the city." data-ja="田舎から、大都会へ。">From the countryside to the city.</h2>
+   <h2 class="i18n" data-en="From the countryside to the city." data-ja="田舎から、&lt;wbr&gt;大都会へ。">From the countryside to the city.</h2>
    <p class="i18n" data-en="I grew up in Weiden, a medieval town in Bavaria, Germany. It’s a lovely place, but I always wanted to look further and build a future beyond it." data-ja="私はドイツ・バイエルン州にある、中世の面影が残る街ヴァイデンで育ちました。すてきな街でしたが、もっと広い世界に目を向け、その先に自分の未来を築きたいと思っていました。">I grew up in Weiden, a medieval town in Bavaria, Germany. It’s a lovely place, but I always wanted to look further and build a future beyond it.</p>
    <p class="i18n" data-en="In middle school, a friend recommended Naruto, and that anime started it all. I fell in love with Japanese culture and history, and living in Japan, and one day giving something back, became a dream of mine." data-ja="中学生のとき、友人にすすめられて『NARUTO -ナルト-』を見たことが、すべてのはじまりでした。日本の文化や歴史に惹かれ、日本に住み、いつか日本に貢献することが私の夢になりました。">In middle school, a friend recommended Naruto, and that anime started it all. I fell in love with Japanese culture and history, and living in Japan, and one day giving something back, became a dream of mine.</p>
    <p class="i18n" data-en="In 2023, I moved to Japan." data-ja="2023年、日本へ移り住みました。">In 2023, I moved to Japan.</p>
@@ -295,7 +297,7 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28p
  <div class="wrap split rev">
   <div>
    <div class="eyebrow i18n" data-en="TECH.C." data-ja="TECH.C.">TECH.C.</div>
-   <h2 class="i18n" data-en="Games with an artist’s eye." data-ja="アーティストの眼で、ゲームをつくる。">Games with an artist’s eye.</h2>
+   <h2 class="i18n" data-en="Games with an artist’s eye." data-ja="アーティストの眼で、&lt;wbr&gt;ゲームを&lt;wbr&gt;つくる。">Games with an artist’s eye.</h2>
    <p class="i18n" data-en="I enrolled at TECH.C. in 2025 to study game programming." data-ja="2025年、ゲームプログラミングを学ぶためにTECH.C.に入学しました。">I enrolled at TECH.C. in 2025 to study game programming.</p>
    <p class="i18n" data-en="My brother is a well-known artist. Growing up beside his work gave me an artist’s eye." data-ja="著名なアーティストである兄に刺激を受け、私はアーティストの眼を持つようになりました。">My brother is a well-known artist. Growing up beside his work gave me an artist’s eye.</p>
    <p class="i18n" data-en="So when I make a game, I see it and work on it like an artist." data-ja="だから、ゲームをつくるときも、アーティストの視点と姿勢で取り組んでいます。">So when I make a game, I see it and work on it like an artist.</p>
@@ -310,7 +312,7 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28p
  <div class="wrap split">
   <div>
    <div class="eyebrow i18n" data-en="Social media" data-ja="ソーシャルメディア">Social media</div>
-   <h2 class="i18n" data-en="19k people follow along." data-ja="1.9万人が、見てくれている。">19k people follow along.</h2>
+   <h2 class="i18n" data-en="19k people follow along." data-ja="1.9万人が、&lt;wbr&gt;見てくれている。">19k people follow along.</h2>
    <p class="i18n" data-en="While studying in Germany, I worked as a freelance composer and grew my music channel on YouTube. I mostly wrote film music, collaborating with YouTubers on background tracks and with small film studios. My most listened track has reached 2.3 million views on YouTube." data-ja="ドイツで学んでいた頃から、フリーランスの作曲家として活動しながら、YouTubeの音楽チャンネルを育ててきました。主に映画音楽を手がけ、YouTuberのBGMや小さな映画スタジオの作品に楽曲を提供しています。最も聴かれている楽曲は、YouTubeで230万回再生されています。">While studying in Germany, I worked as a freelance composer and grew my music channel on YouTube. I mostly wrote film music, collaborating with YouTubers on background tracks and with small film studios. My most listened track has reached 2.3 million views on YouTube.</p>
    <p class="i18n" data-en="Today I share my game dev journey online. My personal YouTube channel grew to 1k subscribers through two years of weekly uploads. Then, in 2026, I started Instagram, and within just two months it had grown to 3k followers." data-ja="現在は、ゲーム制作の歩みを発信しています。個人のYouTubeチャンネルは、2年間の毎週投稿を重ねて登録者1千人に。そして2026年にInstagramを始め、わずか2か月でフォロワー3千人にまで成長しました。">Today I share my game dev journey online. My personal YouTube channel grew to 1k subscribers through two years of weekly uploads. Then, in 2026, I started Instagram, and within just two months it had grown to 3k followers.</p>
    <div class="stat-strip">
@@ -342,7 +344,7 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28p
  <div class="wrap split">
   <div>
    <div class="eyebrow i18n" data-en="Character" data-ja="人柄">Character</div>
-   <h2 class="i18n" data-en="Create. Train. Repeat." data-ja="つくる。鍛える。繰り返す。">Create. Train. Repeat.</h2>
+   <h2 class="i18n" data-en="Create. Train. Repeat." data-ja="つくる。&lt;wbr&gt;鍛える。&lt;wbr&gt;繰り返す。">Create. Train. Repeat.</h2>
    <p class="i18n" data-en="I have two sides. One loves making things and happily spends hours in front of a computer, creating. The other is out and about, staying active: regular trips to the gym, a year of karate up to orange belt, and running." data-ja="私には二つの顔があります。ひとつは、ものづくりが大好きで、パソコンに向かって何時間でも作り続ける自分。もうひとつは、外に出て体を動かす自分です。ジムによく通い、空手を1年間習ってオレンジ帯まで進み、ランニングも続けています。">I have two sides. One loves making things and happily spends hours in front of a computer, creating. The other is out and about, staying active: regular trips to the gym, a year of karate up to orange belt, and running.</p>
    <p class="i18n" data-en="The two feed each other. Making things gives me ideas and purpose, while sport gives me the energy and a clear head to bring them to life. I try to keep them in balance, a bit like the golden mean: the best place to stand is somewhere in between." data-ja="この二つは互いを高め合っています。ものづくりはアイデアと目的を与えてくれ、スポーツはそれを形にするためのエネルギーと冴えた頭を与えてくれます。どちらにも偏らないよう、黄金の中庸のように、ちょうどよい場所は両極の間にあると考えています。">The two feed each other. Making things gives me ideas and purpose, while sport gives me the energy and a clear head to bring them to life. I try to keep them in balance, a bit like the golden mean: the best place to stand is somewhere in between.</p>
   </div>
@@ -385,7 +387,7 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28p
  <div class="wrap split rev">
   <div>
    <div class="eyebrow i18n" data-en="Future" data-ja="未来">Future</div>
-   <h2 class="big i18n" data-en="Building with AI, not against it." data-ja="AIと競うのではなく、AIと築く。">Building with AI, not against it.</h2>
+   <h2 class="big i18n" data-en="Building with AI, not against it." data-ja="AIと競うのではなく、&lt;wbr&gt;AIと築く。">Building with AI, not against it.</h2>
    <p class="i18n" data-en="I don’t see AI as a threat to the skills I’ve built. I see it as one more skill, and one that makes it faster to turn ideas into real software." data-ja="AIは、私が身につけてきたスキルを脅かすものではなく、新しく加わるもう一つのスキルだと考えています。アイデアを実際のソフトウェアにするスピードを、大きく高めてくれるものです。">I don’t see AI as a threat to the skills I’ve built. I see it as one more skill, and one that makes it faster to turn ideas into real software.</p>
    <p class="i18n" data-en="I have plenty of ideas for the future. I plan to use AI as a tool to bring them to life, and eventually to start a company around them, with the goal of making the world a little better." data-ja="将来に向けたアイデアがたくさんあります。AIを道具として活かしながらそれらを形にし、いずれは会社を立ち上げて、世の中を少しでも良くしていきたいと考えています。">I have plenty of ideas for the future. I plan to use AI as a tool to bring them to life, and eventually to start a company around them, with the goal of making the world a little better.</p>
    <p class="i18n" data-en="What AI can’t copy is character. It’s what has helped me grow an audience and win events at school, and it will stay at the center of everything I build." data-ja="AIがまだ真似できないのは、人柄です。人柄があったからこそ、フォロワーが増え、学校のイベントでも結果を残せました。これからも、作るものすべての中心に据えていきます。">What AI can’t copy is character. It’s what has helped me grow an audience and win events at school, and it will stay at the center of everything I build.</p>
@@ -399,7 +401,7 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28p
  <div class="wrap split">
   <div>
    <div class="eyebrow i18n" data-en="Next" data-ja="これから">Next</div>
-   <h2 class="big i18n" data-en="Let’s work together." data-ja="一緒に、つくりませんか。">Let’s work together.</h2>
+   <h2 class="big i18n" data-en="Let’s work together." data-ja="一緒に、&lt;wbr&gt;つくりませんか。">Let’s work together.</h2>
    <p class="i18n" data-en="Thank you for taking a look. If what you’ve seen fits your team or your next project, I’d be glad to hear from you." data-ja="ご覧いただき、ありがとうございます。チームやプロジェクトにご興味をお持ちいただけましたら、お気軽にご連絡ください。">Thank you for taking a look. If what you’ve seen fits your team or your next project, I’d be glad to hear from you.</p>
    <p class="i18n" data-en="I’m open to part-time work now and full-time work from 2028." data-ja="現在はアルバイト、2028年からはフルタイムのお仕事をお待ちしています。">I’m open to part-time work now and full-time work from 2028.</p>
   <div class="pills">
