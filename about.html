@@ -324,9 +324,9 @@ a,button{-webkit-tap-highlight-color:transparent}
  .reel-trio .reel:nth-child(2){margin-top:0!important}
 }
 
-/* iPad / Safari: the page ends at the footer. No sideways scroll container, no stretchy empty area below the footer. */
-html{overflow-x:clip;overscroll-behavior-y:none;background:var(--bg)}
-body{overscroll-behavior-y:none}
+/* iPad / Safari / Chrome on iOS: the page ends at the footer. No sideways scroll container, no stretchy empty area above or below the page. */
+html{overflow-x:hidden;overflow-x:clip;overscroll-behavior:none;background:var(--bg)}
+body{overscroll-behavior:none}
 </style>
 </head>
 <body>
@@ -672,5 +672,36 @@ function apply(l){
 btn.addEventListener("click",()=>apply(lang==="en"?"ja":"en"));
 apply(lang);
 </script>
+<script>
+/* iPad / iOS: the page stops at its real top and bottom (no rubber-band scrolling into empty space).
+   Sideways rails, the nav dropdown and pinch-zoom keep working normally. */
+(()=>{
+  const root=document.documentElement;
+  let sx=0,sy=0,ly=0,axis=null;
+  const canScroll=(el,vertical)=>{
+    for(;el&&el!==document.body&&el!==root;el=el.parentElement){
+      const cs=getComputedStyle(el),o=vertical?cs.overflowY:cs.overflowX;
+      if((o==="auto"||o==="scroll")&&(vertical?el.scrollHeight>el.clientHeight+1:el.scrollWidth>el.clientWidth+1))return true;
+    }
+    return false;
+  };
+  addEventListener("touchstart",e=>{
+    if(e.touches.length!==1){axis="multi";return}
+    sx=e.touches[0].clientX;sy=ly=e.touches[0].clientY;axis=null;
+  },{passive:true});
+  addEventListener("touchmove",e=>{
+    if(axis==="multi"||e.touches.length!==1||!e.cancelable)return;
+    if(window.visualViewport&&visualViewport.scale>1.01)return;
+    const t=e.touches[0],dx=t.clientX-sx,dy=t.clientY-sy;
+    if(!axis){if(Math.abs(dx)<4&&Math.abs(dy)<4)return;axis=Math.abs(dx)>Math.abs(dy)?"x":"y"}
+    if(axis==="x"){if(!canScroll(e.target,false))e.preventDefault();return}
+    const step=t.clientY-ly;ly=t.clientY;
+    if(canScroll(e.target,true))return;
+    const y=window.scrollY,max=root.scrollHeight-window.innerHeight;
+    if((y<=0&&step>0)||(y>=max-1&&step<0))e.preventDefault();
+  },{passive:false});
+})();
+</script>
+
 </body>
 </html>
