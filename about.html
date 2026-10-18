@@ -12,7 +12,7 @@
 :root{--bg:#f5f5f2;--text:#111;--muted:#73736e;--line:rgba(17,17,17,.12);--max:1500px;--padding:clamp(28px,5vw,80px)}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font-family:"Inter","Noto Sans JP",sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Inter","Noto Sans JP",sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;overflow-x:clip}
 img{display:block;max-width:100%}
 a{color:inherit}
 html.lang-ja *{letter-spacing:0!important}
@@ -324,6 +324,9 @@ a,button{-webkit-tap-highlight-color:transparent}
  .reel-trio .reel:nth-child(2){margin-top:0!important}
 }
 
+/* iPad / Safari: the page ends at the footer. No sideways scroll container, no stretchy empty area below the footer. */
+html{overflow-x:clip;overscroll-behavior-y:none;background:var(--bg)}
+body{overscroll-behavior-y:none}
 </style>
 </head>
 <body>
