@@ -211,7 +211,7 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28p
 .stat-note{margin-top:20px;padding-top:16px;border-top:1px solid rgba(245,245,242,.12);font-size:13px;color:#8a8a85}
 #social .pills{margin-top:28px}
 .reel-trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(10px,1.4vw,18px);align-items:start}
-.reel-trio .reel:nth-child(2){margin-top:clamp(32px,5vw,64px)}
+.reel-trio .reel,.reel-trio .reel:nth-child(n){margin-top:0!important}
 .reel-trio .pic.vertical video{aspect-ratio:2/3;border-radius:22px;background:#2a2a28}
 .reel-trio .reel figcaption{margin-top:12px}
 .reel-trio .reel-platform{font-size:11px;margin:0 0 4px}
@@ -301,7 +301,7 @@ a,button{-webkit-tap-highlight-color:transparent}
  #social p{max-width:680px}
  .reel-trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;overflow:visible;margin-right:0;padding-right:0}
  .reel-trio .reel{flex:none;margin-top:0!important}
- .reel-trio .reel:nth-child(2){margin-top:clamp(28px,5vw,56px)!important}
+ .reel-trio .reel:nth-child(2){margin-top:0!important}
  .reel-trio .reel-meta{font-size:16px}
  .reel-trio .reel-platform{font-size:12px}
  .stat-item .stat{font-size:clamp(2rem,4.6vw,3rem)}
@@ -318,6 +318,10 @@ a,button{-webkit-tap-highlight-color:transparent}
 }
 @media (min-width:700px) and (max-width:900px){
  .footer-inner{flex-direction:row}
+}
+/* large iPads (landscape / Pro) fall outside 1100px: touch screens also get three evenly aligned reels */
+@media (min-width:700px) and (pointer:coarse){
+ .reel-trio .reel:nth-child(2){margin-top:0!important}
 }
 
 </style>
@@ -472,9 +476,9 @@ a,button{-webkit-tap-highlight-color:transparent}
   <div>
    <div class="eyebrow i18n" data-en="Future" data-ja="未来">Future</div>
    <h2 class="big i18n" data-en="Building with AI, not against it." data-ja="AIと競うのではなく、&lt;wbr&gt;AIと築く。">Building with AI, not against it.</h2>
-   <p class="i18n" data-en="I don’t see AI as a threat to the skills I’ve built. I see it as one more skill, and one that makes it faster to turn ideas into real software." data-ja="AIは、私が身につけてきたスキルを脅かすものではなく、新しく加わるもう一つのスキルだと考えています。アイデアを実際のソフトウェアにするスピードを、大きく高めてくれるものです。">I don’t see AI as a threat to the skills I’ve built. I see it as one more skill, and one that makes it faster to turn ideas into real software.</p>
-   <p class="i18n" data-en="I have plenty of ideas for the future. I plan to use AI as a tool to bring them to life, and eventually to start a company around them, with the goal of making the world a little better." data-ja="将来に向けたアイデアがたくさんあります。AIを道具として活かしながらそれらを形にし、いずれは会社を立ち上げて、世の中を少しでも良くしていきたいと考えています。">I have plenty of ideas for the future. I plan to use AI as a tool to bring them to life, and eventually to start a company around them, with the goal of making the world a little better.</p>
-   <p class="i18n" data-en="What AI can’t copy is character. It’s what has helped me grow an audience and win events at school, and it will stay at the center of everything I build." data-ja="AIがまだ真似できないのは、人柄です。人柄があったからこそ、フォロワーが増え、学校のイベントでも結果を残せました。これからも、作るものすべての中心に据えていきます。">What AI can’t copy is character. It’s what has helped me grow an audience and win events at school, and it will stay at the center of everything I build.</p>
+   <p class="i18n" data-en="I don’t see AI as a threat to my skills, but as one more skill that turns ideas into real software faster." data-ja="AIは私のスキルを脅かすものではなく、アイデアを素早くソフトウェアにしてくれる、もう一つのスキルだと考えています。">I don’t see AI as a threat to my skills, but as one more skill that turns ideas into real software faster.</p>
+   <p class="i18n" data-en="I plan to use AI to bring my ideas to life, and eventually to start a company that makes the world a little better." data-ja="AIを活かしてアイデアを形にし、いずれは会社を立ち上げて、世の中を少しでも良くしたいと考えています。">I plan to use AI to bring my ideas to life, and eventually to start a company that makes the world a little better.</p>
+   <p class="i18n" data-en="What AI can’t copy is character. It helped me grow an audience and win events at school, and it stays at the center of everything I build." data-ja="AIに真似できないのは、人柄です。フォロワーが増え、学校のイベントで結果を残せたのも人柄のおかげで、これからも作るものの中心に据えます。">What AI can’t copy is character. It helped me grow an audience and win events at school, and it stays at the center of everything I build.</p>
   </div>
   <div class="pic"><img decoding="async" src="me7.jpg" alt="Luca Helgert" loading="lazy"></div>
  </div>
