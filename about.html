@@ -236,6 +236,90 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28p
 @media(max-width:800px){.hob-row .hob-media{order:0}}
 /* JA titles: break only between phrases, never inside a word */
 html.lang-ja h1,html.lang-ja h2,html.lang-ja h3,html.lang-ja h4,html.lang-ja .team-badge{word-break:keep-all;line-break:strict;overflow-wrap:anywhere}
+html.lang-ja .free-break{word-break:normal;line-break:auto;overflow-wrap:normal}
+
+/* ===================================================================
+   iPAD / TABLET PASS  (priority: iPad > desktop > phone)
+   Everything below only adds or overrides; phone rules (<=600px) are untouched.
+   =================================================================== */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+a,button{-webkit-tap-highlight-color:transparent}
+
+/* touch screens: no hover that sticks after a tap */
+@media (hover:none){
+ .nav-dd:not(.open):hover .nav-dd-panel{opacity:0;visibility:hidden}
+ .nav-dd:not(.open):hover .nav-dd-btn{color:var(--muted)}
+ .nav-dd.current:not(.open):hover .nav-dd-btn{color:var(--text)}
+ .lang-toggle:hover{background:transparent;color:var(--text)}
+}
+
+/* tablet navigation: slightly larger type and 44px touch targets */
+@media (min-width:601px) and (max-width:1100px){
+ .nav-right{gap:26px}
+ .nav-links{gap:28px}
+ .nav-links a,.nav-links .nav-dd-btn{font-size:15px}
+ .nav-links .nav-dd-panel a{font-size:15px!important}
+ .nav-dd-panel{min-width:260px}
+ .nav-dd.small .nav-dd-panel{min-width:210px}
+}
+@media (min-width:601px) and (pointer:coarse){
+ .nav-links > a,.nav-dd-btn{padding:13px 0}
+ .lang-toggle{height:42px;padding:0 20px;font-size:14px}
+ .nav-links .nav-dd-panel a{padding:14px 16px}
+}
+
+@media (hover:none){
+ .pill:hover{background:transparent;color:var(--text)}
+ .pill.solid:hover{background:var(--text);color:var(--bg)}
+ .dark .pill:not(.solid):hover{background:transparent;color:#f5f5f2}
+ .fav:hover .fav-pic img{transform:none}
+ .rail-nav button:hover:not([disabled]){background:rgba(245,245,242,.14)}
+}
+@media (min-width:601px) and (pointer:coarse){
+ .pill{height:52px}
+ .rail-nav button{width:50px;height:50px}
+}
+
+/* ---- iPad and tablets (700 to 1100px): keep the two-column web layout ---- */
+@media (min-width:700px) and (max-width:1100px){
+ :root{--padding:clamp(32px,5.5vw,56px)}
+ .sec{padding:clamp(90px,11vw,130px) 0}
+ h2{font-size:clamp(2.3rem,5vw,3.6rem)}
+ .big{font-size:clamp(2.5rem,5.4vw,4rem)}
+ p{font-size:clamp(17px,2.1vw,19px)}
+ .hero{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(32px,5vw,56px);padding:clamp(120px,14vw,150px) 0 clamp(80px,10vw,110px);align-items:center}
+ .hero .pic{order:0}
+ .hero h1{font-size:clamp(3.2rem,8vw,5.6rem)}
+ html.lang-ja .hero h1{font-size:clamp(3rem,7.2vw,5.2rem)}
+ .hero p{margin:32px 0 0;font-size:clamp(19px,2.4vw,24px)}
+ .split,.split.rev{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(36px,5vw,60px);align-items:center}
+ .split.rev .pic{order:-1}
+ .pic img,.pic video{max-height:82vh}
+ /* social: text on top, the three reels side by side underneath (no sideways scrolling) */
+ #social .split{grid-template-columns:minmax(0,1fr);gap:48px}
+ #social h2{font-size:clamp(2.4rem,5.4vw,3.6rem)}
+ #social p{max-width:680px}
+ .reel-trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;overflow:visible;margin-right:0;padding-right:0}
+ .reel-trio .reel{flex:none;margin-top:0!important}
+ .reel-trio .reel:nth-child(2){margin-top:clamp(28px,5vw,56px)!important}
+ .reel-trio .reel-meta{font-size:16px}
+ .reel-trio .reel-platform{font-size:12px}
+ .stat-item .stat{font-size:clamp(2rem,4.6vw,3rem)}
+ /* hobbies */
+ .hob-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,5vw,60px)}
+ .hob-row .hob-media{order:-1}
+ .hob-row .hob-vid{width:clamp(220px,32vw,320px);justify-self:center}
+ .fav{flex-basis:clamp(190px,25vw,250px)}
+ .fav-title{font-size:17px}
+ .fav-meta{font-size:14px}
+ .rail{gap:18px}
+ .hob-title{font-size:clamp(2.2rem,4.6vw,3.2rem)}
+ .tl-row{grid-template-columns:minmax(120px,170px) minmax(0,1fr)}
+}
+@media (min-width:700px) and (max-width:900px){
+ .footer-inner{flex-direction:row}
+}
+
 </style>
 </head>
 <body>
@@ -401,7 +485,7 @@ html.lang-ja h1,html.lang-ja h2,html.lang-ja h3,html.lang-ja h4,html.lang-ja .te
  <div class="wrap split">
   <div>
    <div class="eyebrow i18n" data-en="Next" data-ja="これから">Next</div>
-   <h2 class="big i18n" data-en="Let’s work together." data-ja="一緒に、&lt;wbr&gt;つくりませんか。">Let’s work together.</h2>
+   <h2 class="big i18n free-break" data-en="Let’s work together." data-ja="一緒に、つくりませんか。">Let’s work together.</h2>
    <p class="i18n" data-en="Thank you for taking a look. If what you’ve seen fits your team or your next project, I’d be glad to hear from you." data-ja="ご覧いただき、ありがとうございます。チームやプロジェクトにご興味をお持ちいただけましたら、お気軽にご連絡ください。">Thank you for taking a look. If what you’ve seen fits your team or your next project, I’d be glad to hear from you.</p>
    <p class="i18n" data-en="I’m open to part-time work now and full-time work from 2028." data-ja="現在はアルバイト、2028年からはフルタイムのお仕事をお待ちしています。">I’m open to part-time work now and full-time work from 2028.</p>
   <div class="pills">
@@ -445,7 +529,7 @@ const vids=[...document.querySelectorAll(".pic video")];
 const conn=navigator.connection||{};
 const saveData=!!conn.saveData||/(^|-)2g$/.test(conn.effectiveType||"");
 const isPhone=window.matchMedia("(pointer: coarse)").matches; /* phones and tablets (iPad included) */
-const smallScreen=isPhone||window.innerWidth<900; /* these get the lighter name-m.mp4 file (made by optimize-media.sh) */
+const smallScreen=(isPhone&&Math.min(screen.width,screen.height)<700)||window.innerWidth<700; /* only real phones get the lighter name-m.mp4 file (made by optimize-media.sh); iPad gets the sharp full-quality video */
 const srcFor=v=>(smallScreen&&!v._full)?v.dataset.src.replace(/\.mp4(?=#|$)/,"-m.mp4"):v.dataset.src;
 function attach(v,mode){
   if(!v.getAttribute("src")){v.preload=mode;v.src=srcFor(v);v.load();}

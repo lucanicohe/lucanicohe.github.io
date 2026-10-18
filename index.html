@@ -467,6 +467,145 @@ html.lang-ja h1,html.lang-ja h2,html.lang-ja h3,html.lang-ja h4,html.lang-ja .te
 .hero-facts,.hero-facts:is(*){display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:1fr;width:max-content;max-width:100%;gap:8px;align-items:stretch;justify-items:stretch}
 .fact{width:auto;min-width:0;min-height:0;height:100%;justify-content:space-between;gap:6px;padding:10px 14px 11px}
 @media (max-width:600px){.hero-facts,.hero-facts:is(*){gap:6px}.fact{min-height:0;padding:9px 10px 10px;border-radius:13px}.fact dt{font-size:10.5px}.fact dd{font-size:clamp(13px,3.9vw,16px)}}
+html.lang-ja .free-break{word-break:normal;line-break:auto;overflow-wrap:normal}
+/* a bit less space after the skill bars */
+.statement{padding-bottom:clamp(90px,12.5vw,200px)}
+.skills-deep{padding-top:clamp(70px,9.5vw,140px)}
+
+/* ===================================================================
+   iPAD / TABLET PASS  (priority: iPad > desktop > phone)
+   Everything below only adds or overrides; phone rules (<=600px) are untouched.
+   =================================================================== */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+a,button{-webkit-tap-highlight-color:transparent}
+
+/* touch screens: no hover that sticks after a tap */
+@media (hover:none){
+ .nav-dd:not(.open):hover .nav-dd-panel{opacity:0;visibility:hidden}
+ .nav-dd:not(.open):hover .nav-dd-btn{color:var(--muted)}
+ .nav-dd.current:not(.open):hover .nav-dd-btn{color:var(--text)}
+ .lang-toggle:hover{background:transparent;color:var(--text)}
+}
+
+/* tablet navigation: slightly larger type and 44px touch targets */
+@media (min-width:601px) and (max-width:1100px){
+ .nav-right{gap:26px}
+ .nav-links{gap:28px}
+ .nav-links a,.nav-links .nav-dd-btn{font-size:15px}
+ .nav-links .nav-dd-panel a{font-size:15px!important}
+ .nav-dd-panel{min-width:260px}
+ .nav-dd.small .nav-dd-panel{min-width:210px}
+}
+@media (min-width:601px) and (pointer:coarse){
+ .nav-links > a,.nav-dd-btn{padding:13px 0}
+ .lang-toggle{height:42px;padding:0 20px;font-size:14px}
+ .nav-links .nav-dd-panel a{padding:14px 16px}
+}
+
+@media (hover:none){
+ .play-button:hover{background:var(--text);color:var(--bg);transform:none}
+ .play-button.alt:hover{background:transparent;color:var(--text)}
+ .play-button:hover svg{transform:none}
+ .see-more:hover{background:transparent;color:var(--text)}
+ .hero-image:hover img,.game:hover .game-visual img{transform:none}
+ .contact-item:hover{opacity:1}
+ .contact-item:hover .contact-item-arrow{transform:none}
+ .resume-preview:hover{transform:none}
+ .text-link:hover{text-decoration:none}
+ .text-link:hover::after{transform:translateY(-1px)}
+ .pdf-nav:hover:not([disabled]){transform:translateY(-50%)}
+}
+@media (min-width:601px) and (pointer:coarse){
+ .see-more{height:54px;min-width:170px;font-size:16px}
+ .play-button{height:52px}
+ .text-link{padding:10px 0;font-size:18px}
+ .pdf-nav{width:54px;height:54px}
+}
+
+/* ---- iPad portrait and small tablets: 601 to 1000px, keep the two-column web hero ---- */
+@media (min-width:601px) and (max-width:1000px){
+ :root{--padding:clamp(32px,5.5vw,56px)}
+ nav{background:rgba(245,245,242,.88);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+ .hero{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(32px,5vw,52px);min-height:min(100svh,880px);padding-top:76px;padding-bottom:0;align-items:center}
+ .hero-content{padding:64px 0}
+ .hero-image{justify-self:end;max-width:none;width:100%}
+ .hero-description{margin-top:36px;font-size:clamp(18px,2.3vw,21px)}
+ .hero-badge{font-size:15px}
+ .hero-facts,.hero-facts:is(*){margin-top:32px;width:100%}
+ .fact dd{font-size:clamp(15px,2vw,17px)}
+ .statement{padding:clamp(110px,14vw,150px) 0 clamp(80px,10vw,110px)}
+ .statement h2{font-size:clamp(3.2rem,8.5vw,5rem)}
+ html.lang-ja .statement h2{font-size:clamp(2.4rem,6vw,3.6rem)}
+ .statement-info{margin-top:72px}
+ .skill-details{font-size:16px}
+}
+
+/* ---- all tablet sizes, portrait and landscape: 601 to 1100px ---- */
+@media (min-width:601px) and (max-width:1100px){
+ .work{padding-left:var(--padding);padding-right:var(--padding)}
+ .project-switcher{top:88px;width:min(100%,580px)}
+ .project-switcher button{min-height:48px;font-size:15px}
+ .project-panel{padding-top:56px}
+ .team-intro{margin-bottom:72px;font-size:15px}
+ .team-feature{padding:90px 0}
+ .team-head{margin-bottom:44px}
+ .team-feature-title{font-size:clamp(2.6rem,6.6vw,4.2rem)}
+ .team-badge{font-size:15px}
+ /* project cards: video full width, two screenshots side by side, role card full width, then two cards side by side */
+ .team-body{grid-template-columns:repeat(2,minmax(0,1fr));max-width:none;gap:16px}
+ .team-body > *,.team-body:has(.team-video) .team-shot{grid-column:auto}
+ .team-body > :nth-child(n){order:0}
+ .team-video,.pdf-viewer{grid-column:1/-1}
+ .team-body:not(.pdf) > .team-card:nth-child(4),.team-body.pdf > .team-card:nth-child(2){grid-column:1/-1}
+ .team-shot{border-radius:22px}
+ .team-video{border-radius:26px;box-shadow:0 20px 60px rgba(0,0,0,.14)}
+ .team-card{padding:32px 28px 36px;border-radius:26px}
+ .team-card-title{font-size:clamp(22px,3vw,28px)}
+ .team-card-text,.team-list li{font-size:16px}
+ .pdf-viewer{border-radius:26px;padding:32px 0 80px}
+ .pdf-stage{padding:0 72px}
+ .pdf-nav.prev{left:18px}.pdf-nav.next{right:18px}
+ /* solo project grid: two across like the web version */
+ .game-grid{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:28px;row-gap:64px}
+ .game-visual{aspect-ratio:4/3;margin-bottom:20px}
+ .game-info{grid-template-columns:minmax(0,1fr);row-gap:20px}
+ .game-title{font-size:clamp(1.6rem,3.2vw,2rem)}
+ .game-description{font-size:16px}
+ .extra-projects{margin-top:70px}
+ .see-more-wrap{margin-top:72px}
+ /* about intro: text left, picture right */
+ .about{padding:clamp(90px,11vw,130px) 0}
+ .about-grid{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(32px,5vw,56px);align-items:center}
+ .about-pic{max-width:none}
+ .about-title{font-size:clamp(2.6rem,6vw,4rem)}
+ /* skills in depth */
+ .skills-deep{padding-top:clamp(70px,9vw,110px);padding-bottom:clamp(90px,11vw,130px)}
+ .skills-title{font-size:clamp(2.6rem,6vw,4rem)}
+ .skills-lead{margin-bottom:56px}
+ .sd-highlights{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .sd-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .sd-sub{margin-top:90px}
+ .tl-row{grid-template-columns:minmax(130px,190px) minmax(0,1fr);gap:28px}
+}
+
+/* ---- iPad portrait contact + resume (601 to 900px) ---- */
+@media (min-width:601px) and (max-width:900px){
+ .contact{padding:100px 0 90px}
+ .contact-header{grid-template-columns:minmax(0,1fr);gap:56px}
+ .contact-title{font-size:clamp(56px,10.5vw,88px)}
+ .contact-details{max-width:none;width:100%}
+ .contact-item{min-height:64px;font-size:17px}
+ .resume-block{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(32px,5vw,48px);margin-top:90px;padding-top:70px;align-items:center}
+ .resume-actions .play-button{width:auto}
+}
+
+/* ---- iPad Pro / landscape (1001 to 1366px): web layout, tuned ---- */
+@media (min-width:1001px) and (max-width:1366px){
+ .team-body{gap:18px}
+ .hero{gap:clamp(48px,6vw,90px)}
+ .contact-header{gap:clamp(48px,6vw,90px)}
+}
+
 </style>
 </head>
 
@@ -730,7 +869,7 @@ html.lang-ja h1,html.lang-ja h2,html.lang-ja h3,html.lang-ja h4,html.lang-ja .te
 <section class="contact" id="contact">
 <div class="contact-header">
 <div>
-<h2 class="contact-title i18n" data-en="Let&#x27;s build&lt;br&gt;something together." data-ja="一緒に、何かを&lt;br&gt;つくりましょう。">Let's build<br>something together.</h2>
+<h2 class="contact-title i18n free-break" data-en="Let&#x27;s build&lt;br&gt;something together." data-ja="一緒に、何かを&lt;br&gt;つくりましょう。">Let's build<br>something together.</h2>
 <p class="contact-availability i18n" data-en="Open to part-time jobs now and full-time positions from 2028. Technical artist roles are my first choice, and I&#x27;m also open to art and design roles as well as game programming." data-ja="現在はアルバイトのお仕事を受付中です。2028年の卒業後は、フルタイムでの就職を希望しています。第一希望はテクニカルアーティストですが、アートやデザイン系のお仕事、ゲームプログラマーのお仕事も歓迎です。">Open to part-time jobs now and full-time positions from 2028. Technical artist roles are my first choice, and I'm also open to art and design roles as well as game programming.</p>
 </div>
 <div class="contact-details">
@@ -901,7 +1040,7 @@ const teamVideos = [...document.querySelectorAll(".team-video video")];
 const conn = navigator.connection || {};
 const saveData = !!conn.saveData || /(^|-)2g$/.test(conn.effectiveType || "");
 const isPhone = window.matchMedia("(pointer: coarse)").matches; /* phones and tablets (iPad included) */
-const smallScreen = isPhone || window.innerWidth < 900; /* these get the lighter name-m.mp4 file (made by optimize-media.sh) */
+const smallScreen = (isPhone && Math.min(screen.width, screen.height) < 700) || window.innerWidth < 700; /* only real phones get the lighter name-m.mp4 file (made by optimize-media.sh); iPad gets the sharp full-quality video */
 function srcFor(v) { return (smallScreen && !v._full) ? v.dataset.src.replace(/\.mp4(?=#|$)/, "-m.mp4") : v.dataset.src; }
 
 function attach(v, mode) {
@@ -1175,7 +1314,7 @@ document.querySelectorAll(".pdf-viewer").forEach((box) => {
             ' <a href="' + box.dataset.pdf + '" target="_blank" rel="noopener">' + (ja ? "PDFを開く" : "Open the PDF") + "</a>" +
             (detail ? "<small>" + detail.replace(/</g, "&lt;") + "</small>" : "");
         /* fallback: the browser's own PDF viewer (desktop browsers only) */
-        if (window.innerWidth >= 800 && !box.querySelector(".pdf-fallback")) {
+        if (window.innerWidth >= 800 && !window.matchMedia("(pointer: coarse)").matches && !box.querySelector(".pdf-fallback")) {
             const f = document.createElement("iframe");
             f.className = "pdf-fallback";
             f.src = box.dataset.pdf;
