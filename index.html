@@ -696,16 +696,23 @@ html.lang-ja .work-header h2{font-size:clamp(2.6rem,6vw,5rem)}
 .statement,.about,.contact{border-top:0}
 .about{background:#fff;box-shadow:0 0 0 100vmax #fff;clip-path:inset(0 -100vmax)}
 .project-switcher{background:rgba(236,236,240,.62);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);border:1px solid rgba(255,255,255,.38);box-shadow:inset 0 1px 0 rgba(255,255,255,.42),0 10px 32px rgba(0,0,0,.08)}
-/* LIQUID GLASS FACTS: clear Apple-style glass. The glass itself has no color (Apple: color comes from the content behind it / content layer), so the only color is the existing gradient text. Look comes from: blur + saturate, bright specular rim lit from the top-left, inner glow, soft layered shadow. */
-.fact,.fact.solid{position:relative;overflow:hidden;border-radius:18px;border:1px solid rgba(17,17,17,.05);background:linear-gradient(160deg,rgba(255,255,255,.72) 0%,rgba(255,255,255,.34) 45%,rgba(255,255,255,.5) 100%);-webkit-backdrop-filter:blur(16px) saturate(180%);backdrop-filter:blur(16px) saturate(180%);box-shadow:inset 0 1.5px 0 rgba(255,255,255,1),inset 0 -1.5px 3px rgba(255,255,255,.7),inset 0 -10px 18px -10px rgba(20,40,70,.07),0 1px 2px rgba(20,30,50,.06),0 12px 28px -6px rgba(20,30,50,.14);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease}
-.fact::before{content:"";position:absolute;left:-8%;top:-55%;width:116%;height:95%;pointer-events:none;border-radius:50%;background:linear-gradient(180deg,rgba(255,255,255,.85),rgba(255,255,255,0));transform:rotate(-7deg);opacity:.6}
-.fact::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;padding:1.2px;background:linear-gradient(135deg,rgba(255,255,255,1) 0%,rgba(255,255,255,.1) 32%,rgba(255,255,255,.04) 62%,rgba(255,255,255,.9) 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
-.fact dt,.fact dd{position:relative;z-index:1}
-@media (hover:hover){.fact:hover{transform:translateY(-2px);box-shadow:inset 0 1.5px 0 rgba(255,255,255,1),inset 0 -1.5px 3px rgba(255,255,255,.8),inset 0 -10px 18px -10px rgba(20,40,70,.08),0 2px 4px rgba(20,30,50,.07),0 18px 36px -8px rgba(20,30,50,.18)}}
-@media (max-width:600px){.fact,.fact.solid{border-radius:15px}}
-@supports not ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){.fact,.fact.solid{background:rgba(255,255,255,.92)}}
-@media (prefers-reduced-transparency:reduce){.fact,.fact.solid{-webkit-backdrop-filter:none;backdrop-filter:none;background:#fff}}
-@media (prefers-reduced-motion:reduce){.fact,.fact:hover{transition:none;transform:none}}
+/* LIQUID GLASS: clear Apple-style glass for the hero chips and the skills sections (skill rows, "More of what I can do" cards, tags). The glass has no color of its own; color only lives in the content (gradient text, skill bars). No hover or press reaction: Apple only gives glass that to tappable controls, and these are not tappable. */
+.fact,.fact.solid,.skill-row,.skills-deep .team-card{position:relative;overflow:hidden;border:1px solid rgba(17,17,17,.05);background:linear-gradient(160deg,rgba(255,255,255,.72) 0%,rgba(255,255,255,.34) 45%,rgba(255,255,255,.5) 100%);-webkit-backdrop-filter:blur(16px) saturate(180%);backdrop-filter:blur(16px) saturate(180%);box-shadow:inset 0 1.5px 0 rgba(255,255,255,1),inset 0 -1.5px 3px rgba(255,255,255,.7),inset 0 -10px 18px -10px rgba(20,40,70,.07),0 1px 2px rgba(20,30,50,.06),0 12px 28px -6px rgba(20,30,50,.14)}
+.fact,.fact.solid,.skill-row{border-radius:18px}
+.fact::before,.skill-row::before,.skills-deep .team-card::before{content:"";position:absolute;left:-8%;top:-55%;width:116%;height:95%;pointer-events:none;border-radius:50%;background:linear-gradient(180deg,rgba(255,255,255,.85),rgba(255,255,255,0));transform:rotate(-7deg);opacity:.6}
+.skills-deep .team-card::before{top:-90px;height:130px}
+.fact::after,.skill-row::after,.skills-deep .team-card::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;padding:1.2px;background:linear-gradient(135deg,rgba(255,255,255,1) 0%,rgba(255,255,255,.1) 32%,rgba(255,255,255,.04) 62%,rgba(255,255,255,.9) 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+.fact dt,.fact dd,.skill-row>*,.skills-deep .team-card>*{position:relative;z-index:1}
+/* skill rows become glass cards */
+.skill-row{margin-top:10px;padding:18px 22px 20px}
+.skill-bar{height:6px;border-radius:3px;background:rgba(17,17,17,.07);box-shadow:inset 0 1px 2px rgba(17,17,17,.14),0 1px 0 rgba(255,255,255,.85)}
+.skill-bar-fill{border-radius:3px;background:linear-gradient(90deg,#4c9a52 0%,#2a98a0 52%,#3678b8 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.45)}
+/* tags and language levels become small glass pills (dark glass = strongest tools) */
+.skills-deep .team-chips .team-chip,.skills-deep .lang-level{border:1px solid rgba(17,17,17,.06);background:linear-gradient(165deg,rgba(255,255,255,.85),rgba(255,255,255,.4));box-shadow:inset 0 1px 0 rgba(255,255,255,1),inset 0 -1px 0 rgba(255,255,255,.5),0 1px 2px rgba(20,30,50,.06),0 5px 12px -4px rgba(20,30,50,.12)}
+.skills-deep .team-chips .team-chip.strong,.skills-deep .lang-row.l1 .lang-level{border-color:rgba(0,0,0,.35);color:#fff;background:linear-gradient(165deg,rgba(72,72,78,.94),rgba(29,29,31,.94));box-shadow:inset 0 1px 0 rgba(255,255,255,.32),inset 0 -1px 0 rgba(0,0,0,.35),0 1px 2px rgba(0,0,0,.18),0 6px 14px -4px rgba(0,0,0,.32)}
+@media (max-width:600px){.fact,.fact.solid,.skill-row{border-radius:15px}.skill-row{padding:15px 16px 17px}}
+@supports not ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){.fact,.fact.solid,.skill-row,.skills-deep .team-card{background:rgba(255,255,255,.92)}}
+@media (prefers-reduced-transparency:reduce){.fact,.fact.solid,.skill-row,.skills-deep .team-card{-webkit-backdrop-filter:none;backdrop-filter:none;background:#fff}}
 </style>
 </head>
 
@@ -737,10 +744,10 @@ html.lang-ja .work-header h2{font-size:clamp(2.6rem,6vw,5rem)}
 <h1 class="i18n" data-en="Luca&lt;br&gt;Helgert" data-ja="ヘルゲルト&lt;br&gt;ルカ">Luca<br>Helgert</h1>
 <p class="hero-description i18n" data-en="Hello, I'm Luca, a game programming student at TECH.C., graduating in 2028. I build games from concept to playable experience, with a focus on how they look and feel. I speak Japanese, English and German." data-ja="はじめまして。るかと申します。現在、東京デザインテクノロジーセンター専門学校でゲームプログラミングを学んでおり、2028年に卒業予定です。コンセプトから遊べる体験まで、ゲームの見た目と手触りにこだわって制作しています。日本語、英語、ドイツ語が話せます。">Hello, I'm Luca, a game programming student at TECH.C., graduating in 2028. I build games from concept to playable experience, with a focus on how they look and feel. I speak Japanese, English and German.</p>
 <dl class="hero-facts">
+<div class="fact f-nick"><dt class="i18n" data-en="Nickname" data-ja="ニックネーム">Nickname</dt><dd class="i18n" data-en="Luca" data-ja="るか">Luca</dd></div>
 <div class="fact f-born"><dt class="i18n" data-en="Born in" data-ja="出身地">Born in</dt><dd class="i18n" data-en="Germany" data-ja="ドイツ">Germany</dd></div>
-<div class="fact f-age"><dt class="i18n" data-en="Age" data-ja="年齢">Age</dt><dd class="i18n" data-en="28" data-ja="28歳">28</dd></div>
 <div class="fact f-lives"><dt class="i18n" data-en="Lives in" data-ja="住所">Lives in</dt><dd class="i18n" data-en="Tokyo" data-ja="東京都">Tokyo</dd></div>
-<div class="fact f-sns solid"><dt class="i18n" data-en="SNS" data-ja="SNS">SNS</dt><dd class="i18n" data-en="19k total" data-ja="合計1.9万人">19k total</dd></div>
+<div class="fact f-sns solid"><dt class="i18n" data-en="SNS" data-ja="SNS">SNS</dt><dd class="i18n" data-en="19k followers total" data-ja="フォロワー合計1.9万人">19k followers total</dd></div>
 <div class="fact f-award solid"><dt class="i18n" data-en="School contest" data-ja="校内コンテスト">School contest</dt><dd class="i18n" data-en="Overall winner" data-ja="総合優勝">Overall winner</dd></div>
 <div class="fact f-award solid"><dt class="i18n" data-en="Corporate project" data-ja="企業連携プロジェクト">Corporate project</dt><dd class="i18n" data-en="1st of 7 teams" data-ja="7チーム中1位">1st of 7 teams</dd></div>
 </dl>
