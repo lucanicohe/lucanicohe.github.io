@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f5f5f2;--text:#111;--muted:#73736e;--line:rgba(17,17,17,.12);--max:1500px;--padding:clamp(28px,5vw,80px)}
+:root{--bg:#f5f5f7;--text:#1d1d1f;--muted:#6e6e73;--line:rgba(17,17,17,.12);--max:1500px;--padding:clamp(28px,5vw,80px)}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--text);font-family:"Inter","Noto Sans JP",sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;overflow-x:clip}
@@ -21,7 +21,7 @@ html.lang-ja p{line-height:1.9}
 html.lang-ja h1,html.lang-ja h2,html.lang-ja .big{line-height:1.35}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;height:76px;background:rgba(245,245,242,.88);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid transparent;transition:border-color .3s}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:76px;background:rgba(245,245,247,.88);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid transparent;transition:border-color .3s}
 nav.scrolled{border-color:var(--line)}
 .nav-inner{width:min(100% - (var(--padding) * 2),var(--max));height:100%;margin:auto;display:flex;align-items:center;justify-content:space-between}
 .logo{font-size:16px;font-weight:600;letter-spacing:-.035em;text-decoration:none}
@@ -51,7 +51,7 @@ section[id]{scroll-margin-top:0}
 .pic-cap{margin-top:12px;font-size:13px;opacity:.65}
 /* VIDEO TILES (Apple newsroom pattern: no box, rounded media, one short caption directly underneath, several items in one gallery row) */
 .reel .pic.vertical,.hob-media .pic{width:100%;margin:0}
-.reel .pic.vertical video,.hob-media .pic video{aspect-ratio:5/7;max-height:none;object-fit:cover;object-position:center 30%;border-radius:24px;background:#e9e9e5}
+.reel .pic.vertical video,.hob-media .pic video{aspect-ratio:5/7;max-height:none;object-fit:cover;object-position:center 30%;border-radius:24px;background:#e8e8ed}
 .wrap.reels{margin-top:clamp(56px,7vw,96px)}
 .reels-grid{display:grid;grid-template-columns:repeat(3,minmax(0,340px));justify-content:space-between;gap:clamp(28px,4vw,56px)}
 .reel{margin:0;min-width:0}
@@ -109,9 +109,9 @@ p{margin:0 0 1.3em;max-width:620px;font-size:clamp(17px,1.7vw,21px);line-height:
 .intro-lead{margin:0}
 
 /* DARK */
-.dark{background:var(--text);color:#f5f5f2;border-top:0}
-.dark p{color:#a1a19c}
-.dark .eyebrow{color:#8a8a85}
+.dark{background:var(--text);color:#f5f5f7;border-top:0}
+.dark p{color:#a1a1a6}
+.dark .eyebrow{color:#86868b}
 .big{max-width:15em;margin:0 0 .7em;font-size:clamp(2.6rem,6vw,5.5rem);font-weight:500;line-height:1;letter-spacing:-.06em}
 
 /* CARDS */
@@ -126,10 +126,10 @@ p{margin:0 0 1.3em;max-width:620px;font-size:clamp(17px,1.7vw,21px);line-height:
 .stat{margin:0;font-size:clamp(3.5rem,7vw,6rem);font-weight:500;line-height:1;letter-spacing:-.06em;color:var(--text)}
 
 /* HOBBIES (dark section, Apple-style card rail) */
-.hob-block{margin-top:clamp(64px,8vw,110px);padding-top:clamp(40px,5vw,64px);border-top:1px solid rgba(245,245,242,.14)}
+.hob-block{margin-top:clamp(64px,8vw,110px);padding-top:clamp(40px,5vw,64px);border-top:1px solid rgba(245,245,247,.14)}
 .hob-block.first{margin-top:clamp(40px,5vw,64px);padding-top:0;border-top:0}
 .hob-head{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(24px,6vw,100px);align-items:baseline}
-.hob-title{margin:0;font-size:clamp(1.8rem,3.2vw,2.8rem);font-weight:600;line-height:1.1;letter-spacing:-.045em;color:#f5f5f2}
+.hob-title{margin:0;font-size:clamp(1.8rem,3.2vw,2.8rem);font-weight:600;line-height:1.1;letter-spacing:-.045em;color:#f5f5f7}
 html.lang-ja .hob-title{line-height:1.4}
 .hob-head p{margin:0;max-width:640px;font-size:clamp(16px,1.45vw,19px)}
 .rail{display:flex;gap:18px;margin-top:clamp(36px,4vw,56px);overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
@@ -137,19 +137,18 @@ html.lang-ja .hob-title{line-height:1.4}
 .fav{flex:0 0 clamp(170px,21vw,260px);scroll-snap-align:start;margin:0}
 .fav-pic{aspect-ratio:3/4;border-radius:24px;overflow:hidden;background:#2a2a28}
 .fav-pic img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
-.fav:hover .fav-pic img{transform:scale(1.04)}
-.fav-title{margin:16px 0 4px;font-size:clamp(15px,1.3vw,17px);font-weight:600;line-height:1.3;letter-spacing:-.02em;color:#f5f5f2}
-.fav-meta{font-size:13.5px;line-height:1.4;color:#8a8a85}
+.fav-title{margin:16px 0 4px;font-size:clamp(15px,1.3vw,17px);font-weight:600;line-height:1.3;letter-spacing:-.02em;color:#f5f5f7}
+.fav-meta{font-size:13.5px;line-height:1.4;color:#86868b}
 /* company line above the title so every card starts its text on the same line, however long the title is */
 .fav{display:flex;flex-direction:column}
 .fav-meta{order:1;margin-top:16px}
 .fav-title{order:2;margin:4px 0 0}
 .rail-nav{display:flex;justify-content:flex-end;gap:10px;margin-top:26px}
-.rail-nav button{width:44px;height:44px;border:0;border-radius:50%;background:rgba(245,245,242,.14);color:#f5f5f2;font-family:inherit;font-size:24px;line-height:1;padding:0 0 3px;cursor:pointer;transition:background .2s,opacity .2s}
-.rail-nav button:hover:not([disabled]){background:rgba(245,245,242,.26)}
+.rail-nav button{width:44px;height:44px;border:0;border-radius:50%;background:rgba(245,245,247,.14);color:#f5f5f7;font-family:inherit;font-size:24px;line-height:1;padding:0 0 3px;cursor:pointer;transition:background .2s,opacity .2s}
+.rail-nav button:hover:not([disabled]){background:rgba(245,245,247,.26)}
 .rail-nav button[disabled]{opacity:.3;cursor:default}
-.dark .pill:not(.solid){border-color:rgba(245,245,242,.3);color:#f5f5f2}
-.dark .pill:not(.solid):hover{background:#f5f5f2;color:#111}
+.dark .pill:not(.solid){border-color:rgba(245,245,247,.3);color:#f5f5f7}
+.dark .pill:not(.solid):hover{background:#f5f5f7;color:#111}
 @media(max-width:800px){.hob-head{grid-template-columns:1fr;gap:16px}}
 @media(max-width:600px){.rail{gap:14px}}
 
@@ -199,16 +198,16 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28p
 .rail{overflow-y:clip;scroll-snap-type:x proximity}
 /* social: text left, media right (bigger videos) */
 #social .split{grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr);gap:clamp(36px,5vw,80px);align-items:center}
-.dark .stat{color:#f5f5f2}
-.dark .reel-meta{color:#f5f5f2}
+.dark .stat{color:#f5f5f7}
+.dark .reel-meta{color:#f5f5f7}
 .stat-strip{margin:40px 0 0;padding:26px 28px 22px;border-radius:28px;background:#1c1c1e}
 .stat-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
-.stat-item{padding:0 18px;border-left:1px solid rgba(245,245,242,.12)}
+.stat-item{padding:0 18px;border-left:1px solid rgba(245,245,247,.12)}
 .stat-item:first-child{padding-left:0;border-left:0}
 .stat-item .stat{font-size:clamp(1.8rem,3.1vw,2.8rem);letter-spacing:-.06em;white-space:nowrap}
 #social h2{font-size:clamp(2.4rem,4.4vw,4rem)}
-.stat-lab{margin-top:8px;font-size:12.5px;line-height:1.35;color:#8a8a85}
-.stat-note{margin-top:20px;padding-top:16px;border-top:1px solid rgba(245,245,242,.12);font-size:13px;color:#8a8a85}
+.stat-lab{margin-top:8px;font-size:12.5px;line-height:1.35;color:#86868b}
+.stat-note{margin-top:20px;padding-top:16px;border-top:1px solid rgba(245,245,247,.12);font-size:13px;color:#86868b}
 #social .pills{margin-top:28px}
 .reel-trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(10px,1.4vw,18px);align-items:start}
 .reel-trio .reel,.reel-trio .reel:nth-child(n){margin-top:0!important}
@@ -271,9 +270,8 @@ a,button{-webkit-tap-highlight-color:transparent}
 @media (hover:none){
  .pill:hover{background:transparent;color:var(--text)}
  .pill.solid:hover{background:var(--text);color:var(--bg)}
- .dark .pill:not(.solid):hover{background:transparent;color:#f5f5f2}
- .fav:hover .fav-pic img{transform:none}
- .rail-nav button:hover:not([disabled]){background:rgba(245,245,242,.14)}
+ .dark .pill:not(.solid):hover{background:transparent;color:#f5f5f7}
+ .rail-nav button:hover:not([disabled]){background:rgba(245,245,247,.14)}
 }
 @media (min-width:601px) and (pointer:coarse){
  .pill{height:52px}
@@ -327,6 +325,31 @@ a,button{-webkit-tap-highlight-color:transparent}
 /* iPad / Safari / Chrome on iOS: the page ends at the footer. No sideways scroll container, no stretchy empty area above or below the page. */
 html{overflow-x:hidden;overflow-x:clip;overscroll-behavior:none;background:var(--bg)}
 body{overscroll-behavior:none}
+/* HDR fix: keep pictures/videos at normal brightness (no glow, no dimmed page) */
+:root{dynamic-range-limit:standard}
+img,video{dynamic-range-limit:standard}
+
+/* ================= APPLE PASS ================= */
+/* floating glass nav: the glass lives on a pseudo-element so the phone dropdown (position:fixed) keeps working */
+nav{background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none;border-bottom:0;pointer-events:none}
+.nav-inner{pointer-events:auto;position:relative;isolation:isolate;width:min(100% - 24px,1180px);height:54px;margin:11px auto 0;padding:0 14px 0 26px;border-radius:999px}
+.nav-inner::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background:rgba(245,245,247,.58);-webkit-backdrop-filter:blur(22px) saturate(190%);backdrop-filter:blur(22px) saturate(190%);border:1px solid rgba(255,255,255,.34);box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 -1px 0 rgba(0,0,0,.04),0 8px 30px rgba(0,0,0,.10);transition:background .3s}
+nav.scrolled .nav-inner::before{background:rgba(245,245,247,.74)}
+.nav-dd-panel{background:rgba(250,250,252,.66);-webkit-backdrop-filter:blur(26px) saturate(190%);backdrop-filter:blur(26px) saturate(190%);border:1px solid rgba(255,255,255,.36);box-shadow:inset 0 1px 0 rgba(255,255,255,.42),0 18px 50px rgba(0,0,0,.14)}
+@media(max-width:600px){.nav-inner{height:48px;margin-top:8px;padding:0 8px 0 16px}.nav-inner::before{-webkit-backdrop-filter:blur(16px) saturate(180%);backdrop-filter:blur(16px) saturate(180%)}.nav-dd-panel{top:66px}}
+@media(max-width:480px){.nav-inner{width:auto;max-width:calc(100% - 24px);margin-left:auto;margin-right:12px;padding:0 6px 0 16px}}
+/* quieter labels: sentence case instead of tracked capitals */
+.eyebrow{text-transform:none;letter-spacing:0;font-size:15px;font-weight:600}
+.skills-heading,.sd-sub,.contact-details-label,.card-label,.reel-platform{text-transform:none;letter-spacing:0}
+
+/* about: true black sections, no section hairlines, calmer headings, glass captions on the reels */
+.dark{background:#000}
+.sec{border-top:0}
+h2,.big{font-weight:600}
+@media(min-width:1101px){h2{font-size:clamp(2.6rem,4.4vw,4.2rem)}.big{font-size:clamp(2.6rem,5vw,4.6rem)}.hero h1{font-size:clamp(3.4rem,6.4vw,6.4rem);font-weight:600}}
+.reel-trio .reel{position:relative}
+.reel-trio .reel figcaption{position:absolute;left:10px;right:auto;bottom:10px;margin:0;padding:8px 12px 9px;border-radius:16px;background:rgba(28,28,30,.34);-webkit-backdrop-filter:blur(16px) saturate(170%);backdrop-filter:blur(16px) saturate(170%);border:1px solid rgba(255,255,255,.15);box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}
+.reel-trio .reel-platform{color:rgba(245,245,247,.78)}
 </style>
 </head>
 <body>
@@ -353,7 +376,7 @@ body{overscroll-behavior:none}
   <h1 class="i18n" data-en="More about me" data-ja="私について">More about me</h1>
   <p class="i18n" data-en="Who I am, where I come from, and where I’m going." data-ja="私という人間、これまでの歩み、そしてこれから。">Who I am, where I come from, and where I’m going.</p>
  </div>
- <div class="pic"><img decoding="async" fetchpriority="high" src="me1.jpg" alt="Luca Helgert"></div>
+ <div class="pic"><video data-src="boat.mp4#t=0.1" poster="me1.jpg" muted loop playsinline preload="none" aria-label="Luca Helgert"></video></div>
 </header>
 
 <!-- ORIGINS -->
@@ -453,14 +476,16 @@ body{overscroll-behavior:none}
    <div class="rail-wrap">
     <div class="rail">
    <figure class="fav"><div class="fav-pic"><img decoding="async" src="mario64.jpg" alt="Super Mario 64" loading="lazy"></div><div class="fav-title i18n" data-en="Super Mario 64" data-ja="スーパーマリオ64">Super Mario 64</div><div class="fav-meta i18n" data-en="Nintendo" data-ja="任天堂">Nintendo</div></figure>
-   <figure class="fav"><div class="fav-pic"><img decoding="async" src="kotor.jpg" alt="Star Wars: Knights of the Old Republic" loading="lazy"></div><div class="fav-title i18n" data-en="Star Wars: Knights of the Old Republic" data-ja="Star Wars: Knights of the Old Republic">Star Wars: Knights of the Old Republic</div><div class="fav-meta i18n" data-en="BioWare" data-ja="バイオウェア">BioWare</div></figure>
    <figure class="fav"><div class="fav-pic"><img decoding="async" src="skyrim.jpg" alt="Skyrim" loading="lazy"></div><div class="fav-title i18n" data-en="Skyrim" data-ja="スカイリム">Skyrim</div><div class="fav-meta i18n" data-en="Bethesda Game Studios" data-ja="ベセスダ・ゲームスタジオ">Bethesda Game Studios</div></figure>
+   <figure class="fav"><div class="fav-pic"><img decoding="async" src="godhand.jpg" alt="God Hand" loading="lazy"></div><div class="fav-title i18n" data-en="God Hand" data-ja="ゴッドハンド">God Hand</div><div class="fav-meta i18n" data-en="Clover Studio" data-ja="クローバースタジオ">Clover Studio</div></figure>
    <figure class="fav"><div class="fav-pic"><img decoding="async" src="yakuza0.jpg" alt="Yakuza 0" loading="lazy"></div><div class="fav-title i18n" data-en="Yakuza 0" data-ja="龍が如く0 誓いの場所">Yakuza 0</div><div class="fav-meta i18n" data-en="SEGA" data-ja="セガ">SEGA</div></figure>
+   <figure class="fav"><div class="fav-pic"><img decoding="async" src="metalgearrising.jpg" alt="Metal Gear Rising: Revengeance" loading="lazy"></div><div class="fav-title i18n" data-en="Metal Gear Rising: Revengeance" data-ja="メタルギア ライジング リベンジェンス">Metal Gear Rising: Revengeance</div><div class="fav-meta i18n" data-en="PlatinumGames" data-ja="プラチナゲームズ">PlatinumGames</div></figure>
+   <figure class="fav"><div class="fav-pic"><img decoding="async" src="devilmaycry.jpg" alt="Devil May Cry" loading="lazy"></div><div class="fav-title i18n" data-en="Devil May Cry" data-ja="デビル メイ クライ">Devil May Cry</div><div class="fav-meta i18n" data-en="Capcom" data-ja="カプコン">Capcom</div></figure>
    <figure class="fav"><div class="fav-pic"><img decoding="async" src="darksouls.jpg" alt="Dark Souls" loading="lazy"></div><div class="fav-title i18n" data-en="Dark Souls" data-ja="ダークソウル">Dark Souls</div><div class="fav-meta i18n" data-en="FromSoftware" data-ja="フロム・ソフトウェア">FromSoftware</div></figure>
    <figure class="fav"><div class="fav-pic"><img decoding="async" src="ff7.jpg" alt="Final Fantasy VII" loading="lazy"></div><div class="fav-title i18n" data-en="Final Fantasy VII" data-ja="ファイナルファンタジーVII">Final Fantasy VII</div><div class="fav-meta i18n" data-en="Square Enix" data-ja="スクウェア・エニックス">Square Enix</div></figure>
-   <figure class="fav"><div class="fav-pic"><img decoding="async" src="metalgearrising.jpg" alt="Metal Gear Rising: Revengeance" loading="lazy"></div><div class="fav-title i18n" data-en="Metal Gear Rising: Revengeance" data-ja="メタルギア ライジング リベンジェンス">Metal Gear Rising: Revengeance</div><div class="fav-meta i18n" data-en="PlatinumGames" data-ja="プラチナゲームズ">PlatinumGames</div></figure>
    <figure class="fav"><div class="fav-pic"><img decoding="async" src="naruto.jpg" alt="Naruto Shippuden: Ultimate Ninja Storm" loading="lazy"></div><div class="fav-title i18n" data-en="Naruto Shippuden: Ultimate Ninja Storm" data-ja="NARUTO-ナルト- 疾風伝 ナルティメットストーム">Naruto Shippuden: Ultimate Ninja Storm</div><div class="fav-meta i18n" data-en="CyberConnect2" data-ja="サイバーコネクトツー">CyberConnect2</div></figure>
-    </div>
+   <figure class="fav"><div class="fav-pic"><img decoding="async" src="danganronpa.jpg" alt="Danganronpa" loading="lazy"></div><div class="fav-title i18n" data-en="Danganronpa" data-ja="ダンガンロンパ">Danganronpa</div><div class="fav-meta i18n" data-en="Spike Chunsoft" data-ja="スパイク・チュンソフト">Spike Chunsoft</div></figure>
+</div>
     <div class="rail-nav"><button class="prev" type="button" aria-label="Previous" disabled>&lsaquo;</button><button class="next" type="button" aria-label="Next">&rsaquo;</button></div>
    </div>
   </div>
@@ -496,7 +521,7 @@ body{overscroll-behavior:none}
    <p class="i18n" data-en="Thank you for taking a look. If what you’ve seen fits your team or your next project, I’d be glad to hear from you." data-ja="ご覧いただき、ありがとうございます。チームやプロジェクトにご興味をお持ちいただけましたら、お気軽にご連絡ください。">Thank you for taking a look. If what you’ve seen fits your team or your next project, I’d be glad to hear from you.</p>
    <p class="i18n" data-en="I’m open to part-time work now and full-time work from 2028." data-ja="現在はアルバイト、2028年からはフルタイムのお仕事をお待ちしています。">I’m open to part-time work now and full-time work from 2028.</p>
   <div class="pills">
-   <a class="pill solid i18n" style="background:#f5f5f2;color:#111;border-color:#f5f5f2" href="mailto:luca.helgert@icloud.com" data-en="Get in touch" data-ja="お問い合わせ">Get in touch</a>
+   <a class="pill solid i18n" style="background:#f5f5f7;color:#111;border-color:#f5f5f7" href="mailto:luca.helgert@icloud.com" data-en="Get in touch" data-ja="お問い合わせ">Get in touch</a>
    <a class="pill i18n" href="index.html#resume" data-en="View resume" data-ja="履歴書を見る">View resume</a>
   </div>
   </div>
