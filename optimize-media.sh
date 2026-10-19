@@ -11,6 +11,8 @@
 # processes NEW or REPLACED ones (put a new video with the same name in the folder and only that one is redone).
 #   ./optimize-media.sh --mark-done  one time only: tell the script that everything already in the folder is optimized (no encoding)
 #   ./optimize-media.sh --redo artwork.mp4   you replaced this file with a NEW version: treat the file in the folder as the new original and redo it
+#   ./optimize-media.sh --refresh    rebuild ALL -m.mp4 and -poster.jpg from the videos currently in the folder (no re-optimizing of the main videos)
+#                                    (also happens automatically on a normal run for any video that is newer than its -m / poster)
 #   ./optimize-media.sh --force    redo everything again from ./originals/ (e.g. after changing --max-seconds)
 #
 # WHY THESE SETTINGS (the site shows each video at most 1200 px wide, muted, looping)
@@ -27,11 +29,12 @@
 # PICTURES
 #   any jpg wider than 1600 px or bigger than 300 KB -> 1600 px wide, high quality, same file name (no HTML change needed)
 set -euo pipefail
-LOSSLESS=0; TRIM=0; FORCE=0; MARK=0; REDO=""
+LOSSLESS=0; TRIM=0; FORCE=0; MARK=0; REFRESH=0; REDO=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --lossless) LOSSLESS=1 ;;
     --force) FORCE=1 ;;
+    --refresh) REFRESH=1 ;;
     --mark-done) MARK=1 ;;
     --redo) REDO="$REDO|${2:?--redo needs a file name}|"; shift ;;
     --max-seconds) TRIM="${2:?--max-seconds needs a number}"; shift ;;
@@ -69,6 +72,13 @@ enc() { # in out maxside crf maxrate bufsize
          -g 60 -movflags +faststart "$2"
 }
 
+# rebuild the phone file + poster from the video that is currently in the folder
+refresh_derived() { # file base
+  enc "$1" "tmp_$2-m.mp4" 1280 26 1600k 3200k && mv "tmp_$2-m.mp4" "$2-m.mp4"
+  ffmpeg -y -loglevel error -ss 0.1 -i "$1" -frames:v 1 -vf "$(fit 1280)" -q:v 5 "$2-poster.jpg"
+  echo "refresh $2-m.mp4 + $2-poster.jpg ($(mb "$(fsize "$2-m.mp4")"))"
+}
+
 # --redo name.ext : forget everything about that file so the one in the folder counts as a brand new original
 if [[ -n "$REDO" ]]; then
   IFS='|' read -ra _r <<< "$REDO"
@@ -103,7 +113,12 @@ for f in *.mp4; do
   [[ "$f" == tmp_* ]] && continue
   base="${f%.mp4}"; cur=$(fsize "$f")
   if [[ $FORCE == 0 && "$(recorded "$f")" == "$cur" && -f "$base-m.mp4" && -f "$base-poster.jpg" ]]; then
-    echo "skip   $f (already optimized)"; continue
+    if [[ $REFRESH == 1 || "$f" -nt "$base-m.mp4" || "$f" -nt "$base-poster.jpg" ]]; then
+      refresh_derived "$f" "$base"
+    else
+      echo "skip   $f (already optimized)"
+    fi
+    continue
   fi
   sync_original "$f" "$f" "$cur"
   src="originals/$f"; size=$(fsize "$src")
