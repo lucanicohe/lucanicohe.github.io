@@ -15,9 +15,11 @@ HERE = Path(__file__).parent
 # ------------------------------------------------------------------ CONFIG
 TODAY = datetime.date.today()
 DATE_TEXT = f"{TODAY.year}年{TODAY.month}月{TODAY.day}日現在"
-AGE = 28                       # shown as 満28歳 (birth date is intentionally not shown)
+BIRTH = datetime.date(1998, 4, 15)
+AGE = TODAY.year - BIRTH.year - ((TODAY.month, TODAY.day) < (BIRTH.month, BIRTH.day))
+BIRTH_TEXT = f"{BIRTH.year}年{BIRTH.month}月{BIRTH.day}日生"
 EMAIL = "luca.helgert@icloud.com"
-PORTFOLIO = "github.com/lucanicohe"        # change to your portfolio URL if different
+PORTFOLIO = "lucanicohe.github.io"        # your portfolio site (please confirm this is the exact URL)
 
 # Certification dates are not in your files, so they are left empty.
 # Fill in (year, month) as strings, e.g. ("2026", "2")
@@ -52,11 +54,7 @@ education = [
     ("2028", "3", "同　卒業見込"),
 ]
 
-work = [
-    ("2017", "", "ドイツにてフリーランス作曲家として活動開始"),
-    ("", "", "　YouTubeチャンネルで楽曲を発信し、登録者数1.5万人を達成"),
-    ("2023", "", "フリーランス作曲家としての活動を終了（約6年間）"),
-]
+
 
 html = f"""<!DOCTYPE html>
 <html lang="ja"><head><meta charset="utf-8"><title>履歴書 — Luca Helgert</title>
@@ -64,7 +62,7 @@ html = f"""<!DOCTYPE html>
 @page {{ size: 210mm 297mm; margin: 0 }}
 * {{ box-sizing: border-box }}
 html, body {{ margin: 0; padding: 0 }}
-body {{ font-family: "Noto Sans CJK JP", "Noto Sans JP", sans-serif; color: #000; font-size: 9pt; -webkit-print-color-adjust: exact }}
+body {{ font-family: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Hiragino Sans", "ヒラギノ角ゴシック", "Hiragino Kaku Gothic ProN", "Noto Sans CJK JP", "Noto Sans JP", sans-serif; color: #000; font-size: 9pt; -webkit-print-color-adjust: exact }}
 .page {{ width: 210mm; height: 297mm; padding: 12mm 14mm 10mm; page-break-after: always; position: relative; overflow: hidden }}
 .page:last-child {{ page-break-after: auto }}
 
@@ -83,8 +81,11 @@ th {{ text-align: center; font-size: 8.5pt }}
 .top .left {{ flex: 1; min-width: 0 }}
 .photo {{ width: 30mm; height: 40mm; margin-left: 4mm; flex-shrink: 0; border: .3mm solid #000 }}
 .photo img {{ width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block }}
-.id td {{ height: 7mm }}
-.id tr.name td {{ height: 20mm }}
+.id td {{ height: 6.6mm }}
+.id tr.name td {{ height: 16.5mm }}
+.id tr.row td {{ height: 8.6mm }}
+.id .v {{ font-size: 11pt }}
+.id .v2 {{ font-size: 9.5pt; margin-left: 5mm; color: #222 }}
 .id tr.age td {{ height: 11.5mm }}
 .name-main {{ font-size: 23pt; letter-spacing: .02em; line-height: 1; }}
 .name-sub {{ font-size: 9pt; text-align: right; color: #222 }}
@@ -94,16 +95,24 @@ th {{ text-align: center; font-size: 8.5pt }}
 .contact td.small {{ font-size: 8.5pt }}
 .contact td.label {{ font-size: 7.5pt; height: auto }}
 .contact td.label.m {{ font-size: 9pt }}
-.hist {{ margin-top: 7mm }}
-.hist td {{ height: 7.55mm; font-size: 9pt }}
+.visa {{ margin-top: 3mm }}
+.visa td {{ height: 9mm }}
+.visa td.label {{ width: 24mm; font-size: 9pt }}
+.visa td.vv {{ font-size: 11pt }}
+.visa td.small {{ font-size: 8.8pt }}
+.hist {{ margin-top: 4mm }}
+.hist td {{ height: 8.2mm; font-size: 9.5pt }}
 .hist td:nth-child(1) {{ width: 18mm; text-align: center }}
 .hist td:nth-child(2) {{ width: 11mm; text-align: center }}
-.hist th {{ height: 7.55mm }}
+.hist th {{ height: 8.2mm }}
 .end {{ text-align: right !important }}
 .foot {{ position: absolute; left: 14mm; right: 14mm; bottom: 7mm; font-size: 7pt; color: #444; display: flex; justify-content: space-between }}
 
 /* PAGE 2 */
 .p2 table {{ margin-bottom: 3.2mm }}
+.p2head {{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:3mm; padding-bottom:1.2mm; border-bottom:.5mm solid #000 }}
+.p2head .t {{ font-size:13pt; font-weight:500; letter-spacing:.45em }}
+.p2head .n {{ font-size:9pt }}
 .p2 .lic td {{ height: 6.6mm; font-size: 8.8pt }}
 .p2 .lic th {{ height: 6.4mm }}
 .p2 .lic td:nth-child(1) {{ width: 18mm; text-align: center }}
@@ -115,15 +124,18 @@ th {{ text-align: center; font-size: 8.5pt }}
 .skills .k {{ flex: 0 0 19mm; color: #444; font-size: 7.4pt }}
 .skills .kk {{ flex: 0 0 10mm }}
 .pr th {{ height: 6.4mm }}
-.pr td {{ vertical-align: top; padding: 2mm 3.2mm 2.2mm; font-size: 8.05pt; line-height: 1.56 }}
-.pr h4 {{ margin: 0 0 .1mm; font-size: 8.3pt; font-weight: 700 }}
-.pr h4:not(:first-child) {{ margin-top: 1.3mm }}
+.pr td {{ vertical-align: top; padding: 2mm 3.2mm 2.2mm; font-size: 8.6pt; line-height: 1.6 }}
+.pr p + p {{ margin-top: .8mm }}
+.pr h4 {{ margin: 0 0 .4mm; font-size: 9.8pt; font-weight: 700; line-height: 1.35 }}
+.pr h4 .n {{ color:#000 }}
+.pr h3 {{ margin: 0 0 1mm; font-size: 8.6pt; font-weight: 700; border-bottom: .2mm solid #000; padding-bottom: .4mm }}
+.pr h4:not(:first-child) {{ margin-top: 2.2mm }}
 .pr p {{ margin: 0 }}
 .pr ul {{ margin: 0; padding: 0; list-style: none }}
 .pr li {{ padding-left: 3.2mm; text-indent: -3.2mm }}
 .pr .links {{ margin-top: 1.5mm; font-size: 7.6pt }}
 .wish th {{ height: 6mm; font-size: 8pt }}
-.wish td {{ height: 14mm; vertical-align: top; padding: 2mm 3.2mm; font-size: 8.5pt; line-height: 1.6 }}
+.wish td {{ height: 16mm; vertical-align: top; padding: 2mm 3.2mm; font-size: 8.5pt; line-height: 1.6 }}
 </style></head>
 <body>
 
@@ -134,29 +146,34 @@ th {{ text-align: center; font-size: 8.5pt }}
   <div class="top">
     <div class="left">
       <table class="id thick">
-        <tr><td class="label">ふりがな</td><td class="furi">るか・へるげると</td></tr>
+        <tr><td class="label">ふりがな</td><td class="furi">へるげると・るか</td></tr>
         <tr class="name"><td class="label" style="font-size:9pt">氏　名</td>
-          <td style="position:relative"><span class="name-main">ルカ・ヘルゲルト</span>
-            <span style="position:absolute;right:2.5mm;top:2mm" class="name-sub">Luca Helgert</span></td></tr>
-        <tr class="age"><td class="label">年齢・国籍</td>
-          <td><span style="font-size:10.5pt">（満　{AGE}　歳）</span><span style="margin-left:14mm;font-size:10.5pt">国籍：ドイツ</span></td></tr>
+          <td style="position:relative"><span class="name-main">ヘルゲルト・ルカ</span>
+            <span style="position:absolute;right:2.5mm;top:2mm" class="name-sub">HELGERT Luca</span></td></tr>
+        <tr class="row"><td class="label">生年月日</td>
+          <td><span class="v">{BIRTH_TEXT}</span><span class="v2">（満{AGE}歳）</span></td></tr>
+        <tr class="row"><td class="label">国籍</td>
+          <td><span class="v">ドイツ</span></td></tr>
       </table>
     </div>
     <div class="photo"><img src="data:image/jpeg;base64,{photo_b64}" alt=""></div>
   </div>
 
   <table class="contact thick" style="margin-top:3mm">
-    <tr><td class="label">ふりがな</td><td class="furi" style="font-size:9pt;height:7mm">とうきょうと</td></tr>
-    <tr><td class="label m">現住所</td><td style="font-size:11pt">東京都 <span style="font-size:8pt;color:#333;margin-left:3mm">※番地以下は選考時にお伝えいたします</span></td></tr>
+    <tr><td class="label">ふりがな</td><td class="furi" style="font-size:9pt;height:7mm">とうきょうと　せたがやく　まつばら</td></tr>
+    <tr><td class="label m">現住所</td><td style="font-size:11pt">東京都世田谷区松原 <span style="font-size:8pt;color:#333;margin-left:3mm">※番地以下は選考時にお伝えいたします</span></td></tr>
     <tr><td class="label">e-mail</td><td>{EMAIL}</td></tr>
     <tr><td class="label m">電話</td><td class="small">メールにてご連絡をお願いいたします（電話番号は選考時にお伝えいたします）</td></tr>
   </table>
 
+  <table class="visa thick">
+    <tr><td class="label m">在留期限</td><td class="vv">2028年5月27日</td></tr>
+    <tr><td class="label m">備考</td><td class="small">卒業後の就労に必要な在留資格への変更は、内定後に手続きいたします。</td></tr>
+  </table>
+
   <table class="hist thick">
     <tr><th>年</th><th>月</th><th>学歴</th></tr>
-    {rows(education, 1)}
-    <tr><th>年</th><th>月</th><th>職歴</th></tr>
-    {rows(work, 2)}
+    {rows(education, 2)}
     <tr><td></td><td></td><td class="end">以上</td></tr>
   </table>
 
@@ -165,6 +182,7 @@ th {{ text-align: center; font-size: 8.5pt }}
 
 <!-- ================= PAGE 2 ================= -->
 <div class="page p2">
+  <div class="p2head"><span class="t">履歴書</span><span class="n">ヘルゲルト・ルカ　／　HELGERT Luca　　{DATE_TEXT}</span></div>
   <table class="lic thick">
     <tr><th>年</th><th>月</th><th>免　許・資　格</th></tr>
     <tr><td>2025</td><td>3</td><td>日本語能力 N2レベル（Kai日本語スクール修了）</td></tr>
@@ -181,7 +199,6 @@ th {{ text-align: center; font-size: 8.5pt }}
         <div class="g"><span class="k">2D・映像</span><span>Photoshop、GIMP、Clip Studio Paint、Illustrator</span></div>
         <div class="g"><span class="k">サウンド</span><span>Logic Pro X、Ableton（作曲歴6年以上）</span></div>
         <div class="g"><span class="k">開発環境</span><span>Git / GitHub、WebGL、HTML、Windows / macOS</span></div>
-        <div class="g"><span class="k">生成AI</span><span>Claude、Cursor、Google Antigravity（補助ツールとして活用）</span></div>
       </td>
       <td>
         <div class="g"><span class="k kk">語学</span><span>ドイツ語（母語）<br>日本語（N2レベル）<br>英語（CEFR B2）</span></div>
@@ -191,43 +208,41 @@ th {{ text-align: center; font-size: 8.5pt }}
   </table>
 
   <table class="pr thick">
-    <tr><th>志望動機・自己PR</th></tr>
+    <tr><th>志望動機</th></tr>
     <tr><td>
-      <h4>【志望動機】</h4>
-      <p>幼少期からアニメを通じて日本の文化と歴史に惹かれ、日本で暮らし、いつか日本に貢献することを長年の夢としてきました。ドイツの小さな町で育ち、「自分の力で未来を築きたい」と考えて2023年に来日しました。技術と創造性の両方を活かせるゲーム開発の道を選び、現在は東京デザインテクノロジーセンター専門学校でゲームプログラミングを学んでいます。</p>
-      <p>貴社のようなプロのチームで、品質へのこだわりと開発の進め方を学びたいと考えております。シェーダー、ライティング、エフェクト、環境表現でゲームの見た目と体験を高めるテクニカルアーティストとして、またプログラマーとして、チームの制作に貢献いたします。将来は、多くの人に愛される作品を生み出し、日本のゲーム業界に貢献することが目標です。</p>
+      <h4>父のお下がりのPCで始まった夢を、東京で形にしています</h4>
+      <p>幼い頃からゲームに夢中で、やがて日本のゲーム、<span style="white-space:nowrap">『ダークソウル』</span><span style="white-space:nowrap">『龍が如く0』</span><span style="white-space:nowrap">『メタルギア ライジング』</span><span style="white-space:nowrap">『デビル メイ クライ』</span>に惹かれました。「作る側として日本で働きたい」と、ドイツの片田舎から2023年に来日。日本語は2年でN2に到達しました。</p>
+      <p>私の強みは、音・絵・コードを一人で作れることです。6年間の作曲家経験、アーティストの兄の影響で育った美術の眼、そしてプログラミング。この3つをつなぐ職種が、テクニカルアーティストでした。</p>
+      <p>TECH.C.では、企業連携で1位、東京ゲームショウ出展まで経験しました。貴社でも、見た目と動きと音を一つにまとめ、作品の魅力を高めます。</p>
+    </td></tr>
+  </table>
 
-      <h4>【自己PR】</h4>
-      <h4 style="font-weight:500;margin-top:0">① アイデアを「遊べる形」まで完成させる力</h4>
-      <p>企画から実装、仕上げまでを一人で完結させる制作を続けており、ブラウザで遊べる個人制作作品を13本公開しています。プログラミングに加え、3Dモデリング、シェーダー、UI、プロシージャル生成、物理演算、逆運動学（IK）など幅広い領域に対応できます。</p>
+  <table class="pr thick">
+    <tr><th>自己PR</th></tr>
+    <tr><td>
+      <h4>絵もコードも。チームの「通訳」になれます</h4>
+      <p>プログラム、3D、シェーダーを一人で扱えるため、美術と開発の「伝わらない」を減らせます。企業連携では7チーム中1位、校内では全学年の最優秀作品に選ばれました。</p>
 
-      <h4 style="font-weight:500">② 学内での実績</h4>
+      <h4>チームの困りごとを、行動で解決します</h4>
       <ul>
-        <li>・「Guilty Lane」（5人・3か月）：2025〜2026年度、全学年の作品の中から最優秀作品に選出。プログラム・アート・音楽を担当。</li>
-        <li>・「デカめの一杯」（5人・2か月）：学内大会で優勝。魚の挙動やキャッチ処理のスクリプトをすべて自力で実装。</li>
-        <li>・「Toy Pair」（21人・6か月）：東京ゲームショウに学校のトップ展示として出展。ギミックのプログラムを担当。</li>
-        <li>・「イカイカす」（5人・2か月）：水中表現（シェーダー・屈折・ライティング）が教員から高い評価。</li>
+        <li>・役割が曖昧で作業が重なった時は、自らテクニカルアーティストを担い、全員の担当を明確にしました。</li>
+        <li>・アイデアが増え続けた時は、優先順位をつけて絞り、期限内に完成させました。</li>
+        <li>・21人の開発では、進捗を早めに共有し、待ち時間をなくしました。</li>
       </ul>
 
-      <h4 style="font-weight:500">③ リーダー経験</h4>
-      <p>「クモ vs. マホウ」（5人・6か月）では、チームリーダー兼プランナーとして企画立案、仕様書の作成、工程管理を担当。プログラム、ビジュアルエフェクト、地形制作、作曲も自ら行い、期限内に完成させました。</p>
+      <h4>3年間の飲食店勤務で、日本の職場を学びました</h4>
+      <p>外国人のお客様にすし作りを教えながら、日本の職場のしくみと上下関係を、現場で身につけました。</p>
 
-      <h4 style="font-weight:500">④ 技術と美的感覚の両立</h4>
-      <p>兄の影響で幼少期から3Dに親しみ、3D制作歴は5年以上です。UnityとUnreal Engineで、シェーダー、ライティング、ポストプロセスによる画づくりに取り組んでいます。6年間の作曲家経験を活かし、サウンドも含めてゲーム体験を設計できます。</p>
+      <h4>ドイツ育ち×日本語N2×作曲6年</h4>
+      <p>3か国語で話し、音楽も作れます。空手やジムで心身を整え、制作過程を発信しています。SNS合計1.9万人、最高400万回再生。</p>
 
-      <h4 style="font-weight:500">⑤ 情報発信力と多文化対応力</h4>
-      <p>制作過程をInstagram（フォロワー約3,000人）とYouTubeで発信し、最も再生された動画は400万回を超えました。ドイツ語・日本語・英語でのコミュニケーションが可能で、ホスピタリティ資格で学んだ姿勢をチーム内外の対話に活かします。</p>
-
-      <h4 style="font-weight:500">⑥ 生成AIとの向き合い方</h4>
-      <p>生成AIは補助的な道具として活用し、方向性と最終的な品質の判断は自分で行います。AI使用の程度は、作品ごとにポートフォリオへ明記しています。</p>
-
-      <p class="links">【作品集】 {PORTFOLIO}　／　Instagram：instagram.com/lucanicohe　／　YouTube：youtube.com/@musicformed</p>
+      <p class="links">【作品集】 {PORTFOLIO}　／　Instagram：instagram.com/lucanicohe</p>
     </td></tr>
   </table>
 
   <table class="wish thick" style="margin-bottom:0">
     <tr><th>本人希望記入欄（給料・職種・勤務時間・勤務地・その他についての希望があれば記入）</th></tr>
-    <tr><td>在学中はアルバイト、2028年3月の卒業後はフルタイムでの勤務を希望いたします。職種はテクニカルアーティストを第一希望とし、ゲームプログラマーも歓迎です。その他は貴社の規定に従います。</td></tr>
+    <tr><td>在学中はアルバイト、2028年3月の卒業後はフルタイムでの勤務を希望いたします。<br>志望職種：テクニカルアーティスト<br>その他は貴社の規定に従います。</td></tr>
   </table>
 
   <div class="foot"><span></span><span>2 / 2</span></div>
@@ -236,6 +251,12 @@ th {{ text-align: center; font-size: 8.5pt }}
 """
 
 (HERE / "resume.html").write_text(html, encoding="utf-8")
+import re as _re
+_t = lambda x: _re.sub(r"<[^>]+>|\s", "", x)
+_boxes = _re.findall(r'<th>(志望動機|自己PR)</th></tr>\s*<tr><td>([\s\S]*?)</td></tr>', html)
+for _n, _b in _boxes:
+    _b = _b.split('<p class="links">')[0]
+    print(_n, "chars (incl. headlines):", len(_t(_b)))
 
 # ---------------------------------------------------------------- render PDF
 from playwright.sync_api import sync_playwright
