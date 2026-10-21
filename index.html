@@ -970,10 +970,11 @@ button.xmore:active{transform:scale(.97)}
 @media (prefers-reduced-transparency:reduce){button.xmore{-webkit-backdrop-filter:none;backdrop-filter:none;background:#e9e9ee}}
 .xcard-actions{gap:10px 22px}
 
-/* SCROLL REVEAL (Apple style, layered: headline -> text -> buttons -> media/cards; plays once) */
+/* SCROLL REVEAL (Apple style, layered: headline -> text -> lines -> arrows -> buttons -> media/cards; replays on scroll back) */
 .rv-pre{opacity:0}
 .rv-pre.rv-h{translate:0 calc(34px*var(--rv-k,1));filter:blur(8px)}
 .rv-pre.rv-t{translate:0 calc(26px*var(--rv-k,1))}
+.rv-pre.rv-l{scale:0 1}
 .rv-pre.rv-b{translate:0 calc(14px*var(--rv-k,1));scale:.9}
 .rv-pre.rv-s{translate:0 calc(22px*var(--rv-k,1));scale:.96}
 .rv-pre.rv-c{translate:0 calc(36px*var(--rv-k,1));scale:.975}
@@ -1891,46 +1892,88 @@ applyLanguage(currentLang);
 </script>
 
 <script>
-/* SCROLL REVEAL: Apple-style layered entrances. Headlines sharpen in first, then text, then buttons pop in,
-   while media and cards ease up from a slight scale. Plays once per element; skipped for reduced motion. */
+/* SCROLL REVEAL: Apple-style layered entrances, one section at a time.
+   On first load only the hero is visible; everything else stays hidden until you scroll to it.
+   Order inside a section: headline, text, lines, arrows, buttons, media/cards.
+   Reverses when you scroll back above an element, so it plays again on the way down. Skipped for reduced motion. */
 (()=>{
   if(!("IntersectionObserver" in window)||!("animate" in Element.prototype))return;
   if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
-  const SEL={"h": ".statement h2,.about-title,.contact-title,.resume-title", "t": ".statement-info,.about-text,.about-timeline,.contact-availability,.contact-details-label,.resume-text", "b": ".story-cta .play-button,.resume-actions .play-button", "s": ".proof-item,.contact-item", "c": ".team-feature,.sd-highlights .team-card,.sd-grid .team-card", "m": ".about-pic,.resume-preview"};
+  const SEL={"h": ".statement h2,.about-title,.contact-title,.resume-title", "t": ".sh-text,.statement-info,.about-text,.about-timeline,.contact-availability,.contact-details-label,.resume-text,footer .footer-inner", "l": ".sh-bracket", "s": ".sh-arrows,.proof-item,.contact-item", "b": ".project-switcher,.story-cta .play-button,.resume-actions .play-button", "c": ".team-feature,.sd-highlights .team-card,.sd-grid .team-card", "m": ".about-pic,.resume-preview"};
   const E="cubic-bezier(.28,.11,.32,1)",POP="cubic-bezier(.22,1.15,.36,1)";
   const R={
-    h:{y:34,sc:1,  blur:8,dur:1100,base:0,  ease:E},
-    t:{y:26,sc:1,  blur:0,dur:1000,base:90, ease:E},
-    b:{y:14,sc:.9, blur:0,dur:850, base:240,ease:POP},
-    s:{y:22,sc:.96,blur:0,dur:900, base:60, ease:E},
-    c:{y:36,sc:.975,blur:0,dur:1100,base:60,ease:E},
-    m:{y:40,sc:.94,blur:0,dur:1300,base:120,ease:E}
+    h:{y:34,sc:"1",  blur:8,dur:1100,base:0,  ease:E},
+    t:{y:26,sc:"1",  blur:0,dur:1000,base:90, ease:E},
+    l:{y:0, sc:"0 1",blur:0,dur:900, base:120,ease:E},
+    s:{y:22,sc:".96",blur:0,dur:900, base:140,ease:E},
+    b:{y:14,sc:".9", blur:0,dur:850, base:260,ease:POP},
+    c:{y:36,sc:".975",blur:0,dur:1100,base:60,ease:E},
+    m:{y:40,sc:".94",blur:0,dur:1300,base:120,ease:E}
   };
-  const k=innerWidth<=700?.7:1, vh=innerHeight, role=new Map();
-  const io=new IntersectionObserver(es=>{
-    const hit=es.filter(e=>e.isIntersecting).map(e=>e.target).sort((a,b)=>{
+  const k=innerWidth<=700?.7:1, vh=()=>innerHeight;
+  const role=new Map(), shown=new Set();
+  let armed=scrollY>40; /* until the first scroll, nothing outside the hero is revealed */
+
+  const play=list=>{
+    list.sort((a,b)=>{
       const A=a.getBoundingClientRect(),B=b.getBoundingClientRect();
       return (A.top-B.top)||(A.left-B.left);
-    });
-    hit.forEach((el,n)=>{
+    }).forEach((el,n)=>{
       const g=R[role.get(el)];
-      io.unobserve(el);
+      shown.add(el);
       el.classList.remove("rv-pre");
       el.style.willChange="opacity, translate, scale"+(g.blur?", filter":"");
-      const from={opacity:0,translate:"0 "+g.y*k+"px",scale:String(g.sc)};
+      const from={opacity:0,translate:"0 "+g.y*k+"px",scale:g.sc};
       const to={opacity:1,translate:"0 0",scale:"1"};
       if(g.blur){from.filter="blur("+g.blur+"px)";to.filter="blur(0px)";}
       const a=el.animate([from,to],{duration:g.dur,delay:g.base+Math.min(n*70,280),easing:g.ease,fill:"backwards"});
       const done=()=>{el.style.willChange="";};
       a.onfinish=done;a.oncancel=done;
     });
+  };
+  const hide=el=>{
+    shown.delete(el);
+    el.getAnimations().forEach(a=>a.cancel());
+    el.classList.add("rv-pre");
+  };
+
+  /* reveal when the top of an element passes ~90% of the screen height */
+  const revealIO=new IntersectionObserver(es=>{
+    if(!armed)return;
+    play(es.filter(e=>e.isIntersecting&&!shown.has(e.target)).map(e=>e.target));
   },{rootMargin:"0px 0px -10% 0px",threshold:0});
+
+  /* hide again once an element is well below the screen (or its panel is closed), so it replays */
+  const resetIO=new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting||!shown.has(e.target))return;
+      const r=e.boundingClientRect;
+      if(r.width===0||r.top>0)hide(e.target);
+    });
+  },{rootMargin:"0px 0px 25% 0px",threshold:0});
+
   Object.keys(SEL).forEach(r=>document.querySelectorAll(SEL[r]).forEach(el=>{
-    if(role.has(el)||el.getBoundingClientRect().top<vh*0.9)return; /* already on screen: leave alone */
+    if(role.has(el)||el.closest(".hero"))return;
     role.set(el,r);
     el.classList.add("rv-pre","rv-"+r);
-    io.observe(el);
+    revealIO.observe(el);
+    resetIO.observe(el);
   }));
+
+  if(!armed){
+    const arm=()=>{
+      if(scrollY<8)return;
+      armed=true;
+      removeEventListener("scroll",arm);
+      const cut=vh()*0.9;
+      play([...role.keys()].filter(el=>{
+        if(shown.has(el))return false;
+        const r=el.getBoundingClientRect();
+        return r.width>0&&r.top<cut&&r.bottom>0;
+      }));
+    };
+    addEventListener("scroll",arm,{passive:true});
+  }
 })();
 </script>
 </body>
