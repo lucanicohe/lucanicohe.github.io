@@ -3,588 +3,493 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>More about me — Luca Helgert</title>
-<meta name="description" content="More about Luca Helgert — Creator based in Tokyo">
+<title>More about me — Luca</title>
+<meta name="description" content="More about Luca — Creator based in Tokyo">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f5f5f7;--text:#1d1d1f;--muted:#6e6e73;--line:rgba(17,17,17,.12);--max:1500px;--padding:clamp(28px,5vw,80px)}
+:root{--bg:#f5f5f7;--text:#1d1d1f;--muted:#6e6e73;--slate:#5d6b82;--blue:#0066cc;--line:rgba(17,17,17,.12);--max:1500px;--padding:clamp(28px,5vw,80px)}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font-family:"Inter","Noto Sans JP",sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;overflow-x:clip}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%;overflow-x:hidden;overflow-x:clip;overscroll-behavior:none;background:#fff}
+body{margin:0;background:#fff;color:var(--text);font-family:"Inter","Noto Sans JP",sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;overflow-x:clip;overscroll-behavior:none}
 img{display:block;max-width:100%}
-a{color:inherit}
+a{color:inherit;-webkit-tap-highlight-color:transparent}
+button{-webkit-tap-highlight-color:transparent}
+h1,h2,h3{margin:0;font-weight:600}
+p{margin:0}
+b{font-weight:600}
 html.lang-ja *{letter-spacing:0!important}
 html.lang-ja body{font-family:"Noto Sans JP","Inter",sans-serif}
-html.lang-ja p{line-height:1.9}
-html.lang-ja h1,html.lang-ja h2,html.lang-ja .big{line-height:1.35}
-
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;height:76px;background:rgba(245,245,247,.88);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid transparent;transition:border-color .3s}
-nav.scrolled{border-color:var(--line)}
-.nav-inner{width:min(100% - (var(--padding) * 2),var(--max));height:100%;margin:auto;display:flex;align-items:center;justify-content:space-between}
-.logo{font-size:16px;font-weight:600;letter-spacing:-.035em;text-decoration:none}
-.nav-right{display:flex;align-items:center;gap:30px}
-.nav-links{display:flex;gap:34px}
-.nav-links a{font-size:14px;color:var(--muted);text-decoration:none;transition:color .2s}
-.nav-links a:hover,.nav-links a.current{color:var(--text)}
-/* ABOUT DROPDOWN */
-.nav-dd{position:relative;display:flex;align-items:center}
-.nav-dd-btn{display:inline-flex;align-items:center;gap:6px;padding:0;border:0;background:none;font:inherit;font-size:14px;color:var(--muted);cursor:pointer;transition:color .2s}
-.nav-dd-btn::after{content:"";width:5px;height:5px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .2s}
-.nav-dd-btn:hover,.nav-dd-btn.current,.nav-dd.open .nav-dd-btn{color:var(--text)}
-.nav-dd.open .nav-dd-btn::after{transform:translateY(1px) rotate(225deg)}
-.nav-dd-panel{position:absolute;top:calc(100% + 20px);left:50%;min-width:250px;padding:8px;border:1px solid rgba(17,17,17,.08);border-radius:18px;background:rgba(255,255,255,.97);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 18px 50px rgba(0,0,0,.12);opacity:0;visibility:hidden;transform:translate(-50%,-6px);transition:opacity .18s,transform .18s,visibility .18s}
-.nav-dd-panel::before{content:"";position:absolute;left:0;right:0;top:-22px;height:22px}
-.nav-dd.open .nav-dd-panel{opacity:1;visibility:visible;transform:translate(-50%,0)}
-@media (hover:hover){.nav-dd:hover .nav-dd-panel{opacity:1;visibility:visible;transform:translate(-50%,0)}.nav-dd:hover .nav-dd-btn{color:var(--text)}}
-.nav-links .nav-dd-panel a{display:block;padding:10px 14px;border-radius:11px;font-size:14px!important;color:var(--text);text-decoration:none;white-space:nowrap}
-.nav-links .nav-dd-panel a:hover,.nav-links .nav-dd-panel a:focus-visible{background:rgba(17,17,17,.06);outline:0}
-@media (max-width:600px){.nav-dd-panel{position:fixed;top:70px;right:12px;left:auto;min-width:0;width:min(270px,calc(100vw - 24px));max-height:calc(100vh - 90px);overflow:auto;transform:translateY(-6px)}.nav-dd.open .nav-dd-panel{transform:none}}
-/* jump targets sit below the fixed nav */
-section[id]{scroll-margin-top:0}
-.hob-block[id]{scroll-margin-top:92px}
-/* small vertical video (D.LEAGUE, Instagram reel) */
-.pic.vertical{width:min(100%,230px);margin-top:28px}
-.pic.vertical video{aspect-ratio:9/16;max-height:none;border-radius:20px;object-position:center}
-.pic-cap{margin-top:12px;font-size:13px;opacity:.65}
-/* VIDEO TILES (Apple newsroom pattern: no box, rounded media, one short caption directly underneath, several items in one gallery row) */
-.reel .pic.vertical,.hob-media .pic{width:100%;margin:0}
-.reel .pic.vertical video,.hob-media .pic video{aspect-ratio:5/7;max-height:none;object-fit:cover;object-position:center 30%;border-radius:24px;background:#e8e8ed}
-.wrap.reels{margin-top:clamp(56px,7vw,96px)}
-.reels-grid{display:grid;grid-template-columns:repeat(3,minmax(0,340px));justify-content:space-between;gap:clamp(28px,4vw,56px)}
-.reel{margin:0;min-width:0}
-.reel figcaption{margin-top:16px}
-.reel-platform{display:block;margin:0 0 6px;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.reel-meta{display:block;margin:0 0 4px;font-size:17px;font-weight:600;letter-spacing:-.025em;color:var(--text)}
-.reel .reel-text{margin:0;max-width:none;font-size:14.5px;line-height:1.5;letter-spacing:-.01em}
-@media(max-width:900px){
- .wrap.reels{width:100%}
- .reels-grid{display:flex;gap:16px;padding:0 var(--padding);overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 var(--padding);scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
- .reels-grid::-webkit-scrollbar{display:none}
- .reel{flex:0 0 min(72vw,300px);scroll-snap-align:start}
-}
-/* D.LEAGUE uses the same head grid as Games (title left, text right), then one video tile in the same left-aligned row as the game covers */
-.hob-media{margin-top:clamp(36px,4vw,56px)}
-.hob-media .hob-vid{margin:0;width:clamp(200px,21vw,260px)}
-.hob-media .fav-meta{margin-top:14px}
-@media(max-width:800px){.hob-media .hob-vid{width:min(100%,260px)}}
-.nav-dd.small .nav-dd-panel{min-width:190px}
-.lang-toggle{height:36px;padding:0 18px;border:1px solid rgba(17,17,17,.18);border-radius:18px;background:transparent;color:var(--text);font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;transition:background .2s,color .2s}
-.lang-toggle:hover{background:var(--text);color:var(--bg)}
-
-/* LAYOUT */
-.wrap{width:min(100% - (var(--padding) * 2),1320px);margin:auto}
-.sec{padding:clamp(100px,13vw,200px) 0;border-top:1px solid var(--line)}
-.eyebrow{margin-bottom:28px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-h1,h2{margin:0;font-weight:500}
-h2{font-size:clamp(2.6rem,5.5vw,5rem);line-height:1;letter-spacing:-.06em;margin-bottom:.6em}
-p{margin:0 0 1.3em;max-width:620px;font-size:clamp(17px,1.7vw,21px);line-height:1.6;color:var(--muted);letter-spacing:-.015em}
-.pill{display:inline-flex;align-items:center;height:48px;padding:0 26px;border:1px solid rgba(17,17,17,.18);border-radius:24px;font-size:15px;font-weight:500;text-decoration:none;transition:background .2s,color .2s}
-.pill:hover{background:var(--text);color:var(--bg)}
-.pill.solid{background:var(--text);color:var(--bg);border-color:var(--text)}
-.pill.solid:hover{background:transparent;color:var(--text)}
-.pills{display:flex;flex-wrap:wrap;gap:12px}
-
-/* HERO (text + tall portrait) */
-.hero{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:clamp(120px,12vw,170px) 0 clamp(90px,10vw,140px);display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(40px,6vw,100px);align-items:center}
-.hero h1{font-size:clamp(3.6rem,8vw,8.5rem);line-height:.9;letter-spacing:-.085em;overflow-wrap:anywhere}
-.hero p{margin:44px 0 40px;font-size:clamp(20px,2.4vw,30px);letter-spacing:-.03em}
-
-/* SPLIT + PICTURES */
-.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(50px,8vw,130px);align-items:center}
-.split.rev .pic{order:-1}
-.pic{isolation:isolate;transform:translateZ(0)}
-.pic img,.pic video{display:block;width:100%;aspect-ratio:3/4;max-height:92vh;object-fit:cover;object-position:center top;border-radius:28px}
-
-/* RESUME */
-.resume{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(40px,6vw,100px);align-items:start;margin-top:60px}
-.resume .pic{position:sticky;top:110px}
-.timeline{border-top:1px solid var(--line)}
-.tl-row{display:grid;grid-template-columns:minmax(100px,160px) minmax(0,1fr);gap:26px;padding:28px 0;border-bottom:1px solid var(--line)}
-.tl-date{font-size:15px;color:var(--muted)}
-.tl-title{margin:0 0 6px;font-size:clamp(20px,2.2vw,28px);line-height:1.2;letter-spacing:-.03em;font-weight:600}
-.tl-text{margin:0;max-width:680px;font-size:16px}
-.intro-lead{margin:0}
-
-/* DARK */
-.dark{background:var(--text);color:#f5f5f7;border-top:0}
-.dark p{color:#a1a1a6}
-.dark .eyebrow{color:#86868b}
-.big{max-width:15em;margin:0 0 .7em;font-size:clamp(2.6rem,6vw,5.5rem);font-weight:500;line-height:1;letter-spacing:-.06em}
-
-/* CARDS */
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:60px 0 0}
-.card{background:#fff;border-radius:28px;padding:36px 32px 40px}
-.card-label{margin-bottom:22px;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.card h3{margin:0 0 12px;font-size:clamp(22px,2.2vw,28px);line-height:1.15;letter-spacing:-.03em;font-weight:600}
-.card p{margin:0;font-size:16px}
-
-/* STATS */
-.stat-cards{display:grid;gap:18px}
-.stat{margin:0;font-size:clamp(3.5rem,7vw,6rem);font-weight:500;line-height:1;letter-spacing:-.06em;color:var(--text)}
-
-/* HOBBIES (dark section, Apple-style card rail) */
-.hob-block{margin-top:clamp(64px,8vw,110px);padding-top:clamp(40px,5vw,64px);border-top:1px solid rgba(245,245,247,.14)}
-.hob-block.first{margin-top:clamp(40px,5vw,64px);padding-top:0;border-top:0}
-.hob-head{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(24px,6vw,100px);align-items:baseline}
-.hob-title{margin:0;font-size:clamp(1.8rem,3.2vw,2.8rem);font-weight:600;line-height:1.1;letter-spacing:-.045em;color:#f5f5f7}
-html.lang-ja .hob-title{line-height:1.4}
-.hob-head p{margin:0;max-width:640px;font-size:clamp(16px,1.45vw,19px)}
-.rail{display:flex;gap:18px;margin-top:clamp(36px,4vw,56px);overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
-.rail::-webkit-scrollbar{display:none}
-.fav{flex:0 0 clamp(170px,21vw,260px);scroll-snap-align:start;margin:0}
-.fav-pic{aspect-ratio:3/4;border-radius:24px;overflow:hidden;background:#2a2a28}
-.fav-pic img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
-.fav-title{margin:16px 0 4px;font-size:clamp(15px,1.3vw,17px);font-weight:600;line-height:1.3;letter-spacing:-.02em;color:#f5f5f7}
-.fav-meta{font-size:13.5px;line-height:1.4;color:#86868b}
-/* company line above the title so every card starts its text on the same line, however long the title is */
-.fav{display:flex;flex-direction:column}
-.fav-meta{order:1;margin-top:16px}
-.fav-title{order:2;margin:4px 0 0}
-.rail-nav{display:flex;justify-content:flex-end;gap:10px;margin-top:26px}
-.rail-nav button{width:44px;height:44px;border:0;border-radius:50%;background:rgba(245,245,247,.14);color:#f5f5f7;font-family:inherit;font-size:24px;line-height:1;padding:0 0 3px;cursor:pointer;transition:background .2s,opacity .2s}
-.rail-nav button:hover:not([disabled]){background:rgba(245,245,247,.26)}
-.rail-nav button[disabled]{opacity:.3;cursor:default}
-.dark .pill:not(.solid){border-color:rgba(245,245,247,.3);color:#f5f5f7}
-.dark .pill:not(.solid):hover{background:#f5f5f7;color:#111}
-@media(max-width:800px){.hob-head{grid-template-columns:1fr;gap:16px}}
-@media(max-width:600px){.rail{gap:14px}}
-
-footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:28px 0 35px}
-.footer-inner{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
-
-@media(max-width:900px){
- .hero,.split,.resume,.cards{grid-template-columns:1fr}
- .split.rev .pic{order:0}
- .resume .pic{position:static}
- .hero .pic{order:2}
- .pic img,.pic video{max-height:none}
-}
-@media(max-width:600px){
- :root{--padding:22px}
- nav{height:64px}
- .nav-right{gap:14px}
- .nav-links{gap:14px}
- .nav-links a,.nav-links .nav-dd-btn{font-size:13px}
- .lang-toggle{height:32px;padding:0 13px;font-size:12px}
- .tl-row{grid-template-columns:1fr;gap:6px;padding:22px 0}
- .footer-inner{flex-direction:column;gap:8px}
-}
-@media(max-width:480px){
- .logo{display:none}
- .nav-inner{justify-content:flex-end}
- .nav-links{gap:12px}
- .nav-links a,.nav-links .nav-dd-btn{font-size:12px}
-}
-@media(max-width:380px){
- .nav-right{gap:10px}
- .nav-links{gap:10px}
- .nav-links a,.nav-links .nav-dd-btn{font-size:11.5px}
-}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
-
-/* ---- REWORK ---- */
-/* hobbies: stacked heads, left aligned with the cards (Apple style) */
-.hob-head{display:block;max-width:680px}
-.hob-title{margin:0 0 18px;font-size:clamp(2rem,3.8vw,3.4rem)}
-.hob-block{margin-top:clamp(44px,5vw,72px);padding-top:clamp(32px,4vw,52px)}
-.hob-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(40px,7vw,110px);align-items:center}
-.hob-row .hob-media{margin:0}
-.hob-row .hob-vid{width:clamp(220px,26vw,340px);justify-self:center}
-.hob-row .hob-media .pic video{aspect-ratio:3/4;border-radius:24px;background:#2a2a28}
-@media(max-width:800px){.hob-row{grid-template-columns:1fr}.hob-row .hob-vid{width:min(100%,260px);justify-self:start}}
-.rail{overflow-y:clip;scroll-snap-type:x proximity}
-/* social: text left, media right (bigger videos) */
-#social .split{grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr);gap:clamp(36px,5vw,80px);align-items:center}
-.dark .stat{color:#f5f5f7}
-.dark .reel-meta{color:#f5f5f7}
-.stat-strip{margin:40px 0 0;padding:26px 28px 22px;border-radius:28px;background:#1c1c1e}
-.stat-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
-.stat-item{padding:0 18px;border-left:1px solid rgba(245,245,247,.12)}
-.stat-item:first-child{padding-left:0;border-left:0}
-.stat-item .stat{font-size:clamp(1.8rem,3.1vw,2.8rem);letter-spacing:-.06em;white-space:nowrap}
-#social h2{font-size:clamp(2.4rem,4.4vw,4rem)}
-.stat-lab{margin-top:8px;font-size:12.5px;line-height:1.35;color:#86868b}
-.stat-note{margin-top:20px;padding-top:16px;border-top:1px solid rgba(245,245,247,.12);font-size:13px;color:#86868b}
-#social .pills{margin-top:28px}
-.reel-trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(10px,1.4vw,18px);align-items:start}
-.reel-trio .reel,.reel-trio .reel:nth-child(n){margin-top:0!important}
-.reel-trio .pic.vertical video{aspect-ratio:2/3;border-radius:22px;background:#2a2a28}
-.reel-trio .reel figcaption{margin-top:12px}
-.reel-trio .reel-platform{font-size:11px;margin:0 0 4px}
-.reel-trio .reel-meta{font-size:14px;margin:0}
-@media(max-width:900px){
- #social .split{grid-template-columns:1fr}
- .reel-trio{display:flex;gap:14px;overflow-x:auto;overflow-y:clip;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin-right:calc(var(--padding) * -1);padding-right:var(--padding)}
- .reel-trio::-webkit-scrollbar{display:none}
- .reel-trio .reel{flex:0 0 min(62vw,260px);scroll-snap-align:start;margin-top:0!important}
-}
-/* social: three separate boxes with the link buttons directly underneath, same columns */
-.stat-strip{padding:0;background:none;border-radius:0}
-.stat-row{gap:12px}
-.stat-item,.stat-item:first-child{padding:22px 20px 20px;border-left:0;border-radius:24px;background:#1c1c1e}
-#social .pills{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}
-#social .pills .pill{justify-content:center;text-align:center;padding:0 10px;font-size:14px;white-space:nowrap}
-@media(max-width:420px){#social .pills .pill{font-size:12.5px;padding:0 6px}}
-/* D.LEAGUE: no divider line above it */
-#dleague{border-top:0;margin-top:clamp(32px,4vw,56px);padding-top:0}
-/* D.LEAGUE: video left, text right */
-.hob-row .hob-media{order:-1}
-@media(max-width:800px){.hob-row .hob-media{order:0}}
-/* JA titles: break only between phrases, never inside a word */
-html.lang-ja h1,html.lang-ja h2,html.lang-ja h3,html.lang-ja h4,html.lang-ja .team-badge{word-break:keep-all;line-break:strict;overflow-wrap:anywhere}
-html.lang-ja .free-break{word-break:normal;line-break:auto;overflow-wrap:normal}
-
-/* ===================================================================
-   iPAD / TABLET PASS  (priority: iPad > desktop > phone)
-   Everything below only adds or overrides; phone rules (<=600px) are untouched.
-   =================================================================== */
-html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
-a,button{-webkit-tap-highlight-color:transparent}
-
-/* touch screens: no hover that sticks after a tap */
-@media (hover:none){
- .nav-dd:not(.open):hover .nav-dd-panel{opacity:0;visibility:hidden}
- .nav-dd:not(.open):hover .nav-dd-btn{color:var(--muted)}
- .nav-dd.current:not(.open):hover .nav-dd-btn{color:var(--text)}
- .lang-toggle:hover{background:transparent;color:var(--text)}
-}
-
-/* tablet navigation: slightly larger type and 44px touch targets */
-@media (min-width:601px) and (max-width:1100px){
- .nav-right{gap:26px}
- .nav-links{gap:28px}
- .nav-links a,.nav-links .nav-dd-btn{font-size:15px}
- .nav-links .nav-dd-panel a{font-size:15px!important}
- .nav-dd-panel{min-width:260px}
- .nav-dd.small .nav-dd-panel{min-width:210px}
-}
-@media (min-width:601px) and (pointer:coarse){
- .nav-links > a,.nav-dd-btn{padding:13px 0}
- .lang-toggle{height:42px;padding:0 20px;font-size:14px}
- .nav-links .nav-dd-panel a{padding:14px 16px}
-}
-
-@media (hover:none){
- .pill:hover{background:transparent;color:var(--text)}
- .pill.solid:hover{background:var(--text);color:var(--bg)}
- .dark .pill:not(.solid):hover{background:transparent;color:#f5f5f7}
- .rail-nav button:hover:not([disabled]){background:rgba(245,245,247,.14)}
-}
-@media (min-width:601px) and (pointer:coarse){
- .pill{height:52px}
- .rail-nav button{width:50px;height:50px}
-}
-
-/* ---- iPad and tablets (700 to 1100px): keep the two-column web layout ---- */
-@media (min-width:700px) and (max-width:1100px){
- :root{--padding:clamp(32px,5.5vw,56px)}
- .sec{padding:clamp(90px,11vw,130px) 0}
- h2{font-size:clamp(2.3rem,5vw,3.6rem)}
- .big{font-size:clamp(2.5rem,5.4vw,4rem)}
- p{font-size:clamp(17px,2.1vw,19px)}
- .hero{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(32px,5vw,56px);padding:clamp(120px,14vw,150px) 0 clamp(80px,10vw,110px);align-items:center}
- .hero .pic{order:0}
- .hero h1{font-size:clamp(3.2rem,8vw,5.6rem)}
- html.lang-ja .hero h1{font-size:clamp(3rem,7.2vw,5.2rem)}
- .hero p{margin:32px 0 0;font-size:clamp(19px,2.4vw,24px)}
- .split,.split.rev{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(36px,5vw,60px);align-items:center}
- .split.rev .pic{order:-1}
- .pic img,.pic video{max-height:82vh}
- /* social: text on top, the three reels side by side underneath (no sideways scrolling) */
- #social .split{grid-template-columns:minmax(0,1fr);gap:48px}
- #social h2{font-size:clamp(2.4rem,5.4vw,3.6rem)}
- #social p{max-width:680px}
- .reel-trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;overflow:visible;margin-right:0;padding-right:0}
- .reel-trio .reel{flex:none;margin-top:0!important}
- .reel-trio .reel:nth-child(2){margin-top:0!important}
- .reel-trio .reel-meta{font-size:16px}
- .reel-trio .reel-platform{font-size:12px}
- .stat-item .stat{font-size:clamp(2rem,4.6vw,3rem)}
- /* hobbies */
- .hob-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,5vw,60px)}
- .hob-row .hob-media{order:-1}
- .hob-row .hob-vid{width:clamp(220px,32vw,320px);justify-self:center}
- .fav{flex-basis:clamp(190px,25vw,250px)}
- .fav-title{font-size:17px}
- .fav-meta{font-size:14px}
- .rail{gap:18px}
- .hob-title{font-size:clamp(2.2rem,4.6vw,3.2rem)}
- .tl-row{grid-template-columns:minmax(120px,170px) minmax(0,1fr)}
-}
-@media (min-width:700px) and (max-width:900px){
- .footer-inner{flex-direction:row}
-}
-/* large iPads (landscape / Pro) fall outside 1100px: touch screens also get three evenly aligned reels */
-@media (min-width:700px) and (pointer:coarse){
- .reel-trio .reel:nth-child(2){margin-top:0!important}
-}
-
-/* iPad / Safari / Chrome on iOS: the page ends at the footer. No sideways scroll container, no stretchy empty area above or below the page. */
-html{overflow-x:hidden;overflow-x:clip;overscroll-behavior:none;background:var(--bg)}
-body{overscroll-behavior:none}
-/* HDR fix: keep pictures/videos at normal brightness (no glow, no dimmed page) */
-:root{dynamic-range-limit:standard}
+html.lang-ja p{line-height:1.75}
+html.lang-ja h1,html.lang-ja h2,html.lang-ja h3{line-height:1.3;word-break:keep-all;line-break:strict;overflow-wrap:anywhere}
 img,video{dynamic-range-limit:standard}
 
-/* ================= APPLE PASS ================= */
-/* floating glass nav: the glass lives on a pseudo-element so the phone dropdown (position:fixed) keeps working */
-nav{background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none;border-bottom:0;pointer-events:none}
-.nav-inner{pointer-events:auto;position:relative;isolation:isolate;width:min(100% - 24px,1180px);height:54px;margin:11px auto 0;padding:0 14px 0 26px;border-radius:999px}
-.nav-inner::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background:rgba(245,245,247,.58);-webkit-backdrop-filter:blur(22px) saturate(190%);backdrop-filter:blur(22px) saturate(190%);border:1px solid rgba(255,255,255,.34);box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 -1px 0 rgba(0,0,0,.04),0 8px 30px rgba(0,0,0,.10);transition:background .3s}
-nav.scrolled .nav-inner::before{background:rgba(245,245,247,.74)}
-.nav-dd-panel{background:rgba(250,250,252,.66);-webkit-backdrop-filter:blur(26px) saturate(190%);backdrop-filter:blur(26px) saturate(190%);border:1px solid rgba(255,255,255,.36);box-shadow:inset 0 1px 0 rgba(255,255,255,.42),0 18px 50px rgba(0,0,0,.14)}
-@media(max-width:600px){.nav-inner{height:48px;margin-top:8px;padding:0 8px 0 16px}.nav-inner::before{-webkit-backdrop-filter:blur(16px) saturate(180%);backdrop-filter:blur(16px) saturate(180%)}.nav-dd-panel{top:66px}}
-@media(max-width:480px){.nav-inner{width:auto;max-width:calc(100% - 24px);margin-left:auto;margin-right:12px;padding:0 6px 0 16px}}
-/* quieter labels: sentence case instead of tracked capitals */
-.eyebrow{text-transform:none;letter-spacing:0;font-size:15px;font-weight:600}
-.skills-heading,.sd-sub,.contact-details-label,.card-label,.reel-platform{text-transform:none;letter-spacing:0}
+/* ================= NAV (Apple local-nav bar: title left, links, black pill) ================= */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:48px;background:rgba(255,255,255,.8);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.16)}
+.nav-inner{position:relative;width:min(100% - 48px,980px);height:48px;margin:0 auto;padding:0;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:21px;font-weight:600;letter-spacing:.011em;line-height:1;text-decoration:none;color:var(--text)}
+.nav-right{display:flex;align-items:center;gap:24px;height:100%}
+.nav-links{display:flex;align-items:center;gap:24px;height:100%}
+.nav-links>a,.nav-dd-btn{font-size:12px;line-height:1;color:rgba(29,29,31,.8);text-decoration:none;transition:color .2s}
+.nav-links>a:hover,.nav-links>a.current{color:var(--text)}
+.nav-dd{position:relative;display:flex;align-items:center;height:100%}
+.nav-dd-btn{position:relative;display:inline-flex;align-items:center;gap:5px;height:100%;padding:0;border:0;background:none;font-family:inherit;cursor:pointer}
+.nav-dd-btn::after{content:"";width:4px;height:4px;border-right:1.2px solid currentColor;border-bottom:1.2px solid currentColor;transform:translateY(-1.5px) rotate(45deg);transition:transform .2s}
+.nav-dd-btn:hover,.nav-dd-btn.current,.nav-dd.open .nav-dd-btn{color:var(--text)}
+.nav-dd-btn.current::before{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--text)}
+.nav-dd.open .nav-dd-btn::after{transform:translateY(.5px) rotate(225deg)}
+.nav-dd-panel{position:absolute;top:calc(100% + 6px);left:50%;min-width:230px;padding:8px;border-radius:16px;background:rgba(250,250,252,.82);-webkit-backdrop-filter:saturate(180%) blur(24px);backdrop-filter:saturate(180%) blur(24px);box-shadow:0 0 0 1px rgba(0,0,0,.08),0 18px 44px -14px rgba(0,0,0,.24);opacity:0;visibility:hidden;transform:translate(-50%,-6px);transition:opacity .18s,transform .18s,visibility .18s}
+.nav-dd-panel::before{content:"";position:absolute;left:0;right:0;top:-8px;height:8px}
+.nav-dd.open .nav-dd-panel{opacity:1;visibility:visible;transform:translate(-50%,0)}
+@media (hover:hover){.nav-dd:hover .nav-dd-panel{opacity:1;visibility:visible;transform:translate(-50%,0)}.nav-dd:hover .nav-dd-btn{color:var(--text)}}
+.nav-links .nav-dd-panel a{display:block;padding:10px 14px;border-radius:10px;font-size:13px!important;color:var(--text);text-decoration:none;white-space:nowrap}
+.nav-links .nav-dd-panel a:hover,.nav-links .nav-dd-panel a:focus-visible{background:rgba(17,17,17,.06);outline:0}
+.nav-dd.small .nav-dd-panel{min-width:180px}
+.lang-toggle{height:24px;padding:0 12px;border:0;border-radius:999px;background:var(--text);color:#fff;font-family:inherit;font-size:12px;line-height:1;font-weight:400;cursor:pointer;transition:background .2s}
+.lang-toggle:hover{background:#424245}
+@media (hover:none){
+ .nav-dd:not(.open):hover .nav-dd-panel{opacity:0;visibility:hidden}
+ .nav-dd:not(.open):hover .nav-dd-btn{color:rgba(29,29,31,.8)}
+ .nav-dd:not(.open):hover .nav-dd-btn.current{color:var(--text)}
+ .lang-toggle:hover{background:var(--text)}
+}
+@media (min-width:601px) and (pointer:coarse){.nav-links>a{padding:14px 0}.lang-toggle{height:30px;padding:0 15px;font-size:13px}.nav-links .nav-dd-panel a{padding:14px 16px}}
+@media (max-width:600px){
+ :root{--padding:22px}
+ .nav-inner{width:calc(100% - 32px)}
+ .nav-right{gap:14px}.nav-links{gap:14px}
+ .logo{font-size:18px}
+ .nav-dd-panel{position:fixed;top:54px;right:12px;left:auto;min-width:0;width:min(270px,calc(100vw - 24px));max-height:calc(100vh - 80px);overflow:auto;transform:translateY(-6px)}
+ .nav-dd.open .nav-dd-panel{transform:none}
+}
+@media (max-width:480px){.logo{display:none}.nav-inner{justify-content:flex-end}.nav-links,.nav-right{gap:12px}.nav-links>a,.nav-dd-btn{font-size:12px}}
+@media (max-width:380px){.nav-right,.nav-links{gap:10px}.nav-links>a,.nav-dd-btn{font-size:11.5px}}
+@media (prefers-reduced-transparency:reduce){nav,.nav-dd-panel{-webkit-backdrop-filter:none;backdrop-filter:none;background:#f5f5f7}}
 
-/* about: true black sections, no section hairlines, calmer headings, glass captions on the reels */
-.dark{background:#000}
-.sec{border-top:0}
-h2,.big{font-weight:600}
-@media(min-width:1101px){h2{font-size:clamp(2.6rem,4.4vw,4.2rem)}.big{font-size:clamp(2.6rem,5vw,4.6rem)}.hero h1{font-size:clamp(3.4rem,6.4vw,6.4rem);font-weight:600}}
-.reel-trio .reel{position:relative}
-.reel-trio .reel figcaption{position:absolute;left:10px;right:auto;bottom:10px;margin:0;padding:8px 12px 9px;border-radius:16px;background:rgba(28,28,30,.34);-webkit-backdrop-filter:blur(16px) saturate(170%);backdrop-filter:blur(16px) saturate(170%);border:1px solid rgba(255,255,255,.15);box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}
-.reel-trio .reel-platform{color:rgba(245,245,247,.78)}
-/* ===== APPLE-STYLE HERO (about) =====
-   soft ambient colour behind the page title, gradient headline, flat glass fact chips, and a gentle staggered fade-up like apple.com.
-   Modern glass (iOS 26): flat translucent fill, thin light edge on two opposite corners, soft ambient shadow. */
-.hero{position:relative;isolation:isolate}
-.hero::before{content:"";position:absolute;z-index:-1;inset:-8% -10% -12% -10%;pointer-events:none;background:radial-gradient(38% 48% at 16% 30%,rgba(54,120,184,.17),transparent 70%),radial-gradient(34% 44% at 84% 72%,rgba(76,154,82,.15),transparent 70%),radial-gradient(30% 38% at 58% 12%,rgba(42,152,160,.13),transparent 70%);filter:blur(12px)}
-.hero h1{padding-bottom:.08em;background:linear-gradient(95deg,#1d1d1f 0%,#1d1d1f 22%,#2f6fae 62%,#23919a 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
-.hero-copy p{margin-bottom:30px}
-.hero-chips{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
-.hero-chips li{display:inline-flex;align-items:center;gap:9px;padding:11px 18px;border-radius:999px;font-size:14px;font-weight:500;line-height:1.2;letter-spacing:-.01em;color:var(--text);border:0;background:rgba(255,255,255,.7);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);box-shadow:inset 1px 1px 0 rgba(255,255,255,.95),inset -1px -1px 0 rgba(255,255,255,.5),0 4px 16px -6px rgba(0,0,0,.14)}
-.hero-chips li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--text);opacity:.8}
-.hero .pic{position:relative}
-@keyframes heroUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-.hero-copy>*,.hero .pic{animation:heroUp .95s cubic-bezier(.2,.7,.2,1) backwards}
-.hero-copy>:nth-child(2){animation-delay:.07s}
-.hero-copy>:nth-child(3){animation-delay:.14s}
-.hero-copy>:nth-child(4){animation-delay:.21s}
-.hero .pic{animation-delay:.12s}
-@media(max-width:600px){.hero-chips li{padding:10px 15px;font-size:13px}}
-@media(prefers-reduced-motion:reduce){.hero-copy>*,.hero .pic{animation:none}}
-@media(prefers-reduced-transparency:reduce){.hero-chips li{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(255,255,255,.92)}}
+/* ================= shared ================= */
+.tlink{color:var(--blue);text-decoration:none}
+.tlink:hover{text-decoration:underline}
+.pill{display:inline-flex;align-items:center;height:48px;padding:0 26px;border:1px solid rgba(17,17,17,.18);border-radius:24px;font-size:15px;font-weight:500;text-decoration:none;transition:background .2s,color .2s}
+.pill:hover{background:var(--text);color:#fff}
+.pills{display:flex;flex-wrap:wrap;gap:12px}
+.g-blue{background:linear-gradient(90deg,#2f6fe4,#6d5be8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.g-purple{background:linear-gradient(90deg,#7b5cf0,#a050e0);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.g-pink{background:linear-gradient(90deg,#c94fc0,#e5489a);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.g-warm{background:linear-gradient(90deg,#e5489a,#f2733a);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.g-all{background:linear-gradient(90deg,#2f6fe4,#a050e0 50%,#e5489a 80%,#f2733a);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.two-tone{color:var(--slate)}
+.two-tone b{color:var(--text);font-weight:500}
 
-/* ===== REQUESTED CHANGES ===== */
-/* top menu = same glass as the main page (flat translucent fill, bright specular edge, soft ambient shadow) */
-.nav-inner::before,nav.scrolled .nav-inner::before{background:rgba(118,118,128,.14);-webkit-backdrop-filter:blur(30px) saturate(180%);backdrop-filter:blur(30px) saturate(180%);border:0;box-shadow:inset 1px 1px 0 rgba(255,255,255,.55),inset -1px -1px 0 rgba(255,255,255,.28),0 8px 28px -10px rgba(0,0,0,.18)}
-.nav-dd-panel{background:rgba(246,246,248,.7);-webkit-backdrop-filter:blur(30px) saturate(180%);backdrop-filter:blur(30px) saturate(180%);border:0;box-shadow:inset 1px 1px 0 rgba(255,255,255,.6),inset -1px -1px 0 rgba(255,255,255,.3),0 18px 50px -12px rgba(0,0,0,.22)}
-@media (max-width:600px){.nav-inner::before,nav.scrolled .nav-inner::before{-webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%)}}
-@media (prefers-reduced-transparency:reduce){.nav-inner::before,nav.scrolled .nav-inner::before,.nav-dd-panel{-webkit-backdrop-filter:none;backdrop-filter:none;background:#e9e9ee}}
-/* hero: the follower count comes first, huge, on the left */
-.blast{display:flex;flex-direction:column;align-items:flex-start;margin:0 0 clamp(20px,2.6vw,34px)}
-.blast-num{display:block;padding:.06em .06em .08em 0;font-size:clamp(7rem,14.5vw,15rem);font-weight:600;line-height:.9;letter-spacing:-.075em;white-space:nowrap;background:linear-gradient(95deg,#2f6fae 0%,#23919a 58%,#4c9a52 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
-.blast-lab{margin-top:6px;font-size:clamp(19px,2.1vw,28px);font-weight:600;letter-spacing:-.025em;color:var(--text)}
-html body .hero .hero-copy h1{font-size:clamp(1.9rem,3.2vw,3rem);line-height:1.15;letter-spacing:-.04em}
-html.lang-ja body .hero .hero-copy h1{line-height:1.35;letter-spacing:0}
-.hero .hero-copy p{margin-top:16px;margin-bottom:30px}
-@media (min-width:700px) and (max-width:1100px){.blast-num{font-size:clamp(6.5rem,15vw,10rem)}}
-@media (max-width:699px){.blast-num{font-size:clamp(6.5rem,34vw,10rem)}}
-html body .hero .hero-copy h1.blast-lab{margin-top:6px;font-size:clamp(19px,2.1vw,28px);font-weight:600;line-height:1.3;letter-spacing:-.025em;color:var(--text);background:none;-webkit-text-fill-color:var(--text)}
-
-/* hero: name first (like the top of index), the big number underneath */
-html body .hero .hero-copy h1.hero-name{margin:0 0 clamp(22px,3vw,40px);font-size:clamp(3.8rem,8vw,7.6rem);font-weight:600;line-height:.92;letter-spacing:-.06em}
-html.lang-ja body .hero .hero-copy h1.hero-name{font-size:clamp(3rem,6vw,5.4rem);line-height:1.2;letter-spacing:-.03em}
-html body .hero .hero-copy .blast-lab{margin-top:6px;font-size:clamp(19px,2.1vw,28px);font-weight:600;line-height:1.3;letter-spacing:-.025em;color:var(--text)}
-.hero-copy .blast{margin-bottom:0}
+/* ================= 1. HERO (screenshots 1-3) ================= */
+.hero{position:relative;height:320vh}
+.hero-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#fff}
+.tile{position:absolute;background:#000;z-index:1}
+.tile.center{z-index:2}
+.tile .cam{position:absolute;left:50%;transform:translateX(-50%);z-index:3;border-radius:50%;background:radial-gradient(circle at 50% 50%,#1b2233 0%,#10131b 55%,#000 100%);box-shadow:0 0 0 1px rgba(255,255,255,.05);pointer-events:none}
+.tile .cam.dot{background:#14161c;box-shadow:none}
+.tile .screen{position:relative;width:100%;height:100%;overflow:hidden;background:#1c1c1e}
+.tile .screen img.cimg{position:absolute;left:50%;top:50%;width:100%;height:100%;max-width:none;transform:translate(-50%,-50%);object-fit:cover;object-position:center}
+.tile .screen img,.tile .screen video{display:block;width:100%;height:100%;object-fit:cover}
+.hero-shade{position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(120% 100% at 50% 55%,rgba(0,0,0,.34) 0%,rgba(0,0,0,.48) 100%)}
+.hero-text{position:absolute;inset:0;z-index:4;pointer-events:none;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;text-align:center;padding:58vh var(--padding) 0}
+/* original about-page fonts: name + big gradient 19k */
+.hero-name{margin:0 0 clamp(16px,2vw,30px);font-size:clamp(2.2rem,4.4vw,4.6rem);font-weight:600;line-height:1.02;letter-spacing:-.06em;padding-bottom:.08em;background:linear-gradient(95deg,#ffffff 0%,#ffffff 22%,#8cc2f2 62%,#6ad8de 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+html.lang-ja .hero-name{font-size:clamp(2rem,3.8vw,4rem);line-height:1.2;letter-spacing:-.03em}
+.blast{display:flex;flex-direction:column;align-items:center}
+.blast-num{display:block;padding:.06em .06em .08em 0;font-size:clamp(5rem,9vw,10rem);font-weight:600;line-height:.9;letter-spacing:-.075em;white-space:nowrap;background:none;-webkit-text-fill-color:#fff;color:#fff}
+.blast-lab{margin-top:6px;font-size:clamp(17px,1.6vw,24px);font-weight:600;letter-spacing:-.025em;color:#fff}
 @media (max-width:699px){.blast-num{font-size:clamp(5.5rem,28vw,9rem)}}
 
-/* SCROLL REVEAL (Apple style, layered: headline -> text -> buttons -> media/cards; plays once) */
-.rv-pre{opacity:0}
-.rv-pre.rv-h{translate:0 calc(34px*var(--rv-k,1));filter:blur(8px)}
-.rv-pre.rv-t{translate:0 calc(26px*var(--rv-k,1))}
-.rv-pre.rv-b{translate:0 calc(14px*var(--rv-k,1));scale:.9}
-.rv-pre.rv-s{translate:0 calc(22px*var(--rv-k,1));scale:.96}
-.rv-pre.rv-c{translate:0 calc(36px*var(--rv-k,1));scale:.975}
-.rv-pre.rv-m{translate:0 calc(40px*var(--rv-k,1));scale:.94}
-@media (max-width:700px){:root{--rv-k:.7}}
-@media (prefers-reduced-motion:reduce){.rv-pre,.rv-pre[class]{opacity:1!important;translate:none!important;scale:none!important;filter:none!important}}
+/* ================= 2. REACH (Apple Card "Family" layout: phone left, text right) ================= */
+.reach{position:relative;height:300vh;margin:clamp(110px,24vh,260px) 0 clamp(60px,12vh,150px)}
+.reach-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#fff;--ph:65vh;--pw:calc(var(--ph)*.48)}
+.rphone{position:absolute;z-index:2;left:calc(27.9vw - var(--pw)/2);top:19vh;height:var(--ph);width:var(--pw);box-sizing:border-box;padding:calc(var(--pw)*.034);border-radius:calc(var(--pw)*.17);background:#050506;box-shadow:0 0 0 calc(var(--pw)*.008) #36363a,0 0 0 calc(var(--pw)*.0125) #9a9a9f,3.2vh 5vh 7vh -2.5vh rgba(0,0,0,.34),0 0 2vh rgba(0,0,0,.12)}
+.rphone::before,.rphone::after{content:"";position:absolute;width:calc(var(--pw)*.014);border-radius:2px;background:linear-gradient(90deg,#4b4b4f,#1d1d1f)}
+.rphone::before{left:calc(var(--pw)*-.0225);top:21%;height:15%;background:linear-gradient(180deg,#2a2a2c 0 42%,transparent 42% 58%,#2a2a2c 58%)}
+.rphone::after{right:calc(var(--pw)*-.0225);top:27%;height:11%;background:linear-gradient(270deg,#4b4b4f,#1d1d1f)}
+.risland{position:absolute;z-index:4;left:50%;top:calc(var(--pw)*.058);width:calc(var(--pw)*.29);height:calc(var(--pw)*.088);margin-left:calc(var(--pw)*-.145);border-radius:999px;background:#000}
+.rscreen{position:relative;width:100%;height:100%;overflow:hidden;border-radius:calc(var(--pw)*.138);background:#000;transform:translateZ(0)}
+.rreel{position:absolute;left:0;top:0;width:100%;height:200%;will-change:transform}
+.rreel video{display:block;width:100%;height:50%;object-fit:cover;background:#111}
+.reach .rtext{position:absolute;z-index:2;left:49.8vw;width:34vw;margin:0;font-size:clamp(1.3rem,1.75vw,2.4rem);line-height:1.16;font-weight:400;letter-spacing:-.04em;color:var(--text);word-break:keep-all;overflow-wrap:normal;-webkit-text-size-adjust:none;text-size-adjust:none}
+.reach .rtext p{margin:0;font:inherit;line-height:inherit;letter-spacing:inherit;color:inherit}
+.reach .rtext p,.reach .rline .s{text-wrap:balance}
+.reach .rline .s{display:block;color:var(--slate)}
+.reach .rline .p{display:inline-block}
+.reach .rt1{top:max(11.5vh,100px)}
+.reach .rt2{bottom:12.3vh;opacity:0;visibility:hidden}
+.rpin{display:flex;align-items:center;gap:.7em;font-size:clamp(.85rem,1vw,1.3rem);line-height:1.2;font-weight:500;letter-spacing:-.01em;color:var(--muted)}
+.rt1 .rpin{margin-top:clamp(16px,1.9vw,32px)}
+.rt2 .rpin{margin-bottom:clamp(16px,1.9vw,32px)}
+.rdot{position:relative;flex:none;width:.72em;height:.72em;border-radius:50%;background:linear-gradient(135deg,#2f6fe4,#23919a);box-shadow:0 0 0 .22em rgba(47,111,228,.16)}
+html.lang-ja .reach .rtext{line-height:1.4;font-size:clamp(1.2rem,1.6vw,2.2rem)}
+html.lang-ja .reach .rtext .rpin{line-height:1.2}
+@media (max-width:800px){
+ .reach-stage{--ph:50vh;--ph:50svh}
+ .rphone{left:calc(50% - var(--pw)/2);top:84px}
+ .reach .rtext{left:0;right:0;width:auto;padding:0 var(--padding);font-size:clamp(1.15rem,5vw,1.5rem)}
+ html.lang-ja .reach .rtext{font-size:clamp(1.1rem,4.7vw,1.4rem)}
+ .rpin{font-size:.78em}
+ .reach .rt1,.reach .rt2{top:calc(84px + var(--ph) + 26px);bottom:auto}
+}
+
+/* ================= 3. JAPANESE (screenshot 5) ================= */
+.jp{position:relative;min-height:100vh;min-height:100svh;background:#fafafa;overflow:hidden}
+.jp h2{text-align:center;font-weight:400;font-size:2.7vw;line-height:1.14;letter-spacing:-.04em}
+.jp h2 span{display:block;color:var(--slate)}
+.phone{padding:.65vw;background:#16181c;border-radius:3.4vw;box-shadow:0 0 0 2px #aab4c2,0 40px 70px -30px rgba(30,50,80,.45)}
+.phone video{width:100%;height:100%;object-fit:cover;display:block;border-radius:2.8vw;background:#222}
+.fact small{display:block;font-size:max(13px,1.2vw);color:var(--muted);line-height:1.4}
+.fact b{display:block;margin:.3vh 0;font-size:max(18px,1.55vw);line-height:1.2;letter-spacing:-.02em}
+@media (min-width:801px){
+ .jp h2{position:absolute;top:9vh;left:0;right:0}
+ .phone{position:absolute;left:50%;top:28.5vh;height:66vh;aspect-ratio:.476;transform:translateX(-50%)}
+ .jp-col{position:absolute;top:53vh;width:26vw;display:grid;gap:7vh}
+ .jp-col.l{right:66vw;text-align:right}
+ .jp-col.r{left:66vw;text-align:left}
+}
+@media (max-width:800px){
+ .jp{padding:96px var(--padding) 40px}
+ .jp h2{font-size:clamp(1.8rem,7vw,2.4rem);margin-bottom:22px}
+ .jp-stage{display:grid;grid-template-columns:1fr 1fr;gap:26px 18px}
+ .phone{grid-column:1/-1;justify-self:center;height:min(48vh,420px);aspect-ratio:.476;padding:7px;border-radius:34px}
+ .phone video{border-radius:28px}
+ .jp-col{display:grid;gap:22px}
+}
+
+/* ================= 4. PLATFORMS ================= */
+.plat{position:relative;background:#fff;padding:0 0 2cm}
+.plat-box{background:var(--bg);border-radius:28px}
+.plat h2{font-weight:400;font-size:clamp(1.8rem,2.5vw,2.65rem);line-height:1.12;letter-spacing:-.045em;max-width:760px}
+.plat-sub{font-size:clamp(14px,1.15vw,17px);color:var(--muted);margin-top:2.2vh}
+.plat-sub b{color:var(--text);font-weight:500}
+.plat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2vh 1.3vw;margin-top:4.5vh}
+.pcard{position:relative;min-width:0;min-height:30vh;background:#fff;border-radius:28px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;padding:3vh 1.2vw 0;overflow:hidden}
+.pcard small{font-size:clamp(12px,1vw,15px);line-height:1.4;color:var(--muted);margin-bottom:1.1vh}
+.pcard .b1,.pcard .b2{display:block;font-size:clamp(2rem,3.1vw,3.3rem);line-height:1.02;letter-spacing:-.055em;font-weight:500}
+.pcard .b2{color:var(--slate)}
+.pcard .lab{font-size:clamp(12px,1vw,15px);line-height:1.4;color:var(--muted);margin-top:1.2vh}
+/* The lower three cards intentionally crop the phone at the bottom, like Apple's comparison cards. */
+.pcard-video{display:block;padding:0;justify-content:initial;overflow:hidden}
+.pcard-video .video-caption{position:absolute;top:3.4vh;left:8px;right:8px;font-size:clamp(12px,.95vw,14px);line-height:1.35;color:var(--muted);min-height:0;margin:0;text-wrap:balance;z-index:1}
+.pcard-video .video-caption b{font-weight:500;color:var(--muted)}
+.pcard-video .video-caption span{display:block;max-width:100%;}
+.pcard-video .video-caption br{display:block;content:"";margin-top:3px}
+.pcard-video .mini-phone{position:absolute;top:33.333%;left:50%;transform:translateX(-50%);height:100%;width:auto;aspect-ratio:9/19;box-sizing:border-box;padding:5px;border:1px solid #aeb5bd;border-radius:24px;background:linear-gradient(110deg,#34363a,#090a0c 18%,#111214 82%,#383a3e);box-shadow:0 0 0 1px rgba(0,0,0,.12),0 8px 20px -14px rgba(0,0,0,.35);overflow:hidden;flex:none}
+.pcard-video .mini-phone:before{content:"";position:absolute;z-index:2;top:7px;left:50%;transform:translateX(-50%);width:29%;height:8px;border-radius:999px;background:#050506}
+.pcard-video .mini-phone video{width:100%;height:100%;display:block;object-fit:cover;border-radius:18px;background:#222}
+@media (min-width:801px){
+ .plat-box{width:min(82.3vw,1256px);margin:7.6vh auto 0;padding:8.5vh 6.9vw 2.4vh}
+ .plat-top{display:block}
+ .plat-grid{grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:30vh}
+}
+@media (max-width:800px){
+ .plat{padding:50px 0 2cm}
+ .plat-box{margin:0 22px;border-radius:26px;padding:30px 18px 20px}
+ .plat h2{font-size:clamp(1.65rem,6.4vw,2.2rem)}
+ .plat-sub{font-size:14px;margin-top:12px}
+ .plat-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:22px}
+ .pcard{min-height:180px;border-radius:20px;padding:20px 8px 0}
+ .pcard .b1,.pcard .b2{font-size:clamp(1.6rem,7vw,2.25rem)}
+ .pcard .lab{font-size:12px}
+ .pcard-video{min-height:180px;padding:0}
+ .pcard-video .video-caption{top:18px;left:6px;right:6px;font-size:12px;line-height:1.35}
+ .pcard-video .mini-phone{top:43%;height:130%;border-radius:17px;padding:4px}
+ .pcard-video .mini-phone video{border-radius:13px}
+}
+@media (max-width:420px){.plat-grid{grid-template-columns:1fr}.pcard{min-height:190px}.pcard-video{min-height:190px}.pcard-video .mini-phone{top:43%;height:130%}}
+
+/* ================= 5. GAME DEV (screenshot 7) ================= */
+.craft{position:relative;height:400vh}
+.craft-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#fbfbfd}
+.craft-label{font-size:1.4vw;color:var(--muted)}
+.craft h2{font-weight:400;font-size:3.3vw;line-height:1.17;letter-spacing:-.045em;max-width:18em}
+.craft h2 span{display:block;color:var(--slate)}
+.craft-box{position:relative;overflow:hidden;background:#111;border-radius:2vw;box-shadow:0 26px 55px -25px rgba(0,0,0,.38),0 8px 18px rgba(0,0,0,.08)}
+.craft-layer{position:absolute;inset:0}
+.craft-layer video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.craft-copy{font-size:1.45vw;line-height:1.5;letter-spacing:-.01em}
+.craft-link{display:inline-block;font-size:1.3vw;margin-top:1.4vh;color:#06c;text-decoration:none;letter-spacing:-.015em;transition:color .2s ease}.craft-link:hover{color:#0077ed;text-decoration:underline}.craft-link:focus-visible{outline:2px solid #06c;outline-offset:4px;border-radius:3px}
+@media (min-width:801px){
+ .craft h2{position:absolute;left:29.6vw;top:9.4vh;max-width:14em}
+ .craft-box{position:absolute;left:29.6vw;top:31vh;height:37vh;aspect-ratio:16/9}
+ .craft-text{position:absolute;left:29.6vw;top:75vh;width:42vw}
+}
+@media (max-width:800px){
+ .craft-stage{padding:92px var(--padding) 28px;display:flex;flex-direction:column;gap:14px}
+ .craft h2{font-size:clamp(1.7rem,7vw,2.4rem)}
+ .craft-box{width:100%;aspect-ratio:16/9;border-radius:24px;flex:none}
+ .craft-copy{font-size:15px}.craft-link{font-size:15px}
+}
+
+
+/* Japanese game-dev headline: exactly two intentional lines */
+html.lang-ja .craft h2{max-width:none;width:max-content;max-width:calc(100vw - 2 * var(--padding));font-size:clamp(1.35rem,2.55vw,2.65rem);line-height:1.22;letter-spacing:-.045em;word-break:keep-all;overflow-wrap:normal}
+html.lang-ja .craft h2 span{white-space:nowrap}
+@media(max-width:800px){html.lang-ja .craft h2{font-size:clamp(1rem,4.65vw,1.55rem);max-width:calc(100vw - 2 * var(--padding));line-height:1.25}}
+
+/* ================= 6. MUSIC (screenshots 8-9) ================= */
+.music{position:relative;height:560vh}
+.music-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#fff}
+.m-zone{position:absolute;left:8vw;right:8vw;top:8vh;height:15vh;z-index:1;background:#fff;isolation:isolate;pointer-events:none;overflow:hidden}
+.m-item{position:absolute;left:0;right:0;top:0;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 5vw;will-change:transform,opacity}
+.m-title{font-size:4.2vw;line-height:1;letter-spacing:-.05em}
+.m-sub{margin-top:1.2vh;font-size:1.9vw;font-weight:500;letter-spacing:-.03em}
+.m-line{font-size:3.4vw;line-height:1.1;font-weight:500;letter-spacing:-.045em}
+.ipad{position:absolute;left:50%;top:24vh;transform:translateX(-50%);width:min(84vw,99vh);aspect-ratio:1.6/1;padding:1.1vw;background:#0b0b0c;border-radius:3vw;box-shadow:0 0 0 2px #cfcfd4,0 44px 80px -34px rgba(0,0,0,.4);z-index:3}
+.ipad-screen{width:100%;height:100%;border-radius:1.9vw;overflow:hidden;background:#000}
+.ipad-screen iframe{width:100%;height:100%;border:0;display:block}
+.m-link{position:absolute;left:0;right:0;top:calc(24vh + 62vh + 1.6vh);text-align:center;font-size:max(13px,1.05vw);z-index:3}
+@media (max-width:800px){
+ .m-zone{left:3vw;right:3vw;top:84px;height:16vh}
+ .m-title{font-size:clamp(2.2rem,10vw,3.4rem)}.m-sub{font-size:clamp(1rem,4.4vw,1.5rem)}.m-line{font-size:clamp(1.5rem,6.6vw,2.4rem)}
+ .ipad{top:28vh;width:94vw;padding:8px;border-radius:24px}
+ .ipad-screen{border-radius:16px}
+ .m-link{top:calc(28vh + 58.8vw + 14px)}
+}
+
+/* ================= 7. TOGETHER (screenshot 10) ================= */
+.tog{position:relative;min-height:100vh;min-height:100svh;background:var(--bg);overflow:hidden}
+.tog-lead{font-size:1.6vw;line-height:1.3;letter-spacing:-.025em;font-weight:500;color:#86868b;max-width:14em}
+.tog-lead b{color:var(--text);font-weight:500}
+.tile2{aspect-ratio:.688;padding:.75vw;background:#0b0b0c;border-radius:2.6vw;box-shadow:0 0 0 2px #cfd8d3,0 38px 65px -28px rgba(0,0,0,.42),0 10px 24px rgba(0,0,0,.08)}
+.tile2 .screen{width:100%;height:100%;border-radius:1.9vw;overflow:hidden;background:#222}
+.tile2 video{width:100%;height:100%;object-fit:cover;display:block}
+.cap{font-size:max(12px,1.05vw);color:var(--muted);line-height:1.4}
+.games-track{display:flex;width:100%;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.games-track::-webkit-scrollbar{display:none}
+.games-track img{flex:0 0 100%;width:100%;height:100%;object-fit:cover;scroll-snap-align:start}
+.arrows{display:flex;gap:8px}
+.arrows button{width:32px;height:32px;border:0;border-radius:50%;background:rgba(0,0,0,.08);color:var(--text);font-size:20px;line-height:1;padding:0 0 2px;cursor:pointer;transition:background .2s,opacity .2s}
+.arrows button:hover:not([disabled]){background:rgba(0,0,0,.16)}
+.arrows button[disabled]{opacity:.3;cursor:default}
+.tog-item b{display:block;font-size:max(18px,1.6vw);line-height:1.15;letter-spacing:-.025em;font-weight:600}
+.tog-item span{display:block;font-size:max(13px,1.2vw);color:var(--text);line-height:1.5;margin-top:.3vh;max-width:20em}
+@media (min-width:801px){
+ .tog-lead{position:absolute;left:25.7vw;top:10vh;width:28vw}
+ .tog-tl{position:absolute;left:25.7vw;top:31vh}
+ .tog-tl .tile2,.tog-tr .tile2{height:46vh;width:calc(46vh*.688)}
+ .tog-tl .cap{text-align:right;margin-top:1.4vh}
+ .tog-tr{position:absolute;left:53.9vw;top:18vh}
+ .cap-row{display:flex;align-items:center;justify-content:space-between;margin-top:1.4vh}
+ .tog-list{display:grid;gap:2.2vh;margin-top:3.4vh}
+}
+@media (max-width:800px){
+ .tog{padding:96px var(--padding) 44px}
+ .tog-lead{font-size:clamp(1.2rem,5.2vw,1.6rem);margin-bottom:24px}
+ .tile2{width:min(72vw,300px);padding:8px;border-radius:30px}
+ .tile2 .screen{border-radius:23px}
+ .tog-tl,.tog-tr{margin-bottom:28px}
+ .cap{font-size:13px;margin-top:10px}
+ .cap-row{display:flex;justify-content:space-between;align-items:center;width:min(72vw,300px)}
+ .tog-list{display:grid;gap:14px;margin-top:20px}
+}
+
+/* ================= LAST: next (unchanged) ================= */
+.sec{padding:clamp(100px,13vw,200px) 0 72px}
+.dark{background:#000;color:#f5f5f7}
+.dark p{color:#a1a1a6}
+.wrap{width:min(100% - (var(--padding) * 2),1320px);margin:auto}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(50px,8vw,130px);align-items:center}
+.big{max-width:15em;margin:0 0 .7em;font-size:clamp(2.6rem,5vw,4.6rem);font-weight:600;line-height:1;letter-spacing:-.06em}
+.dark p{margin:0 0 1.3em;max-width:620px;font-size:clamp(17px,1.7vw,21px);line-height:1.6;letter-spacing:-.015em}
+.pic img{display:block;width:100%;aspect-ratio:3/4;max-height:92vh;object-fit:cover;object-position:center top;border-radius:28px}
+.dark .pill:not(.solid){border-color:rgba(245,245,247,.3);color:#f5f5f7}
+.dark .pill:not(.solid):hover{background:#f5f5f7;color:#111}
+html.lang-ja .free-break{word-break:normal;line-break:auto;overflow-wrap:normal}
+@media (max-width:900px){.split{grid-template-columns:1fr}.pic img{max-height:none}.sec{padding-bottom:36px}}
+footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:14px 0 12px}
+.footer-inner{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+@media (max-width:600px){.footer-inner{flex-direction:column;gap:8px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 </style>
 </head>
 <body>
 
 <nav id="nav">
  <div class="nav-inner">
-  <a class="logo i18n" href="index.html" data-en="Luca Helgert" data-ja="ヘルゲルト・ルカ">Luca Helgert</a>
+  <a class="logo i18n" href="#hero" data-en="Luca" data-ja="るか">Luca</a>
   <div class="nav-right">
    <div class="nav-links">
-    <a class="i18n" href="index.html" data-en="Top" data-ja="トップ">Top</a>
-    <a class="i18n" href="index.html#work" data-en="Works" data-ja="作品">Works</a>
-    <div class="nav-dd"><button type="button" class="nav-dd-btn i18n current" aria-haspopup="true" aria-expanded="false" data-en="About" data-ja="私について">About</button><div class="nav-dd-panel" role="menu"><a class="i18n" role="menuitem" href="about.html" data-en="Overview" data-ja="概要">Overview</a><a class="i18n" role="menuitem" href="about.html#origins" data-en="Origins" data-ja="ルーツ">Origins</a><a class="i18n" role="menuitem" href="about.html#japanese" data-en="Learning Japanese" data-ja="日本語学習">Learning Japanese</a><a class="i18n" role="menuitem" href="about.html#craft" data-en="TECH.C." data-ja="TECH.C.">TECH.C.</a><a class="i18n" role="menuitem" href="about.html#social" data-en="Social media" data-ja="ソーシャルメディア">Social media</a><a class="i18n" role="menuitem" href="about.html#character" data-en="Character" data-ja="人柄">Character</a><a class="i18n" role="menuitem" href="about.html#games" data-en="Games" data-ja="ゲーム">Games</a><a class="i18n" role="menuitem" href="about.html#dleague" data-en="D.LEAGUE" data-ja="D.LEAGUE">D.LEAGUE</a><a class="i18n" role="menuitem" href="about.html#perspective" data-en="Future" data-ja="未来">Future</a><a class="i18n" role="menuitem" href="about.html#next" data-en="Next" data-ja="これから">Next</a></div></div>
-    <div class="nav-dd small"><button type="button" class="nav-dd-btn i18n" aria-haspopup="true" aria-expanded="false" data-en="Skills" data-ja="スキル">Skills</button><div class="nav-dd-panel" role="menu"><a class="i18n" role="menuitem" href="index.html#skill-bars" data-en="Skill bars" data-ja="スキルバー">Skill bars</a><a class="i18n" role="menuitem" href="index.html#skills" data-en="Skills in detail" data-ja="スキルの詳細">Skills in detail</a></div></div>
-    <a class="i18n" href="index.html#contact" data-en="Contact" data-ja="お問い合わせ">Contact</a>
+    <a class="i18n" href="#hero" data-en="Top" data-ja="トップ">Top</a>
+    <a class="i18n" href="#reach" data-en="Story" data-ja="ストーリー">Story</a>
+    <a class="i18n" href="#japanese" data-en="Japanese" data-ja="日本語">Japanese</a>
+    <a class="i18n" href="#social" data-en="Social media" data-ja="SNS">Social media</a>
+    <a class="i18n" href="#craft" data-en="Game dev" data-ja="ゲーム開発">Game dev</a>
+    <a class="i18n" href="#music" data-en="Music" data-ja="音楽">Music</a>
+    <a class="i18n" href="#together" data-en="Collaborate" data-ja="コラボ">Collaborate</a>
    </div>
    <button type="button" id="langToggle" class="lang-toggle" aria-label="Switch language">日本語</button>
   </div>
  </div>
 </nav>
 
-<header class="hero">
- <div class="hero-copy">
-  <h1 class="hero-name i18n" data-en="Luca&lt;br&gt;Helgert" data-ja="ヘルゲルト&lt;br&gt;ルカ">Luca<br>Helgert</h1>
-  <div class="blast"><span class="blast-num i18n" data-en="19k" data-ja="1.9万">19k</span><div class="blast-lab i18n" data-en="Total social media followers" data-ja="SNSフォロワー合計">Total social media followers</div></div>
+<!-- 1. HERO -->
+<header class="hero" id="hero">
+ <div class="hero-stage">
+  <div id="heroGrid"></div>
+  <div class="hero-shade" id="heroShade"></div>
+  <div class="hero-text" id="heroText">
+   <div class="blast"><span class="blast-num i18n" role="heading" aria-level="1" data-en="Luca" data-ja="るか">Luca</span><div class="blast-lab i18n" data-en="Artist / Creator" data-ja="アーティスト / クリエイター">Artist / Creator</div></div>
+  </div>
  </div>
- <div class="pic"><video data-src="aboutnew.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Luca Helgert"></video></div>
 </header>
 
-<!-- ORIGINS -->
-<section id="origins" class="sec">
- <div class="wrap split rev">
-  <div>
-   <h2 class="i18n" data-en="Nobody knows my city..." data-ja="誰も、私の&lt;br&gt;街を知らない。">Nobody knows my city...</h2>
-   <p class="i18n" data-en="I grew up in Weiden, a medieval town in Bavaria, Germany. It’s a lovely place, but I always wanted to look further and build a future beyond it." data-ja="私はドイツ・バイエルン州にある、中世の面影が残る街ヴァイデンで育ちました。すてきな街でしたが、もっと広い世界に目を向け、その先に自分の未来を築きたいと思っていました。">I grew up in Weiden, a medieval town in Bavaria, Germany. It’s a lovely place, but I always wanted to look further and build a future beyond it.</p>
-   <p class="i18n" data-en="In middle school, a friend showed me Naruto. That one anime started everything. Japanese games came next, and living in Japan, learning from its makers and one day giving something back became my dream." data-ja="中学生のとき、友人に『NARUTO -ナルト-』を見せてもらいました。この一本のアニメが、すべてのはじまりでした。やがて日本のゲームに出会い、日本に住み、つくり手から学び、いつか恩返しすることが私の夢になりました。">In middle school, a friend showed me Naruto. That one anime started everything. Japanese games came next, and living in Japan, learning from its makers and one day giving something back became my dream.</p>
-   <p class="i18n" data-en="In 2023, I moved to Japan." data-ja="2023年、日本へ移り住みました。">In 2023, I moved to Japan.</p>
+<!-- 2. REACH -->
+<section class="reach" id="reach">
+ <div class="reach-stage" id="reachStage">
+  <div class="rphone" id="rPhone">
+   <i class="risland"></i>
+   <div class="rscreen"><div class="rreel" id="rReel">
+    <video data-src="insta1.mp4#t=0.1" data-manual="1" muted loop playsinline preload="none" aria-label="Instagram reel"></video>
+    <video data-src="insta2.mp4#t=0.1" data-manual="1" muted loop playsinline preload="none" aria-label="Instagram reel"></video>
+   </div></div>
   </div>
-  <div class="pic"><video data-src="germany.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Luca Helgert"></video></div>
+  <div class="rtext rt1" id="rT1"><p class="rline i18n" data-en="I’m from a small town in Germany that nobody knows.&lt;span class=&quot;s&quot;&gt;Anime and manga led me to Japan.&lt;/span&gt;" data-ja="&lt;span class=&quot;p&quot;&gt;ドイツの、&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;誰も知らない&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;小さな町の出身です。&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;p&quot;&gt;アニメとマンガが、&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;私を日本へ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;導いてくれました。&lt;/span&gt;&lt;/span&gt;">I’m from a small town in Germany that nobody knows.<span class="s">Anime and manga led me to Japan.</span></p><div class="rpin"><i class="rdot"></i><span class="i18n" data-en="Germany" data-ja="ドイツ">Germany</span></div></div>
+  <div class="rtext rt2" id="rT2"><div class="rpin"><i class="rdot"></i><span class="i18n" data-en="Japan" data-ja="日本">Japan</span></div><p class="rline i18n" data-en="I started posting on Instagram and YouTube,&lt;span class=&quot;s&quot;&gt;amassing a mostly international audience from Germany and Europe, interested in my life in Japan.&lt;/span&gt;" data-ja="&lt;span class=&quot;p&quot;&gt;InstagramとYouTubeで&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;発信を始め、&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;p&quot;&gt;ドイツやヨーロッパを中心に、&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;海外の視聴者が&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;集まりました。&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;日本で暮らす&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;私の日常に、&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;関心を持ってくれています。&lt;/span&gt;&lt;/span&gt;">I started posting on Instagram and YouTube,<span class="s">amassing a mostly international audience from Germany and Europe, interested in my life in Japan.</span></p></div>
  </div>
 </section>
 
-<!-- LANGUAGE SCHOOL -->
-<section id="japanese" class="sec dark">
- <div class="wrap split">
-  <div>
-   <h2 class="i18n" data-en="Learning Japanese by learning culture." data-ja="日本語は、文化を&lt;br&gt;知って覚えた。">Learning Japanese by learning culture.</h2>
-   <p class="i18n" data-en="After arriving in 2023, I spent two years at Kai Language School, where lessons centered on speaking, and finished in 2025 at Level N2. Today I speak Japanese fluently." data-ja="来日後の2年間はKai日本語スクールで学びました。授業は会話が中心で、2025年にN2レベルで修了。今では日本語を流暢に話せます。">After arriving in 2023, I spent two years at Kai Language School, where lessons centered on speaking, and finished in 2025 at Level N2. Today I speak Japanese fluently.</p>
-   <p class="i18n" data-en="For three years I also worked part time at a restaurant, teaching foreign guests to make sushi. It showed me how Japanese workplaces and their hierarchy really work." data-ja="3年間、飲食店でアルバイトもしました。外国人のお客様にすし作りを教えながら、日本の職場と上下関係のしくみを肌で学びました。">For three years I also worked part time at a restaurant, teaching foreign guests to make sushi. It showed me how Japanese workplaces and their hierarchy really work.</p>
+<!-- 3. JAPANESE -->
+<section class="jp" id="japanese">
+ <h2 class="i18n" data-en="Helping Japanese brands&lt;span&gt;connect with German-speaking audiences.&lt;/span&gt;" data-ja="日本のブランドを、&lt;span&gt;ドイツ語圏の視聴者へつなぐ。&lt;/span&gt;">Helping Japanese brands<span>connect with German-speaking audiences.</span></h2>
+ <div class="jp-stage">
+  <div class="phone"><video data-src="sadou.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Luca Helgert"></video></div>
+  <div class="jp-col l">
+   <div class="fact"><b class="i18n" data-en="From language school to a classroom in Japanese." data-ja="語学学校から、日本語だけの教室へ。">From language school to a classroom in Japanese.</b><small class="i18n" data-en="Two years in Tokyo, and now I study entirely in Japanese. Fluently." data-ja="東京で2年学び、いまは授業もすべて日本語。流暢に話せます。">Two years in Tokyo, and now I study entirely in Japanese. Fluently.</small></div>
   </div>
-  <div class="pic"><video data-src="sadou.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Luca Helgert"></video></div>
+  <div class="jp-col r">
+   <div class="fact"><b class="i18n" data-en="60% of my viewers are German and European." data-ja="視聴者の6割は、ドイツとヨーロッパの人。">60% of my viewers are German and European.</b><small class="i18n" data-en="Lately on TikTok, I make content in Japanese for Japanese people curious about Germany." data-ja="最近はTikTokで、ドイツに興味のある日本人向けに日本語でコンテンツを作っています。">Lately on TikTok, I make content in Japanese for Japanese people curious about Germany.</small></div>
+  </div>
  </div>
 </section>
 
-<!-- TECH.C. -->
-<section id="craft" class="sec">
- <div class="wrap split rev">
-  <div>
-   <h2 class="i18n" data-en="My brother is famous, now it’s my turn." data-ja="兄は有名。&lt;br&gt;次は、私の番。">My brother is famous, now it’s my turn.</h2>
-   <p class="i18n" data-en="I enrolled at TECH.C. in 2025 to make the kind of games that raised me." data-ja="2025年、私を育ててくれたようなゲームをつくるために、TECH.C.に入学しました。">I enrolled at TECH.C. in 2025 to make the kind of games that raised me.</p>
-   <p class="i18n" data-en="My brother is a well-known artist. Growing up beside his work gave me an artist’s eye." data-ja="著名なアーティストである兄に刺激を受け、私はアーティストの眼を持つようになりました。">My brother is a well-known artist. Growing up beside his work gave me an artist’s eye.</p>
-   <p class="i18n" data-en="So when I make a game, I see it and work on it like an artist." data-ja="だから、ゲームをつくるときも、アーティストの視点と姿勢で取り組んでいます。">So when I make a game, I see it and work on it like an artist.</p>
-   <p class="i18n" data-en="It shows in the results: wins at school tournaments and hackathons, a corporate project, and the Tokyo Game Show." data-ja="結果にも表れています。校内大会やハッカソンでの優勝、企業連携プロジェクト、東京ゲームショウへの出展。">It shows in the results: wins at school tournaments and hackathons, a corporate project, and the Tokyo Game Show.</p>
-  </div>
-  <div class="pic"><img decoding="async" src="me4.jpg" alt="Luca Helgert" loading="lazy"></div>
- </div>
-</section>
-
-<!-- SOCIAL MEDIA -->
-<section id="social" class="sec dark">
- <div class="wrap split">
-  <div>
-   <h2 class="i18n" data-en="19k follow along. One video hit 4M." data-ja="1.9万人が、<wbr>見てくれている。<wbr>1本は400万回。">19k follow along. One video hit 4M.</h2>
-   <p class="i18n" data-en="While studying in Germany, I worked as a freelance composer and grew my music channel on YouTube. I mostly wrote film music, collaborating with YouTubers on background tracks and with small film studios. My most listened track has reached 2.3 million views on YouTube." data-ja="ドイツで学んでいた頃から、フリーランスの作曲家として活動しながら、YouTubeの音楽チャンネルを育ててきました。主に映画音楽を手がけ、YouTuberのBGMや小さな映画スタジオの作品に楽曲を提供しています。最も聴かれている楽曲は、YouTubeで230万回再生されています。">While studying in Germany, I worked as a freelance composer and grew my music channel on YouTube. I mostly wrote film music, collaborating with YouTubers on background tracks and with small film studios. My most listened track has reached 2.3 million views on YouTube.</p>
-   <p class="i18n" data-en="Today I share my game dev journey online. My personal YouTube channel grew to 1k subscribers through two years of weekly uploads. Then, in 2026, I started Instagram, and within just two months it had grown to 3k followers." data-ja="現在は、ゲーム制作の歩みを発信しています。個人のYouTubeチャンネルは、2年間の毎週投稿を重ねて登録者1千人に。そして2026年にInstagramを始め、わずか2か月でフォロワー3千人にまで成長しました。">Today I share my game dev journey online. My personal YouTube channel grew to 1k subscribers through two years of weekly uploads. Then, in 2026, I started Instagram, and within just two months it had grown to 3k followers.</p>
-   <div class="stat-strip">
-    <div class="stat-row">
-    <div class="stat-item"><div class="stat i18n" data-en="15k" data-ja="1.5万">15k</div><div class="stat-lab i18n" data-en="Music YouTube" data-ja="音楽YouTube">Music YouTube</div></div>
-    <div class="stat-item"><div class="stat i18n" data-en="3k" data-ja="3千">3k</div><div class="stat-lab i18n" data-en="Instagram" data-ja="Instagram">Instagram</div></div>
-    <div class="stat-item"><div class="stat i18n" data-en="1k" data-ja="1千">1k</div><div class="stat-lab i18n" data-en="Personal YouTube" data-ja="個人YouTube">Personal YouTube</div></div>
-    </div>
-   </div>
-   <div class="pills">
-    <a class="pill i18n" href="https://www.youtube.com/@musicformed" target="_blank" rel="noopener" data-en="Music on YouTube ↗" data-ja="YouTubeの音楽 ↗">Music on YouTube ↗</a>
-    <a class="pill i18n" href="https://www.instagram.com/lucanicohe" target="_blank" rel="noopener" data-en="Instagram ↗" data-ja="Instagram ↗">Instagram ↗</a>
-    <a class="pill i18n" href="https://www.youtube.com/@lucanicohe" target="_blank" rel="noopener" data-en="Personal YouTube ↗" data-ja="個人YouTube ↗">Personal YouTube ↗</a>
+<!-- 4. PLATFORMS -->
+<section class="plat" id="social">
+ <div class="plat-box">
+  <div class="plat-top">
+   <div>
+    <h2 class="i18n" data-en="Producing successful videos that promote talents, brands and campaigns." data-ja="タレント、ブランド、キャンペーンを広める動画を制作。">Producing successful videos that promote talents, brands and campaigns.</h2>
+    <p class="plat-sub i18n" data-en="A few ways &lt;b&gt;three platforms&lt;/b&gt; give you more." data-ja="&lt;b&gt;3つのプラットフォーム&lt;/b&gt;で、より多くの人へ。">A few ways <b>three platforms</b> give you more.</p>
    </div>
   </div>
-  <div class="reel-trio">
-   <figure class="reel"><div class="pic vertical"><video data-src="insta1.mp4#t=0.1" poster="insta1-poster.jpg" muted loop playsinline preload="none" aria-label="Instagram reel with 4M+ views"></video></div>
-    <figcaption><span class="reel-platform">Instagram</span><span class="reel-meta i18n" data-en="4M+ views" data-ja="400万+ 再生">4M+ views</span></figcaption></figure>
-   <figure class="reel"><div class="pic vertical"><video data-src="insta2.mp4#t=0.1" poster="insta2-poster.jpg" muted loop playsinline preload="none" aria-label="Instagram reel: a day as a game dev student"></video></div>
-    <figcaption><span class="reel-platform">Instagram</span><span class="reel-meta i18n" data-en="50k+ views" data-ja="5万+ 再生">50k+ views</span></figcaption></figure>
-   <figure class="reel"><div class="pic vertical"><video data-src="insta3.mp4#t=0.1" poster="insta3-poster.jpg" muted loop playsinline preload="none" aria-label="YouTube video: my games and portfolio"></video></div>
-    <figcaption><span class="reel-platform">YouTube</span><span class="reel-meta i18n" data-en="18k+ views" data-ja="1.8万+ 再生">18k+ views</span></figcaption></figure>
+  <div class="plat-grid">
+   <div class="pcard"><small>YouTube</small><span class="b1">16k</span><span class="b2 i18n" data-en="views" data-ja="回再生">views</span><span class="lab i18n" data-en="Game dev content" data-ja="ゲーム開発コンテンツ">Game dev content</span></div>
+   <div class="pcard"><small>Instagram</small><span class="b1">4 million</span><span class="b2 i18n" data-en="views" data-ja="回再生">views</span><span class="lab i18n" data-en="German living in Japan" data-ja="日本に住むドイツ人">German living in Japan</span></div>
+   <div class="pcard"><small>TikTok</small><span class="b1 i18n" data-en="30k" data-ja="3万回">30k</span><span class="b2 i18n" data-en="views" data-ja="再生">views</span><span class="lab i18n" data-en="German content for Japanese" data-ja="日本人向けのドイツコンテンツ">German content for Japanese</span></div>
+   <div class="pcard pcard-video"><div class="video-caption"><span class="i18n" data-en="1.100 subscribers<br>enjoy my game dev content" data-ja="1,100人の登録者<br>ゲーム開発コンテンツを楽しんでいます">1.100 subscribers<br>enjoy my game dev content</span></div><div class="mini-phone"><video data-src="insta3.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Most popular video about games made in Japan"></video></div></div>
+   <div class="pcard pcard-video"><div class="video-caption"><span class="i18n" data-en="3400 followers<br>want to see a German perspective on Japan" data-ja="3,400人のフォロワー<br>ドイツ人から見た日本に関心があります">3400 followers<br>want to see a German perspective on Japan</span></div><div class="mini-phone"><video data-src="insta1.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Video romanticising Germany like Japan"></video></div></div>
+   <div class="pcard pcard-video"><div class="video-caption"><span class="i18n" data-en="30k Japanese viewers<br>enjoyed a video about my hometown" data-ja="3万人の日本人視聴者<br>地元を紹介する動画を楽しみました">30k Japanese viewers<br>enjoyed a video about my hometown</span></div><div class="mini-phone"><video data-src="tiktokjapanese.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Japanese viewers enjoying my hometown in Germany"></video></div></div>
   </div>
  </div>
 </section>
 
-<!-- CHARACTER -->
-<section id="character" class="sec">
- <div class="wrap split">
-  <div>
-   <h2 class="i18n" data-en="What makes me different?" data-ja="私は、&lt;br&gt;何が違うのか。">What makes me different?</h2>
-   <p class="i18n" data-en="I have two sides. A maker who happily creates for hours, and a mover who trains: regular gym trips, a year of karate up to orange belt, and running." data-ja="私には二つの顔があります。何時間でもつくり続ける、ものづくりの自分。そして、体を動かす自分。ジム、空手（1年・オレンジ帯）、ランニングを続けています。">I have two sides. A maker who happily creates for hours, and a mover who trains: regular gym trips, a year of karate up to orange belt, and running.</p>
-   <p class="i18n" data-en="The two feed each other. Making things gives me ideas and purpose, while sport gives me the energy and a clear head to bring them to life. I try to keep them in balance, a bit like the golden mean: the best place to stand is somewhere in between." data-ja="この二つは互いを高め合っています。ものづくりはアイデアと目的を与えてくれ、スポーツはそれを形にするためのエネルギーと冴えた頭を与えてくれます。どちらにも偏らないよう、黄金の中庸のように、ちょうどよい場所は両極の間にあると考えています。">The two feed each other. Making things gives me ideas and purpose, while sport gives me the energy and a clear head to bring them to life. I try to keep them in balance, a bit like the golden mean: the best place to stand is somewhere in between.</p>
+<!-- 5. GAME DEV -->
+<section class="craft" id="craft">
+ <div class="craft-stage">
+  <h2 class="i18n" data-en="Connect brands with gaming,&lt;span&gt;tech and the game industry.&lt;/span&gt;" data-ja="ゲームやテクノロジー、&lt;span&gt;ゲーム業界のブランドとつながる。&lt;/span&gt;">Connect brands with gaming,<span>tech and the game industry.</span></h2>
+  <div class="craft-box" id="craftBox">
+   <div class="craft-layer"><video data-src="squid1.mp4#t=0.1" muted loop playsinline preload="none"></video></div>
+   <div class="craft-layer"><video data-src="squid2.mp4#t=0.1" muted loop playsinline preload="none"></video></div>
+   <div class="craft-layer"><video data-src="squid3.mp4#t=0.1" muted loop playsinline preload="none"></video></div>
   </div>
-  <div class="pic"><video data-src="gym.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Luca Helgert"></video></div>
+  <div class="craft-text"><p class="craft-copy two-tone i18n" data-en="My YouTube focuses on game dev, which lets me connect brands with <b>gaming and tech</b>." data-ja="YouTubeではゲーム開発を中心に発信し、<b>ゲームやテクノロジー</b>のブランドとつなぎます。">My YouTube focuses on game dev, which lets me connect brands with <b>gaming and tech</b>.</p><a class="craft-link i18n" href="index.html" data-en="View my portfolio" data-ja="ポートフォリオを見る">View my portfolio</a></div>
  </div>
 </section>
 
-<!-- HOBBIES -->
-<section id="hobbies" class="sec dark">
- <div class="wrap">
-  <h2 class="big i18n" data-en="What inspires me" data-ja="私を動かす&lt;wbr&gt;もの。">What inspires me</h2>
-  <div class="hob-block first" id="games">
-   <div class="hob-head"><h3 class="hob-title i18n" data-en="Games" data-ja="ゲーム">Games</h3><p class="i18n" data-en="I have played games since I was young, starting on the Nintendo DS. Later, my dad gave me his old work computer, and I explored PC games, beginning with Western ones. Then I found Japanese games, and studios like FromSoftware, SEGA, PlatinumGames and Capcom became the ones I most want to learn from." data-ja="子どもの頃から、ずっとゲームで遊んできました。始まりはニンテンドーDSでした。その後、父が昔使っていた仕事用のパソコンをくれて、PCゲームの世界へ。最初は西洋のゲームから。やがて日本のゲームに出会い、フロム・ソフトウェア、セガ、プラチナゲームズ、カプコンのようなスタジオから、いつか学びたいと思うようになりました。">I have played games since I was young, starting on the Nintendo DS. Later, my dad gave me his old work computer, and I explored PC games, beginning with Western ones. Then I found Japanese games, and studios like FromSoftware, SEGA, PlatinumGames and Capcom became the ones I most want to learn from.</p></div>
-   <div class="rail-wrap">
-    <div class="rail">
-   <figure class="fav"><div class="fav-pic"><img decoding="async" src="mario64.jpg" alt="Super Mario 64" loading="lazy"></div><div class="fav-title i18n" data-en="Super Mario 64" data-ja="スーパーマリオ64">Super Mario 64</div><div class="fav-meta i18n" data-en="Nintendo" data-ja="任天堂">Nintendo</div></figure>
-   <figure class="fav"><div class="fav-pic"><img decoding="async" src="skyrim.jpg" alt="Skyrim" loading="lazy"></div><div class="fav-title i18n" data-en="Skyrim" data-ja="スカイリム">Skyrim</div><div class="fav-meta i18n" data-en="Bethesda Game Studios" data-ja="ベセスダ・ゲームスタジオ">Bethesda Game Studios</div></figure>
-   <figure class="fav"><div class="fav-pic"><img decoding="async" src="yakuza0.jpg" alt="Yakuza 0" loading="lazy"></div><div class="fav-title i18n" data-en="Yakuza 0" data-ja="龍が如く0 誓いの場所">Yakuza 0</div><div class="fav-meta i18n" data-en="SEGA" data-ja="セガ">SEGA</div></figure>
-   <figure class="fav"><div class="fav-pic"><img decoding="async" src="metalgearrising.jpg" alt="Metal Gear Rising: Revengeance" loading="lazy"></div><div class="fav-title i18n" data-en="Metal Gear Rising: Revengeance" data-ja="メタルギア ライジング リベンジェンス">Metal Gear Rising: Revengeance</div><div class="fav-meta i18n" data-en="PlatinumGames" data-ja="プラチナゲームズ">PlatinumGames</div></figure>
-   <figure class="fav"><div class="fav-pic"><img decoding="async" src="devilmaycry.jpg" alt="Devil May Cry" loading="lazy"></div><div class="fav-title i18n" data-en="Devil May Cry" data-ja="デビル メイ クライ">Devil May Cry</div><div class="fav-meta i18n" data-en="Capcom" data-ja="カプコン">Capcom</div></figure>
-   <figure class="fav"><div class="fav-pic"><img decoding="async" src="darksouls.jpg" alt="Dark Souls" loading="lazy"></div><div class="fav-title i18n" data-en="Dark Souls" data-ja="ダークソウル">Dark Souls</div><div class="fav-meta i18n" data-en="FromSoftware" data-ja="フロム・ソフトウェア">FromSoftware</div></figure>
-   <figure class="fav"><div class="fav-pic"><img decoding="async" src="ff7.jpg" alt="Final Fantasy VII" loading="lazy"></div><div class="fav-title i18n" data-en="Final Fantasy VII" data-ja="ファイナルファンタジーVII">Final Fantasy VII</div><div class="fav-meta i18n" data-en="Square Enix" data-ja="スクウェア・エニックス">Square Enix</div></figure>
-   <figure class="fav"><div class="fav-pic"><img decoding="async" src="naruto.jpg" alt="Naruto Shippuden: Ultimate Ninja Storm" loading="lazy"></div><div class="fav-title i18n" data-en="Naruto Shippuden: Ultimate Ninja Storm" data-ja="NARUTO-ナルト- 疾風伝 ナルティメットストーム">Naruto Shippuden: Ultimate Ninja Storm</div><div class="fav-meta i18n" data-en="CyberConnect2" data-ja="サイバーコネクトツー">CyberConnect2</div></figure>
-   <figure class="fav"><div class="fav-pic"><img decoding="async" src="danganronpa.jpg" alt="Danganronpa" loading="lazy"></div><div class="fav-title i18n" data-en="Danganronpa" data-ja="ダンガンロンパ">Danganronpa</div><div class="fav-meta i18n" data-en="Spike Chunsoft" data-ja="スパイク・チュンソフト">Spike Chunsoft</div></figure>
-</div>
-    <div class="rail-nav"><button class="prev" type="button" aria-label="Previous" disabled>&lsaquo;</button><button class="next" type="button" aria-label="Next">&rsaquo;</button></div>
-   </div>
+<!-- 6. MUSIC -->
+<section class="music" id="music">
+ <div class="music-stage">
+  <div class="m-zone">
+   <div class="m-item"><h2 class="m-title i18n" data-en="Original music" data-ja="オリジナル曲を、">Original music</h2><div class="m-sub g-all i18n" data-en="for videos, talents and campaigns." data-ja="映像、タレント、キャンペーンのために。">for videos, talents and campaigns.</div></div>
+   <div class="m-item"><h3 class="m-line g-blue i18n" data-en="15k subscribers on my YouTube channel." data-ja="YouTubeチャンネル登録者1.5万人。">15k subscribers on my YouTube channel.</h3></div>
+   <div class="m-item"><h3 class="m-line g-purple i18n" data-en="One video, 2M+ views." data-ja="1本で200万回以上再生。">One video, 2M+ views.</h3></div>
+   <div class="m-item"><h3 class="m-line g-pink i18n" data-en="Film music and background tracks." data-ja="映画音楽とBGMを制作。">Film music and background tracks.</h3></div>
+   <div class="m-item"><h3 class="m-line g-warm i18n" data-en="For YouTubers and small film studios." data-ja="YouTuberや小さな映画スタジオへ。">For YouTubers and small film studios.</h3></div>
+   <div class="m-item"><h3 class="m-line g-all i18n" data-en="Next: your promo, your talent, your campaign." data-ja="次は、あなたのプロモーションへ。">Next: your promo, your talent, your campaign.</h3></div>
   </div>
-  <div class="hob-block" id="dleague">
-   <div class="hob-row">
-    <div class="hob-head"><h3 class="hob-title i18n" data-en="D.LEAGUE" data-ja="D.LEAGUE">D.LEAGUE</h3><p class="i18n" data-en="An artist friend from Instagram, who works with a company involved in D.LEAGUE, invited me to see it. What hooked me was the companies behind the teams: SEGA (SEGA SAMMY LUX), KADOKAWA (KADOKAWA DREAMS) and CyberAgent (CyberAgent Legit). Their dance teams, their charm. I wish I could join one of them." data-ja="Instagramで知り合ったアーティストの友人が、D.LEAGUEに関わる会社で働いていて、私を招待してくれました。心を奪われたのは、チームを支える企業の魅力です。SEGA（SEGA SAMMY LUX）、KADOKAWA（KADOKAWA DREAMS）、CyberAgent（CyberAgent Legit）。そのダンスと空気感に惹かれ、いつかこんな会社の一員になりたいと思っています。">An artist friend from Instagram, who works with a company involved in D.LEAGUE, invited me to see it. What hooked me was the companies behind the teams: SEGA (SEGA SAMMY LUX), KADOKAWA (KADOKAWA DREAMS) and CyberAgent (CyberAgent Legit). Their dance teams, their charm. I wish I could join one of them.</p></div>
-    <div class="hob-media"><figure class="hob-vid"><div class="pic"><video data-src="dance.mp4#t=0.1" poster="dance-poster.jpg" muted loop playsinline preload="none" aria-label="D.LEAGUE"></video></div></figure></div>
-   </div>
+  <div class="ipad"><div class="ipad-screen"><iframe id="ytFrame" src="https://www.youtube.com/embed/cfmdAHSZqHs?playsinline=1&amp;rel=0&amp;enablejsapi=1&amp;origin=https%3A%2F%2Flucanicohe.github.io" title="Luca Helgert — music" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="origin" allowfullscreen></iframe></div></div>
+ </div>
+</section>
+
+<!-- 7. TOGETHER -->
+<section class="tog" id="together">
+ <p class="tog-lead i18n" data-en="I’d love to work with D.LEAGUE and KADOKAWA DREAMS as a big fan." data-ja="大ファンとして、D.LEAGUEとKADOKAWA DREAMSとご一緒したいです。">I’d love to work with D.LEAGUE and KADOKAWA DREAMS as a big fan.</p>
+ <div class="tog-tl">
+  <div class="tile2"><div class="screen"><video data-src="dance.mp4#t=0.1" poster="dance-poster.jpg" muted loop playsinline preload="none" aria-label="D.LEAGUE"></video></div></div>
+  <div class="cap">D.LEAGUE</div>
+ </div>
+ <div class="tog-tr">
+  <div class="tile2"><div class="screen"><div class="games-track" id="gamesTrack">
+   <img src="devilmaycry.jpg" alt="Devil May Cry" data-en="Devil May Cry" data-ja="デビル メイ クライ" loading="lazy" decoding="async">
+   <img src="yakuza0.jpg" alt="Yakuza 0" data-en="Yakuza 0" data-ja="龍が如く0 誓いの場所" loading="lazy" decoding="async">
+   <img src="metalgearrising.jpg" alt="Metal Gear Rising: Revengeance" data-en="Metal Gear Rising: Revengeance" data-ja="メタルギア ライジング リベンジェンス" loading="lazy" decoding="async">
+   <img src="darksouls.jpg" alt="Dark Souls" data-en="Dark Souls" data-ja="ダークソウル" loading="lazy" decoding="async">
+   <img src="naruto.jpg" alt="Naruto Shippuden: Ultimate Ninja Storm" data-en="Naruto Shippuden: Ultimate Ninja Storm" data-ja="NARUTO-ナルト- 疾風伝 ナルティメットストーム" loading="lazy" decoding="async">
+   <img src="danganronpa.jpg" alt="Danganronpa" data-en="Danganronpa" data-ja="ダンガンロンパ" loading="lazy" decoding="async">
+   <img src="ff7.jpg" alt="Final Fantasy VII" data-en="Final Fantasy VII" data-ja="ファイナルファンタジーVII" loading="lazy" decoding="async">
+   <img src="mario64.jpg" alt="Super Mario 64" data-en="Super Mario 64" data-ja="スーパーマリオ64" loading="lazy" decoding="async">
+   <img src="skyrim.jpg" alt="Skyrim" data-en="Skyrim" data-ja="スカイリム" loading="lazy" decoding="async">
+  </div></div></div>
+  <div class="cap-row"><div class="cap" id="gamesCap"></div><div class="arrows"><button type="button" id="gPrev" aria-label="Previous" disabled>&lsaquo;</button><button type="button" id="gNext" aria-label="Next">&rsaquo;</button></div></div>
+  <div class="tog-list">
+   <div class="tog-item"><b class="g-pink i18n" data-en="Gaming companies" data-ja="ゲーム会社">Gaming companies</b><span class="i18n" data-en="Capcom, SEGA, FromSoftware, PlatinumGames" data-ja="カプコン、セガ、フロム・ソフトウェア、&lt;br&gt;プラチナゲームズ">Capcom, SEGA, FromSoftware, PlatinumGames</span></div>
   </div>
  </div>
 </section>
 
-<!-- PERSPECTIVE -->
-<section id="perspective" class="sec">
- <div class="wrap split rev">
-  <div>
-   <h2 class="big i18n" data-en="Ten years from now." data-ja="10年後の私。">Ten years from now.</h2>
-   <p class="i18n" data-en="In 10 years, I see myself leading a team at the company that first took a chance on me: growing its signature work, and the next newcomer." data-ja="10年後は、最初に私を受け入れてくれた会社でチームを率い、看板となる仕事を育て、次の新人を育てていたいです。">In 10 years, I see myself leading a team at the company that first took a chance on me: growing its signature work, and the next newcomer.</p>
-   <p class="i18n" data-en="I see AI not as a threat to my skills, but as one more skill that turns ideas into real work faster." data-ja="AIは私のスキルを脅かすものではなく、アイデアを素早く形にしてくれる、もう一つのスキルだと考えています。">I see AI not as a threat to my skills, but as one more skill that turns ideas into real work faster.</p>
-   <p class="i18n" data-en="What AI can’t copy is character. It helped me grow an audience and win events at school, and it stays at the center of everything I build." data-ja="AIに真似できないのは、人柄です。フォロワーが増え、学校のイベントで結果を残せたのも人柄のおかげで、これからも作るものの中心に据えます。">What AI can’t copy is character. It helped me grow an audience and win events at school, and it stays at the center of everything I build.</p>
-  </div>
-  <div class="pic"><video data-src="acker2.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Luca Helgert"></video></div>
- </div>
-</section>
-
-<!-- NEXT -->
+<!-- LAST: next (unchanged) -->
 <section id="next" class="sec dark">
  <div class="wrap split">
   <div>
    <h2 class="big i18n free-break" data-en="Let’s work together." data-ja="一緒に、つくりませんか。">Let’s work together.</h2>
    <p class="i18n" data-en="Thank you for taking a look. If what you’ve seen fits your team or your next project, I’d be glad to hear from you." data-ja="ご覧いただき、ありがとうございます。チームやプロジェクトにご興味をお持ちいただけましたら、お気軽にご連絡ください。">Thank you for taking a look. If what you’ve seen fits your team or your next project, I’d be glad to hear from you.</p>
-   <p class="i18n" data-en="Part-time now, full-time from 2028: wherever a creative with a story can help." data-ja="現在はアルバイト、2028年からはフルタイム。物語を持つクリエイターの力が役立つ場所で、お待ちしています。">Part-time now, full-time from 2028: wherever a creative with a story can help.</p>
-  <div class="pills">
-   <a class="pill solid i18n" style="background:#f5f5f7;color:#111;border-color:#f5f5f7" href="mailto:luca.helgert@icloud.com?subject=%E9%9D%A2%E8%AB%87%E3%81%AE%E3%81%94%E7%9B%B8%E8%AB%87%20%2F%20Let%27s%20meet" data-en="Meet me in person" data-ja="会って話す">Meet me in person</a>
-   <a class="pill i18n" href="index.html#resume" data-en="View resume" data-ja="履歴書を見る">View resume</a>
-  </div>
+   <div class="pills">
+    <a class="pill solid i18n" style="background:#f5f5f7;color:#111;border-color:#f5f5f7" href="mailto:luca.helgert@icloud.com?subject=%E9%9D%A2%E8%AB%87%E3%81%AE%E3%81%94%E7%9B%B8%E8%AB%87%20%2F%20Let%27s%20meet" data-en="Meet me in person" data-ja="会って話す">Meet me in person</a>
+   </div>
   </div>
   <div class="pic"><img decoding="async" src="me9.jpg" alt="Luca Helgert" loading="lazy"></div>
  </div>
 </section>
 
-<footer>
- <div class="footer-inner">
-  <span class="i18n" data-en="© 2026 Luca Helgert" data-ja="© 2026 ヘルゲルト・ルカ">© 2026 Luca Helgert</span>
-  <span class="i18n" data-en="Tokyo, Japan" data-ja="東京、日本">Tokyo, Japan</span>
- </div>
-</footer>
 
 <script>
-const nav=document.getElementById("nav");
-window.addEventListener("scroll",()=>nav.classList.toggle("scrolled",window.scrollY>20),{passive:true});
-/* NAV DROPDOWNS (hover on desktop, tap on touch, Esc / outside click closes; opening one closes the others) */
+const $=s=>document.querySelector(s);
+const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+const smooth=t=>t*t*(3-2*t);
+const prog=el=>{const r=el.getBoundingClientRect();return clamp(-r.top/Math.max(1,r.height-innerHeight));};
+let lang="ja";
+
+/* ============ HERO TILES: edit this list to change what shows in the grid ============
+   [row, column offset, "v" video | "i" image | "c" center video, file, optional object-position]
+   row 0 = middle row. Rows -1 and 1 are shifted half a tile (like the screenshot). */
+const HERO_TILES=[
+ [-1,-1.5,"v","sadou.mp4"],[-1,-0.5,"i","me7.jpg","50% 30%"],[-1,0.5,"v","boat2.mp4"],[-1,1.5,"i","helen.jpg","50% 30%"],
+ [0,-2,"i","me1.jpg","50% 30%"],[0,-1,"v","gym.mp4"],[0,0,"c","wideshot.jpg"],[0,1,"i","me13.jpg","50% 30%"],[0,2,"v","austria.mp4"],
+ [1,-1.5,"i","me11.jpg","50% 30%"],[1,-0.5,"v","intro.mp4"],[1,0.5,"i","me4.jpg","50% 30%"],[1,1.5,"i","me14.jpg","50% 30%"]
+];
+const heroGrid=$("#heroGrid");
+const heroTiles=HERO_TILES.map(([row,k,type,file,pos])=>{
+  const t=document.createElement("div");t.className="tile"+(type==="c"?" center":"");
+  const s=document.createElement("div");s.className="screen";
+  let m;
+  if(type==="c"){m=document.createElement("img");m.src=file;m.alt="Luca Helgert";m.decoding="async";m.className="cimg";}
+  else if(type==="i"){m=document.createElement("img");m.src=file;m.alt="";m.loading="eager";m.fetchPriority="low";m.decoding="async";}
+  else{
+    m=document.createElement("video");m.dataset.src=type==="c"?file:file+"#t=0.1";
+    m.muted=true;m.loop=true;m.playsInline=true;m.preload=type==="c"?"auto":"none";
+    if(type==="c"){m.dataset.eager="1";m.setAttribute("aria-label","Luca Helgert");}else m.setAttribute("aria-hidden","true");
+  }
+  if(pos)m.style.objectPosition=pos;
+  const cam=document.createElement("i"),dot=document.createElement("i");cam.className="cam";dot.className="cam dot";
+  s.appendChild(m);t.appendChild(s);t.appendChild(cam);t.appendChild(dot);heroGrid.appendChild(t);
+  return {row,k,t,s,cam,dot,center:type==="c",img:type==="c"?m:null};
+});
+
+/* ============ nav ============ */
+const nav=$("#nav");
+addEventListener("scroll",()=>nav.classList.toggle("scrolled",scrollY>20),{passive:true});
 (()=>{
   const dds=[...document.querySelectorAll(".nav-dd")].map(dd=>{
     const btn=dd.querySelector(".nav-dd-btn");
@@ -598,36 +503,30 @@ window.addEventListener("scroll",()=>nav.classList.toggle("scrolled",window.scro
   document.addEventListener("click",e=>{dds.forEach(x=>{if(!x.dd.contains(e.target))x.set(false);});});
   document.addEventListener("keydown",e=>{if(e.key==="Escape")dds.forEach(x=>{if(x.dd.classList.contains("open")){x.set(false);x.btn.focus();}});});
 })();
-/* MEDIA LOADING (same system as the main page)
-   posters in the HTML -> idle first-frame warm-up -> full buffering when near -> play when on screen, rewind when away.
-   Nothing is cancelled or restarted; iOS/iPadOS (which never preload video) starts downloading when play() is called. */
-const reduceMotion=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const vids=[...document.querySelectorAll(".pic video")];
+
+/* ============ video loading ============ */
+const reduceMotion=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const vids=[...document.querySelectorAll("video[data-src]")];
 const conn=navigator.connection||{};
 const saveData=!!conn.saveData||/(^|-)2g$/.test(conn.effectiveType||"");
-const isPhone=window.matchMedia("(pointer: coarse)").matches; /* phones and tablets (iPad included) */
-const smallScreen=(isPhone&&Math.min(screen.width,screen.height)<700)||window.innerWidth<700; /* only real phones get the lighter name-m.mp4 file (made by optimize-media.sh); iPad gets the sharp full-quality video */
-const srcFor=v=>(smallScreen&&!v._full)?v.dataset.src.replace(/\.mp4(?=#|$)/,"-m.mp4"):v.dataset.src;
+const isPhone=matchMedia("(pointer: coarse)").matches;
+const smallScreen=(isPhone&&Math.min(screen.width,screen.height)<700)||innerWidth<700;
+const srcFor=v=>(smallScreen&&!v._full&&!v.dataset.eager)?v.dataset.src.replace(/\.mp4(?=#|$)/,"-m.mp4"):v.dataset.src;
 function attach(v,mode){
   if(!v.getAttribute("src")){v.preload=mode;v.src=srcFor(v);v.load();}
-  else if(mode==="auto"&&v.preload!=="auto"){v.preload="auto";}
+  else if(mode==="auto"&&v.preload!=="auto")v.preload="auto";
 }
 function playVideo(v){
   attach(v,"auto");
   const p=v.play();
   if(p&&p.catch)p.catch(()=>{v.dataset.blocked="1";});
 }
-function distanceToScreen(el){
-  if(!el.offsetParent)return 1e9;
-  const r=el.getBoundingClientRect();
-  return Math.abs((r.top+r.bottom)/2-window.innerHeight/2);
-}
 vids.forEach(v=>{
-  v.muted=true;v.defaultMuted=true;v.loop=true;
+  v.muted=true;v.defaultMuted=true;v.loop=true;v.controls=false;
   v.setAttribute("playsinline","");v.setAttribute("webkit-playsinline","");
-  v.disablePictureInPicture=true;v.disableRemotePlayback=true;v.controls=false;
-  v._visible=false;v._errors=0;v._kicks=0;
-  v.addEventListener("playing",()=>{delete v.dataset.blocked;v._errors=0;v._kicks=0;});
+  v.disablePictureInPicture=true;v.disableRemotePlayback=true;
+  v._visible=false;v._errors=0;
+  v.addEventListener("playing",()=>{delete v.dataset.blocked;v._errors=0;});
   v.addEventListener("canplay",()=>{if(v._visible&&!reduceMotion&&v.paused)playVideo(v);});
   v.addEventListener("error",()=>{
     if(!v.getAttribute("src"))return;
@@ -639,112 +538,148 @@ vids.forEach(v=>{
     }
     if(v._errors>=2)return;
     v._errors++;
-    setTimeout(()=>{
-      v.removeAttribute("src");v.load();
-      attach(v,v._visible?"auto":"metadata");
-      if(v._visible&&!reduceMotion)playVideo(v);
-    },1500*v._errors);
-  });
-  v.addEventListener("pause",()=>{
-    if(v._visible&&!document.hidden&&!reduceMotion&&!v.ended&&v._kicks<3){
-      v._kicks++;
-      setTimeout(()=>{if(v._visible&&v.paused)playVideo(v);},120);
-    }
+    setTimeout(()=>{v.removeAttribute("src");v.load();attach(v,v._visible?"auto":"metadata");if(v._visible&&!reduceMotion)playVideo(v);},1500*v._errors);
   });
 });
-document.addEventListener("visibilitychange",()=>{
-  if(!document.hidden&&!reduceMotion)vids.forEach(v=>{if(v._visible)playVideo(v);});
-});
-const nearObserver=new IntersectionObserver(es=>{
-  es.forEach(e=>{if(e.isIntersecting)attach(e.target,"auto");});
-},{rootMargin:"200% 0px"});
-const playObserver=new IntersectionObserver(es=>{
-  es.forEach(e=>{
-    const v=e.target;
-    v._visible=e.isIntersecting;
-    if(e.isIntersecting){
-      v._kicks=0;
-      try{if(v.currentTime>0.3)v.currentTime=0;}catch(err){}
-      playVideo(v);
-    }else{
-      v.pause();
-      try{if(v.currentTime>0.2)v.currentTime=0;}catch(err){}
-    }
-  });
-},{rootMargin:"8% 0px",threshold:0.01});
-vids.forEach(v=>{
-  nearObserver.observe(v);
-  if(!reduceMotion)playObserver.observe(v);
-});
-function warmImages(){
-  const reach=isPhone?window.innerHeight*4:Infinity;
-  const queue=[...document.images].filter(i=>!i.complete||i.loading==="lazy")
-    .map(i=>({i,d:distanceToScreen(i)})).filter(o=>o.d<reach)
-    .sort((a,b)=>a.d-b.d).map(o=>o.i);
-  let active=0;
-  const pump=()=>{
-    while(active<3&&queue.length){
-      const img=queue.shift();
-      img.loading="eager";
-      active++;
-      const done=()=>{active--;pump();};
-      if(img.decode)img.decode().then(done,done);
-      else{img.addEventListener("load",done,{once:true});img.addEventListener("error",done,{once:true});}
-    }
-  };
-  pump();
-}
-document.querySelectorAll(".pic img").forEach(img=>{
-  if(img.complete&&img.naturalWidth)return;
-  img.style.opacity="0";
-  const show=()=>{img.style.transition="opacity .45s ease";img.style.opacity="1";};
-  img.addEventListener("load",show,{once:true});
-  img.addEventListener("error",show,{once:true});
-});
-if(!saveData){
-  const start=()=>{
-    warmImages();
-    setTimeout(()=>vids.filter(v=>!v.getAttribute("src"))
-      .sort((a,b)=>distanceToScreen(a)-distanceToScreen(b))
-      .forEach((v,i)=>setTimeout(()=>attach(v,"metadata"),i*120)),400);
-  };
-  const afterLoad=()=>(window.requestIdleCallback||(fn=>setTimeout(fn,200)))(start,{timeout:1500});
-  if(document.readyState==="complete")afterLoad();else window.addEventListener("load",afterLoad,{once:true});
-}
-["touchend","pointerdown","click"].forEach(t=>window.addEventListener(t,()=>{
-  vids.forEach(v=>{
-    if(!v.dataset.blocked)return;
-    const r=v.getBoundingClientRect();
-    if(r.bottom>0&&r.top<window.innerHeight)playVideo(v);
-  });
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&!reduceMotion)vids.forEach(v=>{if(v._visible)playVideo(v);});});
+const nearObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)attach(e.target,"auto");}),{rootMargin:"150% 0px"});
+const playObs=new IntersectionObserver(es=>es.forEach(e=>{
+  const v=e.target;v._visible=e.isIntersecting;
+  if(e.isIntersecting)playVideo(v);else v.pause();
+}),{rootMargin:"4% 0px",threshold:0.01});
+vids.forEach(v=>{if(!saveData||v.dataset.eager)nearObs.observe(v);if(!reduceMotion&&!v.dataset.manual)playObs.observe(v);});
+["touchend","pointerdown","click"].forEach(t=>addEventListener(t,()=>{
+  vids.forEach(v=>{if(!v.dataset.blocked)return;const r=v.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight)playVideo(v);});
 },{passive:true}));
-document.querySelectorAll(".rail-wrap").forEach(w=>{
-  const r=w.querySelector(".rail"),p=w.querySelector(".prev"),n=w.querySelector(".next");
-  const step=()=>(r.querySelector(".fav").getBoundingClientRect().width+18)*2;
-  const upd=()=>{p.disabled=r.scrollLeft<4;n.disabled=r.scrollLeft+r.clientWidth>=r.scrollWidth-4;};
-  p.addEventListener("click",()=>r.scrollBy({left:-step(),behavior:"smooth"}));
-  n.addEventListener("click",()=>r.scrollBy({left:step(),behavior:"smooth"}));
-  r.addEventListener("scroll",upd,{passive:true});
-  window.addEventListener("resize",upd);
+
+/* ============ scroll scenes ============ */
+const hero=$("#hero"),heroText=$("#heroText"),heroShade=$("#heroShade"),heroStage=$(".hero-stage");let heroSpill=false;
+const reach=$("#reach"),rT1=$("#rT1"),rT2=$("#rT2"),rReel=$("#rReel"),reachVids=[...rReel.querySelectorAll("video")];
+const craft=$("#craft"),craftLayers=[...document.querySelectorAll("#craftBox .craft-layer")];
+const music=$("#music"),mItems=[...document.querySelectorAll(".m-item")];
+const ytFrame=$("#ytFrame");
+let SL={x:0,y:0,w:0,h:0};
+
+function measure(){}
+
+function updateHero(){
+  const vw=innerWidth,vh=innerHeight;
+  /* measured from the Apple screenshot (3058px wide): black bezel 599x598 = 19.59% of width, square;
+     column pitch 767px = 1.2804 x tile; row pitch 709px = 1.1836 x tile; centre row at 54.6% of the height;
+     rim 10px (1.67%), bezel 33px (5.5%), corner radius 120px (20%) */
+  const fitW=0.47*vw/3.06,fitH=Math.min((0.5462*vh-86)/1.68,(0.4538*vh-18)/1.68);
+  const Tw=(vw<=800?0.49*vw:Math.min(0.1959*vw,fitW,fitH)),Th=Tw,px=Tw*1.2804,py=Tw*1.1836;
+  const bz0=Tw*0.055,r0=Tw*0.20,rim0=Tw*0.0167;
+  const S0=Math.max(vw/(Tw-2*bz0),vh/(Th-2*bz0))*1.02;
+  const p=clamp(prog(hero)/0.8),e=smooth(p);
+  const s=Math.exp(Math.log(S0)*(1-e)),kk=Math.log(s)/Math.log(S0),cy=vh*(0.5+0.0462*(1-kk));
+  heroTiles.forEach(o=>{
+    const w=Tw*s,h=Th*s;
+    const left=vw/2+o.k*px*s-w/2,top=cy+o.row*py*s-h/2;
+    const vis=left<vw&&left+w>0&&top<vh&&top+h>0;
+    if(!vis){o.t.style.display="none";return;}
+    const bz=bz0*s,r=r0*s,rim=rim0*s;
+    const st=o.t.style;
+    st.boxShadow="0 0 0 "+rim+"px #d4d4d6,"+(w*.134)+"px "+(w*.12)+"px "+(w*.157)+"px "+(-w*.05)+"px rgba(0,0,0,.4),0 0 "+(w*.02)+"px rgba(0,0,0,.2)";
+    o.cam.style.cssText="width:"+(w*.023)+"px;height:"+(w*.023)+"px;top:"+(bz*.36-w*.0115)+"px";
+    o.dot.style.cssText="width:"+(w*.005)+"px;height:"+(w*.005)+"px;top:"+(bz*.36-w*.0025)+"px;margin-left:"+(-w*.047)+"px";
+    if(o.img){const sw=w-2*bz,sh=h-2*bz,is=o.img.style;is.width=(sw*(1-kk)+vw*kk)+"px";is.height=(sh*(1-kk)+vh*kk)+"px";}
+    st.display="block";st.left=left+"px";st.top=top+"px";st.width=w+"px";st.height=h+"px";
+    st.padding=bz+"px";st.borderRadius=r+"px";
+    o.s.style.borderRadius=Math.max(0,r-bz)+"px";
+  });
+  const spill=p>=1;if(spill!==heroSpill){heroSpill=spill;heroStage.style.overflow=spill?"visible":"";}
+  const o=1-clamp(p/0.28);
+  heroText.style.opacity=o;heroShade.style.opacity=o;
+  heroText.style.transform="translateY("+(-p*50)+"px)";
+  heroText.style.visibility=o<=0?"hidden":"visible";
+}
+
+function update(){
+  const vw=innerWidth,vh=innerHeight;
+  updateHero();
+  /* reach: phone reel swipes insta1 -> insta2 while the two texts swap */
+  {
+    const rr=reach.getBoundingClientRect(),on=rr.bottom>0&&rr.top<vh;
+    if(rr.top<vh*2)reachVids.forEach(v=>attach(v,"auto"));
+    const p=prog(reach),t=smooth(clamp((p-0.28)/0.34));
+    rReel.style.transform="translate3d(0,"+(-t*50)+"%,0)";
+    const o1=1-smooth(clamp(t/0.45)),o2=smooth(clamp((t-0.55)/0.45));
+    rT1.style.opacity=o1;rT1.style.transform="translateY("+(-14*(1-o1))+"px)";rT1.style.visibility=o1<=0?"hidden":"visible";
+    rT2.style.opacity=o2;rT2.style.transform="translateY("+(14*(1-o2))+"px)";rT2.style.visibility=o2<=0?"hidden":"visible";
+    reachVids.forEach((v,i)=>{
+      const want=on&&!reduceMotion&&(i===0?t<1:t>0);
+      if(want&&!v._visible){v._visible=true;try{if(v.readyState>0)v.currentTime=0;}catch(e){}playVideo(v);}
+      else if(!want&&v._visible){v._visible=false;v.pause();}
+    });
+  }
+  /* game dev: squid1 -> squid2 -> squid3, each wipes in from the bottom */
+  {
+    const p=prog(craft);
+    const ranges=[[0,0],[0.14,0.38],[0.54,0.78]];
+    craftLayers.forEach((l,i)=>{
+      if(i===0){l.style.zIndex=1;return;}
+      const t=smooth(clamp((p-ranges[i][0])/(ranges[i][1]-ranges[i][0])));
+      l.style.zIndex=i+1;
+      l.style.clipPath="inset("+((1-t)*100)+"% 0 0 0)";
+      l.style.visibility=t<=0?"hidden":"visible";
+    });
+  }
+  /* music: coloured lines scroll up behind the iPad */
+  {
+    const p=prog(music),n=mItems.length;
+    const s=clamp(p/0.92)*(n-1),step=vh*0.22;
+    mItems.forEach((el,i)=>{
+      const d=i-s;
+      el.style.transform="translateY("+(d*step)+"px)";
+      el.style.opacity=d<0?1-clamp(-d/0.6):1;
+      el.style.visibility=d>2.2||d<-1?"hidden":"visible";
+    });
+    if(!ytFrame.src&&music.getBoundingClientRect().top<vh*2)ytFrame.src=ytFrame.dataset.src;
+  }
+}
+let ticking=false;
+const req=()=>{if(!ticking){ticking=true;requestAnimationFrame(()=>{ticking=false;update();});}};
+addEventListener("scroll",req,{passive:true});
+addEventListener("resize",()=>{measure();req();});
+addEventListener("load",()=>{measure();update();});
+measure();update();
+
+/* ============ games scroller ============ */
+(()=>{
+  const tr=$("#gamesTrack"),cap=$("#gamesCap"),pv=$("#gPrev"),nx=$("#gNext");
+  const imgs=[...tr.querySelectorAll("img")];
+  const idx=()=>clamp(Math.round(tr.scrollLeft/tr.clientWidth),0,imgs.length-1);
+  const upd=()=>{
+    const i=idx();
+    cap.textContent=imgs[i].dataset[lang]||imgs[i].alt;
+    pv.disabled=i===0;nx.disabled=i===imgs.length-1;
+  };
+  pv.addEventListener("click",()=>tr.scrollBy({left:-tr.clientWidth,behavior:"smooth"}));
+  nx.addEventListener("click",()=>tr.scrollBy({left:tr.clientWidth,behavior:"smooth"}));
+  tr.addEventListener("scroll",()=>requestAnimationFrame(upd),{passive:true});
+  window.refreshGamesCap=upd;
   upd();
-});
-const btn=document.getElementById("langToggle");
-const titles={en:"More about me — Luca Helgert",ja:"私について — ヘルゲルト・ルカ"};
-let lang="ja"; /* starts in Japanese */
+})();
+
+/* ============ language ============ */
+const btn=$("#langToggle");
+const titles={en:"More about me — Luca",ja:"私について — るか"};
 function apply(l){
- lang=l;
- document.documentElement.lang=l;
- document.documentElement.classList.toggle("lang-ja",l==="ja");
- document.querySelectorAll(".i18n").forEach(el=>{const c=el.dataset[l];if(c!==undefined)el.innerHTML=c});
- btn.textContent=l==="ja"?"EN":"日本語";
- document.title=titles[l];
+  lang=l;
+  document.documentElement.lang=l;
+  document.documentElement.classList.toggle("lang-ja",l==="ja");
+  document.querySelectorAll(".i18n").forEach(el=>{const c=el.dataset[l];if(c!==undefined)el.innerHTML=c;});
+  btn.textContent=l==="ja"?"EN":"日本語";
+  document.title=titles[l];
+  if(window.refreshGamesCap)window.refreshGamesCap();
+  measure();update();
 }
 btn.addEventListener("click",()=>apply(lang==="en"?"ja":"en"));
 apply(lang);
 </script>
 <script>
-/* iPad / iOS: the page stops at its real top and bottom (no rubber-band scrolling into empty space).
-   Sideways rails, the nav dropdown and pinch-zoom keep working normally. */
+/* iPad / iOS: no rubber-band scrolling at the page edges; sideways scrollers keep working */
 (()=>{
   const root=document.documentElement;
   let sx=0,sy=0,ly=0,axis=null;
@@ -767,53 +702,9 @@ apply(lang);
     if(axis==="x"){if(!canScroll(e.target,false))e.preventDefault();return}
     const step=t.clientY-ly;ly=t.clientY;
     if(canScroll(e.target,true))return;
-    const y=window.scrollY,max=root.scrollHeight-window.innerHeight;
+    const y=scrollY,max=root.scrollHeight-innerHeight;
     if((y<=0&&step>0)||(y>=max-1&&step<0))e.preventDefault();
   },{passive:false});
-})();
-</script>
-
-<script>
-/* SCROLL REVEAL: Apple-style layered entrances. Headlines sharpen in first, then text, then buttons pop in,
-   while media and cards ease up from a slight scale. Plays once per element; skipped for reduced motion. */
-(()=>{
-  if(!("IntersectionObserver" in window)||!("animate" in Element.prototype))return;
-  if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
-  const SEL={"h": "section.sec h2,.hob-title", "t": ".split > div > p,.hob-head p,.eyebrow", "b": ".pills .pill", "s": ".stat-item", "c": ".rail-wrap", "m": ".split > .pic,.hob-media,.reel"};
-  const E="cubic-bezier(.28,.11,.32,1)",POP="cubic-bezier(.22,1.15,.36,1)";
-  const R={
-    h:{y:34,sc:1,  blur:8,dur:1100,base:0,  ease:E},
-    t:{y:26,sc:1,  blur:0,dur:1000,base:90, ease:E},
-    b:{y:14,sc:.9, blur:0,dur:850, base:240,ease:POP},
-    s:{y:22,sc:.96,blur:0,dur:900, base:60, ease:E},
-    c:{y:36,sc:.975,blur:0,dur:1100,base:60,ease:E},
-    m:{y:40,sc:.94,blur:0,dur:1300,base:120,ease:E}
-  };
-  const k=innerWidth<=700?.7:1, vh=innerHeight, role=new Map();
-  const io=new IntersectionObserver(es=>{
-    const hit=es.filter(e=>e.isIntersecting).map(e=>e.target).sort((a,b)=>{
-      const A=a.getBoundingClientRect(),B=b.getBoundingClientRect();
-      return (A.top-B.top)||(A.left-B.left);
-    });
-    hit.forEach((el,n)=>{
-      const g=R[role.get(el)];
-      io.unobserve(el);
-      el.classList.remove("rv-pre");
-      el.style.willChange="opacity, translate, scale"+(g.blur?", filter":"");
-      const from={opacity:0,translate:"0 "+g.y*k+"px",scale:String(g.sc)};
-      const to={opacity:1,translate:"0 0",scale:"1"};
-      if(g.blur){from.filter="blur("+g.blur+"px)";to.filter="blur(0px)";}
-      const a=el.animate([from,to],{duration:g.dur,delay:g.base+Math.min(n*70,280),easing:g.ease,fill:"backwards"});
-      const done=()=>{el.style.willChange="";};
-      a.onfinish=done;a.oncancel=done;
-    });
-  },{rootMargin:"0px 0px -10% 0px",threshold:0});
-  Object.keys(SEL).forEach(r=>document.querySelectorAll(SEL[r]).forEach(el=>{
-    if(role.has(el)||el.getBoundingClientRect().top<vh*0.9)return; /* already on screen: leave alone */
-    role.set(el,r);
-    el.classList.add("rv-pre","rv-"+r);
-    io.observe(el);
-  }));
 })();
 </script>
 </body>

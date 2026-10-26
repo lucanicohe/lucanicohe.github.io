@@ -1,0 +1,180 @@
+.kiwi-resume-game[hidden],
+.resume-block[hidden] {
+  display: none !important;
+}
+
+.kiwi-resume-game {
+  margin-top: 110px;
+  padding-top: 80px;
+  border-top: 1px solid var(--line);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.kiwi-resume-game__heading {
+  max-width: 760px;
+  margin-bottom: 26px;
+}
+
+.kiwi-resume-game__heading .resume-title {
+  margin-bottom: 14px;
+}
+
+.kiwi-resume-game__controls {
+  max-width: 620px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.kiwi-resume-game__stage {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  border-radius: 14px;
+  background: #fcfcfc;
+  box-shadow: 0 14px 44px rgba(0, 0, 0, .08);
+}
+
+.kiwi-resume-game__stage canvas {
+  min-width: 0;
+  display: block;
+  width: 100%;
+  height: clamp(250px, 32vw, 390px);
+  touch-action: pan-y;
+  cursor: pointer;
+  outline: none;
+}
+
+.kiwi-resume-game__end-card[hidden] {
+  display: none !important;
+}
+
+.kiwi-resume-game__stage.is-game-over .kiwi-resume-game__end-card {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(10px, 1.5vw, 18px);
+  width: min(560px, calc(100% - 28px));
+  box-sizing: border-box;
+  padding: 10px 12px;
+  transform: translateX(-50%);
+  border: 1px solid rgba(29, 29, 31, .12);
+  border-radius: 15px;
+  background: rgba(250, 250, 252, .92);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  backdrop-filter: blur(14px) saturate(150%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .16);
+  pointer-events: none;
+}
+
+.kiwi-resume-game__preview {
+  display: block;
+  flex: 0 1 190px;
+  width: min(190px, 36%);
+  max-height: 94px;
+  height: auto;
+  margin: 0;
+  box-sizing: border-box;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #e8e8ed;
+  object-fit: contain;
+}
+
+.kiwi-resume-game__resume-actions {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  pointer-events: none;
+}
+
+.kiwi-resume-game__resume-actions .play-button {
+  width: auto;
+  min-width: 160px;
+  height: 40px;
+  padding: 0 16px;
+  justify-content: space-between;
+  font-size: 13px;
+  pointer-events: auto;
+}
+
+.kiwi-resume-game__stage.is-game-over .kiwi-resume-game__end-card[hidden] {
+  display: none !important;
+}
+
+.kiwi-resume-game__stage canvas:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: -5px;
+}
+
+.kiwi-resume-game__status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+@media (max-width: 900px) {
+  .kiwi-resume-game {
+    margin-top: 80px;
+    padding-top: 60px;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .kiwi-resume-game {
+    margin-top: 90px;
+    padding-top: 70px;
+  }
+}
+
+@media (max-width: 600px) {
+  .kiwi-resume-game__heading {
+    margin-bottom: 20px;
+  }
+
+  .kiwi-resume-game__stage canvas {
+    height: clamp(240px, 65vw, 310px);
+  }
+}
+
+
+@media (max-width: 600px) {
+  .kiwi-resume-game__stage.is-game-over .kiwi-resume-game__end-card {
+    top: 8px;
+    gap: 8px;
+    width: calc(100% - 16px);
+    padding: 8px;
+  }
+
+  .kiwi-resume-game__preview {
+    flex-basis: 116px;
+    width: min(116px, 34vw);
+    max-height: 76px;
+  }
+
+  .kiwi-resume-game__resume-actions .play-button {
+    min-width: 0;
+    height: 38px;
+    padding: 0 11px;
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kiwi-resume-game__stage { transition: none; }
+}

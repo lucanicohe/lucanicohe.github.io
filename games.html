@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ja" class="lang-ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Games — Luca Helgert</title>
+<meta name="description" content="All my games: team projects, solo projects and design work by Luca Helgert.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand+SC&family=Klee+One:wght@600&display=swap" rel="stylesheet">
+<style>
+/* ===== BASE: white like the Apple iPad page ===== */
+:root{
+  --bg:#fff; --text:#1d1d1f; --muted:#86868b; --link:#0066cc; --blue:#0071e3; --soft:#f5f5f7; --line:rgba(0,0,0,.12);
+  --bar:52px;
+  --vh:1vh;
+  --pad:clamp(20px,8.2vw,170px);
+  --cw:min(calc(var(--u)*82.5),calc(100vw - 2*var(--pad)));
+  /* one unit that scales with the SMALLER of width and height, so every screen fits the window: nothing needs scrolling inside a screen */
+  --u:min(1vw,calc(var(--vh)*1.5));
+}
+@supports (height:100svh){:root{--vh:1svh}}
+@media (max-width:860px),(max-aspect-ratio:1/1){:root{--u:min(2.2vw,calc(var(--vh)*1.4))}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Inter","Noto Sans JP",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+html.lang-ja body{font-family:"Noto Sans JP","Inter",system-ui,sans-serif}
+html.lang-ja *{letter-spacing:0!important}
+img,video{display:block;max-width:100%}
+a{color:inherit}
+b{font-weight:inherit;color:var(--text)}
+.nb{display:inline-block;white-space:nowrap}
+h1,h2,h3,p,figure{margin:0}
+button{font:inherit;color:inherit}
+
+/* ===== LOCAL NAV (like the "iPad  Overview  Tech Specs  Buy" bar) ===== */
+.lnav{position:fixed;top:0;left:0;right:0;height:var(--bar);z-index:50;background:rgba(255,255,255,.78);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);transition:box-shadow .3s}
+.lnav.scrolled{box-shadow:0 1px 0 var(--line)}
+.lnav-in{width:min(100% - 40px,max(var(--cw),620px));height:100%;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.lnav-title{font-size:21px;font-weight:600;letter-spacing:-.02em;text-decoration:none;white-space:nowrap}
+.lnav-links{display:flex;align-items:center;height:100%;gap:clamp(14px,2.4vw,30px)}
+.lnav-links a{position:relative;display:flex;align-items:center;height:100%;font-size:13px;color:#515154;text-decoration:none;white-space:nowrap;transition:color .2s}
+.lnav-links a:hover,.lnav-links a.on{color:var(--text)}
+.lnav-links a.on::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--text)}
+.lnav-links a.pill{height:26px;padding:0 14px;border-radius:980px;background:var(--blue);color:#fff;font-weight:500}
+.lnav-links a.pill:hover{background:#0077ed;color:#fff}
+.lnav-links a.pill::after{display:none}
+.lang{height:26px;padding:0 11px;border:1px solid rgba(0,0,0,.2);border-radius:980px;background:transparent;font-size:12px;cursor:pointer;transition:background .2s,color .2s}
+.lang:hover{background:var(--text);color:#fff}
+@media (max-width:640px){.lnav-links a:not(.pill){display:none}.lnav-title{font-size:19px}}
+
+/* ===== SCREENS: every section is exactly one window tall ===== */
+.pg{position:relative;min-height:calc(var(--vh)*100);padding-top:var(--bar);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.lnk{display:inline-flex;align-items:center;gap:.15em;color:var(--link);text-decoration:none;white-space:nowrap}
+.lnk:hover{text-decoration:underline}
+.lnk svg{width:.7em;height:.7em;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ===== DEVICE FRAME (iPad look: colored rim, black bezel, camera dot) ===== */
+.dev{--dw:calc(var(--u)*52);--ar:16/11;position:relative;width:var(--dw);border-radius:calc(var(--dw)*.05);background:var(--rim,#d9dadd);padding:calc(var(--dw)*.0045);box-shadow:0 calc(var(--dw)*.045) calc(var(--dw)*.08) calc(var(--dw)*-.04) rgba(0,0,0,.38),0 1px 3px rgba(0,0,0,.18)}
+.dev .bz{position:relative;background:#050506;border-radius:calc(var(--dw)*.046);padding:calc(var(--dw)*.03)}
+.dev .scr{position:relative;border-radius:calc(var(--dw)*.017);overflow:hidden;aspect-ratio:var(--ar);background:#16161a}
+.dev .cam{position:absolute;top:calc(var(--dw)*.0125);left:50%;width:calc(var(--dw)*.0075);height:calc(var(--dw)*.0075);margin-left:calc(var(--dw)*-.00375);border-radius:50%;background:#26262c}
+.dev.pt{--dw:calc(var(--u)*27.5);--ar:5/7;border-radius:calc(var(--dw)*.085)}
+.dev.pt .bz{border-radius:calc(var(--dw)*.078);padding:calc(var(--dw)*.05)}
+.dev.pt .scr{border-radius:calc(var(--dw)*.03)}
+.dev.pt .cam{top:calc(var(--dw)*.02);width:calc(var(--dw)*.013);height:calc(var(--dw)*.013);margin-left:calc(var(--dw)*-.0065)}
+.scr video,.scr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+
+/* ===== 1 · HERO ===== */
+.hero{--S:min(calc((var(--vh)*100 - var(--bar))*.94),58vw)}
+.hero-in{display:flex;align-items:center;justify-content:center;gap:calc(var(--u)*3);width:100%}
+.fan{position:relative;flex:none;width:calc(var(--S)*.78);height:var(--S)}
+.fc{position:absolute;left:calc(var(--S)*var(--x));top:calc(var(--S)*var(--y));width:calc(var(--S)*.42);height:calc(var(--S)*.31);transform:translate(-50%,-50%) rotate(var(--r));border-radius:calc(var(--S)*.045);background:var(--rim,#ddd);padding:calc(var(--S)*.016);box-shadow:0 calc(var(--S)*.03) calc(var(--S)*.06) calc(var(--S)*-.03) rgba(0,0,0,.35);transition:transform 1.2s cubic-bezier(.2,.75,.2,1) var(--d,0s),opacity .9s ease var(--d,0s)}
+.fc-in{position:relative;width:100%;height:100%;border-radius:calc(var(--S)*.03);overflow:hidden;background:#16161a}
+.fc-in video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.fc.front{width:auto;height:auto;padding:0;background:none;box-shadow:none;border-radius:0}
+.fc.front .dev{--ar:16/11}
+.fan:not(.go) .fc{opacity:0;transform:translate(-50%,-50%) translateY(7%) rotate(0deg) scale(.94)}
+.fan:not(.go) .fc.front{transform:translate(-50%,-50%) translateY(10%) scale(.96)}
+.fc.front{transform:translate(-50%,-50%) rotate(var(--r))}
+.hero-copy{flex:none;text-align:center;min-width:calc(var(--u)*27)}
+.hero-copy h1{font-size:calc(var(--u)*5.6);line-height:1.07;font-weight:600;letter-spacing:-.04em;text-wrap:balance}
+html.lang-ja .hero-copy h1{font-size:calc(var(--u)*4.7);line-height:1.28;font-weight:700}
+.hero-sub{margin-top:calc(var(--u)*2.4);font-size:clamp(14px,calc(var(--u)*1.45),26px);color:var(--text)}
+
+/* ===== 2 · FEATURE (device + icon + grey text with black key phrases) ===== */
+.ft-in{width:var(--cw);display:grid;grid-template-columns:calc(var(--u)*52) calc(var(--u)*25);justify-content:space-between;gap:calc(var(--u)*5.5);align-items:center}
+.ft-in.rev{grid-template-columns:calc(var(--u)*25) calc(var(--u)*52)}
+.ft-in.rev .ft-fig{order:2}
+.ft-fig{display:flex;flex-direction:column;align-items:center}
+.ft-in:has(.pt){grid-template-columns:calc(var(--u)*27.5) calc(var(--u)*25);justify-content:center;gap:calc(var(--u)*12)}
+.ft-in.rev:has(.pt){grid-template-columns:calc(var(--u)*25) calc(var(--u)*27.5)}
+.note{margin-top:calc(var(--u)*2.3);font-family:"Patrick Hand SC","Klee One",cursive;text-transform:uppercase;text-align:center;font-size:calc(var(--u)*1.7);line-height:1.15;letter-spacing:.03em;color:var(--text)}
+html.lang-ja .note{font-family:"Klee One","Noto Sans JP",cursive;font-weight:600;font-size:calc(var(--u)*1.5)}
+.ico{display:block;width:max(38px,calc(var(--u)*4.1));height:auto;margin-bottom:calc(var(--u)*1.9)}
+.ft-p{font-size:clamp(15px,calc(var(--u)*1.52),30px);line-height:1.4;font-weight:500;color:var(--muted);text-wrap:pretty}
+html.lang-ja .ft-p{font-size:clamp(14px,calc(var(--u)*1.38),27px);line-height:1.8;font-weight:400}
+.ft-tools{margin-top:calc(var(--u)*1.7);font-size:clamp(12px,calc(var(--u)*1.05),19px);color:#a1a1a6}
+.ft-links{display:flex;flex-direction:column;align-items:flex-start;gap:calc(var(--u)*.5);margin-top:calc(var(--u)*1.1);font-size:clamp(15px,calc(var(--u)*1.5),27px)}
+.ft-links:empty{display:none}
+
+/* PDF viewer inside the portrait device */
+.pdf{position:absolute;inset:0;background:#e8e8ed;display:flex;align-items:center;justify-content:center;outline:none}
+.pdf canvas{display:block;max-width:100%;max-height:100%;box-shadow:0 1px 6px rgba(0,0,0,.18)}
+.pdf iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#e8e8ed}
+.pdf-st{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--muted);transition:opacity .3s}
+.pdf.ready .pdf-st{opacity:0;pointer-events:none}
+.pdf.failed .pdf-st{opacity:1;pointer-events:auto;padding:16px;text-align:center}
+.pn{position:absolute;top:50%;width:30px;height:30px;margin-top:-15px;border:0;border-radius:50%;background:rgba(255,255,255,.88);box-shadow:0 1px 5px rgba(0,0,0,.2);display:grid;place-items:center;cursor:pointer;opacity:0;transition:opacity .25s}
+.pdf.ready:hover .pn,.pdf.ready:focus-within .pn{opacity:1}
+@media (hover:none){.pdf.ready .pn{opacity:1}}
+.pn:disabled{opacity:0!important;pointer-events:none}
+.pn svg{width:11px;height:11px;fill:none;stroke:#1d1d1f;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.pn.prev{left:8px}.pn.next{right:8px}
+.pc{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);padding:2px 9px;border-radius:980px;background:rgba(255,255,255,.88);font-size:11px;color:#515154}
+
+/* ===== 3 · CAROUSELS (video cards with a caption underneath / small cards) ===== */
+.car-in{width:100%}
+.car-head{padding:0 var(--pad);margin-bottom:calc(var(--u)*3)}
+.car-h{font-size:calc(var(--u)*3.5);line-height:1.1;font-weight:600;letter-spacing:-.025em;text-wrap:balance}
+html.lang-ja .car-h{font-size:calc(var(--u)*3.1);line-height:1.3;font-weight:700}
+.rail{display:flex;gap:calc(var(--u)*1.3);overflow-x:auto;overflow-y:hidden;padding:0 var(--pad);scroll-padding-left:var(--pad);scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;outline:none}
+.rail::-webkit-scrollbar{display:none}
+.car-nav{display:flex;justify-content:flex-end;gap:10px;padding:0 var(--pad);margin-top:calc(var(--u)*2.2)}
+.car-nav button{width:32px;height:32px;border:0;border-radius:50%;background:#e8e8ed;display:grid;place-items:center;cursor:pointer;transition:opacity .2s,background .2s}
+.car-nav button:hover:not(:disabled){background:#d2d2d7}
+.car-nav button:disabled{opacity:.4;cursor:default}
+.car-nav svg{width:12px;height:12px;fill:none;stroke:#424245;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+#more{--ch:min(calc((var(--vh)*100 - var(--bar))*.54),38vw)}
+.cc{flex:none;width:calc(var(--ch)*1.36);scroll-snap-align:start}
+.cc-media{position:relative;height:var(--ch);border-radius:calc(var(--u)*2.1);overflow:hidden;background:#16161a}
+.cc-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cc-cap{padding:calc(var(--u)*1.2) calc(var(--u)*1.1) 0;font-size:clamp(14px,calc(var(--u)*1.25),23px);line-height:1.4;color:var(--muted);text-wrap:pretty}
+html.lang-ja .cc-cap{font-size:clamp(13px,calc(var(--u)*1.15),21px);line-height:1.75}
+
+/* quiet grey strip with smaller picture cards: cut off at the edge on purpose */
+.quiet{background:var(--soft)}
+.quiet .car-h{font-size:calc(var(--u)*2.9)}
+html.lang-ja .quiet .car-h{font-size:calc(var(--u)*2.6)}
+.sc{position:relative;flex:none;width:calc(var(--u)*25);height:calc(var(--u)*31);border-radius:calc(var(--u)*2);background:#fff;overflow:hidden;scroll-snap-align:start}
+.sc-top{padding:calc(var(--u)*2.1) calc(var(--u)*2.1) 0}
+.sc-label{font-size:clamp(12px,calc(var(--u)*1.05),19px);font-weight:500;color:var(--text)}
+.sc-title{margin-top:calc(var(--u)*.7);font-size:clamp(17px,calc(var(--u)*1.75),32px);line-height:1.15;font-weight:600;letter-spacing:-.02em;text-wrap:balance}
+html.lang-ja .sc-title{line-height:1.3;font-size:clamp(16px,calc(var(--u)*1.55),28px)}
+.sc-text{margin-top:calc(var(--u)*.9);font-size:clamp(12.5px,calc(var(--u)*1.15),21px);line-height:1.35;color:#3a3a3d}
+html.lang-ja .sc-text{line-height:1.65;font-size:clamp(12px,calc(var(--u)*1.05),19px)}
+.sc-img{position:absolute;left:0;right:0;bottom:0;height:47%;background:#e8e8ed}
+.sc-img img{width:100%;height:100%;object-fit:cover}
+.sc-go{position:absolute;right:calc(var(--u)*1.4);bottom:calc(var(--u)*1.4);width:max(30px,calc(var(--u)*2.4));height:max(30px,calc(var(--u)*2.4));border-radius:50%;background:rgba(245,245,247,.9);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);display:grid;place-items:center;text-decoration:none;transition:background .2s}
+.sc-go:hover{background:#fff}
+.sc-go svg{width:35%;height:35%;fill:none;stroke:#1d1d1f;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+
+/* ===== 4 · BIG BOLD TITLE ("Make quick work of your work.") ===== */
+.bigt-in{width:var(--cw)}
+.big{font-size:calc(var(--u)*6.8);line-height:1.04;font-weight:700;letter-spacing:-.05em}
+html.lang-ja .big{font-size:calc(var(--u)*5.9);line-height:1.25}
+.bigt-p{max-width:calc(var(--u)*40);margin-top:calc(var(--u)*3.6);font-size:clamp(16px,calc(var(--u)*1.85),34px);line-height:1.35;font-weight:500;color:var(--muted);text-wrap:pretty}
+html.lang-ja .bigt-p{line-height:1.8;font-weight:400;font-size:clamp(15px,calc(var(--u)*1.65),30px)}
+
+.foot{padding:36px 20px 44px;text-align:center;font-size:12px;color:var(--muted)}
+.foot .back{font-size:15px}
+.foot p{margin-top:10px}
+
+/* ===== PORTRAIT / NARROW: same screens, stacked, still one window each ===== */
+@media (max-width:860px),(max-aspect-ratio:1/1){
+  .hero{--S:min(calc((var(--vh)*100 - var(--bar))*.5),104vw)}
+  .hero-in{flex-direction:column;gap:calc(var(--u)*2)}
+  .hero-copy{min-width:0;padding:0 20px}
+  .hero-copy h1{font-size:calc(var(--u)*7.4)}
+  html.lang-ja .hero-copy h1{font-size:calc(var(--u)*6.2)}
+  .hero-sub{font-size:clamp(15px,calc(var(--u)*2.1),24px)}
+
+  .ft-in,.ft-in.rev,.ft-in:has(.pt),.ft-in.rev:has(.pt){width:100%;padding:0 22px;grid-template-columns:minmax(0,1fr);justify-content:stretch;gap:calc(var(--u)*2.6);justify-items:center}
+  .ft-in.rev .ft-fig{order:0}
+  .ft-fig{width:100%}
+  .dev{--dw:min(calc(var(--u)*43),100%)}
+  .dev.pt{--dw:min(calc(var(--u)*25),68vw)}
+  .ft-txt{width:100%;max-width:calc(var(--u)*46)}
+  .note{margin-top:calc(var(--u)*1.2);font-size:calc(var(--u)*2.1)}
+  html.lang-ja .note{font-size:calc(var(--u)*1.9)}
+  .ico{width:34px;margin-bottom:calc(var(--u)*1.1)}
+  .ft-p{max-width:none;font-size:clamp(15px,calc(var(--u)*2.15),22px)}
+  html.lang-ja .ft-p{font-size:clamp(14px,calc(var(--u)*1.95),20px)}
+  .ft-tools{margin-top:calc(var(--u)*1)}
+  .ft-links{margin-top:calc(var(--u)*.7);font-size:clamp(15px,calc(var(--u)*2),21px)}
+
+  #more{--ch:min(62vw,calc((var(--vh)*100 - var(--bar))*.36))}
+  .car-head{margin-bottom:calc(var(--u)*2)}
+  .car-h,.quiet .car-h{font-size:clamp(26px,calc(var(--u)*4.6),48px)}
+  html.lang-ja .car-h,html.lang-ja .quiet .car-h{font-size:clamp(23px,calc(var(--u)*4.1),42px)}
+  .cc-cap{padding:calc(var(--u)*1.4) 4px 0;font-size:clamp(14px,calc(var(--u)*1.9),21px)}
+  html.lang-ja .cc-cap{font-size:clamp(13px,calc(var(--u)*1.7),19px)}
+  .sc{width:min(72vw,calc(var(--vh)*38));height:min(calc(var(--vh)*58),calc(72vw*1.34))}
+  .sc-label{font-size:13px}.sc-title{font-size:clamp(19px,calc(var(--u)*3),28px)}.sc-text{font-size:clamp(13.5px,calc(var(--u)*2),18px)}
+  html.lang-ja .sc-title{font-size:clamp(18px,calc(var(--u)*2.7),26px)}html.lang-ja .sc-text{font-size:clamp(13px,calc(var(--u)*1.85),17px)}
+  .car-nav{margin-top:calc(var(--u)*1.6)}
+
+  .bigt-in{padding:0 22px;width:100%}
+  .big{font-size:clamp(36px,calc(var(--u)*8.6),88px)}
+  html.lang-ja .big{font-size:clamp(30px,min(calc(var(--u)*6.1),13vw),76px)}
+  .bigt-p{max-width:none;font-size:clamp(16px,calc(var(--u)*2.4),26px);margin-top:calc(var(--u)*3)}
+  html.lang-ja .bigt-p{font-size:clamp(15px,calc(var(--u)*2.15),23px)}
+}
+@media (prefers-reduced-motion:reduce){.fc{transition:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<nav class="lnav" id="lnav" aria-label="Games">
+  <div class="lnav-in">
+    <a class="lnav-title" href="#top"><span class="i18n" data-en="Games" data-ja="ゲーム">ゲーム</span></a>
+    <div class="lnav-links">
+      <a class="on" href="#top" data-k="overview"><span class="i18n" data-en="Overview" data-ja="概要">概要</span></a>
+      <a href="#team" data-k="team"><span class="i18n" data-en="Team" data-ja="チーム作品">チーム作品</span></a>
+      <a href="#more" data-k="more"><span class="i18n" data-en="More" data-ja="そのほか">そのほか</span></a>
+      <a href="#design" data-k="design"><span class="i18n" data-en="Design" data-ja="デザイン">デザイン</span></a>
+      <a class="pill" href="index.html"><span class="i18n" data-en="Home" data-ja="ホーム">ホーム</span></a>
+      <button class="lang" id="lang" type="button" aria-label="Switch language">EN</button>
+    </div>
+  </div>
+</nav>
+<main>
+<section class="pg hero" id="top" data-nav="overview" aria-label="All my games">
+  <div class="hero-in">
+    <div class="fan" id="fan" aria-hidden="true">
+<div class="fc" style="--rim:#e4e5e7;--x:0.5;--y:0.205;--r:7deg;--d:.25s;z-index:1"><div class="fc-in"><video data-src="great.mp4#t=0.1" poster="great-poster.jpg" muted loop playsinline preload="none" aria-label="Great Foot Okhan"></video></div></div>
+<div class="fc" style="--rim:#f4e58a;--x:0.385;--y:0.245;--r:20deg;--d:.18s;z-index:2"><div class="fc-in"><video data-src="bouzocart.mp4#t=0.1" poster="bouzocart-poster.jpg" muted loop playsinline preload="none" aria-label="Bouzou Cart"></video></div></div>
+<div class="fc" style="--rim:#e88a98;--x:0.295;--y:0.335;--r:31deg;--d:.11s;z-index:3"><div class="fc-in"><video data-src="dekamenoippai.mp4#t=0.1" poster="dekamenoippai-poster.jpg" muted loop playsinline preload="none" aria-label="Lots of Big Ones"></video></div></div>
+<div class="fc" style="--rim:#9db9de;--x:0.235;--y:0.45;--r:41deg;--d:.04s;z-index:4"><div class="fc-in"><video data-src="bongo.mp4#t=0.1" poster="bongo-poster.jpg" muted loop playsinline preload="none" aria-label="Bongo 3D"></video></div></div>
+<div class="fc front" style="--x:.31;--y:.705;--r:-2deg;--d:0s;z-index:6"><div class="dev" style="--rim:#9db9de;--dw:calc(var(--S)*.58)"><div class="bz"><i class="cam"></i><div class="scr"><video data-src="toypair.mp4#t=0.1" poster="toypair-poster.jpg" muted loop playsinline preload="none" aria-label="Toy Pair"></video></div></div></div></div>
+    </div>
+    <div class="hero-copy">
+      <h1 class="i18n" data-en="All my&lt;br&gt;games." data-ja="&lt;span class=&quot;nb&quot;&gt;私のゲーム、&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;nb&quot;&gt;すべて。&lt;/span&gt;"><span class="nb">私のゲーム、</span><br><span class="nb">すべて。</span></h1>
+      <p class="i18n hero-sub" data-en="Built with teams, and on my own." data-ja="チームでも、ひとりでも。">チームでも、ひとりでも。</p>
+    </div>
+  </div>
+</section>
+<section class="pg ft" id="team" data-nav="team">
+  <div class="ft-in">
+    <figure class="ft-fig">
+      <div class="dev" style="--rim:#9db9de"><div class="bz"><i class="cam"></i><div class="scr"><video data-src="toypair.mp4#t=0.1" poster="toypair-poster.jpg" muted loop playsinline preload="none" aria-label="Toy Pair gameplay video"></video></div></div></div>
+      <figcaption class="i18n note" data-en="Team of 21 · 6 months" data-ja="21人チーム · 6か月">21人チーム · 6か月</figcaption>
+    </figure>
+    <div class="ft-txt">
+      <svg class="ico" viewBox="0 0 56 56" style="color:#3b8df2" aria-hidden="true"><rect x="6" y="6" width="44" height="44" rx="12" fill="none" stroke="currentColor" stroke-width="3.2"/><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 0)"><rect x="14" y="19" width="15" height="15" rx="4"/><rect x="27" y="30" width="15" height="15" rx="4"/><path d="M29 26.5h5.5a3 3 0 0 1 3 3V30"/></g></svg>
+      <p class="i18n ft-p" data-en="&lt;b&gt;Toy Pair&lt;/b&gt; is a Switch game built around teamplay, and it was shown at the &lt;b&gt;Tokyo Game Show&lt;/b&gt; as our school’s top exhibition. In a team of 21, I was the programmer behind the &lt;b&gt;rotating and moving lifts&lt;/b&gt;, the extending piston, the ball gimmick and the 2-player lift." data-ja="&lt;b&gt;トイ・ペア&lt;/b&gt;は、チームプレイを重視したSwitchゲーム。&lt;b&gt;東京ゲームショウ&lt;/b&gt;に、学校のトップ展示として出展されました。21人のチームでプログラマーを務め、&lt;b&gt;回転・移動リフト&lt;/b&gt;や伸びるピストン、ボールの仕掛け、2人用リフトを担当しました。"><b>トイ・ペア</b>は、チームプレイを重視したSwitchゲーム。<b>東京ゲームショウ</b>に、学校のトップ展示として出展されました。21人のチームでプログラマーを務め、<b>回転・移動リフト</b>や伸びるピストン、ボールの仕掛け、2人用リフトを担当しました。</p>
+      <p class="ft-tools">C#</p>
+      <div class="ft-links"></div>
+    </div>
+  </div>
+</section>
+<section class="pg ft" id="team2" data-nav="team">
+  <div class="ft-in rev">
+    <figure class="ft-fig">
+      <div class="dev" style="--rim:#e88a98"><div class="bz"><i class="cam"></i><div class="scr"><video data-src="dekamenoippai.mp4#t=0.1" poster="dekamenoippai-poster.jpg" muted loop playsinline preload="none" aria-label="Lots of Big Ones gameplay video"></video></div></div></div>
+      <figcaption class="i18n note" data-en="Team of 5 · 2 months" data-ja="5人チーム · 2か月">5人チーム · 2か月</figcaption>
+    </figure>
+    <div class="ft-txt">
+      <svg class="ico" viewBox="0 0 56 56" style="color:#ee4f9d" aria-hidden="true"><rect x="6" y="6" width="44" height="44" rx="12" fill="none" stroke="currentColor" stroke-width="3.2"/><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 0)"><path d="M12 28c6-9 17-11 25-3l7-6v18l-7-6c-8 8-19 6-25-3Z"/><circle cx="20.5" cy="26.5" r="1.4" fill="currentColor" stroke="none"/></g></svg>
+      <p class="i18n ft-p" data-en="&lt;b&gt;Lots of Big Ones&lt;/b&gt; is a fishing simulator that &lt;b&gt;won our school’s hackathon&lt;/b&gt;. I wrote the &lt;b&gt;fish behavior scripts&lt;/b&gt; and made the art, sound and lighting, in my 1st year, as one of my first projects ever. Even the catch is a trick: a caught fish just vanishes for 5 seconds, then returns." data-ja="&lt;b&gt;デカめの一杯&lt;/b&gt;は、&lt;b&gt;学内のハッカソンで優勝&lt;/b&gt;した釣りシミュレーター。&lt;b&gt;魚の動きのスクリプト&lt;/b&gt;を書き、アート、サウンド、ライティングも作りました。1年生のときの、初めてのプロジェクトのひとつです。釣りも実は見せかけで、釣られた魚は5秒消えて、また現れます。"><b>デカめの一杯</b>は、<b>学内のハッカソンで優勝</b>した釣りシミュレーター。<b>魚の動きのスクリプト</b>を書き、アート、サウンド、ライティングも作りました。1年生のときの、初めてのプロジェクトのひとつです。釣りも実は見せかけで、釣られた魚は5秒消えて、また現れます。</p>
+      <p class="ft-tools">Unity · C# · Blender · Piskel</p>
+      <div class="ft-links"><a class="lnk" href="https://lucahelgert.itch.io/dekameippai" target="_blank" rel="noopener"><span class="i18n" data-en="Play" data-ja="プレイ">プレイ</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></a></div>
+    </div>
+  </div>
+</section>
+<section class="pg ft" id="team3" data-nav="team">
+  <div class="ft-in">
+    <figure class="ft-fig">
+      <div class="dev" style="--rim:#d9dadd"><div class="bz"><i class="cam"></i><div class="scr"><video data-src="kumovsmahou.mp4#t=0.1" poster="kumovsmahou-poster.jpg" muted loop playsinline preload="none" aria-label="Kumo vs. Mahou gameplay video"></video></div></div></div>
+      <figcaption class="i18n note" data-en="Team of 5 · 6 months" data-ja="5人チーム · 6か月">5人チーム · 6か月</figcaption>
+    </figure>
+    <div class="ft-txt">
+      <svg class="ico" viewBox="0 0 56 56" style="color:#8a5cf0" aria-hidden="true"><rect x="6" y="6" width="44" height="44" rx="12" fill="none" stroke="currentColor" stroke-width="3.2"/><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 0)"><circle cx="28" cy="29" r="5.5"/><path d="M23 26c-4-3-7-3-10-7M22.6 29.5H12.5M23 33c-4 2-7 5-9 10M33 26c4-3 7-3 10-7M33.4 29.5h10.1M33 33c4 2 7 5 9 10"/><path d="M28 14v4.5"/></g></svg>
+      <p class="i18n ft-p" data-en="&lt;b&gt;Kumo vs. Mahou&lt;/b&gt; is an open-world fantasy game where you hunt spiders with magic. I &lt;b&gt;led the team of 5&lt;/b&gt;, came up with the game idea as the planner, and as programmer and technical artist built the &lt;b&gt;visual effects and the world terrain&lt;/b&gt;. I even composed the music myself." data-ja="&lt;b&gt;クモ vs. マホウ&lt;/b&gt;は、魔法で蜘蛛を狩るオープンワールドのファンタジーゲーム。&lt;b&gt;5人チームを率い&lt;/b&gt;、プランナーとしてゲームの案を考えました。プログラマーとテクニカルアーティストとして&lt;b&gt;ビジュアルエフェクトとワールドの地形&lt;/b&gt;を作り、音楽も自分で作曲しました。"><b>クモ vs. マホウ</b>は、魔法で蜘蛛を狩るオープンワールドのファンタジーゲーム。<b>5人チームを率い</b>、プランナーとしてゲームの案を考えました。プログラマーとテクニカルアーティストとして<b>ビジュアルエフェクトとワールドの地形</b>を作り、音楽も自分で作曲しました。</p>
+      <p class="ft-tools">Unity · HLSL · C# · World Machine · Logic Pro X</p>
+      <div class="ft-links"><a class="lnk" href="https://lucahelgert.itch.io/kumovsmahou" target="_blank" rel="noopener"><span class="i18n" data-en="Download" data-ja="ダウンロード">ダウンロード</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></a><a class="lnk" href="https://github.com/lucanicohe/KumoVsMahou" target="_blank" rel="noopener"><span class="i18n" data-en="View code on GitHub" data-ja="GitHubでコードを見る">GitHubでコードを見る</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></a></div>
+    </div>
+  </div>
+</section>
+<section class="pg car" id="more" data-nav="more" data-rail>
+  <div class="car-in">
+    <div class="car-head"><h2 class="i18n car-h" data-en="And plenty more." data-ja="ほかにも、たくさん。">ほかにも、たくさん。</h2></div>
+    <div class="rail" tabindex="0" aria-label="More games">
+<article class="cc"><div class="cc-media"><video data-src="great.mp4#t=0.1" poster="great-poster.jpg" muted loop playsinline preload="none" aria-label="Great Foot Okhan gameplay video"></video></div>
+  <p class="i18n cc-cap" data-en="&lt;b&gt;Great Foot Okhan.&lt;/b&gt; A corporate project with the pro wrestler Great O-Khan that won 1st place out of 7 teams. As the technical artist, I built the Mongolian world, the lighting and the shaders. &lt;a class=&quot;lnk&quot; href=&quot;https://lucahelgert.itch.io/great-foot-o-khan&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Download&lt;svg viewBox=&quot;0 0 16 16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5.5 2.5 11 8l-5.5 5.5&quot;/&gt;&lt;/svg&gt;&lt;/a&gt;" data-ja="&lt;b&gt;グレート-フット-O-カーン。&lt;/b&gt;プロレスラー、グレート-O-カーン選手との企業連携プロジェクトで、7チーム中1位。テクニカルアーティストとして、モンゴルの世界観とライティング、シェーダーを担当しました。 &lt;a class=&quot;lnk&quot; href=&quot;https://lucahelgert.itch.io/great-foot-o-khan&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;ダウンロード&lt;svg viewBox=&quot;0 0 16 16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5.5 2.5 11 8l-5.5 5.5&quot;/&gt;&lt;/svg&gt;&lt;/a&gt;"><b>グレート-フット-O-カーン。</b>プロレスラー、グレート-O-カーン選手との企業連携プロジェクトで、7チーム中1位。テクニカルアーティストとして、モンゴルの世界観とライティング、シェーダーを担当しました。 <a class="lnk" href="https://lucahelgert.itch.io/great-foot-o-khan" target="_blank" rel="noopener">ダウンロード<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></a></p></article>
+<article class="cc"><div class="cc-media"><video data-src="bongo.mp4#t=0.1" poster="bongo-poster.jpg" muted loop playsinline preload="none" aria-label="Bongo 3D gameplay video"></video></div>
+  <p class="i18n cc-cap" data-en="&lt;b&gt;Bongo 3D.&lt;/b&gt; The Bongo Cat internet phenomenon as a 3D interactive piece, finished and playable in the browser in just 1 week. &lt;a class=&quot;lnk&quot; href=&quot;https://lucanicohe.github.io/bongo3d/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Play&lt;svg viewBox=&quot;0 0 16 16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5.5 2.5 11 8l-5.5 5.5&quot;/&gt;&lt;/svg&gt;&lt;/a&gt;" data-ja="&lt;b&gt;ボンゴ3D。&lt;/b&gt;話題の「ボンゴキャット」を3Dのインタラクティブな作品に。わずか1週間で、ブラウザで遊べる形に仕上げました。 &lt;a class=&quot;lnk&quot; href=&quot;https://lucanicohe.github.io/bongo3d/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;プレイ&lt;svg viewBox=&quot;0 0 16 16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5.5 2.5 11 8l-5.5 5.5&quot;/&gt;&lt;/svg&gt;&lt;/a&gt;"><b>ボンゴ3D。</b>話題の「ボンゴキャット」を3Dのインタラクティブな作品に。わずか1週間で、ブラウザで遊べる形に仕上げました。 <a class="lnk" href="https://lucanicohe.github.io/bongo3d/" target="_blank" rel="noopener">プレイ<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></a></p></article>
+<article class="cc"><div class="cc-media"><video data-src="artwork.mp4#t=0.1" poster="artwork-poster.jpg" muted loop playsinline preload="none" aria-label="Artwork Restoration gameplay video"></video></div>
+  <p class="i18n cc-cap" data-en="&lt;b&gt;Artwork Restoration.&lt;/b&gt; A 3-week client project for an illustrator with 10k followers. Her artwork, brought back to life as an interactive piece with programming and animation. &lt;a class=&quot;lnk&quot; href=&quot;https://lucanicohe.github.io/chipartwork/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Play&lt;svg viewBox=&quot;0 0 16 16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5.5 2.5 11 8l-5.5 5.5&quot;/&gt;&lt;/svg&gt;&lt;/a&gt;" data-ja="&lt;b&gt;アートワークの復元。&lt;/b&gt;フォロワー1万人のイラストレーターのための、3週間の依頼制作。彼女のイラストを、プログラミングとアニメーションでインタラクティブな作品に蘇らせました。 &lt;a class=&quot;lnk&quot; href=&quot;https://lucanicohe.github.io/chipartwork/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;プレイ&lt;svg viewBox=&quot;0 0 16 16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5.5 2.5 11 8l-5.5 5.5&quot;/&gt;&lt;/svg&gt;&lt;/a&gt;"><b>アートワークの復元。</b>フォロワー1万人のイラストレーターのための、3週間の依頼制作。彼女のイラストを、プログラミングとアニメーションでインタラクティブな作品に蘇らせました。 <a class="lnk" href="https://lucanicohe.github.io/chipartwork/" target="_blank" rel="noopener">プレイ<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></a></p></article>
+<article class="cc"><div class="cc-media"><video data-src="onlybadguys.mp4#t=0.1" poster="onlybadguys-poster.jpg" muted loop playsinline preload="none" aria-label="Only Bad Guys on the Train gameplay video"></video></div>
+  <p class="i18n cc-cap" data-en="&lt;b&gt;Only Bad Guys on the Train.&lt;/b&gt; A first-person fight inside a moving train, made alone in 4 weeks. Every model, texture and 2D element is mine, built from my own photos of real Japanese trains. &lt;a class=&quot;lnk&quot; href=&quot;https://lucanicohe.github.io/onlybadguysonthetrain/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Play&lt;svg viewBox=&quot;0 0 16 16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5.5 2.5 11 8l-5.5 5.5&quot;/&gt;&lt;/svg&gt;&lt;/a&gt;" data-ja="&lt;b&gt;電車の中の悪者たち。&lt;/b&gt;走行中の電車が舞台の、一人称視点の戦闘アクション。4週間でひとりで制作し、モデルもテクスチャも2D素材もすべて自作。テクスチャは、実際の電車を撮影した写真から作りました。 &lt;a class=&quot;lnk&quot; href=&quot;https://lucanicohe.github.io/onlybadguysonthetrain/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;プレイ&lt;svg viewBox=&quot;0 0 16 16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5.5 2.5 11 8l-5.5 5.5&quot;/&gt;&lt;/svg&gt;&lt;/a&gt;"><b>電車の中の悪者たち。</b>走行中の電車が舞台の、一人称視点の戦闘アクション。4週間でひとりで制作し、モデルもテクスチャも2D素材もすべて自作。テクスチャは、実際の電車を撮影した写真から作りました。 <a class="lnk" href="https://lucanicohe.github.io/onlybadguysonthetrain/" target="_blank" rel="noopener">プレイ<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></a></p></article>
+<article class="cc"><div class="cc-media"><video data-src="bouzocart.mp4#t=0.1" poster="bouzocart-poster.jpg" muted loop playsinline preload="none" aria-label="Bouzou Cart gameplay video"></video></div>
+  <p class="i18n cc-cap" data-en="&lt;b&gt;Bouzou Cart.&lt;/b&gt; A hackathon game inspired by 90s video games. As the technical artist, I designed the overall look and made everything feel like an old-school 90s game. &lt;a class=&quot;lnk&quot; href=&quot;https://lucahelgert.itch.io/bousou-cart&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Play&lt;svg viewBox=&quot;0 0 16 16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5.5 2.5 11 8l-5.5 5.5&quot;/&gt;&lt;/svg&gt;&lt;/a&gt;" data-ja="&lt;b&gt;ボウゾウ・カート。&lt;/b&gt;90年代のビデオゲームに影響を受けた、ハッカソンのゲーム。テクニカルアーティストとして全体のビジュアルを設計し、オールドスクールな90年代らしさに仕上げました。 &lt;a class=&quot;lnk&quot; href=&quot;https://lucahelgert.itch.io/bousou-cart&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;プレイ&lt;svg viewBox=&quot;0 0 16 16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5.5 2.5 11 8l-5.5 5.5&quot;/&gt;&lt;/svg&gt;&lt;/a&gt;"><b>ボウゾウ・カート。</b>90年代のビデオゲームに影響を受けた、ハッカソンのゲーム。テクニカルアーティストとして全体のビジュアルを設計し、オールドスクールな90年代らしさに仕上げました。 <a class="lnk" href="https://lucahelgert.itch.io/bousou-cart" target="_blank" rel="noopener">プレイ<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></a></p></article>
+<article class="cc"><div class="cc-media"><video data-src="mysterybox.mp4#t=0.1" poster="mysterybox-poster.jpg" muted loop playsinline preload="none" aria-label="Mystery Box gameplay video"></video></div>
+  <p class="i18n cc-cap" data-en="&lt;b&gt;Mystery Box.&lt;/b&gt; My first Unreal Engine team project. I gave the environment a Tron look, building the Blueprints, the materials and the overall design. &lt;a class=&quot;lnk&quot; href=&quot;https://github.com/NathanAung/MysteryBox&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;View code on GitHub&lt;svg viewBox=&quot;0 0 16 16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5.5 2.5 11 8l-5.5 5.5&quot;/&gt;&lt;/svg&gt;&lt;/a&gt;" data-ja="&lt;b&gt;ミステリーボックス。&lt;/b&gt;初めてのUnreal Engineチームプロジェクト。環境をTron風に仕上げ、Blueprint、マテリアル、全体のデザインを担当しました。 &lt;a class=&quot;lnk&quot; href=&quot;https://github.com/NathanAung/MysteryBox&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;GitHubでコードを見る&lt;svg viewBox=&quot;0 0 16 16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5.5 2.5 11 8l-5.5 5.5&quot;/&gt;&lt;/svg&gt;&lt;/a&gt;"><b>ミステリーボックス。</b>初めてのUnreal Engineチームプロジェクト。環境をTron風に仕上げ、Blueprint、マテリアル、全体のデザインを担当しました。 <a class="lnk" href="https://github.com/NathanAung/MysteryBox" target="_blank" rel="noopener">GitHubでコードを見る<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></a></p></article>
+<article class="cc"><div class="cc-media"><video data-src="boukyakunoyakata.mp4#t=0.1" poster="boukyakunoyakata-poster.jpg" muted loop playsinline preload="none" aria-label="House of Forgetting gameplay video"></video></div>
+  <p class="i18n cc-cap" data-en="&lt;b&gt;House of Forgetting.&lt;/b&gt; A pixel art horror escape game and my first Unity team project. I did 90% of the programming and made the sprite art. &lt;a class=&quot;lnk&quot; href=&quot;https://lucahelgert.itch.io/boukyaku-no-yakata&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Play&lt;svg viewBox=&quot;0 0 16 16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5.5 2.5 11 8l-5.5 5.5&quot;/&gt;&lt;/svg&gt;&lt;/a&gt;" data-ja="&lt;b&gt;忘却の館。&lt;/b&gt;ピクセルアートのホラー脱出ゲームで、初めてのUnityチームプロジェクト。プログラミングの9割を担当し、スプライトのアートも制作しました。 &lt;a class=&quot;lnk&quot; href=&quot;https://lucahelgert.itch.io/boukyaku-no-yakata&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;プレイ&lt;svg viewBox=&quot;0 0 16 16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5.5 2.5 11 8l-5.5 5.5&quot;/&gt;&lt;/svg&gt;&lt;/a&gt;"><b>忘却の館。</b>ピクセルアートのホラー脱出ゲームで、初めてのUnityチームプロジェクト。プログラミングの9割を担当し、スプライトのアートも制作しました。 <a class="lnk" href="https://lucahelgert.itch.io/boukyaku-no-yakata" target="_blank" rel="noopener">プレイ<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></a></p></article>
+    </div>
+    <div class="car-nav"><button class="prev" type="button" aria-label="Previous"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.5 2.5 5 8l5.5 5.5"/></svg></button><button class="next" type="button" aria-label="Next"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></button></div>
+  </div>
+</section>
+<section class="pg car quiet" id="small" data-nav="more" data-rail>
+  <div class="car-in">
+    <div class="car-head"><h2 class="i18n car-h" data-en="Smaller games, playable in your browser." data-ja="ブラウザで遊べる、小さなゲーム。">ブラウザで遊べる、小さなゲーム。</h2></div>
+    <div class="rail" tabindex="0" aria-label="Smaller games">
+<article class="sc">
+  <div class="sc-top"><div class="i18n sc-label" data-en="Procedural" data-ja="プロシージャル">プロシージャル</div><h3 class="i18n sc-title" data-en="Lost in the Cold" data-ja="極寒の迷路">極寒の迷路</h3><p class="i18n sc-text" data-en="A new maze on every launch. Find your way through an ever-changing frozen maze." data-ja="起動するたびに新しい迷路が生成される、氷の迷路ゲーム。">起動するたびに新しい迷路が生成される、氷の迷路ゲーム。</p></div>
+  <div class="sc-img"><img loading="lazy" decoding="async" src="maze.jpg" alt="Lost in the Cold"></div>
+  <a class="sc-go" href="https://lucanicohe.github.io/smallmazegame/index.html" target="_blank" rel="noopener" aria-label="Play Lost in the Cold"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></a>
+</article>
+<article class="sc">
+  <div class="sc-top"><div class="i18n sc-label" data-en="Physics + IK" data-ja="物理演算 + IK">物理演算 + IK</div><h3 class="i18n sc-title" data-en="Earth is a Toy" data-ja="地球はおもちゃ">地球はおもちゃ</h3><p class="i18n sc-text" data-en="A physics-based alien catching game. The aliens move with inverse kinematics." data-ja="物理演算のエイリアンキャッチゲーム。動きは逆運動学（IK）。">物理演算のエイリアンキャッチゲーム。動きは逆運動学（IK）。</p></div>
+  <div class="sc-img"><img loading="lazy" decoding="async" src="aliencatchball.jpg" alt="Earth is a Toy"></div>
+  <a class="sc-go" href="https://lucanicohe.github.io/aliensandstuff/index.html" target="_blank" rel="noopener" aria-label="Play Earth is a Toy"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></a>
+</article>
+<article class="sc">
+  <div class="sc-top"><div class="i18n sc-label" data-en="Made fully with AI" data-ja="完全AI制作">完全AI制作</div><h3 class="i18n sc-title" data-en="Fat Cat" data-ja="ぼうちゃり猫">ぼうちゃり猫</h3><p class="i18n sc-text" data-en="A Mario-style platformer about a fat cat with an Osaka dialect, built by prompting Codex." data-ja="大阪弁をしゃべる太った猫のマリオ風ゲーム。Codexへの指示だけで制作。">大阪弁をしゃべる太った猫のマリオ風ゲーム。Codexへの指示だけで制作。</p></div>
+  <div class="sc-img"><img loading="lazy" decoding="async" src="fatcat.jpg" alt="Fat Cat"></div>
+  <a class="sc-go" href="https://lucanicohe.github.io/fatcat/" target="_blank" rel="noopener" aria-label="Play Fat Cat"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></a>
+</article>
+<article class="sc">
+  <div class="sc-top"><div class="i18n sc-label" data-en="World Machine" data-ja="World Machine">World Machine</div><h3 class="i18n sc-title" data-en="Olympus Dodge" data-ja="オリンポス・ドッジ">オリンポス・ドッジ</h3><p class="i18n sc-text" data-en="A first-person fantasy dodgeball game in a big landscape I built in World Machine." data-ja="World Machineで作った広大な背景の、一人称ドッジボール。">World Machineで作った広大な背景の、一人称ドッジボール。</p></div>
+  <div class="sc-img"><img loading="lazy" decoding="async" src="olympus.jpg" alt="Olympus Dodge"></div>
+  <a class="sc-go" href="https://lucanicohe.github.io/OlympusDodgeBall/" target="_blank" rel="noopener" aria-label="Play Olympus Dodge"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></a>
+</article>
+<article class="sc">
+  <div class="sc-top"><div class="i18n sc-label" data-en="Physics" data-ja="物理演算">物理演算</div><h3 class="i18n sc-title" data-en="Frog Kamizumo" data-ja="カエル紙相撲">カエル紙相撲</h3><p class="i18n sc-text" data-en="Traditional paper sumo rebuilt in 3D, with physics that react to every hit." data-ja="伝統の紙相撲を3Dで再構築。衝突に反応する物理表現が見どころ。">伝統の紙相撲を3Dで再構築。衝突に反応する物理表現が見どころ。</p></div>
+  <div class="sc-img"><img loading="lazy" decoding="async" src="kamizumo.jpg" alt="Frog Kamizumo"></div>
+  <a class="sc-go" href="https://lucanicohe.github.io/kamizumo/" target="_blank" rel="noopener" aria-label="Play Frog Kamizumo"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></a>
+</article>
+<article class="sc">
+  <div class="sc-top"><div class="i18n sc-label" data-en="Unity" data-ja="Unity">Unity</div><h3 class="i18n sc-title" data-en="Underwater Pinball" data-ja="水中ピンボール">水中ピンボール</h3><p class="i18n sc-text" data-en="An old-school pinball game underwater. The 3D assets and all the gameplay are mine." data-ja="水中を舞台にしたピンボール。3Dアセットもゲームプレイも自作。">水中を舞台にしたピンボール。3Dアセットもゲームプレイも自作。</p></div>
+  <div class="sc-img"><img loading="lazy" decoding="async" src="pin.jpg" alt="Underwater Pinball"></div>
+  <a class="sc-go" href="https://lucanicohe.github.io/PinBall/" target="_blank" rel="noopener" aria-label="Play Underwater Pinball"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></a>
+</article>
+<article class="sc">
+  <div class="sc-top"><div class="i18n sc-label" data-en="2D" data-ja="2D">2D</div><h3 class="i18n sc-title" data-en="Bow &amp;amp; Bones" data-ja="ボウ・アンド・ボーンズ">ボウ・アンド・ボーンズ</h3><p class="i18n sc-text" data-en="A stylized 2D archery game with hand-drawn visuals, enemies and responsive combat." data-ja="手描き風ビジュアルの、スタイリッシュな2Dアーチェリー。">手描き風ビジュアルの、スタイリッシュな2Dアーチェリー。</p></div>
+  <div class="sc-img"><img loading="lazy" decoding="async" src="bowbones.jpg" alt="Bow &amp; Bones"></div>
+  <a class="sc-go" href="https://lucanicohe.github.io/shootinggame/" target="_blank" rel="noopener" aria-label="Play Bow &amp; Bones"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></a>
+</article>
+<article class="sc">
+  <div class="sc-top"><div class="i18n sc-label" data-en="Physics" data-ja="物理演算">物理演算</div><h3 class="i18n sc-title" data-en="Zero Gravity Bowling" data-ja="無重力ボウリング">無重力ボウリング</h3><p class="i18n sc-text" data-en="Bowling without gravity. Read momentum and trajectories to knock the pins down." data-ja="重力のないボウリング。運動量と軌道を読んで遊びます。">重力のないボウリング。運動量と軌道を読んで遊びます。</p></div>
+  <div class="sc-img"><img loading="lazy" decoding="async" src="zerogravitybowling.jpg" alt="Zero Gravity Bowling"></div>
+  <a class="sc-go" href="https://lucanicohe.github.io/zerogravitybowling/" target="_blank" rel="noopener" aria-label="Play Zero Gravity Bowling"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></a>
+</article>
+<article class="sc">
+  <div class="sc-top"><div class="i18n sc-label" data-en="Movement" data-ja="移動">移動</div><h3 class="i18n sc-title" data-en="The Floor Is Lava" data-ja="床は溶岩">床は溶岩</h3><p class="i18n sc-text" data-en="Get across a flooded classroom where the environment itself is the obstacle." data-ja="水没した教室を渡る、環境そのものが障害物の探索ゲーム。">水没した教室を渡る、環境そのものが障害物の探索ゲーム。</p></div>
+  <div class="sc-img"><img loading="lazy" decoding="async" src="lava.jpg" alt="The Floor Is Lava"></div>
+  <a class="sc-go" href="https://lucanicohe.github.io/thefloorislava/" target="_blank" rel="noopener" aria-label="Play The Floor Is Lava"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></a>
+</article>
+<article class="sc">
+  <div class="sc-top"><div class="i18n sc-label" data-en="Rhythm" data-ja="リズム">リズム</div><h3 class="i18n sc-title" data-en="Tron Rhythm" data-ja="トロン・リズム">トロン・リズム</h3><p class="i18n sc-text" data-en="Obstacles appear in sync with the music. Follow the beat and dodge the cubes." data-ja="音楽に合わせて現れるキューブを、ビートに乗って避けるゲーム。">音楽に合わせて現れるキューブを、ビートに乗って避けるゲーム。</p></div>
+  <div class="sc-img"><img loading="lazy" decoding="async" src="rhythm.jpg" alt="Tron Rhythm"></div>
+  <a class="sc-go" href="https://lucanicohe.github.io/rhythmgame/index.html" target="_blank" rel="noopener" aria-label="Play Tron Rhythm"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></a>
+</article>
+<article class="sc">
+  <div class="sc-top"><div class="i18n sc-label" data-en="Animation" data-ja="アニメーション">アニメーション</div><h3 class="i18n sc-title" data-en="The Universe" data-ja="宇宙">宇宙</h3><p class="i18n sc-text" data-en="A fully hand-drawn animation piece rather than a game. A quiet look at scale and existence." data-ja="ゲームではなく、完全手描きのアニメーション作品。">ゲームではなく、完全手描きのアニメーション作品。</p></div>
+  <div class="sc-img"><img loading="lazy" decoding="async" src="uni.jpg" alt="The Universe"></div>
+  <a class="sc-go" href="https://lucanicohe.github.io/dmtexperience/" target="_blank" rel="noopener" aria-label="Play The Universe"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></a>
+</article>
+    </div>
+    <div class="car-nav"><button class="prev" type="button" aria-label="Previous"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.5 2.5 5 8l5.5 5.5"/></svg></button><button class="next" type="button" aria-label="Next"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></button></div>
+  </div>
+</section>
+<section class="pg bigt" id="design" data-nav="design">
+  <div class="bigt-in">
+    <h2 class="i18n big" data-en="I can also&lt;br&gt;do design." data-ja="&lt;span class=&quot;nb&quot;&gt;デザインも、&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;nb&quot;&gt;できます。&lt;/span&gt;"><span class="nb">デザインも、</span><br><span class="nb">できます。</span></h2>
+    <p class="i18n bigt-p" data-en="Games aren’t all I make. I also design &lt;b&gt;card games and magazines&lt;/b&gt;, from the first idea and the drawings to the &lt;b&gt;page layout, the writing and the photo editing&lt;/b&gt;." data-ja="つくるのは、ゲームだけではありません。&lt;b&gt;カードゲームや雑誌&lt;/b&gt;のデザインも手がけます。最初のアイデアやイラストから、&lt;b&gt;ページのレイアウト、執筆、写真の編集&lt;/b&gt;まで。">つくるのは、ゲームだけではありません。<b>カードゲームや雑誌</b>のデザインも手がけます。最初のアイデアやイラストから、<b>ページのレイアウト、執筆、写真の編集</b>まで。</p>
+  </div>
+</section>
+<section class="pg ft" id="design1" data-nav="design">
+  <div class="ft-in">
+    <figure class="ft-fig">
+      <div class="dev" style="--rim:#f4e58a"><div class="bz"><i class="cam"></i><div class="scr"><img loading="lazy" decoding="async" src="cardgame1.jpg" alt="Prefecture Card Game"></div></div></div>
+      <figcaption class="i18n note" data-en="Team of 7 · 3 months" data-ja="7人チーム · 3か月">7人チーム · 3か月</figcaption>
+    </figure>
+    <div class="ft-txt">
+      <svg class="ico" viewBox="0 0 56 56" style="color:#ff8a2b" aria-hidden="true"><rect x="6" y="6" width="44" height="44" rx="12" fill="none" stroke="currentColor" stroke-width="3.2"/><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 0)"><rect x="13" y="20" width="19" height="26" rx="4" transform="rotate(-10 22 33)"/><rect x="24" y="14" width="19" height="26" rx="4" transform="rotate(8 33 27)"/></g></svg>
+      <p class="i18n ft-p" data-en="&lt;b&gt;Prefecture Card Game&lt;/b&gt; is a printed card game in the style of Pokémon, with one card for each prefecture of Japan. I came up with the game and the card ideas, then &lt;b&gt;designed and drew every card myself&lt;/b&gt; in Clip Studio Paint. It was the &lt;b&gt;most popular analog game&lt;/b&gt; at the school festival." data-ja="&lt;b&gt;都道府県カードゲーム&lt;/b&gt;は、ポケモン風の、紙に印刷して遊ぶカードゲーム。日本の都道府県ごとにカードがあります。ゲームとカードのアイデアを考え、&lt;b&gt;すべてのカードを自分でデザイン&lt;/b&gt;してClip Studio Paintで描きました。学園祭では&lt;b&gt;一番人気のアナログゲーム&lt;/b&gt;でした。"><b>都道府県カードゲーム</b>は、ポケモン風の、紙に印刷して遊ぶカードゲーム。日本の都道府県ごとにカードがあります。ゲームとカードのアイデアを考え、<b>すべてのカードを自分でデザイン</b>してClip Studio Paintで描きました。学園祭では<b>一番人気のアナログゲーム</b>でした。</p>
+      <p class="ft-tools">Clip Studio Paint</p>
+      <div class="ft-links"><a class="lnk" href="https://lucanicohe.github.io/cardsofjapan/" target="_blank" rel="noopener"><span class="i18n" data-en="Look at all cards" data-ja="すべてのカードを見る">すべてのカードを見る</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></a></div>
+    </div>
+  </div>
+</section>
+<section class="pg ft" id="design2" data-nav="design">
+  <div class="ft-in rev">
+    <figure class="ft-fig">
+      <div class="dev pt" style="--rim:#d9dadd"><div class="bz"><i class="cam"></i><div class="scr"><div class="pdf" data-pdf="rena.pdf" tabindex="0" role="group" aria-label="れい Magazine Article (PDF)"><canvas></canvas><div class="pdf-st"><span class="i18n" data-en="Loading…" data-ja="読み込み中…">読み込み中…</span></div><button class="pn prev" type="button" aria-label="Previous page" disabled><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.5 2.5 5 8l5.5 5.5"/></svg></button><button class="pn next" type="button" aria-label="Next page" disabled><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></button><span class="pc">1 / 1</span></div></div></div></div>
+      <figcaption class="i18n note" data-en="Solo · Language school" data-ja="個人制作 · 日本語学校">個人制作 · 日本語学校</figcaption>
+    </figure>
+    <div class="ft-txt">
+      <svg class="ico" viewBox="0 0 56 56" style="color:#0fb5c4" aria-hidden="true"><rect x="6" y="6" width="44" height="44" rx="12" fill="none" stroke="currentColor" stroke-width="3.2"/><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 0)"><path d="M28 20.5c-4-3-9-3.5-14-2.5v23c5-1 10-.5 14 2.5 4-3 9-3.5 14-2.5V18c-5-1-10-.5-14 2.5Z"/><path d="M28 20.5v23M17.5 24.5h5.5M17.5 29.5h5.5M33 24.5h5.5"/></g></svg>
+      <p class="i18n ft-p" data-en="&lt;b&gt;れい Magazine Article&lt;/b&gt; is my private interview with れい, a hostess at a kyabakura, about her working life. I did the interview, &lt;b&gt;wrote the article in Japanese&lt;/b&gt;, made the inside pages and edited the photos myself, as an assignment at language school." data-ja="&lt;b&gt;れい 雑誌記事&lt;/b&gt;は、キャバクラで働くれいさんへの&lt;b&gt;プライベート取材&lt;/b&gt;をまとめた記事。取材から&lt;b&gt;日本語での執筆&lt;/b&gt;、中面のページ制作、写真の編集まで、すべてひとりで行いました。日本語学校の授業課題です。"><b>れい 雑誌記事</b>は、キャバクラで働くれいさんへの<b>プライベート取材</b>をまとめた記事。取材から<b>日本語での執筆</b>、中面のページ制作、写真の編集まで、すべてひとりで行いました。日本語学校の授業課題です。</p>
+      <p class="ft-tools">Apple Pages · GIMP · Photoshop</p>
+      <div class="ft-links"><a class="lnk" href="rena.pdf" target="_blank" rel="noopener"><span class="i18n" data-en="Open the PDF" data-ja="PDFを開く">PDFを開く</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></a></div>
+    </div>
+  </div>
+</section>
+<section class="pg ft" id="design3" data-nav="design">
+  <div class="ft-in">
+    <figure class="ft-fig">
+      <div class="dev pt" style="--rim:#9db9de"><div class="bz"><i class="cam"></i><div class="scr"><div class="pdf" data-pdf="saitama.pdf" tabindex="0" role="group" aria-label="To Saitama (PDF)"><canvas></canvas><div class="pdf-st"><span class="i18n" data-en="Loading…" data-ja="読み込み中…">読み込み中…</span></div><button class="pn prev" type="button" aria-label="Previous page" disabled><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.5 2.5 5 8l5.5 5.5"/></svg></button><button class="pn next" type="button" aria-label="Next page" disabled><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></button><span class="pc">1 / 1</span></div></div></div></div>
+      <figcaption class="i18n note" data-en="Team of 2 · Language school" data-ja="2人チーム · 日本語学校">2人チーム · 日本語学校</figcaption>
+    </figure>
+    <div class="ft-txt">
+      <svg class="ico" viewBox="0 0 56 56" style="color:#2fb36d" aria-hidden="true"><rect x="6" y="6" width="44" height="44" rx="12" fill="none" stroke="currentColor" stroke-width="3.2"/><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 0)"><rect x="15" y="14" width="26" height="30" rx="4"/><path d="M21 22h14M21 28h14M21 34h8"/></g></svg>
+      <p class="i18n ft-p" data-en="&lt;b&gt;To Saitama&lt;/b&gt; is a magazine about living in Saitama versus living in Tokyo, made with one partner as a class project: &lt;b&gt;a full magazine by just 2 people&lt;/b&gt;. I wrote the text, made the inside pages and edited the photos." data-ja="&lt;b&gt;埼玉へ&lt;/b&gt;は、埼玉に住むことと東京に住むことを比べた雑誌。授業課題として2人組で制作し、&lt;b&gt;たった2人で1冊の雑誌をまるごと&lt;/b&gt;作りました。文章を書き、中面のページを作り、写真を編集しました。"><b>埼玉へ</b>は、埼玉に住むことと東京に住むことを比べた雑誌。授業課題として2人組で制作し、<b>たった2人で1冊の雑誌をまるごと</b>作りました。文章を書き、中面のページを作り、写真を編集しました。</p>
+      <p class="ft-tools">Apple Pages · GIMP · Photoshop</p>
+      <div class="ft-links"><a class="lnk" href="saitama.pdf" target="_blank" rel="noopener"><span class="i18n" data-en="Open the PDF" data-ja="PDFを開く">PDFを開く</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></a></div>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="foot">
+  <a class="i18n lnk back" data-en="Back to the portfolio" data-ja="ポートフォリオに戻る" href="index.html">ポートフォリオに戻る</a>
+  <p>Luca Helgert</p>
+</footer><script>
+(() => {
+"use strict";
+const root = document.documentElement;
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- language (starts in Japanese, same as the main page; ?lang=en opens English) ---------- */
+const langBtn = document.getElementById("lang");
+let lang = "ja";
+function applyLang(l) {
+    lang = l;
+    root.lang = l;
+    root.classList.toggle("lang-ja", l === "ja");
+    document.querySelectorAll(".i18n").forEach((el) => {
+        const c = l === "ja" ? el.dataset.ja : el.dataset.en;
+        if (c !== undefined) el.innerHTML = c;
+    });
+    langBtn.textContent = l === "ja" ? "EN" : "日本語";
+    document.title = l === "ja" ? "ゲーム — ヘルゲルト・ルカ" : "Games — Luca Helgert";
+    document.querySelectorAll(".pdf").forEach((b) => { if (b._status) b._status(); });
+    document.querySelectorAll("[data-rail]").forEach((s) => s._upd && s._upd());
+}
+langBtn.addEventListener("click", () => applyLang(lang === "ja" ? "en" : "ja"));
+if (/[?&]lang=en/.test(location.search)) applyLang("en");
+
+/* ---------- nav: hairline after scrolling, underline follows the screen you are on ---------- */
+const lnav = document.getElementById("lnav");
+addEventListener("scroll", () => lnav.classList.toggle("scrolled", scrollY > 8), { passive: true });
+const navLinks = [...document.querySelectorAll(".lnav-links a[data-k]")];
+const navObs = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const k = e.target.dataset.nav;
+        navLinks.forEach((a) => a.classList.toggle("on", a.dataset.k === k));
+    });
+}, { threshold: 0.55 });
+document.querySelectorAll("section[data-nav]").forEach((s) => navObs.observe(s));
+
+/* ---------- hero fan opens up once ---------- */
+const fan = document.getElementById("fan");
+requestAnimationFrame(() => requestAnimationFrame(() => fan.classList.add("go")));
+
+/* ---------- videos: poster first, play only while on screen, rewind when scrolled away ---------- */
+const conn = navigator.connection || {};
+const saveData = !!conn.saveData || /(^|-)2g$/.test(conn.effectiveType || "");
+const isTouch = matchMedia("(pointer: coarse)").matches;
+const smallScreen = (isTouch && Math.min(screen.width, screen.height) < 700) || innerWidth < 700; /* phones get the lighter name-m.mp4, iPad the sharp one */
+const vids = [...document.querySelectorAll("video[data-src]")];
+const srcFor = (v) => (smallScreen && !v._full) ? v.dataset.src.replace(/\.mp4(?=#|$)/, "-m.mp4") : v.dataset.src;
+function attach(v, mode) {
+    if (!v.getAttribute("src")) { v.preload = mode; v.src = srcFor(v); v.load(); }
+    else if (mode === "auto" && v.preload !== "auto") v.preload = "auto";
+}
+function play(v) {
+    attach(v, "auto");
+    const p = v.play();
+    if (p && p.catch) p.catch(() => { v.dataset.blocked = "1"; });
+}
+vids.forEach((v) => {
+    v.muted = v.defaultMuted = true; v.loop = true; v.controls = false;
+    v.setAttribute("playsinline", ""); v.setAttribute("webkit-playsinline", "");
+    v.disablePictureInPicture = true; v.disableRemotePlayback = true;
+    v._visible = false; v._errors = 0;
+    v.addEventListener("playing", () => { delete v.dataset.blocked; v._errors = 0; });
+    v.addEventListener("canplay", () => { if (v._visible && !reduceMotion && v.paused) play(v); });
+    v.addEventListener("error", () => {
+        if (!v.getAttribute("src")) return;
+        if (!v._full && /-m\.mp4/.test(v.getAttribute("src"))) { v._full = true; v.removeAttribute("src"); v.load(); attach(v, v._visible ? "auto" : "metadata"); if (v._visible && !reduceMotion) play(v); return; }
+        if (v._errors >= 2) return;
+        v._errors++;
+        setTimeout(() => { v.removeAttribute("src"); v.load(); attach(v, v._visible ? "auto" : "metadata"); if (v._visible && !reduceMotion) play(v); }, 1500 * v._errors);
+    });
+    v.addEventListener("contextmenu", (e) => e.preventDefault());
+});
+const nearObs = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) attach(e.target, "auto"); }), { rootMargin: "150% 100%" });
+const playObs = new IntersectionObserver((es) => es.forEach((e) => {
+    const v = e.target;
+    v._visible = e.isIntersecting;
+    if (e.isIntersecting) { try { if (v.currentTime > 0.3) v.currentTime = 0; } catch (x) {} play(v); }
+    else { v.pause(); try { if (v.currentTime > 0.2) v.currentTime = 0; } catch (x) {} }
+}), { threshold: 0.01 });
+vids.forEach((v) => {
+    /* on phones and tablets only the front hero video plays, the four behind it stay on their poster (keeps scrolling smooth) */
+    const behind = isTouch && v.closest(".fc") && !v.closest(".front");
+    if (behind) { v.poster && (v.dataset.still = "1"); return; }
+    nearObs.observe(v);
+    if (!reduceMotion) playObs.observe(v);
+});
+document.addEventListener("visibilitychange", () => { if (!document.hidden && !reduceMotion) vids.forEach((v) => { if (v._visible) play(v); }); });
+["touchend", "pointerdown", "click"].forEach((t) => addEventListener(t, () => vids.forEach((v) => {
+    if (!v.dataset.blocked) return;
+    const r = v.getBoundingClientRect();
+    if (r.bottom > 0 && r.top < innerHeight && r.right > 0 && r.left < innerWidth) play(v);
+}), { passive: true }));
+if (!saveData) {
+    const warm = () => vids.filter((v) => !v.getAttribute("src") && !v.dataset.still).forEach((v, i) => setTimeout(() => attach(v, "metadata"), i * 150));
+    const go = () => (window.requestIdleCallback || ((f) => setTimeout(f, 300)))(warm, { timeout: 2000 });
+    document.readyState === "complete" ? go() : addEventListener("load", go, { once: true });
+}
+
+/* ---------- carousels ---------- */
+document.querySelectorAll("[data-rail]").forEach((sec) => {
+    const rail = sec.querySelector(".rail"), prev = sec.querySelector(".prev"), next = sec.querySelector(".next");
+    const step = () => {
+        const c = rail.firstElementChild;
+        return c.getBoundingClientRect().width + (parseFloat(getComputedStyle(rail).columnGap) || 0);
+    };
+    const upd = () => {
+        prev.disabled = rail.scrollLeft <= 2;
+        next.disabled = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 2;
+    };
+    sec._upd = upd;
+    prev.addEventListener("click", () => rail.scrollBy({ left: -step(), behavior: "smooth" }));
+    next.addEventListener("click", () => rail.scrollBy({ left: step(), behavior: "smooth" }));
+    rail.addEventListener("scroll", upd, { passive: true });
+    addEventListener("resize", upd);
+    upd();
+});
+
+/* ---------- magazines (PDF): pdf.js is only fetched when a magazine is about to be seen ---------- */
+const PDFJS = ["https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/", "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/"];
+const PDFJS_ASSETS = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/";
+let pdfReady;
+const loadScript = (src) => new Promise((ok, no) => { const t = document.createElement("script"); t.src = src; t.onload = ok; t.onerror = () => { t.remove(); no(new Error("script failed: " + src)); }; document.head.appendChild(t); });
+function loadPdfJs() {
+    if (!pdfReady) pdfReady = (async () => {
+        if (window.pdfjsLib) return window.pdfjsLib;
+        let err;
+        for (const base of PDFJS) {
+            try { await loadScript(base + "pdf.min.js"); window.pdfjsLib.GlobalWorkerOptions.workerSrc = base + "pdf.worker.min.js"; return window.pdfjsLib; }
+            catch (e) { err = e; }
+        }
+        pdfReady = null; throw err;
+    })();
+    return pdfReady;
+}
+document.querySelectorAll(".pdf").forEach((box) => {
+    const canvas = box.querySelector("canvas"), count = box.querySelector(".pc"), prev = box.querySelector(".prev"), next = box.querySelector(".next"), st = box.querySelector(".pdf-st");
+    let pdf = null, page = 1, token = 0, started = false, failed = null;
+    async function show(n) {
+        if (!pdf) return;
+        page = Math.min(Math.max(1, n), pdf.numPages);
+        const mine = ++token;
+        count.textContent = page + " / " + pdf.numPages;
+        prev.disabled = page <= 1; next.disabled = page >= pdf.numPages;
+        try {
+            const p = await pdf.getPage(page);
+            if (mine !== token) return;
+            const base = p.getViewport({ scale: 1 });
+            const fit = Math.min(box.clientWidth / base.width, box.clientHeight / base.height);
+            const dpr = Math.min(devicePixelRatio || 1, 2);
+            const vp = p.getViewport({ scale: fit * dpr });
+            const off = document.createElement("canvas");
+            off.width = vp.width; off.height = vp.height;
+            await p.render({ canvasContext: off.getContext("2d"), viewport: vp }).promise;
+            if (mine !== token) return;
+            canvas.width = vp.width; canvas.height = vp.height;
+            canvas.style.width = vp.width / dpr + "px"; canvas.style.height = vp.height / dpr + "px";
+            canvas.getContext("2d").drawImage(off, 0, 0);
+        } catch (e) { console.error("PDF page failed:", e); }
+    }
+    box._status = () => {
+        if (!failed) return;
+        /* file missing: say so clearly. Anything else (page opened from a local file, pdf.js blocked): show the PDF in the browser's own viewer instead */
+        if (failed.notFound) {
+            st.innerHTML = (lang === "ja" ? "PDFが見つかりません：" : "PDF not found: ") + box.dataset.pdf + ' <a class="lnk" href="' + box.dataset.pdf + '" target="_blank" rel="noopener">' + (lang === "ja" ? "開く" : "Open") + "</a>";
+        } else if (!box.querySelector("iframe")) {
+            const f = document.createElement("iframe");
+            f.title = box.getAttribute("aria-label") || "PDF";
+            f.src = box.dataset.pdf + "#toolbar=0&navpanes=0&view=FitH";
+            box.appendChild(f);
+            st.style.display = "none"; box.querySelector(".pc").style.display = "none";
+            box.querySelectorAll(".pn").forEach((b) => b.style.display = "none");
+        }
+    };
+    function start() {
+        if (started) return; started = true;
+        Promise.all([loadPdfJs(), fetch(box.dataset.pdf).then((r) => { if (!r.ok) { const e = new Error("PDF not found (" + r.status + "): " + box.dataset.pdf); e.notFound = true; throw e; } return r.arrayBuffer(); })])
+            .then(([lib, buf]) => lib.getDocument({ data: new Uint8Array(buf), cMapUrl: PDFJS_ASSETS + "cmaps/", cMapPacked: true, standardFontDataUrl: PDFJS_ASSETS + "standard_fonts/", useSystemFonts: true }).promise)
+            .then((doc) => { pdf = doc; box.classList.add("ready"); show(1); })
+            .catch((e) => { console.error("PDF preview failed:", e); failed = e; box.classList.add("failed"); box._status(); });
+    }
+    prev.addEventListener("click", () => show(page - 1));
+    next.addEventListener("click", () => show(page + 1));
+    box.addEventListener("keydown", (e) => { if (e.key === "ArrowLeft") { e.preventDefault(); show(page - 1); } if (e.key === "ArrowRight") { e.preventDefault(); show(page + 1); } });
+    let x0 = null;
+    box.addEventListener("touchstart", (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+    box.addEventListener("touchend", (e) => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; x0 = null; if (Math.abs(dx) > 50) show(page + (dx < 0 ? 1 : -1)); }, { passive: true });
+    let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => show(page), 200); });
+    new IntersectionObserver((es, o) => { if (es.some((e) => e.isIntersecting)) { start(); o.disconnect(); } }, { rootMargin: "300px 0px" }).observe(box);
+});
+})();
+</script>
+</body>
+</html>
