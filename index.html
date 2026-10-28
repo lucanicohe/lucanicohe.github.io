@@ -2955,7 +2955,7 @@ applyLanguage(currentLang);
   play(curEl);
 
   /* ---------- the wall of game screens ---------- */
-  const games = [{"src": "toypair.mp4", "poster": "toypair-poster.jpg", "label": "Toy Pair"}, {"src": "mysterybox.mp4", "poster": "mysterybox-poster.jpg", "label": "Mystery Box"}, {"src": "onlybadguys.mp4", "poster": "onlybadguys-poster.jpg", "label": "Only Bad Guys on the Train"}, {"src": "great.mp4", "poster": "great-poster.jpg", "label": "Great Foot Okhan"}, {"src": "artwork.mp4", "poster": "artwork-poster.jpg", "label": "Artwork Restoration"}, {"src": "dekamenoippai.mp4", "poster": "dekamenoippai-poster.jpg", "label": "Lots of Big Ones"}, {"src": "ikaikasu.mp4", "poster": "ikaikasu-poster.jpg", "label": "Squid to the Max"}, {"src": "boukyakunoyakata.mp4", "poster": "boukyakunoyakata-poster.jpg", "label": "House of Forgetting"}, {"src": "kumovsmahou.mp4", "poster": "kumovsmahou-poster.jpg", "label": "Kumo vs. Mahou"}, {"src": "bongo.mp4", "poster": "bongo-poster.jpg", "label": "Bongo 3D"}, {"src": "bouzocart.mp4", "poster": "bouzocart-poster.jpg", "label": "Bouzou Cart"}];
+  const games = [{"src": "toypair.mp4", "poster": "toypair-poster.jpg", "label": "Toy Pair"}, {"src": "mysterybox.mp4", "poster": "mysterybox-poster.jpg", "label": "Mystery Box"}, {"src": "onlybadguys.mp4", "poster": "onlybadguys-poster.jpg", "label": "Only Bad Guys on the Train"}, {"src": "great.mp4", "poster": "great-poster.jpg", "label": "Great Foot Okhan"}, {"src": "artwork.mp4", "poster": "artwork-poster.jpg", "label": "Artwork Restoration"}, {"src": "dekamenoippai.mp4", "poster": "dekamenoippai-poster.jpg", "label": "Lots of Big Ones"}, {"src": "ikaikasu.mp4", "poster": "ikaikasu-poster.jpg", "label": "Squid to the Max"}, {"src": "boukyakunoyakata.mp4", "poster": "boukyakunoyakata-poster.jpg", "label": "House of Forgetting"}, {"src": "kumovsmahou.mp4", "poster": "kumovsmahou-poster.jpg", "label": "Kumo vs. Mahou"}, {"src": "bongo.mp4", "poster": "bongo-poster.jpg", "label": "Bongo 3D"}, {"src": "bouzocart.mp4", "poster": "bouzocart-poster.jpg", "label": "Bouzou Cart"}, {"src": "reee2.mp4", "poster": "", "label": "Toy Pair"}];
   const coords = [[-1,-1.5],[-1,-.5],[-1,.5],[-1,1.5],[0,-2],[0,-1],[0,0],[0,1],[0,2],[1,-1.5],[1,-.5],[1,.5],[1,1.5]];
   const smallScreen = innerWidth < 700 || (matchMedia("(pointer: coarse)").matches && Math.min(screen.width, screen.height) < 700);
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -2967,7 +2967,7 @@ applyLanguage(currentLang);
     const t = document.createElement("div"); t.className = "ah-tile";
     const s = document.createElement("div"); s.className = "scr";
     const v = document.createElement("video");
-    v.muted = true; v.defaultMuted = true; v.loop = true; v.playsInline = true; v.preload = "none"; v.poster = g.poster; v.setAttribute("aria-label", g.label);
+    v.muted = true; v.defaultMuted = true; v.loop = true; v.playsInline = true; v.preload = "none"; if (g.poster) v.poster = g.poster; v.setAttribute("aria-label", g.label);
     const cam = document.createElement("i"); cam.className = "cam";
     s.appendChild(v); t.append(s, cam); grid.insertBefore(t, welcome);
     return { row, k, t, s, v, cam, g };
