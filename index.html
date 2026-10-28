@@ -1472,7 +1472,7 @@ html.lang-ja .hero.hx .hx-name{font-size:clamp(2.4rem,5.4vw,7rem);letter-spacing
 .ah{position:relative;height:calc(100vh + 180vh);height:calc(100svh + 180svh);background:#fff;color:#1d1d1f}
 .ah-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#fff;-webkit-user-select:none;user-select:none}
 .ah-grid{position:absolute;inset:0}
-.ah-tile{position:absolute;z-index:1;background:#07080b;box-sizing:border-box;will-change:left,top,width,height,border-radius,padding}
+.ah-tile{position:absolute;z-index:1;background:#07080b;box-sizing:border-box}
 .ah-tile.center{z-index:2;left:0;top:0;width:100%;height:100%}
 .ah-tile .scr{position:relative;width:100%;height:100%;overflow:hidden;background:#000}
 .ah-tile .scr>video{display:block;width:100%;height:100%;object-fit:cover;object-position:center;background:#14161b}
@@ -2005,6 +2005,8 @@ html.lang-ja .tgs-still .tgs-sr{letter-spacing:0}
 </div>
 </section>
 
+
+
 <!-- MY SKILLS -->
 <section class="sb" id="skill-bars" aria-label="My skills">
 <div class="sb-in">
@@ -2044,6 +2046,8 @@ html.lang-ja .tgs-still .tgs-sr{letter-spacing:0}
 </div>
 </div>
 </section>
+
+
 
 
 <!-- cut from view, kept in the DOM so nothing that depends on it breaks -->
@@ -2902,29 +2906,43 @@ applyLanguage(currentLang);
     to.addEventListener("playing", fin, { once: true });
     setTimeout(fin, 2500);
   };
+  /* the start / end clips are one-shots: whatever happens (language switch, scrolling away, hero hidden, load error, stuck), we always fall back to the loop of the current language */
+  let clipGuard = 0;
+  const toLoop = () => { clearTimeout(clipGuard); ending = false; showVideo(loopOf(curLang)); };
+  const playClip = (v) => {
+    showVideo(v);
+    clearTimeout(clipGuard);
+    clipGuard = setTimeout(() => { if (curEl === v) toLoop(); }, 15000);
+  };
   const showLang = (lang) => {
     if (lang === curLang) return;
     curLang = lang;
-    showVideo(ending ? endOf(lang) : loopOf(lang));
+    toLoop();                                                    /* switching the language always shows the loop */
   };
   new MutationObserver(() => showLang(isJa() ? "ja" : "en")).observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
   if (hit) hit.addEventListener("click", (e) => { e.preventDefault(); if (langBtn) langBtn.click(); });
   if (arrow) arrow.addEventListener("click", () => { const w = document.getElementById("work"); if (w) w.scrollIntoView({ behavior: "smooth", block: "start" }); });
 
   /* the start videos play once, then the loop of the same language takes over */
-  [vSJa, vSEn].forEach((v) => v && v.addEventListener("ended", () => { if (curEl === v) showVideo(loopOf(curLang)); }));
-  [vEJa, vEEn].forEach((v) => v && v.addEventListener("ended", () => {
-    if (curEl === v && ending) { ending = false; showVideo(loopOf(curLang)); }
-  }));
-  const playStart = () => { ending = false; showVideo(startOf(curLang)); };
+  [vSJa, vSEn, vEJa, vEEn].forEach((v) => {
+    if (!v) return;
+    v.addEventListener("ended", () => { if (curEl === v) toLoop(); });
+    v.addEventListener("error", () => { if (curEl === v) toLoop(); });
+  });
+  const playStart = () => { ending = false; playClip(startOf(curLang)); };
+  /* never restart a clip that already finished: go to the loop instead */
+  const resume = () => {
+    if (!heroVisible) return;
+    if (curEl && curEl.ended && curEl !== loopOf(curLang)) toLoop(); else play(curEl);
+  };
 
   new IntersectionObserver((es) => {
     heroVisible = es[0].isIntersecting;
-    if (heroVisible) play(curEl); else all.forEach((v) => v.pause());
+    if (heroVisible) resume(); else all.forEach((v) => v.pause());
   }, { threshold: 0 }).observe(hero);
-  document.addEventListener("visibilitychange", () => { if (!document.hidden && heroVisible) play(curEl); });
+  document.addEventListener("visibilitychange", () => { if (!document.hidden && heroVisible) resume(); });
   /* if autoplay was blocked, the first touch / key / scroll starts the video */
-  const kick = () => { if (heroVisible) play(curEl); };
+  const kick = () => { resume(); };
   ["pointerdown", "touchstart", "keydown", "wheel", "scroll"].forEach((n) => addEventListener(n, kick, { once: true, passive: true }));
   play(curEl);
 
@@ -2959,6 +2977,10 @@ applyLanguage(currentLang);
     if (e.isIntersecting) { attach(o); if (!reduced) o.v.play().catch(() => {}); } else o.v.pause();
   }), { rootMargin: "35% 0px", threshold: .01 });
   tiles.forEach((o) => { if (o.v) mediaIO.observe(o.v); });
+  /* fetch the other screens one after another in the background, so nothing has to load while you zoom out */
+  const prefetch = () => tiles.forEach((o, i) => { if (o.v) setTimeout(() => { if (!o.v.src) { o.v.preload = "auto"; attach(o); } }, i * 500); });
+  const firstV = center.querySelector(".ah-v.on"); if (firstV) firstV.addEventListener("canplay", () => setTimeout(prefetch, 1500), { once: true });
+  setTimeout(prefetch, 7000);
 
   /* ---------- zoom: same maths as the codex version, but it runs over the whole scroll track ---------- */
   let navOn = null, wFs = 0;
@@ -3031,10 +3053,16 @@ applyLanguage(currentLang);
     if (!anim && prevY < 2 && scrollY > 2 && !location.hash) scrollTo({ top: 0, behavior: "instant" });
     else prevY = scrollY;
   }, { passive: true });
+  /* coming back to the top plays the end clip once. It needs a real trip away first (more than 60px), so small bounces at the top can never restart it. */
+  let away = scrollY > 60;
   addEventListener("scroll", () => {
-    const atTop = scrollY < 2;
-    if (atTop && !wasAtTop) { ending = true; showVideo(endOf(curLang)); }
-    wasAtTop = atTop;
+    const y = scrollY;
+    if (y > 60) {
+      away = true;
+      if (ending) toLoop();                                      /* left the top while the end clip was running */
+    } else if (y < 2 && away) {
+      away = false; ending = true; playClip(endOf(curLang));
+    }
   }, { passive: true });
   if (zoomHit) zoomHit.addEventListener("click", (e) => {
     e.preventDefault();
