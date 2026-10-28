@@ -1899,6 +1899,14 @@ html.lang-ja .tgs-still .tgs-sr{letter-spacing:0}
 .tgs-still .tgs-blk{opacity:1!important;transform:none!important;margin:0 0 clamp(60px,8vw,120px)}
 .tgs-still .tgs-sub,.tgs-still .tgs-p,.tgs-still .tgs-lap{opacity:1!important;transform:none!important}
 </style>
+<style id="kiwi-pill-glass">
+/* start hint under the game: glass pill that stays at the bottom of the screen while you scroll the game section (same behaviour as the Contact pill in Guilty Lane) */
+#kiwi .kiwi-pill{position:sticky;bottom:clamp(18px,4vh,42px);z-index:90;pointer-events:none;background:rgba(246,246,248,.55);-webkit-backdrop-filter:saturate(180%) blur(24px);backdrop-filter:saturate(180%) blur(24px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.75),0 0 0 1px rgba(0,0,0,.05),0 8px 30px rgba(0,0,0,.16)}
+@media(max-width:600px){#kiwi .kiwi-pill{bottom:16px}}
+@media (prefers-reduced-transparency:reduce){#kiwi .kiwi-pill{-webkit-backdrop-filter:none;backdrop-filter:none;background:#e8e8ed}}
+footer.sf .sf-r{display:inline-flex;align-items:center;gap:14px}
+footer.sf .sf-g{white-space:nowrap}
+</style>
 </head>
 
 <body>
@@ -2136,7 +2144,7 @@ html.lang-ja .tgs-still .tgs-sr{letter-spacing:0}
 <!-- FOOTER: very quiet copyright left, mail icon right -->
 <footer class="sf">
 <span class="i18n" data-en="© 2026 Luca Helgert" data-ja="© 2026 ヘルゲルト・るか">© 2026 ヘルゲルト・るか</span>
-<a class="sf-m" href="mailto:luca.helgert@icloud.com" aria-label="Email / メール"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1.5" y="3" width="13" height="10" rx="2"/><path d="M2.3 4.6 8 8.9l5.7-4.3"/></svg></a>
+<span class="sf-r"><span class="i18n sf-g" data-en="Graduating 2028" data-ja="28卒・2028年卒業予定">28卒・2028年卒業予定</span><a class="sf-m" href="mailto:luca.helgert@icloud.com" aria-label="Email / メール"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1.5" y="3" width="13" height="10" rx="2"/><path d="M2.3 4.6 8 8.9l5.7-4.3"/></svg></a></span>
 </footer>
 <div class="xsheet" id="xSheet" role="dialog" aria-modal="true" aria-label="Game details"><div class="xsheet-bg"></div><div class="xsheet-panel"><button class="xsheet-close" type="button" aria-label="Close"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button><div id="xSheetBody"></div></div></div>
 
@@ -3221,9 +3229,11 @@ applyLanguage(currentLang);
   var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
   var cats=[].slice.call(sec.querySelectorAll(".sb-c")),rows=document.getElementById("sbRows");
   /* rows are drawn hidden (data-level holds the bar length); reveal() fades them in one after another and then fills the bars */
+  function yr(n){return document.documentElement.classList.contains("lang-ja")?n+"年":n+(n===1?" year":" years")}
+  function relabel(){[].slice.call(rows.querySelectorAll(".sb-num")).forEach(function(e){e.textContent=yr(+e.dataset.y)})}
   function rowsHTML(i){
     return D[i].map(function(t,k){return [t[0],t[1],k]}).sort(function(a,b){return (b[1]-a[1])||(a[2]-b[2])}).map(function(tool,n){
-      return '<div class="sb-row'+(n===0?' sb-top':'')+'" style="--n:'+n+'"><div class="sb-line"><span class="sb-fill" style="width:0" data-level="'+Math.min(100,tool[1]*10)+'%"></span></div><span class="sb-num">'+tool[1]+(tool[1]===1?' year':' years')+'</span><div class="sb-lab">'+tool[0]+'</div></div>';
+      return '<div class="sb-row'+(n===0?' sb-top':'')+'" style="--n:'+n+'"><div class="sb-line"><span class="sb-fill" style="width:0" data-level="'+Math.min(100,tool[1]*10)+'%"></span></div><span class="sb-num" data-y="'+tool[1]+'">'+yr(tool[1])+'</span><div class="sb-lab">'+tool[0]+'</div></div>';
     }).join("");
   }
   /* the list always has the height of the tallest category, so switching categories never moves the page */
@@ -3257,7 +3267,7 @@ applyLanguage(currentLang);
   var lk=0;function relock(){cancelAnimationFrame(lk);lk=requestAnimationFrame(lock)}
   addEventListener("resize",relock);addEventListener("load",relock);
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(relock);
-  new MutationObserver(relock).observe(document.documentElement,{attributes:true,attributeFilter:["class","lang"]});
+  new MutationObserver(function(){relock();relabel();requestAnimationFrame(relabel)}).observe(document.documentElement,{attributes:true,attributeFilter:["class","lang"]});
   if("IntersectionObserver" in window){
     new IntersectionObserver(function(entries){entries.forEach(function(en){
       if(en.isIntersecting&&(en.intersectionRatio>=.3||en.intersectionRect.height>=innerHeight*.35))enter();
