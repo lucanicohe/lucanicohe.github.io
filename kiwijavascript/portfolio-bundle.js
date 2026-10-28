@@ -18,8 +18,8 @@ const CONFIG = Object.freeze({
   initialSpawnDelay: 0.9,
   minimumObstacleInterval: 1.05,
   obstacleIntervalVariation: 0.5,
-  scorePerWorldUnit: 1.8,
-  highScoreKey: 'KiwiRunnerHighScore',
+  scorePerWorldUnit: 1.4,
+  personalBestKey: 'KiwiRunnerPersonalBest',
   dayColor: '#fcfcfc',
   inkColor: '#525252',
   player: Object.freeze({
@@ -57,6 +57,8 @@ const GLYPHS = Object.freeze({
   S: ['.###', '#...', '#...', '.##.', '...#', '...#', '###.'],
   T: ['####', '.##.', '.##.', '.##.', '.##.', '.##.', '.##.'],
   V: ['#..#', '#..#', '#..#', '#..#', '#..#', '.##.', '.##.'],
+  U: ['#..#', '#..#', '#..#', '#..#', '#..#', '#..#', '.##.'],
+  Y: ['#..#', '#..#', '.##.', '..#.', '..#.', '..#.', '..#.'],
   '0': ['.##.', '#..#', '#..#', '#..#', '#..#', '#..#', '.##.'],
   '1': ['..#.', '.##.', '..#.', '..#.', '..#.', '..#.', '.###'],
   '2': ['.##.', '#..#', '...#', '..#.', '.#..', '#...', '####'],
@@ -197,11 +199,16 @@ class ScoreKeeper {
     this.distanceScore = 0;
     this.value = 0;
     this.highScore = this.readHighScore();
+    this.personalBest = this.readPersonalBest();
   }
 
   readHighScore() {
+    return 108;
+  }
+
+  readPersonalBest() {
     try {
-      const value = Number.parseInt(this.storage?.getItem(CONFIG.highScoreKey) ?? '0', 10);
+      const value = Number.parseInt(this.storage?.getItem(CONFIG.personalBestKey) ?? '0', 10);
       return Number.isFinite(value) && value > 0 ? value : 0;
     } catch {
       return 0;
@@ -211,10 +218,7 @@ class ScoreKeeper {
   advance(dt, speed) {
     this.distanceScore += dt * speed * CONFIG.scorePerWorldUnit;
     this.value = Math.floor(this.distanceScore);
-    if (this.value > this.highScore) {
-      this.highScore = this.value;
-      this.save();
-    }
+    this.personalBest = Math.max(this.personalBest, this.value);
     return Math.min(CONFIG.maximumSpeed, speed + CONFIG.accelerationPerSecond * dt);
   }
 
@@ -225,9 +229,9 @@ class ScoreKeeper {
 
   save() {
     try {
-      this.storage?.setItem(CONFIG.highScoreKey, String(this.highScore));
+      this.storage?.setItem(CONFIG.personalBestKey, String(this.personalBest));
     } catch {
-      // The run still works if browser storage is disabled or full.
+      // The game still works if browser storage is disabled or full.
     }
   }
 }
@@ -702,12 +706,18 @@ class Renderer {
     const ctx = this.ctx;
     const scale = Math.sqrt((this.width / CONFIG.hud.referenceWidth) * (this.height / CONFIG.hud.referenceHeight));
 
-    const scoreText = `HI ${String(game.score.highScore).padStart(6, '0')}  ${String(game.score.value).padStart(6, '0')}`;
-    const scoreImageWidth = 81 * 7 * scale;
-    const scoreImageHeight = 7 * 7 * scale;
-    const scoreLeft = this.width * 0.97 - scoreImageWidth;
-    const scoreTop = this.height * 0.1 - scoreImageHeight * 0.5;
-    drawPixelText(ctx, scoreText, scoreLeft, scoreTop, 7 * scale, CONFIG.inkColor);
+    const stats = [
+      `MY HI ${game.score.highScore}`,
+      `YOUR HI ${game.score.personalBest}`,
+      `SCORE ${game.score.value}`,
+    ];
+    const scoreUnit = 5 * scale;
+    const scoreRight = this.width * 0.97;
+    const scoreTop = this.height * 0.07;
+    stats.forEach((text, index) => {
+      const scoreLeft = scoreRight - pixelTextWidth(text) * scoreUnit;
+      drawPixelText(ctx, text, scoreLeft, scoreTop + index * 8 * scoreUnit, scoreUnit, CONFIG.inkColor);
+    });
 
     if (game.mode !== 'gameover') return;
     this.drawCenteredPixelText('GAME OVER', this.width * 0.5, this.height * (1 - 0.55), 6 * scale);
@@ -785,6 +795,7 @@ async function start() {
 
       if (game.mode === 'gameover' && !showingEndCard) {
         showingEndCard = true;
+        endCard.dataset.score = String(game.score.value);
         stage.classList.add('is-game-over');
         endCard.hidden = false;
         status.textContent = document.documentElement.classList.contains('lang-ja')

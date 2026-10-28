@@ -3,6 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* LANGUAGE: open in the visitor's browser language (Japanese = ja, everything else = en). A choice made with the toggle is remembered on all pages. */
+(function(){
+  var l=null,r=document.documentElement;
+  try{l=localStorage.getItem("luca-lang")}catch(e){}
+  if(l!=="ja"&&l!=="en"){
+    var n=(navigator.languages&&navigator.languages.length?navigator.languages[0]:navigator.language)||"";
+    l=/^ja\b/i.test(n)?"ja":"en";
+  }
+  window.__lang=l;r.lang=l;r.classList.toggle("lang-ja",l==="ja");
+  if(l==="en"){r.classList.add("lang-pending");setTimeout(function(){r.classList.remove("lang-pending")},2500)}
+})();
+</script>
 <title>More about me — Luca</title>
 <meta name="description" content="More about Luca — Creator based in Tokyo">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -303,6 +316,11 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:14p
 .footer-inner{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
 @media (max-width:600px){.footer-inner{flex-direction:column;gap:8px}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+html.lang-pending body{visibility:hidden}
+footer.sf{width:min(100% - 48px,980px);margin:0 auto;padding:16px 0 20px;border-top:1px solid rgba(17,17,17,.08);display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:11px;line-height:1;letter-spacing:0;color:#86868b}
+footer.sf .sf-m{display:inline-flex;align-items:center;color:inherit;opacity:.8;transition:opacity .2s,color .2s}
+footer.sf .sf-m:hover,footer.sf .sf-m:focus-visible{opacity:1;color:#1d1d1f}
+footer.sf svg{display:block;width:1.35em;height:1.35em}
 </style>
 </head>
 <body>
@@ -312,13 +330,8 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:14p
   <a class="logo i18n" href="#hero" data-en="Luca" data-ja="るか">Luca</a>
   <div class="nav-right">
    <div class="nav-links">
-    <a class="i18n" href="#hero" data-en="Top" data-ja="トップ">Top</a>
-    <a class="i18n" href="#reach" data-en="Story" data-ja="ストーリー">Story</a>
-    <a class="i18n" href="#japanese" data-en="Japanese" data-ja="日本語">Japanese</a>
-    <a class="i18n" href="#social" data-en="Social media" data-ja="SNS">Social media</a>
-    <a class="i18n" href="#craft" data-en="Game dev" data-ja="ゲーム開発">Game dev</a>
-    <a class="i18n" href="#music" data-en="Music" data-ja="音楽">Music</a>
-    <a class="i18n" href="#together" data-en="Collaborate" data-ja="コラボ">Collaborate</a>
+    <a class="i18n" href="index.html" data-en="Portfolio" data-ja="ポートフォリオ">Portfolio</a>
+    <a class="i18n" href="mailto:luca.helgert@icloud.com" data-en="Contact" data-ja="お問い合わせ">Contact</a>
    </div>
    <button type="button" id="langToggle" class="lang-toggle" aria-label="Switch language">日本語</button>
   </div>
@@ -454,12 +467,18 @@ footer{width:min(100% - (var(--padding) * 2),var(--max));margin:auto;padding:14p
 </section>
 
 
+<!-- FOOTER: very quiet copyright left, mail icon right -->
+<footer class="sf">
+<span class="i18n" data-en="© 2026 Luca Helgert" data-ja="© 2026 ヘルゲルト・るか">© 2026 Luca Helgert</span>
+<a class="sf-m" href="mailto:luca.helgert@icloud.com" aria-label="Email / メール"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1.5" y="3.5" width="13" height="9" rx="2"/><path d="M2.3 4.8 8 9l5.7-4.2"/></svg></a>
+</footer>
+
 <script>
 const $=s=>document.querySelector(s);
 const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
 const smooth=t=>t*t*(3-2*t);
 const prog=el=>{const r=el.getBoundingClientRect();return clamp(-r.top/Math.max(1,r.height-innerHeight));};
-let lang="ja";
+let lang=window.__lang||"ja";
 
 /* ============ HERO TILES: edit this list to change what shows in the grid ============
    [row, column offset, "v" video | "i" image | "c" center video, file, optional object-position]
@@ -679,8 +698,9 @@ function apply(l){
   document.title=titles[l];
   if(window.refreshGamesCap)window.refreshGamesCap();
   measure();update();
+  document.documentElement.classList.remove("lang-pending");
 }
-btn.addEventListener("click",()=>apply(lang==="en"?"ja":"en"));
+btn.addEventListener("click",()=>{const next=lang==="en"?"ja":"en";try{localStorage.setItem("luca-lang",next)}catch(e){}apply(next)});
 apply(lang);
 </script>
 <script>

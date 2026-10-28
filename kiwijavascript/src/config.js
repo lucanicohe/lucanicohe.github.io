@@ -13,8 +13,8 @@ export const CONFIG = Object.freeze({
   initialSpawnDelay: 0.9,
   minimumObstacleInterval: 1.05,
   obstacleIntervalVariation: 0.5,
-  scorePerWorldUnit: 1.8,
-  highScoreKey: 'KiwiRunnerHighScore',
+  scorePerWorldUnit: 1.4,
+  personalBestKey: 'KiwiRunnerPersonalBest',
   dayColor: '#fcfcfc',
   inkColor: '#525252',
   player: Object.freeze({

@@ -14,11 +14,16 @@ export class ScoreKeeper {
     this.distanceScore = 0;
     this.value = 0;
     this.highScore = this.readHighScore();
+    this.personalBest = this.readPersonalBest();
   }
 
   readHighScore() {
+    return 108;
+  }
+
+  readPersonalBest() {
     try {
-      const value = Number.parseInt(this.storage?.getItem(CONFIG.highScoreKey) ?? '0', 10);
+      const value = Number.parseInt(this.storage?.getItem(CONFIG.personalBestKey) ?? '0', 10);
       return Number.isFinite(value) && value > 0 ? value : 0;
     } catch {
       return 0;
@@ -28,10 +33,7 @@ export class ScoreKeeper {
   advance(dt, speed) {
     this.distanceScore += dt * speed * CONFIG.scorePerWorldUnit;
     this.value = Math.floor(this.distanceScore);
-    if (this.value > this.highScore) {
-      this.highScore = this.value;
-      this.save();
-    }
+    this.personalBest = Math.max(this.personalBest, this.value);
     return Math.min(CONFIG.maximumSpeed, speed + CONFIG.accelerationPerSecond * dt);
   }
 
@@ -42,9 +44,9 @@ export class ScoreKeeper {
 
   save() {
     try {
-      this.storage?.setItem(CONFIG.highScoreKey, String(this.highScore));
+      this.storage?.setItem(CONFIG.personalBestKey, String(this.personalBest));
     } catch {
-      // The run still works if browser storage is disabled or full.
+      // The game still works if browser storage is disabled or full.
     }
   }
 }

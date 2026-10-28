@@ -84,12 +84,18 @@ export class Renderer {
     const ctx = this.ctx;
     const scale = Math.sqrt((this.width / CONFIG.hud.referenceWidth) * (this.height / CONFIG.hud.referenceHeight));
 
-    const scoreText = `HI ${String(game.score.highScore).padStart(6, '0')}  ${String(game.score.value).padStart(6, '0')}`;
-    const scoreImageWidth = 81 * 7 * scale;
-    const scoreImageHeight = 7 * 7 * scale;
-    const scoreLeft = this.width * 0.97 - scoreImageWidth;
-    const scoreTop = this.height * 0.1 - scoreImageHeight * 0.5;
-    drawPixelText(ctx, scoreText, scoreLeft, scoreTop, 7 * scale, CONFIG.inkColor);
+    const stats = [
+      `MY HI ${game.score.highScore}`,
+      `YOUR HI ${game.score.personalBest}`,
+      `SCORE ${game.score.value}`,
+    ];
+    const scoreUnit = 5 * scale;
+    const scoreRight = this.width * 0.97;
+    const scoreTop = this.height * 0.07;
+    stats.forEach((text, index) => {
+      const scoreLeft = scoreRight - pixelTextWidth(text) * scoreUnit;
+      drawPixelText(ctx, text, scoreLeft, scoreTop + index * 8 * scoreUnit, scoreUnit, CONFIG.inkColor);
+    });
 
     if (game.mode !== 'gameover') return;
     this.drawCenteredPixelText('GAME OVER', this.width * 0.5, this.height * (1 - 0.55), 6 * scale);

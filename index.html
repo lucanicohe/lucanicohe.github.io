@@ -3,6 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* LANGUAGE: open in the visitor's browser language (Japanese = ja, everything else = en). A choice made with the toggle is remembered on all pages. */
+(function(){
+  var l=null,r=document.documentElement;
+  try{l=localStorage.getItem("luca-lang")}catch(e){}
+  if(l!=="ja"&&l!=="en"){
+    var n=(navigator.languages&&navigator.languages.length?navigator.languages[0]:navigator.language)||"";
+    l=/^ja\b/i.test(n)?"ja":"en";
+  }
+  window.__lang=l;r.lang=l;r.classList.toggle("lang-ja",l==="ja");
+  if(l==="en"){r.classList.add("lang-pending");setTimeout(function(){r.classList.remove("lang-pending")},2500)}
+})();
+</script>
 
 <title>Luca Helgert — Game Programmer</title>
 <meta name="description" content="Luca Helgert — Game Programmer based in Tokyo">
@@ -1452,7 +1465,7 @@ html .hero.hx .hx-greet,html.lang-ja .hero.hx .hx-greet{font-size:clamp(1rem,1.8
 html .hero.hx .hx-name{font-size:clamp(2.6rem,6.8vw,9rem);font-weight:600;line-height:1.05;letter-spacing:-.035em;white-space:nowrap}
 html.lang-ja .hero.hx .hx-name{font-size:clamp(2.4rem,5.4vw,7rem);letter-spacing:0;line-height:1.15}
 
-/* ===== FRONT PAGE: full-screen train video (loopjap.mov / loopeng.mov) that zooms out into the game wall.
+/* ===== FRONT PAGE: full-screen train video that zooms out into the game wall.
    No text, no darkening, no menu at the start. Scroll zooms out (same curve as the codex version), the title is part of the zoomed
    scene, and the menu drops in once everything is zoomed out. Right after it comes the trolley section. ===== */
 /* --zoom-scroll = how much scrolling the whole zoom-out takes. After it, the next scroll moves straight on to the trolley section. */
@@ -1650,11 +1663,12 @@ html.lang-ja #kiwi .resume-title{font-size:clamp(1.35rem,2.9vw,2.8rem);line-heig
 @media(max-width:700px){#kiwi #kiwiResumeGameTitle{white-space:normal!important}}
 #kiwiResumeEndCard .kr-head{align-items:center!important;text-align:center!important;justify-content:center}
 #kiwiResumeEndCard .kr-copy{text-align:center!important}
-#kiwiResumeEndCard .kr-title{font-size:clamp(1.9rem,4.2vw,4rem)!important;line-height:1.1!important;letter-spacing:-.04em!important;white-space:nowrap}
+#kiwiResumeEndCard .kr-title{font-size:clamp(1.25rem,2.2vw,2rem)!important;line-height:1.2!important;letter-spacing:-.025em!important;white-space:normal!important}
+#kiwiResumeEndCard .kr-sub{max-width:42rem;font-size:clamp(.95rem,1.35vw,1.2rem)!important;line-height:1.4!important;color:#6e6e73}
 html.lang-ja #kiwiResumeEndCard .kr-title{letter-spacing:0!important}
 #kiwiResumeEndCard .kiwi-resume-game__resume-actions{justify-content:center!important}
 #kiwiResumeEndCard .kr-mail{align-items:center!important;text-align:center}
-@media(max-width:700px){#kiwiResumeEndCard .kr-title{font-size:clamp(1.4rem,6.4vw,2rem)!important}}
+@media(max-width:700px){#kiwiResumeEndCard .kr-title{font-size:clamp(1.2rem,4.8vw,1.6rem)!important}}
 
 /* ===== kiwi fits one screen like Apple's: heading + card + pill always visible together ===== */
 #kiwi.kiwi-sec{width:min(100% - 17.4vw,1800px,max(520px,calc((100svh - 16.3vw - 70px) * 2.06)));padding:clamp(22px,2.6vw,44px) 0 clamp(20px,2vw,34px)}
@@ -1725,7 +1739,7 @@ html.lang-ja #kiwiResumeEndCard .kr-title{letter-spacing:0!important}
 @media(prefers-reduced-motion:reduce){.glr{opacity:1;transform:none;filter:none;transition:none}}
 
 /* spacing round: skills section ends 1.5 cm sooner; Hello, world section gets 1 cm more on top and 1 cm less at the bottom */
-.sb{padding-bottom:max(0px,calc(9vw - 1.5cm))}
+.sb{padding-bottom:max(0px,calc(9vw - 2cm))}
 #about.hello{padding:calc(clamp(48px,5.4vw,88px) + 2cm) 0 clamp(64px,7.4vw,118px)}
 </style>
 <style id="nav-games-style">
@@ -1755,6 +1769,135 @@ nav#nav.on-dark .lang-toggle{color:#1d1d1f;border-color:rgba(0,0,0,.2)}
 nav#nav.on-dark .lang-toggle:hover{color:#fff}
 @media (max-width:640px){nav#nav .logo{font-size:19px}nav#nav .nav-links>a{font-size:12px}}
 @media (max-width:480px){nav#nav .logo{display:none}nav#nav .nav-inner{justify-content:flex-end;width:calc(100% - 24px)}nav#nav .nav-links{gap:11px}nav#nav .nav-right{gap:9px}nav#nav .nav-links>a.nav-games{padding:0 11px}nav#nav .lang-toggle{padding:0 9px}}
+<style id="luca-oct27">
+/* language: while the English text is being applied the page waits (no flash of Japanese) */
+html.lang-pending body{visibility:hidden}
+
+/* hero: Apple-style colour on the key words of the zoomed-out title */
+.ah-grad{background:linear-gradient(90deg,#0a84ff 0%,#5e5ce6 38%,#bf5af2 68%,#ff6482 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;padding:.04em .02em .12em;margin:-.04em -.02em -.12em}
+
+/* hero: scroll arrow under the screens, appears after the zoom-out, leaves with the first scroll */
+.ah-scroll{position:absolute;left:50%;top:92%;z-index:4;width:44px;height:44px;margin:-22px 0 0 -22px;padding:0;border:0;background:none;color:#1d1d1f;cursor:pointer;display:grid;place-items:center;opacity:0;transform:translate3d(0,12px,0) scale(.9);filter:blur(4px);pointer-events:none;-webkit-tap-highlight-color:transparent;transition:opacity .5s cubic-bezier(.22,.8,.2,1),transform .5s cubic-bezier(.22,.8,.2,1),filter .5s cubic-bezier(.22,.8,.2,1)}
+.ah-scroll.on{opacity:.6;transform:none;filter:none;pointer-events:auto;transition-duration:.8s;transition-delay:.5s}
+.ah-scroll.on:hover{opacity:1}
+.ah-scroll svg{display:block;width:22px;height:22px;animation:ahBob 2.6s cubic-bezier(.45,0,.35,1) infinite}
+@keyframes ahBob{0%,100%{transform:translateY(-3px)}50%{transform:translateY(5px)}}
+.ah-scroll:focus-visible{outline:2px solid #0071e3;outline-offset:2px;border-radius:50%}
+@media(prefers-reduced-motion:reduce){.ah-scroll svg{animation:none}.ah-scroll,.ah-scroll.on{transition:opacity .2s;transform:none;filter:none}}
+
+/* nav: three plain links */
+nav#nav .nav-links>a{font-weight:400}
+
+/* Guilty Lane: less empty space between the blocks */
+@media(min-width:901px){
+  .gl .gl-block.gl-1{min-height:0;padding-bottom:clamp(24px,4.5svh,52px)}
+  .gl .gl-block.gl-2{min-height:0;padding-top:clamp(30px,5.5svh,64px);padding-bottom:clamp(20px,3.5svh,40px)}
+  .gl .gl-block.gl-3{min-height:0;padding-top:clamp(24px,4svh,48px)}
+}
+@media(max-width:900px){
+  .gl .gl-2{padding-top:clamp(36px,6vw,80px)}
+  .gl .gl-3{padding-top:clamp(36px,6vw,80px)}
+}
+
+/* Guilty Lane, block 3: the text looks like the block above (semi-bold grey, white highlights), no gradient */
+.gl .gl-3 .gl-text{font-size:clamp(1.05rem,1.55vw,1.5rem);font-weight:600;line-height:1.4;letter-spacing:-.015em;color:#86868b;text-wrap:pretty}
+.gl .gl-3 .gl-text b{color:#f5f5f7;font-weight:600}
+.gl .gl-3 .gl-aux{margin-top:1.1em;background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor;color:#86868b}
+html.lang-ja .gl .gl-3 .gl-text{line-height:1.75;letter-spacing:0;word-break:auto-phrase}
+@media(min-width:901px){.gl .gl-3 .gl-text{font-size:clamp(.95rem,min(1.5vw,2.25svh),1.5rem)}}
+
+/* contact button (was "Actually play it"): mail icon instead of the play triangle */
+.gl-play::after{background:#0071e3 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23fff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='14' height='10' rx='2'/%3E%3Cpath d='M3.8 6.6 10 11l6.2-4.4'/%3E%3C/svg%3E") center/58% no-repeat}
+
+/* skill bars: rows rise in one after another, the bars fill, then a soft light runs over them */
+.sb-row{opacity:0;transform:translate3d(0,26px,0);filter:blur(8px);transition:opacity .85s cubic-bezier(.22,.8,.2,1),transform .95s cubic-bezier(.22,.8,.2,1),filter .85s cubic-bezier(.22,.8,.2,1);transition-delay:calc(var(--n,0) * 120ms);will-change:opacity,transform}
+.sb-row.in{opacity:1;transform:none;filter:none}
+.sb-row.out{opacity:0;transform:translate3d(0,-12px,0);filter:blur(5px);transition-duration:.26s;transition-delay:0s}
+.sb-fill{position:relative;overflow:hidden;transition:width 1.6s cubic-bezier(.16,.84,.24,1) calc(var(--n,0) * 120ms + 320ms)}
+.sb-fill::after{content:"";position:absolute;top:0;bottom:0;left:0;width:55%;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.7),rgba(255,255,255,0));transform:translateX(-120%);opacity:0}
+.sb-row.in .sb-fill::after{animation:sbSheen 1.2s cubic-bezier(.4,0,.2,1) calc(var(--n,0) * 120ms + 1.6s) 1 both}
+@keyframes sbSheen{0%{transform:translateX(-120%);opacity:0}15%{opacity:1}100%{transform:translateX(260%);opacity:0}}
+@media(prefers-reduced-motion:reduce){.sb-row,.sb-row.out{opacity:1;transform:none;filter:none;transition:none}.sb-fill{transition:none}.sb-row.in .sb-fill::after{animation:none}}
+
+/* game: heading + highscore line, result card = one title, one line, one button */
+#kiwi .kiwi-hs{margin:clamp(6px,.8vw,12px) 0 0;font-size:clamp(1rem,1.6vw,1.6rem);font-weight:500;letter-spacing:-.01em;color:#86868b}
+#kiwi .kiwi-hs b{color:#1d1d1f;font-weight:600;font-variant-numeric:tabular-nums}
+#kiwiResumeEndCard .kr-panel{grid-template-columns:1fr!important;grid-template-rows:1fr!important;align-items:center!important;justify-items:center;text-align:center}
+#kiwiResumeEndCard .kr-head{width:100%}
+#kiwiResumeEndCard .kr-sub{margin:.6em 0 0;font-size:clamp(.95rem,1.5vw,1.45rem);line-height:1.4;font-weight:500;color:#86868b}
+#kiwiResumeEndCard .kr-sub:empty{display:none}
+#kiwiResumeEndCard .kr-btn{border:0;font-family:inherit;cursor:pointer}
+#kiwiResumeEndCard .kr-btn[hidden]{display:none!important}
+@media(max-width:700px){#kiwiResumeEndCard .kr-panel{padding:14px}#kiwiResumeEndCard .kr-title{padding-right:0!important}}
+
+/* footer: very quiet copyright on the left, mail icon on the right (same size) */
+footer.sf{width:min(100% - (var(--padding) * 2),var(--max));margin:0 auto;padding:16px 0 20px;border-top:1px solid rgba(17,17,17,.08);display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:11px;line-height:1;letter-spacing:0;color:#86868b}
+footer.sf .sf-m{display:inline-flex;align-items:center;color:inherit;opacity:.8;transition:opacity .2s,color .2s}
+footer.sf .sf-m:hover,footer.sf .sf-m:focus-visible{opacity:1;color:#1d1d1f}
+footer.sf svg{display:block;width:1.35em;height:1.35em}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Noto+Sans+JP:wght@700&display=swap" rel="stylesheet">
+<style id="tgs-style">
+/* ===== Tokyo Game Show: Apple "M5. M5 Pro. M5 Max." sequence =====
+   1 video full screen -> 2 headline zooms out, video only shows inside the letters -> 3 headline shrinks and turns into a light gradient
+   -> 4 subtitle + small text -> 5 they leave, headline stays -> 6 new text + laptop scroll in (two pictures cross-fade on the screen) */
+.tgs{--lw:min(86vw,900px);position:relative;height:500vh;height:500svh;background:#000;color:#f5f5f7}
+.tgs-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#000;isolation:isolate}
+.tgs-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;background:#000;pointer-events:none}
+.tgs-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.tgs-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* pause button (like the one on apple.com) */
+.tgs-pause{position:absolute;z-index:4;right:clamp(14px,2vw,28px);top:calc(52px + clamp(14px,2vw,28px));width:44px;height:44px;margin:0;padding:0;border:0;border-radius:50%;display:grid;place-items:center;color:#f5f5f7;background:rgba(44,44,48,.62);-webkit-backdrop-filter:saturate(180%) blur(16px);backdrop-filter:saturate(180%) blur(16px);cursor:pointer;opacity:0;visibility:hidden;transition:opacity .35s ease,visibility 0s .35s,background .2s ease}
+.tgs-pause.on{opacity:1;visibility:visible;transition:opacity .35s ease,visibility 0s,background .2s ease}
+.tgs-pause:hover{background:rgba(70,70,76,.72)}
+.tgs-pause:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.tgs-pause svg{width:18px;height:18px;display:block}
+.tgs-pause .ic-play{display:none}
+.tgs-pause[aria-pressed="true"] .ic-pause{display:none}
+.tgs-pause[aria-pressed="true"] .ic-play{display:block}
+
+/* text + laptop: one column that scrolls up at the end (top is set by the script) */
+.tgs-copy{position:absolute;left:0;right:0;top:var(--bt,42vh);z-index:2;display:grid;justify-items:center;padding:0 5vw;will-change:transform}
+.tgs-blk{grid-area:1/1;width:100%;display:flex;flex-direction:column;align-items:center;align-self:start;text-align:center}
+.tgs-sub{margin:0;padding:0 0 .12em;font-size:clamp(1.55rem,2.7vw,3.3rem);line-height:1.15;letter-spacing:-.03em;font-weight:700;text-wrap:balance;background:linear-gradient(90deg,#f5f5f7 0%,#bfe0da 42%,#7e9eb8 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+html.lang-ja .tgs-sub{letter-spacing:0;line-height:1.35}
+.tgs-p{margin:clamp(16px,2.2vw,36px) 0 0;max-width:min(58vw,820px);font-size:clamp(1.05rem,1.55vw,1.7rem);line-height:1.32;letter-spacing:-.012em;font-weight:600;color:#86868b;text-wrap:pretty}
+.tgs-p b{font-weight:600;color:#f5f5f7}
+html.lang-ja .tgs-p{line-height:1.75;letter-spacing:0;word-break:auto-phrase}
+.tgs-b1,.tgs-b2-text{display:flex;flex-direction:column;align-items:center;width:100%}
+.tgs-b2{align-items:center}
+
+/* laptop, built in CSS (space black, front view). --lw = width of the base, the lid is 82% of it */
+.tgs-lap{position:relative;width:var(--lw);margin:clamp(24px,4.5vh,48px) auto 0}
+.tgs-lid{position:relative;width:82%;margin:0 auto;box-sizing:border-box;padding:calc(var(--lw)*.0172) calc(var(--lw)*.0138) calc(var(--lw)*.0222);background:linear-gradient(180deg,#17171a 0%,#0b0b0d 100%);border-radius:calc(var(--lw)*.026) calc(var(--lw)*.026) calc(var(--lw)*.004) calc(var(--lw)*.004);box-shadow:0 0 0 1px #2d2d31,inset 0 0 0 1px rgba(255,255,255,.05),0 -1px 0 rgba(255,255,255,.08)}
+.tgs-lid::before{content:"";position:absolute;left:50%;top:calc(var(--lw)*.0072);width:calc(var(--lw)*.0046);height:calc(var(--lw)*.0046);margin-left:calc(var(--lw)*-.0023);border-radius:50%;background:radial-gradient(circle at 50% 50%,#1d2436 0%,#0e1119 60%,#000 100%)}
+.tgs-scr{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;background:#000;border-radius:calc(var(--lw)*.005)}
+.tgs-scr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.tgs-scr img{opacity:0}
+.tgs-scr img:first-child{opacity:1;z-index:1}
+.tgs-base{position:relative;z-index:1;height:calc(var(--lw)*.03);margin-top:-1px;background:linear-gradient(180deg,#3a3a3f 0%,#222226 28%,#121214 100%);border-radius:calc(var(--lw)*.004) calc(var(--lw)*.004) calc(var(--lw)*.045) calc(var(--lw)*.045)/calc(var(--lw)*.004) calc(var(--lw)*.004) calc(var(--lw)*.03) calc(var(--lw)*.03);box-shadow:0 calc(var(--lw)*.05) calc(var(--lw)*.07) calc(var(--lw)*-.03) rgba(70,120,210,.22),inset 0 1px 0 rgba(255,255,255,.12)}
+.tgs-base::before{content:"";position:absolute;left:50%;top:0;width:19%;height:46%;transform:translateX(-50%);border-radius:0 0 calc(var(--lw)*.03) calc(var(--lw)*.03);background:linear-gradient(180deg,#0a0a0c 0%,#2a2a2e 100%)}
+.tgs-cap{margin:calc(var(--lw)*.026) 0 0;text-align:right;font-size:clamp(.78rem,1.02vw,1.05rem);line-height:1.3;font-weight:400;letter-spacing:-.005em;color:#86868b}
+html.lang-ja .tgs-cap{letter-spacing:0}
+
+@media(max-width:700px){
+  .tgs-copy{padding:0 6vw}
+  .tgs-p{max-width:88vw}
+  .tgs-pause{width:40px;height:40px}
+}
+
+/* reduced motion: no pinned animation, everything simply stacked */
+.tgs-still{height:auto;padding:clamp(90px,11vw,150px) 0 clamp(60px,8vw,110px)}
+.tgs-still .tgs-stage{position:relative;height:auto;overflow:visible}
+.tgs-still .tgs-video,.tgs-still .tgs-canvas,.tgs-still .tgs-pause{display:none}
+.tgs-still .tgs-sr{position:static;width:auto;height:auto;margin:0 auto clamp(30px,4vw,60px);overflow:visible;clip:auto;white-space:normal;text-align:center;font-size:clamp(2.6rem,6vw,6rem);line-height:1.1;letter-spacing:-.035em;font-weight:700;background:linear-gradient(90deg,#d4efe8 0%,#a6cfcb 38%,#7fa4bd 72%,#667f9e 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+html.lang-ja .tgs-still .tgs-sr{letter-spacing:0}
+.sb{padding-top:max(0px,calc(8vw - .5cm))}
+@media(max-width:900px){.sb{padding-top:max(0px,calc(60px - .5cm))}}
+.tgs-still .tgs-copy{position:static;display:block;transform:none!important}
+.tgs-still .tgs-blk{opacity:1!important;transform:none!important;margin:0 0 clamp(60px,8vw,120px)}
+.tgs-still .tgs-sub,.tgs-still .tgs-p,.tgs-still .tgs-lap{opacity:1!important;transform:none!important}
 </style>
 </head>
 
@@ -1766,11 +1909,8 @@ nav#nav.on-dark .lang-toggle:hover{color:#fff}
 <a class="logo i18n" href="#top" data-en="Luca" data-ja="るか">Luca</a>
 <div class="nav-right">
 <div class="nav-links">
-<a class="i18n" href="#top" data-en="Top" data-ja="トップ">トップ</a>
-<a class="i18n" href="#work" data-en="Work" data-ja="作品">作品</a>
-<a class="i18n" href="#skill-bars" data-en="Skills" data-ja="スキル">スキル</a>
-<a class="i18n" href="#kiwi" data-en="Contact" data-ja="お問い合わせ">お問い合わせ</a>
-<a class="i18n nav-games" href="games.html" data-en="Games" data-ja="ゲーム">ゲーム</a>
+<a class="i18n" href="about.html" data-en="About" data-ja="私について">私について</a>
+<a class="i18n" href="mailto:luca.helgert@icloud.com" data-en="Contact" data-ja="お問い合わせ">お問い合わせ</a>
 </div>
 <button type="button" id="langToggle" class="lang-toggle" aria-label="Switch language">日本語</button>
 </div>
@@ -1779,61 +1919,68 @@ nav#nav.on-dark .lang-toggle:hover{color:#fff}
 
 <main id="top">
 
-<!-- HERO: loopjap.mov loops full screen (no text, no overlay, no menu). Click the lower centre = English + loopeng.mov (and back).
+<!-- HERO: the language-specific train loop plays full screen (no text, no overlay, no menu). Click the lower centre to switch languages.
      Scrolling zooms out into the game wall; the title and the menu belong to the zoomed-out state. -->
 <section class="ah" id="ah" aria-label="Introduction">
 <div class="ah-stage" id="ahStage">
 <div class="ah-grid" id="ahGrid">
 <div class="ah-tile center" id="ahCenter"><div class="scr">
-<video class="ah-v on" id="ahVJa" src="loopjap.mov" autoplay loop muted playsinline webkit-playsinline preload="auto" aria-hidden="true"></video>
-<video class="ah-v" id="ahVEn" data-src="loopeng.mov" loop muted playsinline webkit-playsinline preload="none" aria-hidden="true"></video>
-<video class="ah-v" id="ahVSJa" data-src="startjap.mov" muted playsinline webkit-playsinline preload="none" aria-hidden="true"></video>
-<video class="ah-v" id="ahVSEn" data-src="starteng.mov" muted playsinline webkit-playsinline preload="none" aria-hidden="true"></video>
+<video class="ah-v on" id="ahVJa" src="newtrainloopjap.mov" autoplay loop muted playsinline webkit-playsinline preload="auto" aria-hidden="true"></video>
+<video class="ah-v" id="ahVEn" data-src="newtrainloopeng.mov" loop muted playsinline webkit-playsinline preload="none" aria-hidden="true"></video>
+<video class="ah-v" id="ahVSJa" data-src="newtrainstartjap.mov" muted playsinline webkit-playsinline preload="none" aria-hidden="true"></video>
+<video class="ah-v" id="ahVSEn" data-src="newtrainstarteng.mov" muted playsinline webkit-playsinline preload="none" aria-hidden="true"></video>
+<video class="ah-v" id="ahVEJa" data-src="newtrainstopjap.mov" muted playsinline webkit-playsinline preload="none" aria-hidden="true"></video>
+<video class="ah-v" id="ahVEEn" data-src="newtrainstopeng.mov" muted playsinline webkit-playsinline preload="none" aria-hidden="true"></video>
 <button type="button" class="ah-zoomhit" id="ahZoomHit" aria-label="Zoom out / ズームアウト"></button>
 <button type="button" class="ah-hit" id="ahHit" aria-label="Switch language / 言語を切り替える"></button>
+<script>(function(){if(window.__lang!=="en")return;var j=document.getElementById("ahVJa"),e=document.getElementById("ahVEn");if(!j||!e)return;j.dataset.src=j.getAttribute("src");j.removeAttribute("src");j.removeAttribute("autoplay");j.preload="none";j.classList.remove("on");try{j.load()}catch(x){}e.preload="auto";e.autoplay=true;e.src=e.dataset.src;e.classList.add("on");})();</script>
 </div><i class="cam"></i></div>
-<h2 class="i18n ah-welcome" id="ahWelcome" data-en="Welcome to my portfolio" data-ja="ポートフォリオへようこそ">ポートフォリオへようこそ</h2>
+<h2 class="i18n ah-welcome" id="ahWelcome" data-en="Welcome to &lt;span class=&quot;ah-grad&quot;&gt;my portfolio&lt;/span&gt;" data-ja="&lt;span class=&quot;ah-grad&quot;&gt;ポートフォリオ&lt;/span&gt;へようこそ"><span class="ah-grad">ポートフォリオ</span>へようこそ</h2>
 </div>
+<button type="button" class="ah-scroll" id="ahScroll" aria-label="Scroll down" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9.5l6 6 6-6"/></svg></button>
 </div>
 </section>
 
 <!-- GUILTY LANE -->
 <section class="gl" id="work">
-<div class="gl-block gl-1"><div class="gl-media"><img src="trolley.png" alt="The trolley problem" loading="lazy" decoding="async"></div><div class="gl-copy"><p class="i18n gl-text" data-en="At a hackathon, every team got a concept to turn into a game. Ours was &lt;b&gt;the trolley problem&lt;/b&gt;. Other teams decided to go for a simple 2D game, but I want to deliver something more, so we built &lt;b&gt;a full first-person 3D game&lt;/b&gt;. I never just do the bare minimum. Ask me for ¥100 and I deliver ¥1,000." data-ja="ハッカソンで、各チームにゲームの題材が与えられました。私たちのお題は&lt;b&gt;トロッコ問題&lt;/b&gt;。他のチームは単純な2Dゲームを選びましたが、私はそれ以上のものを届けたいので、&lt;b&gt;本格的な一人称視点の3Dゲーム&lt;/b&gt;を作りました。最低限だけで終わらせることはしません。100円頼まれたら、1000円分お返しします。">ハッカソンで、各チームにゲームの題材が与えられました。私たちのお題は<b>トロッコ問題</b>。他のチームは単純な2Dゲームを選びましたが、私はそれ以上のものを届けたいので、<b>本格的な一人称視点の3Dゲーム</b>を作りました。最低限だけで終わらせることはしません。100円頼まれたら、1000円分お返しします。</p></div></div>
+<div class="gl-block gl-1"><div class="gl-media"><img src="trolley.png" alt="The trolley problem" loading="lazy" decoding="async"></div><div class="gl-copy"><p class="i18n gl-text" data-en="At a hackathon, our team was given a simple concept: &lt;b&gt;the trolley problem&lt;/b&gt;. We could have made a simple 2D game. Instead, we built &lt;b&gt;a full first-person 3D world&lt;/b&gt;. Because I don&#x27;t just want to meet expectations. I want to exceed them. Give me a small idea, and I&#x27;ll turn it into something bigger than you imagined." data-ja="ハッカソンで、私たちのチームに与えられたお題はシンプルでした。&lt;b&gt;トロッコ問題&lt;/b&gt;。単純な2Dゲームで済ませることもできました。でも私たちは、&lt;b&gt;本格的な一人称視点の3Dの世界&lt;/b&gt;を作りました。期待に応えるだけでは、満足できないからです。期待を超えたい。小さなアイデアをください。想像よりも大きなものにしてお返しします。">ハッカソンで、私たちのチームに与えられたお題はシンプルでした。<b>トロッコ問題</b>。単純な2Dゲームで済ませることもできました。でも私たちは、<b>本格的な一人称視点の3Dの世界</b>を作りました。期待に応えるだけでは、満足できないからです。期待を超えたい。小さなアイデアをください。想像よりも大きなものにしてお返しします。</p></div></div>
 
-<div class="gl-block gl-2"><div class="gl-media"><video data-src="tracks.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Track spawning system"></video></div><div class="gl-copy"><div class="gl-lhs"><div class="i18n gl-kicker" data-en="Engineering" data-ja="エンジニアリング">Engineering</div><h3 class="i18n gl-big" data-en="4,096 tracks." data-ja="4,096本の道">4,096 tracks.</h3><div class="i18n gl-note" data-en="12 rounds means 2¹² = 4,096 possible tracks" data-ja="トロッコ問題では、左右を選べます。">12 rounds means 2¹² = 4,096 possible tracks</div></div><p class="i18n gl-text" data-en="In this game you pull a lever, go left or right. Laying out all tracks in Unity would take weeks. AI would come up with a memory wise bad solution. I solved it with dominoes: each track has a collider at the front and a spawn point at the end. When the train hits the collider, the next track spawns, like a falling domino. At forks, the lever picks left or right spawn point. The simplest and cleanest solution." data-ja="このゲームでは、レバーを左か右に引きます。全12ラウンドで、2¹²＝4,096通りの線路。Unityで並べると何週間もかかります。AIはメモリに悪い解決策を出してきます。私はドミノを見て解決しました。&lt;b&gt;レバーを左右どちらに動かすかで、倒れるドミノのように、次の線路がその方向に出現します。&lt;/b&gt;一番シンプルで、すっきりした解決策。">このゲームでは、レバーを左か右に引きます。全12ラウンドで、2¹²＝4,096通りの線路。Unityで並べると何週間もかかります。AIはメモリに悪い解決策を出してきます。私はドミノを見て解決しました。<b>レバーを左右どちらに動かすかで、倒れるドミノのように、次の線路がその方向に出現します。</b>一番シンプルで、すっきりした解決策。</p></div></div>
+<div class="gl-block gl-2"><div class="gl-media"><video data-src="tracks.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Track spawning system"></video></div><div class="gl-copy"><div class="gl-lhs"><div class="i18n gl-kicker" data-en="Engineering" data-ja="エンジニアリング">Engineering</div><h3 class="i18n gl-big" data-en="4,096 tracks." data-ja="4,096本の道">4,096 tracks.</h3><div class="i18n gl-note" data-en="12 rounds means 2¹² = 4,096 possible tracks" data-ja="トロッコ問題では、左右を選べます。">12 rounds means 2¹² = 4,096 possible tracks</div></div><p class="i18n gl-text" data-en="Every time you pull the lever, you decide who lives and who dies. But behind that simple choice lies a technical challenge: how do you build an endless railway without wasting weeks placing tracks and overwhelming memory? I solved it with dominoes: &lt;b&gt;each track triggers the next, spawning only what the player needs.&lt;/b&gt; At forks, the lever determines which track comes next. AI can generate code, but finding the simplest solution to a problem takes human ingenuity." data-ja="レバーを引くたびに、誰が生き、誰が死ぬかを決めることになります。けれど、その単純な選択の裏には技術的な課題がありました。線路を並べるのに何週間もかけず、メモリも圧迫せずに、終わりのない鉄道をどう作るか。私はドミノで解決しました。&lt;b&gt;それぞれの線路が次の線路を動かし、プレイヤーに必要な分だけを出現させます。&lt;/b&gt;分岐では、レバーが次の線路を決めます。AIはコードを書けても、問題への一番シンプルな答えを見つけるには、人の発想が必要です。">レバーを引くたびに、誰が生き、誰が死ぬかを決めることになります。けれど、その単純な選択の裏には技術的な課題がありました。線路を並べるのに何週間もかけず、メモリも圧迫せずに、終わりのない鉄道をどう作るか。私はドミノで解決しました。<b>それぞれの線路が次の線路を動かし、プレイヤーに必要な分だけを出現させます。</b>分岐では、レバーが次の線路を決めます。AIはコードを書けても、問題への一番シンプルな答えを見つけるには、人の発想が必要です。</p></div></div>
 <div class="gl-block gl-3">
 <h3 class="i18n gl-alive-h" data-en="I make your games&lt;br&gt;&lt;span class=&quot;gl-alive&quot;&gt;come alive&lt;/span&gt;." data-ja="あなたのゲームに、&lt;br&gt;&lt;span class=&quot;gl-alive&quot;&gt;命を吹き込みます。&lt;/span&gt;">あなたのゲームに、<br><span class="gl-alive">命を吹き込みます。</span></h3>
 <div class="gl-3-row">
 <div class="gl-media"><video data-src="guiltylane.mp4#t=0.1" poster="guiltylane-poster.jpg" muted loop playsinline preload="none" aria-label="Guilty Lane gameplay"></video></div>
 <div class="gl-copy">
 <a class="gl-cert" href="guilty2.jpg" target="_blank" rel="noopener" aria-label="Hackathon certificate"><img src="guilty2.jpg" alt="Hackathon certificate" loading="lazy" decoding="async"></a>
-<p class="i18n gl-text gl-main" data-en="As a game programmer, I make games come alive. I'm no master modeler, but programming turned the rough models and textures I made for this game into something amazing." data-ja="ゲームプログラマーとして、ゲームに命を吹き込みます。モデル作りは得意ではありませんが、プログラミングの力で、このゲームのために自作した粗いモデルとテクスチャを驚きの世界に変えます。">ゲームプログラマーとして、ゲームに命を吹き込みます。モデル作りは得意ではありませんが、プログラミングの力で、このゲームのために自作した粗いモデルとテクスチャを驚きの世界に変えます。</p>
-<p class="i18n gl-text gl-aux" data-en="That effort won us the hackathon. I bring results to every project, even yours." data-ja="その努力でハッカソンに優勝。あなたの案件にも成果をもたらします。">その努力でハッカソンに優勝。あなたの案件にも成果をもたらします。</p>
+<p class="i18n gl-text gl-main" data-en="&lt;b&gt;I&#x27;m a game programmer.&lt;/b&gt; I made rough 3D models and unfinished textures, then turned them into something extraordinary. That&#x27;s my craft: &lt;b&gt;making things work, making them feel alive&lt;/b&gt;, and pushing them beyond what they were ever meant to be." data-ja="&lt;b&gt;私はゲームプログラマーです。&lt;/b&gt;粗い3Dモデルと未完成のテクスチャを、素晴らしいものへと変えました。それが私の仕事です。&lt;b&gt;動くようにし、生き生きと感じさせ&lt;/b&gt;、本来の想定を超えるところまで引き上げること。"><b>私はゲームプログラマーです。</b>粗い3Dモデルと未完成のテクスチャを、素晴らしいものへと変えました。それが私の仕事です。<b>動くようにし、生き生きと感じさせ</b>、本来の想定を超えるところまで引き上げること。</p>
+<p class="i18n gl-text gl-aux" data-en="That mindset helped our team win the hackathon. I don&#x27;t just write code. &lt;b&gt;I make your game come alive.&lt;/b&gt;" data-ja="その姿勢が、チームのハッカソン優勝につながりました。私はコードを書くだけではありません。&lt;b&gt;あなたのゲームに命を吹き込みます。&lt;/b&gt;">その姿勢が、チームのハッカソン優勝につながりました。私はコードを書くだけではありません。<b>あなたのゲームに命を吹き込みます。</b></p>
 </div></div>
-<div class="gl-play-wrap"><a class="i18n gl-play" href="https://lucahelgert.itch.io/guilty-lane-ver2" target="_blank" rel="noopener" data-en="Actually play it" data-ja="実際にプレイする">実際にプレイする</a></div>
+<div class="gl-play-wrap"><a class="i18n gl-play" href="mailto:luca.helgert@icloud.com" data-en="Contact" data-ja="お問い合わせ">お問い合わせ</a></div>
 </div>
 </section>
 
-<!-- 24 GAMES (Apple-style explosion reveal) -->
-<section class="gm" id="gm" aria-labelledby="gmTitle">
-<div class="gm-stage">
-<div class="gm-canvas">
-<div class="gm-tile" style="--l:9.610%;--t:5.918%;--wn:0.1889;--ml:3vw;--mw:28;--mtop:3vw;--mbot:auto"><div class="gm-media" aria-hidden="true"><video data-src="toypair.mp4#t=0.1" poster="toypair-poster.jpg" muted loop playsinline preload="none" aria-label="Toy Pair"></video></div></div>
-<div class="gm-tile" style="--l:36.220%;--t:12.612%;--wn:0.0777;--ml:40vw;--mw:20;--mtop:auto;--mbot:27vw"><div class="gm-media" aria-hidden="true"><video data-src="mysterybox.mp4#t=0.1" poster="mysterybox-poster.jpg" muted loop playsinline preload="none" aria-label="Mystery Box"></video></div></div>
-<div class="gm-tile" style="--l:48.989%;--t:7.157%;--wn:0.0942;--ml:36vw;--mw:24;--mtop:auto;--mbot:3vw"><div class="gm-media" aria-hidden="true"><video data-src="onlybadguys.mp4#t=0.1" poster="onlybadguys-poster.jpg" muted loop playsinline preload="none" aria-label="Only Bad Guys on the Train"></video></div></div>
-<div class="gm-tile" style="--l:71.153%;--t:2.016%;--wn:0.1963;--ml:32vw;--mw:30;--mtop:24vw;--mbot:auto"><div class="gm-media" aria-hidden="true"><video data-src="great.mp4#t=0.1" poster="great-poster.jpg" muted loop playsinline preload="none" aria-label="Great Foot Okhan"></video></div></div>
-<div class="gm-tile" style="--l:58.095%;--t:21.692%;--wn:0.1146;--ml:67vw;--mw:24;--mtop:25vw;--mbot:auto"><div class="gm-media" aria-hidden="true"><video data-src="artwork.mp4#t=0.1" poster="artwork-poster.jpg" muted loop playsinline preload="none" aria-label="Artwork Restoration"></video></div></div>
-<div class="gm-tile" style="--l:34.202%;--t:29.313%;--wn:0.1361;--ml:3vw;--mw:26;--mtop:24vw;--mbot:auto"><div class="gm-media" aria-hidden="true"><video data-src="dekamenoippai.mp4#t=0.1" poster="dekamenoippai-poster.jpg" muted loop playsinline preload="none" aria-label="Lots of Big Ones"></video></div></div>
-<div class="gm-tile" style="--l:20.384%;--t:36.459%;--wn:0.1032;--ml:34vw;--mw:22;--mtop:4vw;--mbot:auto"><div class="gm-media" aria-hidden="true"><video data-src="ikaikasu.mp4#t=0.1" poster="ikaikasu-poster.jpg" muted loop playsinline preload="none" aria-label="Squid to the Max"></video></div></div>
-<div class="gm-tile" style="--l:81.903%;--t:40.181%;--wn:0.1157;--ml:8vw;--mw:26;--mtop:auto;--mbot:26vw"><div class="gm-media" aria-hidden="true"><video data-src="boukyakunoyakata.mp4#t=0.1" poster="boukyakunoyakata-poster.jpg" muted loop playsinline preload="none" aria-label="House of Forgetting"></video></div></div>
-<div class="gm-tile" style="--l:75.918%;--t:60.367%;--wn:0.1010;--ml:59vw;--mw:24;--mtop:3vw;--mbot:auto"><div class="gm-media" aria-hidden="true"><video data-src="kumovsmahou.mp4#t=0.1" poster="kumovsmahou-poster.jpg" muted loop playsinline preload="none" aria-label="Kumo vs. Mahou"></video></div></div>
-<div class="gm-tile" style="--l:5.061%;--t:68.271%;--wn:0.1963;--ml:3vw;--mw:30;--mtop:auto;--mbot:3vw"><div class="gm-media" aria-hidden="true"><video data-src="bongo.mp4#t=0.1" poster="bongo-poster.jpg" muted loop playsinline preload="none" aria-label="Bongo 3D"></video></div></div>
-<div class="gm-tile" style="--l:79.447%;--t:79.587%;--wn:0.1010;--ml:64vw;--mw:25;--mtop:auto;--mbot:3vw"><div class="gm-media" aria-hidden="true"><video data-src="bouzocart.mp4#t=0.1" poster="bouzocart-poster.jpg" muted loop playsinline preload="none" aria-label="Bouzou Cart"></video></div></div>
-<div class="gm-copy">
-<h2 class="i18n gm-title" id="gmTitle" data-en="&lt;span class=&quot;gm-l1&quot;&gt;24 games.&lt;/span&gt; &lt;span class=&quot;gm-l2&quot;&gt;In less than 2 years.&lt;/span&gt;" data-ja="&lt;span class=&quot;gm-l1&quot;&gt;24本のゲーム。&lt;/span&gt; &lt;span class=&quot;gm-l2&quot;&gt;2年足らずで。&lt;/span&gt;"><span class="gm-l1">24本のゲーム。</span> <span class="gm-l2">2年足らずで。</span></h2>
-<p class="i18n gm-text" data-en="AI is an opportunity: faster prototypes, cheaper projects. But on its own, AI is dumb. Paired with a human mind, it becomes a tool for building great worlds." data-ja="AIはチャンスです。試作は速く、制作費は安くなります。ただ、AI単体では愚かなまま。人の頭脳と組み合わせてこそ、素晴らしい世界を作る道具になります。">AIはチャンスです。試作は速く、制作費は安くなります。ただ、AI単体では愚かなまま。人の頭脳と組み合わせてこそ、素晴らしい世界を作る道具になります。</p>
-<a class="i18n gm-btn" href="games.html" data-en="See all 24 games" data-ja="24本すべてを見る">24本すべてを見る</a>
+<!-- TOKYO GAME SHOW (Apple-style: video inside the headline, then text and laptop) -->
+<section class="tgs" id="tgs" aria-labelledby="tgsTitle">
+<div class="tgs-stage">
+<video class="tgs-video" data-src="reee2.mp4#t=0.1" muted loop playsinline preload="none" aria-hidden="true"></video>
+<canvas class="tgs-canvas" aria-hidden="true"></canvas>
+<h2 class="i18n tgs-sr" id="tgsTitle" data-en="Tokyo Game Show." data-ja="東京ゲームショウ">東京ゲームショウ</h2>
+<button type="button" class="tgs-pause" id="tgsPause" aria-label="動画を一時停止" aria-pressed="false"><svg class="ic-pause" viewBox="0 0 18 18" aria-hidden="true"><rect x="4" y="3" width="3.4" height="12" rx="1.1" fill="currentColor"/><rect x="10.6" y="3" width="3.4" height="12" rx="1.1" fill="currentColor"/></svg><svg class="ic-play" viewBox="0 0 18 18" aria-hidden="true"><path d="M5.5 3.6v10.8a.6.6 0 0 0 .9.5l8.6-5.4a.6.6 0 0 0 0-1L6.4 3.1a.6.6 0 0 0-.9.5z" fill="currentColor"/></svg></button>
+<div class="tgs-copy">
+<div class="tgs-blk tgs-b1">
+<h3 class="i18n tgs-sub" data-en="I presented this game." data-ja="このゲームを出展しました。">このゲームを出展しました。</h3>
+<p class="i18n tgs-p" data-en="&lt;b&gt;I was one of the main programmers&lt;/b&gt; on this game, and most of the gimmicks you see here were written by me in C#. Task me with making a game, and &lt;b&gt;I’ll bring it to Tokyo Game Show.&lt;/b&gt;" data-ja="&lt;b&gt;このゲームのメインプログラマーの一人&lt;/b&gt;として、ここに見られる仕掛けのほとんどをC#で書きました。ゲームを作る課題をください。&lt;b&gt;東京ゲームショウまで持っていきます。&lt;/b&gt;"><b>このゲームのメインプログラマーの一人</b>として、ここに見られる仕掛けのほとんどをC#で書きました。ゲームを作る課題をください。<b>東京ゲームショウまで持っていきます。</b></p>
+</div>
+<div class="tgs-blk tgs-b2">
+<div class="tgs-b2-text">
+<h3 class="i18n tgs-sub" data-en="Programming ≠ Coding." data-ja="プログラミング ≠ コーディング。">プログラミング ≠ コーディング。</h3>
+<p class="i18n tgs-p" data-en="Programmers work inside Visual Studio Code. But that is &lt;b&gt;coding. Not programming.&lt;/b&gt; Engines like Unreal Engine prove that you can build worlds without having to write a single line of code. The scene you see below was fully made with node-based coding in World Machine. &lt;b&gt;No 3D modeling required.&lt;/b&gt;" data-ja="プログラマーはVisual Studio Codeの中で仕事をします。でもそれは&lt;b&gt;コーディングであって、プログラミングではありません。&lt;/b&gt;Unreal Engineのようなエンジンは、コードを1行も書かなくても世界を作れることを証明しています。下のシーンは、World Machineでのノードベースのコーディングだけで作りました。&lt;b&gt;3Dモデリングは一切不要です。&lt;/b&gt;">プログラマーはVisual Studio Codeの中で仕事をします。でもそれは<b>コーディングであって、プログラミングではありません。</b>Unreal Engineのようなエンジンは、コードを1行も書かなくても世界を作れることを証明しています。下のシーンは、World Machineでのノードベースのコーディングだけで作りました。<b>3Dモデリングは一切不要です。</b></p>
+</div>
+<div class="tgs-lap">
+<div class="tgs-lid"><div class="tgs-scr"><img src="mount01.jpg" alt="Fantasy mountain landscape built in World Machine" loading="lazy" decoding="async"><img src="mount02.jpg" alt="" loading="lazy" decoding="async"><img src="mount03.jpg" alt="" loading="lazy" decoding="async"><img src="mount04.jpg" alt="" loading="lazy" decoding="async"></div></div>
+<div class="tgs-base"></div>
+<p class="i18n tgs-cap" data-en="Fantasy Mountains inspired by Skyrim" data-ja="スカイリムにインスパイアされたファンタジーの山々">スカイリムにインスパイアされたファンタジーの山々</p>
+</div>
 </div>
 </div>
 </div>
@@ -1861,7 +2008,6 @@ nav#nav.on-dark .lang-toggle:hover{color:#fff}
 <!-- MY SKILLS -->
 <section class="sb" id="skill-bars" aria-label="My skills">
 <div class="sb-in">
-<p class="sb-cats sb-eq i18n" data-en="Programming ≠ just coding" data-ja="プログラミング ≠ ただのコーディング">Programming ≠ just coding</p>
 <p class="sb-cats" id="sbCats">
 <button type="button" class="i18n sb-c on" data-i="0" data-en="Game dev" data-ja="ゲーム開発">Game dev</button> <span class="sb-sl">/</span>
 <button type="button" class="i18n sb-c" data-i="1" data-en="Shaders" data-ja="シェーダー">Shaders</button> <span class="sb-sl">/</span>
@@ -1875,36 +2021,30 @@ nav#nav.on-dark .lang-toggle:hover{color:#fff}
 </div>
 </section>
 
-<!-- KIWI GAME -->
-<section class="kiwi-sec" id="kiwi">
-<div class="kiwi-resume-game" id="kiwiResumeGame" aria-labelledby="kiwiResumeGameTitle">
-<div class="kiwi-resume-game__heading">
-<h3 class="resume-title i18n" id="kiwiResumeGameTitle" data-en="If you lose, you have to hire me." data-ja="負けたら、私を採用してもらいます。">If you lose, you have to hire me.</h3>
-<p class="kiwi-resume-game__controls i18n" data-en="Jump with Space or click." data-ja="Spaceキーまたはクリックでジャンプ。">Jump with Space or click.</p>
-</div>
-<div class="kiwi-resume-game__stage" id="kiwiResumeStage">
-<canvas id="kiwiResumeCanvas" tabindex="0" aria-label="Kiwi Runner. Jump over hazards with Space or a click."></canvas>
-<aside class="kiwi-resume-game__end-card" id="kiwiResumeEndCard" hidden aria-label="Resume">
-<div class="kr-panel">
-<button class="kr-close" type="button" aria-label="Close">&times;</button>
-<div class="kr-head">
-<div class="kr-copy">
-<h3 class="kr-title i18n" data-en="You lost." data-ja="負けました。">負けました。</h3>
-</div>
-<div class="resume-actions kiwi-resume-game__resume-actions">
-<a class="kr-btn" href="resume.pdf" target="_blank" rel="noopener"><span class="i18n" data-en="See my resume" data-ja="履歴書を見る">履歴書を見る</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h9"/><path d="M8.5 4.5L12 8l-3.5 3.5"/></svg></a>
-<button class="kr-again i18n" type="button" data-en="Play again" data-ja="もう一度">もう一度</button>
-</div>
-<a class="kr-mail" href="mailto:luca.helgert@icloud.com"><span class="i18n" data-en="Contact me" data-ja="連絡する">Contact me</span><b>luca.helgert@icloud.com</b></a>
-</div>
-<a class="kr-img" href="resume.pdf" target="_blank" rel="noopener" aria-label="Open resume PDF"><img class="kiwi-resume-game__preview" src="resume-preview.jpg" alt="Luca Helgert resume preview" decoding="async"></a>
-</div>
-</aside>
+<!-- 24 GAMES (Apple-style explosion reveal) -->
+<section class="gm" id="gm" aria-labelledby="gmTitle">
+<div class="gm-stage">
+<div class="gm-canvas">
+<div class="gm-tile" style="--l:9.610%;--t:5.918%;--wn:0.1889;--ml:3vw;--mw:28;--mtop:3vw;--mbot:auto"><div class="gm-media" aria-hidden="true"><video data-src="toypair.mp4#t=0.1" poster="toypair-poster.jpg" muted loop playsinline preload="none" aria-label="Toy Pair"></video></div></div>
+<div class="gm-tile" style="--l:36.220%;--t:12.612%;--wn:0.0777;--ml:40vw;--mw:20;--mtop:auto;--mbot:27vw"><div class="gm-media" aria-hidden="true"><video data-src="mysterybox.mp4#t=0.1" poster="mysterybox-poster.jpg" muted loop playsinline preload="none" aria-label="Mystery Box"></video></div></div>
+<div class="gm-tile" style="--l:48.989%;--t:7.157%;--wn:0.0942;--ml:36vw;--mw:24;--mtop:auto;--mbot:3vw"><div class="gm-media" aria-hidden="true"><video data-src="onlybadguys.mp4#t=0.1" poster="onlybadguys-poster.jpg" muted loop playsinline preload="none" aria-label="Only Bad Guys on the Train"></video></div></div>
+<div class="gm-tile" style="--l:71.153%;--t:2.016%;--wn:0.1963;--ml:32vw;--mw:30;--mtop:24vw;--mbot:auto"><div class="gm-media" aria-hidden="true"><video data-src="great.mp4#t=0.1" poster="great-poster.jpg" muted loop playsinline preload="none" aria-label="Great Foot Okhan"></video></div></div>
+<div class="gm-tile" style="--l:58.095%;--t:21.692%;--wn:0.1146;--ml:67vw;--mw:24;--mtop:25vw;--mbot:auto"><div class="gm-media" aria-hidden="true"><video data-src="artwork.mp4#t=0.1" poster="artwork-poster.jpg" muted loop playsinline preload="none" aria-label="Artwork Restoration"></video></div></div>
+<div class="gm-tile" style="--l:34.202%;--t:29.313%;--wn:0.1361;--ml:3vw;--mw:26;--mtop:24vw;--mbot:auto"><div class="gm-media" aria-hidden="true"><video data-src="dekamenoippai.mp4#t=0.1" poster="dekamenoippai-poster.jpg" muted loop playsinline preload="none" aria-label="Lots of Big Ones"></video></div></div>
+<div class="gm-tile" style="--l:20.384%;--t:36.459%;--wn:0.1032;--ml:34vw;--mw:22;--mtop:4vw;--mbot:auto"><div class="gm-media" aria-hidden="true"><video data-src="ikaikasu.mp4#t=0.1" poster="ikaikasu-poster.jpg" muted loop playsinline preload="none" aria-label="Squid to the Max"></video></div></div>
+<div class="gm-tile" style="--l:81.903%;--t:40.181%;--wn:0.1157;--ml:8vw;--mw:26;--mtop:auto;--mbot:26vw"><div class="gm-media" aria-hidden="true"><video data-src="boukyakunoyakata.mp4#t=0.1" poster="boukyakunoyakata-poster.jpg" muted loop playsinline preload="none" aria-label="House of Forgetting"></video></div></div>
+<div class="gm-tile" style="--l:75.918%;--t:60.367%;--wn:0.1010;--ml:59vw;--mw:24;--mtop:3vw;--mbot:auto"><div class="gm-media" aria-hidden="true"><video data-src="kumovsmahou.mp4#t=0.1" poster="kumovsmahou-poster.jpg" muted loop playsinline preload="none" aria-label="Kumo vs. Mahou"></video></div></div>
+<div class="gm-tile" style="--l:5.061%;--t:68.271%;--wn:0.1963;--ml:3vw;--mw:30;--mtop:auto;--mbot:3vw"><div class="gm-media" aria-hidden="true"><video data-src="bongo.mp4#t=0.1" poster="bongo-poster.jpg" muted loop playsinline preload="none" aria-label="Bongo 3D"></video></div></div>
+<div class="gm-tile" style="--l:79.447%;--t:79.587%;--wn:0.1010;--ml:64vw;--mw:25;--mtop:auto;--mbot:3vw"><div class="gm-media" aria-hidden="true"><video data-src="bouzocart.mp4#t=0.1" poster="bouzocart-poster.jpg" muted loop playsinline preload="none" aria-label="Bouzou Cart"></video></div></div>
+<div class="gm-copy">
+<h2 class="i18n gm-title" id="gmTitle" data-en="&lt;span class=&quot;gm-l1&quot;&gt;24 games.&lt;/span&gt; &lt;span class=&quot;gm-l2&quot;&gt;In less than 2 years.&lt;/span&gt;" data-ja="&lt;span class=&quot;gm-l1&quot;&gt;24本のゲーム。&lt;/span&gt; &lt;span class=&quot;gm-l2&quot;&gt;2年足らずで。&lt;/span&gt;"><span class="gm-l1">24本のゲーム。</span> <span class="gm-l2">2年足らずで。</span></h2>
+<p class="i18n gm-text" data-en="AI is an opportunity: faster prototypes, cheaper projects. But on its own, AI is dumb. Paired with a human mind, it becomes a tool for building great worlds." data-ja="AIはチャンスです。試作は速く、制作費は安くなります。ただ、AI単体では愚かなまま。人の頭脳と組み合わせてこそ、素晴らしい世界を作る道具になります。">AIはチャンスです。試作は速く、制作費は安くなります。ただ、AI単体では愚かなまま。人の頭脳と組み合わせてこそ、素晴らしい世界を作る道具になります。</p>
+<a class="i18n gm-btn" href="games.html" data-en="See all 24 games" data-ja="24本すべてを見る">24本すべてを見る</a>
 </div>
 </div>
-<div class="kiwi-pill"><span class="i18n" id="kiwiPillText" data-en="Click to start or press Space" data-ja="クリックまたはSpaceキーでスタート">Click to start or press Space</span></div>
-<p class="kiwi-resume-game__status" id="kiwiResumeStatus" role="status" aria-live="polite"></p>
+</div>
 </section>
+
 
 <!-- cut from view, kept in the DOM so nothing that depends on it breaks -->
 <div hidden class="cut-away">
@@ -1937,7 +2077,6 @@ nav#nav.on-dark .lang-toggle:hover{color:#fff}
 </div>
 <a class="resume-preview" href="resume.pdf" target="_blank" rel="noopener" aria-label="Open the resume PDF"><img decoding="async" src="resume-preview.jpg" alt="Luca Helgert resume (履歴書), page 1 and 2" loading="lazy"></a>
 </div>
-<script src="kiwijavascript/portfolio-bundle.js"></script>
 </section>
 <!-- FOOTER -->
 <footer>
@@ -1950,8 +2089,7 @@ nav#nav.on-dark .lang-toggle:hover{color:#fff}
 
 <!-- ABOUT (hello hero) -->
 <section class="about hello" id="about" aria-label="More about me">
-<p class="hello-eyebrow i18n" data-en="More about me" data-ja="私について、もっと">More about me</p>
-<h2 class="about-title hello-title i18n" data-en="Hello, world." data-ja="Hello, world.">Hello, world.</h2>
+<h2 class="about-title hello-title i18n" data-en="Hello world." data-ja="Hello world.">Hello world.</h2>
 <div class="dog-pic" id="dogPic"><video data-src="dog.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Luca Helgert and a dog"></video></div>
 <div class="hello-pill">
 <span class="hello-text i18n" data-en="I come from a small town in Germany. What led me to Japan?" data-ja="ドイツの小さな町出身の私が、なぜ日本に来たのでしょうか？">I come from a small town in Germany. What led me to Japan?</span>
@@ -1959,8 +2097,43 @@ nav#nav.on-dark .lang-toggle:hover{color:#fff}
 </div>
 </section>
 
+<!-- GAME (last section): beat the highscore, win the chance to work with me -->
+<section class="kiwi-sec" id="kiwi">
+<div class="kiwi-resume-game" id="kiwiResumeGame" aria-labelledby="kiwiResumeGameTitle">
+<div class="kiwi-resume-game__heading">
+<h3 class="resume-title i18n" id="kiwiResumeGameTitle" data-en="Beat my highscore and win a prize." data-ja="私のハイスコアを超えて、賞品を手に入れよう。">私のハイスコアを超えて、賞品を手に入れよう。</h3>
+<p class="kiwi-resume-game__controls i18n" data-en="Jump with Space or click." data-ja="Spaceキーまたはクリックでジャンプ。">Spaceキーまたはクリックでジャンプ。</p>
+</div>
+<div class="kiwi-resume-game__stage" id="kiwiResumeStage">
+<canvas id="kiwiResumeCanvas" tabindex="0" aria-label="Kiwi Runner. Jump over hazards with Space or a click."></canvas>
+<aside class="kiwi-resume-game__end-card" id="kiwiResumeEndCard" hidden aria-label="Result" aria-live="polite">
+<div class="kr-panel">
+<div class="kr-head">
+<div class="kr-copy">
+<h3 class="kr-title i18n" id="krTitle" data-en="You lost." data-ja="負けました。">負けました。</h3>
+<p class="kr-sub i18n" id="krSub"></p>
+</div>
+<div class="resume-actions kiwi-resume-game__resume-actions">
+<button class="kr-btn" id="krRetry" type="button"><span class="i18n" data-en="Try again" data-ja="もう一度挑戦">もう一度挑戦</span></button>
+<a class="kr-btn" id="krMail" href="mailto:luca.helgert@icloud.com" hidden><span class="i18n" data-en="Contact" data-ja="お問い合わせ">お問い合わせ</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1.5" y="3" width="13" height="10" rx="2"/><path d="M2.3 4.6 8 8.9l5.7-4.3"/></svg></a>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</div>
+<div class="kiwi-pill"><span class="i18n" id="kiwiPillText" data-en="Click to start or press Space" data-ja="クリックまたはSpaceキーでスタート">クリックまたはSpaceキーでスタート</span></div>
+<p class="kiwi-resume-game__status" id="kiwiResumeStatus" role="status" aria-live="polite"></p>
+</section>
+<script src="kiwijavascript/portfolio-bundle.js"></script>
 
 </main>
+
+<!-- FOOTER: very quiet copyright left, mail icon right -->
+<footer class="sf">
+<span class="i18n" data-en="© 2026 Luca Helgert" data-ja="© 2026 ヘルゲルト・るか">© 2026 ヘルゲルト・るか</span>
+<a class="sf-m" href="mailto:luca.helgert@icloud.com" aria-label="Email / メール"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1.5" y="3" width="13" height="10" rx="2"/><path d="M2.3 4.6 8 8.9l5.7-4.3"/></svg></a>
+</footer>
 <div class="xsheet" id="xSheet" role="dialog" aria-modal="true" aria-label="Game details"><div class="xsheet-bg"></div><div class="xsheet-panel"><button class="xsheet-close" type="button" aria-label="Close"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button><div id="xSheetBody"></div></div></div>
 
 
@@ -2039,7 +2212,7 @@ document.addEventListener("keydown", (e) => { if (e.key === "Escape" && xSheet.c
 
 /* LANGUAGE TOGGLE */
 const langToggle = document.getElementById("langToggle");
-let currentLang = "ja"; /* starts in Japanese */
+let currentLang = window.__lang || "ja"; /* browser language (set in <head>), a saved choice wins */
 
 function applyLanguage(lang) {
     currentLang = lang;
@@ -2052,10 +2225,13 @@ function applyLanguage(lang) {
     langToggle.textContent = lang === "ja" ? "EN" : "日本語";
     langToggle.setAttribute("aria-pressed", lang === "ja");
     updateSeeMoreLabel();
+    document.documentElement.classList.remove("lang-pending");
 }
 
 langToggle.addEventListener("click", () => {
-    applyLanguage(currentLang === "en" ? "ja" : "en");
+    const next = currentLang === "en" ? "ja" : "en";
+    try { localStorage.setItem("luca-lang", next); } catch (e) {}
+    applyLanguage(next);
 });
 
 /* MEDIA LOADING (videos + pictures)
@@ -2672,14 +2848,14 @@ applyLanguage(currentLang);
 </script>
 <script>
 /* FRONT PAGE
-   1. loopjap.mov (Japanese) / loopeng.mov (English) play full screen and loop. Language and video always match.
+   1. The matching language loop plays full screen.
    2. Click the lower centre of the video = switch language (uses the normal language toggle), and the video changes with it.
    3. Scrolling zooms the screen out into the game wall (same curve as the codex version). The title sits in that scene above the top row.
    4. When everything is zoomed out the menu drops in. The next scroll goes straight on to the trolley section. */
 (() => {
   const $ = (id) => document.getElementById(id);
   const hero = $("ah"), stage = $("ahStage"), grid = $("ahGrid"), center = $("ahCenter"), welcome = $("ahWelcome");
-  const nav = $("nav"), hit = $("ahHit"), vJa = $("ahVJa"), vEn = $("ahVEn"), langBtn = $("langToggle");
+  const nav = $("nav"), hit = $("ahHit"), vJa = $("ahVJa"), vEn = $("ahVEn"), langBtn = $("langToggle"), arrow = $("ahScroll");
   if (!hero || !stage || !grid || !center || !vJa || !vEn) return;
 
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
@@ -2689,23 +2865,23 @@ applyLanguage(currentLang);
   [vJa, vEn].forEach((v) => { v.muted = true; v.defaultMuted = true; v.loop = true; });
 
   /* ---------- the train video ----------
-     Loops: loopjap.mov (Japanese) / loopeng.mov (English). Lower-centre button switches language and loop.
-     Zoom-out button: plays startjap.mov (if Japanese) or starteng.mov (if English) once, then continues with that language's loop. */
-  const vSJa = $("ahVSJa"), vSEn = $("ahVSEn");
-  const all = [vJa, vEn, vSJa, vSEn].filter(Boolean);
+     The language-specific start clip plays on zoom-out; the end clip plays on zoom-in before returning to the loop. */
+  const vSJa = $("ahVSJa"), vSEn = $("ahVSEn"), vEJa = $("ahVEJa"), vEEn = $("ahVEEn");
+  const all = [vJa, vEn, vSJa, vSEn, vEJa, vEEn].filter(Boolean);
   all.forEach((v) => { v.muted = true; v.defaultMuted = true; });
-  let curLang = isJa() ? "ja" : "en", tok = 0, heroVisible = true, curEl = vJa;
+  let curLang = isJa() ? "ja" : "en", tok = 0, heroVisible = true, ending = false, curEl = isJa() ? vJa : vEn;
   const loopOf = (l) => (l === "ja" ? vJa : vEn);
   const startOf = (l) => (l === "ja" ? vSJa : vSEn);
+  const endOf = (l) => (l === "ja" ? vEJa : vEEn);
   const ensureSrc = (v) => { if (v && !v.getAttribute("src") && v.dataset.src) { v.preload = "auto"; v.src = v.dataset.src; v.load(); } };
 
   /* the other videos are fetched one after another once the first one plays, so switching is instant */
   let warmed = false;
   const warm = () => {
     if (warmed) return; warmed = true;
-    [loopOf(curLang === "ja" ? "en" : "ja"), startOf(curLang), startOf(curLang === "ja" ? "en" : "ja")].forEach((v, i) => setTimeout(() => ensureSrc(v), i * 1500));
+    [loopOf(curLang === "ja" ? "en" : "ja"), startOf(curLang), startOf(curLang === "ja" ? "en" : "ja"), endOf(curLang), endOf(curLang === "ja" ? "en" : "ja")].forEach((v, i) => setTimeout(() => ensureSrc(v), i * 1500));
   };
-  vJa.addEventListener("canplay", () => setTimeout(warm, 600), { once: true });
+  (isJa() ? vJa : vEn).addEventListener("canplay", () => setTimeout(warm, 600), { once: true });
   setTimeout(warm, 5000);
 
   /* show one video: it starts from 0 and is swapped in once it really runs (no black flash) */
@@ -2729,14 +2905,18 @@ applyLanguage(currentLang);
   const showLang = (lang) => {
     if (lang === curLang) return;
     curLang = lang;
-    showVideo(loopOf(lang));
+    showVideo(ending ? endOf(lang) : loopOf(lang));
   };
   new MutationObserver(() => showLang(isJa() ? "ja" : "en")).observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
   if (hit) hit.addEventListener("click", (e) => { e.preventDefault(); if (langBtn) langBtn.click(); });
+  if (arrow) arrow.addEventListener("click", () => { const w = document.getElementById("work"); if (w) w.scrollIntoView({ behavior: "smooth", block: "start" }); });
 
   /* the start videos play once, then the loop of the same language takes over */
   [vSJa, vSEn].forEach((v) => v && v.addEventListener("ended", () => { if (curEl === v) showVideo(loopOf(curLang)); }));
-  const playStart = () => showVideo(startOf(curLang));
+  [vEJa, vEEn].forEach((v) => v && v.addEventListener("ended", () => {
+    if (curEl === v && ending) { ending = false; showVideo(loopOf(curLang)); }
+  }));
+  const playStart = () => { ending = false; showVideo(startOf(curLang)); };
 
   new IntersectionObserver((es) => {
     heroVisible = es[0].isIntersecting;
@@ -2746,7 +2926,7 @@ applyLanguage(currentLang);
   /* if autoplay was blocked, the first touch / key / scroll starts the video */
   const kick = () => { if (heroVisible) play(curEl); };
   ["pointerdown", "touchstart", "keydown", "wheel", "scroll"].forEach((n) => addEventListener(n, kick, { once: true, passive: true }));
-  play(vJa);
+  play(curEl);
 
   /* ---------- the wall of game screens ---------- */
   const games = [{"src": "toypair.mp4", "poster": "toypair-poster.jpg", "label": "Toy Pair"}, {"src": "mysterybox.mp4", "poster": "mysterybox-poster.jpg", "label": "Mystery Box"}, {"src": "onlybadguys.mp4", "poster": "onlybadguys-poster.jpg", "label": "Only Bad Guys on the Train"}, {"src": "great.mp4", "poster": "great-poster.jpg", "label": "Great Foot Okhan"}, {"src": "artwork.mp4", "poster": "artwork-poster.jpg", "label": "Artwork Restoration"}, {"src": "dekamenoippai.mp4", "poster": "dekamenoippai-poster.jpg", "label": "Lots of Big Ones"}, {"src": "ikaikasu.mp4", "poster": "ikaikasu-poster.jpg", "label": "Squid to the Max"}, {"src": "boukyakunoyakata.mp4", "poster": "boukyakunoyakata-poster.jpg", "label": "House of Forgetting"}, {"src": "kumovsmahou.mp4", "poster": "kumovsmahou-poster.jpg", "label": "Kumo vs. Mahou"}, {"src": "bongo.mp4", "poster": "bongo-poster.jpg", "label": "Bongo 3D"}, {"src": "bouzocart.mp4", "poster": "bouzocart-poster.jpg", "label": "Bouzou Cart"}];
@@ -2799,7 +2979,8 @@ applyLanguage(currentLang);
     const e = smooth(p), s = Math.exp(Math.log(S0) * (1 - e)), kk = Math.log(s) / Math.log(S0), cy = vh * (.5 + .0462 * (1 - kk));
     tiles.forEach((o) => {
       const w = Tw * s, h = Th * s, left = vw / 2 + o.k * px * s - w / 2, top = cy + o.row * py * s - h / 2;
-      const visible = left < vw && left + w > 0 && top < vh && top + h > 0;
+      const sm = w * .26;                                          /* the shadow reaches this far past the screen, so it must already be drawn before the screen itself is on stage */
+      const visible = left - sm < vw && left + w + sm > 0 && top - sm < vh && top + h + sm > 0;
       const st = o.t.style; if (!visible) { st.display = "none"; return; }
       const bz = bz0 * s, rad = r0 * s, rim = rim0 * s;
       st.boxShadow = "0 0 0 " + rim + "px #d4d4d6," + (w * .09) + "px " + (w * .12) + "px " + (w * .15) + "px " + (-w * .05) + "px rgba(0,0,0,.4),0 0 " + (w * .02) + "px rgba(0,0,0,.2)";
@@ -2817,13 +2998,20 @@ applyLanguage(currentLang);
     if (wy + half < 0 || wy - half > vh) welcome.style.display = "none";
     else { welcome.style.display = "block"; welcome.style.top = wy + "px"; welcome.style.transform = "translate(-50%,-50%) scale(" + s + ")"; }
     syncNav(p >= .985);
+    /* scroll arrow: sits centred between the bottom row of screens and the bottom edge; shows once fully zoomed out, leaves on the first scroll */
+    if (arrow) {
+      const bottomEdge = .5462 * vh + py + Th / 2, free = Math.max(0, vh - bottomEdge);
+      arrow.style.top = (bottomEdge + free / 2) + "px";
+      const on = p >= .985 && (scrollY - endY()) < 14;
+      arrow.classList.toggle("on", on); arrow.disabled = !on;
+    }
   }
   /* ---------- start lock ----------
      Scrolling is blocked only while you are fully on the starting video (top of the page). Press the lower-right button to zoom out
      automatically (about 3 s). Anywhere else, including halfway through the zoom, scrolling works normally in both directions. */
   const zoomHit = $("ahZoomHit");
-  const ZOOM_MS = 3000;                                          /* how long the automatic zoom-out takes */
-  let anim = false, prevY = scrollY, touchY = 0;
+  const ZOOM_MS = 2000;                                          /* how long the automatic zoom-out takes */
+  let anim = false, prevY = scrollY, touchY = 0, wasAtTop = scrollY < 2;
   const endY = () => hero.getBoundingClientRect().top + scrollY + hero.offsetHeight - stage.offsetHeight;
   const inZoom = () => scrollY < 2;                              /* true only on the starting video */
   addEventListener("wheel", (e) => { if (anim || (e.deltaY > 0 && inZoom())) e.preventDefault(); }, { passive: false });
@@ -2843,13 +3031,18 @@ applyLanguage(currentLang);
     if (!anim && prevY < 2 && scrollY > 2 && !location.hash) scrollTo({ top: 0, behavior: "instant" });
     else prevY = scrollY;
   }, { passive: true });
+  addEventListener("scroll", () => {
+    const atTop = scrollY < 2;
+    if (atTop && !wasAtTop) { ending = true; showVideo(endOf(curLang)); }
+    wasAtTop = atTop;
+  }, { passive: true });
   if (zoomHit) zoomHit.addEventListener("click", (e) => {
     e.preventDefault();
     if (anim) return;
     const to = endY(), from = scrollY, dist = to - from;
     if (dist <= 2) return;
     anim = true;
-    playStart();                                                 /* startjap.mov or starteng.mov, depending on the language */
+    playStart();
     const t0 = performance.now();
     const step = (now) => {
       const k = Math.min(1, (now - t0) / ZOOM_MS);
@@ -2990,17 +3183,19 @@ applyLanguage(currentLang);
 (function(){
   var sec=document.getElementById("skill-bars");if(!sec)return;
   var D=[
-    [["Unity",3],["Unreal Engine",1],["C++",1]],
-    [["Shader Graph",2],["Shader Templates",1],["HLSL",1]],
+    [["Unity",3],["Unreal Engine",2],["C++",1]],
+    [["Shader Graph",3],["Shader Templates",1],["HLSL",1]],
     [["Blender",1],["Blockbench",2],["World Machine",6]],
     [["Photoshop",6],["Illustrator",3],["Clip Studio Paint",3]],
     [["Audacity",6],["Ableton",3],["Logic Pro X",2]],
     [["Premiere Pro",5],["Final Cut Pro",1],["Meta Edits",1]]
   ];
+  var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
   var cats=[].slice.call(sec.querySelectorAll(".sb-c")),rows=document.getElementById("sbRows");
+  /* rows are drawn hidden (data-level holds the bar length); reveal() fades them in one after another and then fills the bars */
   function rowsHTML(i){
     return D[i].map(function(t,k){return [t[0],t[1],k]}).sort(function(a,b){return (b[1]-a[1])||(a[2]-b[2])}).map(function(tool,n){
-      return '<div class="sb-row'+(n===0?' sb-top':'')+'"><div class="sb-line"><span class="sb-fill" style="width:0" data-level="'+Math.min(100,tool[1]*10)+'%"></span></div><span class="sb-num">'+tool[1]+(tool[1]===1?' year':' years')+'</span><div class="sb-lab">'+tool[0]+'</div></div>';
+      return '<div class="sb-row'+(n===0?' sb-top':'')+'" style="--n:'+n+'"><div class="sb-line"><span class="sb-fill" style="width:0" data-level="'+Math.min(100,tool[1]*10)+'%"></span></div><span class="sb-num">'+tool[1]+(tool[1]===1?' year':' years')+'</span><div class="sb-lab">'+tool[0]+'</div></div>';
     }).join("");
   }
   /* the list always has the height of the tallest category, so switching categories never moves the page */
@@ -3009,24 +3204,38 @@ applyLanguage(currentLang);
     for(var i=0;i<D.length;i++){rows.innerHTML=rowsHTML(i);max=Math.max(max,rows.offsetHeight)}
     rows.innerHTML=keep;rows.style.minHeight=max+"px";
   }
-  var cur=0,timer=null;
+  function fill(r){var f=r.querySelector(".sb-fill");f.style.width=f.dataset.level;r.classList.add("in")}
+  function paint(i){
+    rows.innerHTML=rowsHTML(i);
+    var list=[].slice.call(rows.querySelectorAll(".sb-row"));
+    if(reduce){list.forEach(fill);return}
+    void rows.offsetWidth;
+    requestAnimationFrame(function(){requestAnimationFrame(function(){list.forEach(fill)})});
+  }
+  var cur=0,timer=null,shown=false,tok=0;
   function show(i){
     cur=i;cats.forEach(function(c,k){c.classList.toggle("on",k===i)});
-    rows.innerHTML=rowsHTML(i)
-;
-    requestAnimationFrame(function(){[].slice.call(rows.querySelectorAll(".sb-fill")).forEach(function(fill){fill.style.width=fill.dataset.level})});
+    var my=++tok,old=[].slice.call(rows.querySelectorAll(".sb-row.in"));
+    if(old.length&&!reduce){old.forEach(function(r){r.classList.add("out")});setTimeout(function(){if(my===tok)paint(i)},280)}
+    else paint(i);
   }
-  function schedule(){clearTimeout(timer);timer=setTimeout(function(){show((cur+1)%D.length);schedule()},3200)}
-  cats.forEach(function(cat,k){cat.addEventListener("click",function(){show(k);schedule()})});
-  function start(){if(timer)return;schedule()}
-  show(0);lock();
+  function schedule(){clearTimeout(timer);timer=setTimeout(function(){show((cur+1)%D.length);schedule()},3600)}
+  cats.forEach(function(cat,k){cat.addEventListener("click",function(){if(!shown)return;show(k);schedule()})});
+  /* nothing is revealed until the section scrolls into view; every time it comes back into view the reveal plays again */
+  cats.forEach(function(c,k){c.classList.toggle("on",k===cur)});
+  rows.innerHTML=rowsHTML(cur);lock();
+  function enter(){if(shown)return;shown=true;tok++;paint(cur);schedule()}
+  function leave(){if(!shown)return;shown=false;clearTimeout(timer);timer=null;tok++;rows.innerHTML=rowsHTML(cur)}
   var lk=0;function relock(){cancelAnimationFrame(lk);lk=requestAnimationFrame(lock)}
   addEventListener("resize",relock);addEventListener("load",relock);
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(relock);
   new MutationObserver(relock).observe(document.documentElement,{attributes:true,attributeFilter:["class","lang"]});
   if("IntersectionObserver" in window){
-    new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting)start();else{clearTimeout(timer);timer=null}})},{threshold:.2}).observe(sec);
-  }else start();
+    new IntersectionObserver(function(entries){entries.forEach(function(en){
+      if(en.isIntersecting&&(en.intersectionRatio>=.3||en.intersectionRect.height>=innerHeight*.35))enter();
+      else if(!en.isIntersecting)leave();
+    })},{threshold:[0,.1,.3,.6]}).observe(sec);
+  }else enter();
 })();
 
 /* skills heading: sentence stays on 1 line, category list always on 2 lines at most (English and Japanese, every screen width) */
@@ -3051,16 +3260,42 @@ applyLanguage(currentLang);
 (function(){
   var card=document.getElementById("kiwiResumeEndCard");if(!card)return;
   var canvas=document.getElementById("kiwiResumeCanvas"),pill=document.getElementById("kiwiPillText");
+  /* The score to beat. */
+  var HIGHSCORE=108;
+  var fmt=function(n){return n.toLocaleString("en-US")};
+  var hs=document.getElementById("kiwiHS");if(hs)hs.textContent=fmt(HIGHSCORE);
+  var title=document.getElementById("krTitle"),sub=document.getElementById("krSub"),mail=document.getElementById("krMail"),retry=document.getElementById("krRetry");
+  var isJa=function(){return document.documentElement.classList.contains("lang-ja")};
+  function say(el,en,ja){el.dataset.en=en;el.dataset.ja=ja;el.innerHTML=isJa()?ja:en}
+  function render(win,score){
+    if(win){
+      say(title,"You won!","勝ちました！");
+      say(sub,"Contact me for the prize.","賞品についてはお問い合わせください。");
+      mail.hidden=false;retry.hidden=true;
+    }else{
+      say(title,"You lost.","負けました。");
+      say(sub,"","");
+      mail.hidden=true;retry.hidden=false;
+    }
+  }
   function close(){card.hidden=true;if(canvas)canvas.focus({preventScroll:true})}
-  var x=card.querySelector(".kr-close");if(x)x.addEventListener("click",close);
-  var ag=card.querySelector(".kr-again");if(ag)ag.addEventListener("click",function(){card.hidden=true;if(canvas){canvas.focus({preventScroll:true});try{canvas.click()}catch(e){}}});
+  new MutationObserver(function(){
+    if(card.hidden)return;
+    var score=Number(card.dataset.score)||0;
+    render(score>=HIGHSCORE,score);
+  }).observe(card,{attributes:true,attributeFilter:["hidden"]});
+  retry.addEventListener("click",function(){card.hidden=true;if(canvas){canvas.focus({preventScroll:true});try{canvas.click()}catch(e){}}});
   card.addEventListener("click",function(e){if(e.target===card||e.target.classList.contains("kr-panel"))close()});
   addEventListener("keydown",function(e){if(e.key==="Escape"&&!card.hidden)close()});
   /* pill: "Click to start or press Space" turns into a jump hint after the first try */
   var done=false;
-  function started(){if(done||!pill)return;done=true;pill.dataset.en="Click or press Space to jump";pill.dataset.ja="クリックまたはSpaceキーでジャンプ";pill.textContent=document.documentElement.classList.contains("lang-ja")?pill.dataset.ja:pill.dataset.en}
+  function started(){if(done||!pill)return;done=true;pill.dataset.en="Click or press Space to jump";pill.dataset.ja="クリックまたはSpaceキーでジャンプ";pill.textContent=isJa()?pill.dataset.ja:pill.dataset.en}
   if(canvas)canvas.addEventListener("pointerdown",started);
-  addEventListener("keydown",function(e){if(e.code==="Space"&&canvas&&canvas.getBoundingClientRect().bottom>0&&canvas.getBoundingClientRect().top<innerHeight)started()});
+  addEventListener("keydown",function(e){
+    if(e.code!=="Space"||!canvas)return;
+    var r=canvas.getBoundingClientRect();
+    if(r.bottom>0&&r.top<innerHeight)started();
+  });
 })();
 </script>
 <script>
@@ -3070,5 +3305,170 @@ applyLanguage(currentLang);
   if(dv&&dp)dv.addEventListener("loadedmetadata",function(){if(dv.videoWidth&&dv.videoHeight){var r=Math.min(Math.max(dv.videoWidth/dv.videoHeight,.8),2);dp.style.setProperty("--dr",(Math.round(r*1000)/1000)+"/1")}});
 })();
 </script>
+<script id="tgs-script">
+/* Tokyo Game Show: the video is only visible inside the headline letters (a black canvas with the text cut out of it).
+   The headline starts so big that one letter fills the screen, zooms out, then shrinks and turns into a light gradient. */
+(function(){
+  var sec=document.getElementById("tgs"); if(!sec)return;
+  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){sec.classList.add("tgs-still");return;}
+  var stage=sec.querySelector(".tgs-stage"),video=sec.querySelector(".tgs-video"),cv=sec.querySelector(".tgs-canvas"),
+      title=document.getElementById("tgsTitle"),copy=sec.querySelector(".tgs-copy"),b2=sec.querySelector(".tgs-b2"),
+      b2txt=sec.querySelector(".tgs-b2-text"),lap=sec.querySelector(".tgs-lap"),pauseBtn=document.getElementById("tgsPause");
+  var sub=sec.querySelectorAll(".tgs-sub"),par=sec.querySelectorAll(".tgs-p");
+  var ctx=cv.getContext("2d");
+  var W=0,H=0,dpr=1,small=false,txt="",hs0=100,hs1=60,Hy1=0,Dmax=0,S0=50,Fx=0,Fy=0,langKey="",lastP=-1,dirty=true,userPaused=false,ready=false;
+  var smallScreen=(matchMedia("(pointer: coarse)").matches&&Math.min(screen.width,screen.height)<700)||innerWidth<700;
+
+  function clamp(t){return t<0?0:t>1?1:t}
+  function ease(t){t=clamp(t);return t*t*(3-2*t)}
+  function isJa(){return document.documentElement.classList.contains("lang-ja")}
+  function fontFor(px){return "700 "+px+"px "+(isJa()?'"Noto Sans JP",Inter':'Inter,"Noto Sans JP"')+',-apple-system,"Helvetica Neue",Arial,sans-serif'}
+  function setLS(c,px){if("letterSpacing" in c)c.letterSpacing=(isJa()?0:-px*.03)+"px"}
+  function prep(c,px){c.font=fontFor(px);setLS(c,px);c.textAlign="center";c.textBaseline="middle"}
+
+  /* biggest circle that fits inside the letters: its centre is where the first screen zooms from */
+  function inscribed(){
+    var c=document.createElement("canvas"),x=c.getContext("2d",{willReadFrequently:true});
+    prep(x,hs0);
+    var tw=Math.ceil(x.measureText(txt).width),pad=Math.ceil(hs0*.3),w=tw+pad*2,h=Math.ceil(hs0*1.7);
+    c.width=w;c.height=h;prep(x,hs0);x.fillStyle="#000";x.fillText(txt,w/2,h/2);
+    var d=x.getImageData(0,0,w,h).data,n=w*h,D=new Int32Array(n),i,xx,yy,v,INF=1e6;
+    for(i=0;i<n;i++)D[i]=d[i*4+3]>127?INF:0;
+    for(yy=0;yy<h;yy++)for(xx=0;xx<w;xx++){i=yy*w+xx;if(!D[i])continue;v=D[i];
+      if(xx>0)v=Math.min(v,D[i-1]+3);
+      if(yy>0){v=Math.min(v,D[i-w]+3);if(xx>0)v=Math.min(v,D[i-w-1]+4);if(xx<w-1)v=Math.min(v,D[i-w+1]+4)}
+      D[i]=v}
+    var best=0,bi=0;
+    for(yy=h-1;yy>=0;yy--)for(xx=w-1;xx>=0;xx--){i=yy*w+xx;if(!D[i])continue;v=D[i];
+      if(xx<w-1)v=Math.min(v,D[i+1]+3);
+      if(yy<h-1){v=Math.min(v,D[i+w]+3);if(xx<w-1)v=Math.min(v,D[i+w+1]+4);if(xx>0)v=Math.min(v,D[i+w-1]+4)}
+      D[i]=v;if(v>best&&Math.abs(xx-w/2)<tw*.14){best=v;bi=i}}
+    return {r:Math.max(best/3-1,1),x:(bi%w)-w/2,y:Math.floor(bi/w)-h/2};
+  }
+
+  function layout(){
+    W=stage.clientWidth;H=stage.clientHeight;if(!W||!H)return;
+    small=W<700;dpr=Math.min(window.devicePixelRatio||1,2);
+    cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);
+    langKey=isJa()?"ja":"en";txt=(isJa()?title.dataset.ja:title.dataset.en)||title.textContent;
+    prep(ctx,100);
+    var w100=ctx.measureText(txt).width||1;
+    hs0=Math.min(100*W*(small?.9:.84)/w100,H*.34);
+    hs1=Math.min(100*W*(small?.74:.5)/w100,H*.15);
+    Hy1=Math.max(H*(small?.17:.2),52+26+hs1*.42);
+    var bt=Hy1+hs1*.42+Math.max(24,H*.05);
+    copy.style.setProperty("--bt",bt+"px");
+    var textH=b2txt.offsetHeight,gap=Math.max(24,H*.045),bm=Math.max(18,H*.045),avail=H-96-textH-gap-44-bm;
+    var lw=Math.min(W*(small?.94:.7),Math.max(W*(small?.6:.4),avail/.57));
+    lap.style.setProperty("--lw",lw+"px");lap.style.marginTop=gap+"px";
+    Dmax=Math.max(0,bt+b2.offsetHeight+bm-H);
+    var f=inscribed();Fx=f.x;Fy=f.y;
+    S0=Math.min(500,Math.hypot(W,H)/2/f.r*1.12);
+    ready=true;dirty=true;render();
+  }
+
+  function setItem(el,aIn,aOut){
+    var o=aIn*(1-aOut);
+    el.style.opacity=o.toFixed(3);
+    el.style.transform="translate3d(0,"+((1-aIn)*26-aOut*14).toFixed(1)+"px,0)";
+  }
+
+  function draw(s,cx,cy,fs,yc,g,ha){
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.globalCompositeOperation="source-over";ctx.globalAlpha=1;
+    ctx.clearRect(0,0,W,H);
+    if(g<1){ctx.fillStyle="#000";ctx.fillRect(0,0,W,H)}
+    prep(ctx,fs);
+    ctx.save();
+    ctx.translate(W/2,yc);ctx.scale(s,s);ctx.translate(-cx,-cy);
+    if(g<1){ctx.globalCompositeOperation="destination-out";ctx.fillStyle="#000";ctx.fillText(txt,0,0)}
+    if(g>0&&ha>0){
+      var tw=ctx.measureText(txt).width,gr=ctx.createLinearGradient(-tw/2,0,tw/2,0);
+      gr.addColorStop(0,"#d4efe8");gr.addColorStop(.38,"#a6cfcb");gr.addColorStop(.72,"#7fa4bd");gr.addColorStop(1,"#667f9e");
+      ctx.globalCompositeOperation="source-over";ctx.globalAlpha=g*ha;ctx.fillStyle=gr;ctx.fillText(txt,0,0);
+    }
+    ctx.restore();
+  }
+
+  function loadVideo(){
+    if(video.getAttribute("src")||!video.dataset.src)return;
+    video.src=smallScreen?video.dataset.src.replace(/\.mp4(?=#|$)/,"-m.mp4"):video.dataset.src;video.load();
+  }
+  video.muted=true;video.defaultMuted=true;video.disablePictureInPicture=true;
+  video.addEventListener("error",function(){
+    var s=video.getAttribute("src")||"";
+    if(/-m\.mp4/.test(s)){video.src=video.dataset.src;video.load()}
+  });
+
+  function render(){
+    if(!ready)return;
+    var r=sec.getBoundingClientRect(),span=r.height-H;
+    var p=clamp(-r.top/span);
+    var near=r.top<H*2&&r.bottom>-H,vis=r.top<H&&r.bottom>0;
+    sec.classList.toggle("tgs-off",!vis);
+    if(near)loadVideo();
+    var wantPlay=vis&&p<.5&&!userPaused;
+    if(wantPlay&&video.paused){var pr=video.play();if(pr&&pr.catch)pr.catch(function(){})}
+    else if(!wantPlay&&!video.paused)video.pause();
+    pauseBtn.classList.toggle("on",vis&&p<.34);
+    if(!dirty&&Math.abs(p-lastP)<.0002)return;
+    lastP=p;dirty=false;
+
+    var s=1,cx=0,cy=0,t=ease((p-.04)/.26);
+    if(p<.31){
+      s=Math.exp(Math.log(S0)*(1-t));
+      var k=(1/s-1)/(1/S0-1);cx=Fx*k;cy=Fy*k;
+    }
+    var u=ease((p-.37)/.13),fs=hs0+(hs1-hs0)*u,yc=H/2+(Hy1-H/2)*u,g=ease((p-.39)/.11);
+    var D=Dmax*clamp((p-.78)/.16);
+    yc-=D;
+    var ha=clamp((yc-fs*.5-58)/(fs*.8));
+    draw(s,cx,cy,fs,yc,g,ha);
+    video.style.visibility=g>=1?"hidden":"visible";
+
+    var o1=ease((p-.68)/.05);
+    setItem(sub[0],ease((p-.50)/.05),o1);
+    setItem(par[0],ease((p-.53)/.05),o1);
+    setItem(sub[1],ease((p-.72)/.05),0);
+    setItem(par[1],ease((p-.74)/.05),0);
+    setItem(lap,ease((p-.75)/.05),0);
+    copy.style.transform="translate3d(0,"+(-D).toFixed(1)+"px,0)";
+    copy.style.pointerEvents=p>.7?"auto":"none";
+  }
+
+  pauseBtn.addEventListener("click",function(){
+    userPaused=!userPaused;
+    pauseBtn.setAttribute("aria-pressed",userPaused?"true":"false");
+    pauseBtn.setAttribute("aria-label",isJa()?(userPaused?"動画を再生":"動画を一時停止"):(userPaused?"Play video":"Pause video"));
+    render();
+  });
+
+  var tick=false;
+  function onScroll(){if(tick)return;tick=true;requestAnimationFrame(function(){tick=false;render()})}
+  addEventListener("scroll",onScroll,{passive:true});
+  var rt=0;
+  addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(layout,120)},{passive:true});
+  new MutationObserver(function(){if((isJa()?"ja":"en")!==langKey)layout();pauseBtn.setAttribute("aria-label",isJa()?"動画を一時停止":"Pause video")}).observe(document.documentElement,{attributes:true,attributeFilter:["class"]});
+  addEventListener("load",layout);
+  if(document.fonts&&document.fonts.load){
+    Promise.all([document.fonts.load("700 100px Inter"),document.fonts.load('700 100px "Noto Sans JP"',"東京ゲームショウ")]).then(layout,layout);
+    document.fonts.ready.then(layout);
+  }
+  /* laptop pictures: 01 02 03 04 03 02 01 02 ... each one fades in on top of the previous one (no dark dip) */
+  (function(){
+    var im=sec.querySelectorAll(".tgs-scr img"),seq=[0,1,2,3,2,1],si=0,cur=0,FADE=1800,GAP=2000;
+    if(im.length<2)return;
+    setInterval(function(){
+      if(sec.classList.contains("tgs-off"))return;
+      si=(si+1)%seq.length;var n=seq[si],a=im[n],o=im[cur];if(n===cur)return;
+      a.style.transition="none";a.style.opacity="0";a.style.zIndex="2";void a.offsetWidth;
+      a.style.transition="opacity "+FADE+"ms ease-in-out";a.style.opacity="1";o.style.zIndex="1";cur=n;
+      setTimeout(function(){for(var i=0;i<im.length;i++){if(im[i]!==a){im[i].style.transition="none";im[i].style.opacity="0";im[i].style.zIndex="0"}}a.style.zIndex="1"},FADE+60);
+    },GAP);
+  })();
+  layout();
+})();
+</script>
+
 </body>
 </html>

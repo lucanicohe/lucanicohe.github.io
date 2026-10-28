@@ -59,6 +59,7 @@ async function start() {
 
       if (game.mode === 'gameover' && !showingEndCard) {
         showingEndCard = true;
+        endCard.dataset.score = String(game.score.value);
         stage.classList.add('is-game-over');
         endCard.hidden = false;
         status.textContent = document.documentElement.classList.contains('lang-ja')

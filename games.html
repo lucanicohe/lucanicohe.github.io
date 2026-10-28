@@ -3,6 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>
+/* LANGUAGE: open in the visitor's browser language (Japanese = ja, everything else = en). A choice made with the toggle is remembered on all pages. */
+(function(){
+  var l=null,r=document.documentElement;
+  try{l=localStorage.getItem("luca-lang")}catch(e){}
+  if(l!=="ja"&&l!=="en"){
+    var n=(navigator.languages&&navigator.languages.length?navigator.languages[0]:navigator.language)||"";
+    l=/^ja\b/i.test(n)?"ja":"en";
+  }
+  window.__lang=l;r.lang=l;r.classList.toggle("lang-ja",l==="ja");
+  if(l==="en"){r.classList.add("lang-pending");setTimeout(function(){r.classList.remove("lang-pending")},2500)}
+})();
+</script>
 <title>Games — Luca Helgert</title>
 <meta name="description" content="All my games: team projects, solo projects and design work by Luca Helgert.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -205,6 +218,16 @@ html.lang-ja .bigt-p{line-height:1.8;font-weight:400;font-size:clamp(15px,calc(v
   html.lang-ja .bigt-p{font-size:clamp(15px,calc(var(--u)*2.15),23px)}
 }
 @media (prefers-reduced-motion:reduce){.fc{transition:none}html{scroll-behavior:auto}}
+html.lang-pending body{visibility:hidden}
+/* nav: three plain links; they stay visible on phones */
+@media (max-width:640px){.lnav-links a:not(.pill){display:flex;font-size:12px}.lnav-links{gap:14px}}
+@media (max-width:480px){.lnav-title{display:none}.lnav-in{justify-content:flex-end}}
+@media (max-width:380px){.lnav-links{gap:10px}.lnav-links a:not(.pill){font-size:11.5px}}
+/* footer: very quiet copyright left, mail icon right */
+footer.sf{width:min(100% - 40px,max(var(--cw),620px));margin:0 auto;padding:16px 0 20px;border-top:1px solid rgba(0,0,0,.08);display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:11px;line-height:1;letter-spacing:0;color:#86868b}
+footer.sf .sf-m{display:inline-flex;align-items:center;color:inherit;opacity:.8;transition:opacity .2s,color .2s}
+footer.sf .sf-m:hover,footer.sf .sf-m:focus-visible{opacity:1;color:#1d1d1f}
+footer.sf svg{display:block;width:1.35em;height:1.35em}
 </style>
 </head>
 <body>
@@ -213,11 +236,8 @@ html.lang-ja .bigt-p{line-height:1.8;font-weight:400;font-size:clamp(15px,calc(v
   <div class="lnav-in">
     <a class="lnav-title" href="#top"><span class="i18n" data-en="Games" data-ja="ゲーム">ゲーム</span></a>
     <div class="lnav-links">
-      <a class="on" href="#top" data-k="overview"><span class="i18n" data-en="Overview" data-ja="概要">概要</span></a>
-      <a href="#team" data-k="team"><span class="i18n" data-en="Team" data-ja="チーム作品">チーム作品</span></a>
-      <a href="#more" data-k="more"><span class="i18n" data-en="More" data-ja="そのほか">そのほか</span></a>
-      <a href="#design" data-k="design"><span class="i18n" data-en="Design" data-ja="デザイン">デザイン</span></a>
-      <a class="pill" href="index.html"><span class="i18n" data-en="Home" data-ja="ホーム">ホーム</span></a>
+      <a href="index.html"><span class="i18n" data-en="Portfolio" data-ja="ポートフォリオ">ポートフォリオ</span></a>
+      <a href="mailto:luca.helgert@icloud.com"><span class="i18n" data-en="Contact" data-ja="お問い合わせ">お問い合わせ</span></a>
       <button class="lang" id="lang" type="button" aria-label="Switch language">EN</button>
     </div>
   </div>
@@ -414,9 +434,9 @@ html.lang-ja .bigt-p{line-height:1.8;font-weight:400;font-size:clamp(15px,calc(v
   </div>
 </section>
 </main>
-<footer class="foot">
-  <a class="i18n lnk back" data-en="Back to the portfolio" data-ja="ポートフォリオに戻る" href="index.html">ポートフォリオに戻る</a>
-  <p>Luca Helgert</p>
+<footer class="sf">
+  <span class="i18n" data-en="© 2026 Luca Helgert" data-ja="© 2026 ヘルゲルト・るか">© 2026 ヘルゲルト・るか</span>
+  <a class="sf-m" href="mailto:luca.helgert@icloud.com" aria-label="Email / メール"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1.5" y="3.5" width="13" height="9" rx="2"/><path d="M2.3 4.8 8 9l5.7-4.2"/></svg></a>
 </footer><script>
 (() => {
 "use strict";
@@ -425,7 +445,7 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
 
 /* ---------- language (starts in Japanese, same as the main page; ?lang=en opens English) ---------- */
 const langBtn = document.getElementById("lang");
-let lang = "ja";
+let lang = window.__lang || "ja";
 function applyLang(l) {
     lang = l;
     root.lang = l;
@@ -438,9 +458,10 @@ function applyLang(l) {
     document.title = l === "ja" ? "ゲーム — ヘルゲルト・ルカ" : "Games — Luca Helgert";
     document.querySelectorAll(".pdf").forEach((b) => { if (b._status) b._status(); });
     document.querySelectorAll("[data-rail]").forEach((s) => s._upd && s._upd());
+    root.classList.remove("lang-pending");
 }
-langBtn.addEventListener("click", () => applyLang(lang === "ja" ? "en" : "ja"));
-if (/[?&]lang=en/.test(location.search)) applyLang("en");
+langBtn.addEventListener("click", () => { const next = lang === "ja" ? "en" : "ja"; try { localStorage.setItem("luca-lang", next); } catch (e) {} applyLang(next); });
+if (lang === "en" || /[?&]lang=en/.test(location.search)) applyLang("en");
 
 /* ---------- nav: hairline after scrolling, underline follows the screen you are on ---------- */
 const lnav = document.getElementById("lnav");
