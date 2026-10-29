@@ -1918,6 +1918,10 @@ footer.sf .sf-g{white-space:nowrap}
 /* XP ending: same grey as the Kiwi section above (#f5f5f7). The 4:3 screen is sized so that, at the very bottom of the page, it sits between the fixed 52px nav and the copyright line (52 nav + 32 padding + ~48 footer + gap). */
 #xpEnd{position:relative;background:#f5f5f7;padding:52px 0 32px}
 #xpEnd .xp-frame{display:block;margin:0 auto;border:0;background:transparent;width:min(100%,calc((100vh - 140px) * 4 / 3));width:min(100%,calc((100svh - 140px) * 4 / 3));aspect-ratio:4/3;height:auto}
+/* scroll hint: small light-grey Apple-style text right next to the down arrow of the intro; the arrow + text pair stays centred where the arrow was (the individual translate property does not touch the arrow's own transform) */
+#ahScroll{width:auto;min-width:44px;margin-left:0;padding:0 4px;translate:-50% 0;display:flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap}
+#ahScroll .ah-scroll-t{font-size:clamp(13px,1.05vw,15px);font-weight:500;letter-spacing:-.01em;line-height:1;color:#6e6e73}
+html.lang-ja #ahScroll .ah-scroll-t{letter-spacing:.02em}
 </style>
 </head>
 
@@ -1945,19 +1949,19 @@ footer.sf .sf-g{white-space:nowrap}
 <div class="ah-stage" id="ahStage">
 <div class="ah-grid" id="ahGrid">
 <div class="ah-tile center" id="ahCenter"><div class="scr">
-<video class="ah-v on" id="ahVJa" src="newtrainloopjap.mov" autoplay loop muted playsinline webkit-playsinline preload="auto" aria-hidden="true"></video>
-<video class="ah-v" id="ahVEn" data-src="newtrainloopeng.mov" loop muted playsinline webkit-playsinline preload="none" aria-hidden="true"></video>
-<video class="ah-v" id="ahVSJa" data-src="newtrainstartjap.mov" muted playsinline webkit-playsinline preload="none" aria-hidden="true"></video>
-<video class="ah-v" id="ahVSEn" data-src="newtrainstarteng.mov" muted playsinline webkit-playsinline preload="none" aria-hidden="true"></video>
-<video class="ah-v" id="ahVEJa" data-src="newtrainstopjap.mov" muted playsinline webkit-playsinline preload="none" aria-hidden="true"></video>
-<video class="ah-v" id="ahVEEn" data-src="newtrainstopeng.mov" muted playsinline webkit-playsinline preload="none" aria-hidden="true"></video>
+<video class="ah-v on" id="ahVJa" src="newtrainloopjap.mp4" autoplay loop muted playsinline webkit-playsinline preload="auto" aria-hidden="true"></video>
+<video class="ah-v" id="ahVEn" data-src="newtrainloopeng.mp4" loop muted playsinline webkit-playsinline preload="none" aria-hidden="true"></video>
+<video class="ah-v" id="ahVSJa" data-src="newtrainstartjap.mp4" muted playsinline webkit-playsinline preload="none" aria-hidden="true"></video>
+<video class="ah-v" id="ahVSEn" data-src="newtrainstarteng.mp4" muted playsinline webkit-playsinline preload="none" aria-hidden="true"></video>
+<video class="ah-v" id="ahVEJa" data-src="newtrainstopjap.mp4" muted playsinline webkit-playsinline preload="none" aria-hidden="true"></video>
+<video class="ah-v" id="ahVEEn" data-src="newtrainstopeng.mp4" muted playsinline webkit-playsinline preload="none" aria-hidden="true"></video>
 <button type="button" class="ah-zoomhit" id="ahZoomHit" aria-label="Zoom out / ズームアウト"></button>
 <button type="button" class="ah-hit" id="ahHit" aria-label="Switch language / 言語を切り替える"></button>
 <script>(function(){if(window.__lang!=="en")return;var j=document.getElementById("ahVJa"),e=document.getElementById("ahVEn");if(!j||!e)return;j.dataset.src=j.getAttribute("src");j.removeAttribute("src");j.removeAttribute("autoplay");j.preload="none";j.classList.remove("on");try{j.load()}catch(x){}e.preload="auto";e.autoplay=true;e.src=e.dataset.src;e.classList.add("on");})();</script>
 </div><i class="cam"></i></div>
 <h2 class="i18n ah-welcome" id="ahWelcome" data-en="Welcome to &lt;span class=&quot;ah-grad&quot;&gt;my portfolio&lt;/span&gt;" data-ja="&lt;span class=&quot;ah-grad&quot;&gt;ポートフォリオ&lt;/span&gt;へようこそ"><span class="ah-grad">ポートフォリオ</span>へようこそ</h2>
 </div>
-<button type="button" class="ah-scroll" id="ahScroll" aria-label="Scroll down" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9.5l6 6 6-6"/></svg></button>
+<button type="button" class="ah-scroll" id="ahScroll" aria-label="Scroll down" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9.5l6 6 6-6"/></svg><span class="i18n ah-scroll-t" data-en="Please scroll down" data-ja="下にスクロールしてください">下にスクロールしてください</span></button>
 </div>
 </section>
 
@@ -2293,8 +2297,10 @@ hr{border:0;border-top:1px solid #d6d6d6;margin:4px 14px 8px}
 #dok{display:block;width:90px;height:28px;margin:14px auto 12px;border:2px solid #1d4a99;border-radius:4px;background:linear-gradient(#fff,#f3f2ea 55%,#dedbcc);font:16px Tahoma,Arial,sans-serif;color:#000}
 .ja #dok{font-family:'MS UI Gothic','Yu Gothic','Hiragino Kaku Gothic ProN',Tahoma,sans-serif}
 #dok:hover{box-shadow:inset 0 0 0 2px #f4b440}
-#stage.live,#stage.live *{cursor:default}
-#stage.live #dok,#stage.live #dx{cursor:pointer}
+/* opening (fake cursor on screen): real input off, real cursor hidden. From the typing on: the real cursor is the XP arrow (--xpcur, set by JS to match the fake one) */
+body:not(.typing){cursor:none}
+body:not(.typing) #stage{pointer-events:none}
+body.typing,body.typing #stage,body.typing #stage *{cursor:var(--xpcur,default)}
 /* balloon */
 #bl{display:none;position:absolute;left:616px;bottom:52px;width:308px;z-index:50;padding:11px 14px 12px;background:#ffffe1;border:1px solid #000;border-radius:9px;font-size:14px;line-height:1.3;color:#000;box-shadow:2px 3px 5px rgba(0,0,0,.35)}
 #bl:after{content:'';position:absolute;right:11px;bottom:-9px;width:16px;height:16px;background:#ffffe1;border:solid #000;border-width:0 1px 1px 0;transform:rotate(45deg) skew(10deg,10deg)}
@@ -2354,7 +2360,8 @@ hr{border:0;border-top:1px solid #d6d6d6;margin:4px 14px 8px}
 <script>
 const $=s=>document.querySelector(s),sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const st=$('#stage'),cur=$('#cur');
-function fit(){st.style.transform='scale('+Math.min(innerWidth/1024,innerHeight/768)+')'}
+function xpCursor(k){const w=Math.max(12,Math.min(120,Math.round(26*k))),h=Math.round(w*38/26),svg="<svg xmlns='http://www.w3.org/2000/svg' width='"+w+"' height='"+h+"' viewBox='0 0 12 17'><path d='M.5.5v13l3-2.8 2.2 5 1.9-.9-2.1-4.9H10.5z' fill='white' stroke='black'/></svg>";document.documentElement.style.setProperty('--xpcur','url("'+'data:image/svg+xml,'+encodeURIComponent(svg)+'") 0 0, default')}
+function fit(){const k=Math.min(innerWidth/1024,innerHeight/768);st.style.transform='scale('+k+')';xpCursor(k)}
 addEventListener('resize',fit);fit();
 
 /* ---- texts ---- */
@@ -2419,7 +2426,7 @@ async function run(l){
   $('#np').classList.add('open');$('#tbtn').style.display='block';
   await sleep(300);
   await go($('#oeb'),450,.5,.5);
-  cur.style.opacity=0;
+  cur.style.opacity=0;document.body.classList.add('typing');
   await sleep(250);
   const ls=LINES[l];
   try{
