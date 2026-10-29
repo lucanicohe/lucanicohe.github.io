@@ -2360,7 +2360,7 @@ body.typing,body.typing #stage,body.typing #stage *{cursor:var(--xpcur,default)}
 <script>
 const $=s=>document.querySelector(s),sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const st=$('#stage'),cur=$('#cur');
-function xpCursor(k){const w=Math.max(12,Math.min(120,Math.round(26*k))),h=Math.round(w*38/26),svg="<svg xmlns='http://www.w3.org/2000/svg' width='"+w+"' height='"+h+"' viewBox='0 0 12 17'><path d='M.5.5v13l3-2.8 2.2 5 1.9-.9-2.1-4.9H10.5z' fill='white' stroke='black'/></svg>";document.documentElement.style.setProperty('--xpcur','url("'+'data:image/svg+xml,'+encodeURIComponent(svg)+'") 0 0, default')}
+function xpCursor(k){const h=Math.max(16,Math.min(32,Math.round(38*k))),w=Math.round(h*26/38),svg="<svg xmlns='http://www.w3.org/2000/svg' width='"+w+"' height='"+h+"' viewBox='0 0 12 17'><path d='M.5.5v13l3-2.8 2.2 5 1.9-.9-2.1-4.9H10.5z' fill='white' stroke='black'/></svg>";document.documentElement.style.setProperty('--xpcur','url("'+'data:image/svg+xml,'+encodeURIComponent(svg)+'") 0 0, default')}
 function fit(){const k=Math.min(innerWidth/1024,innerHeight/768);st.style.transform='scale('+k+')';xpCursor(k)}
 addEventListener('resize',fit);fit();
 
@@ -2440,7 +2440,8 @@ async function run(l){
   st.classList.add('live');$('#dlg').classList.add('show');
 }
 $('#dok').addEventListener('click',sendMail);
-$('#dx').addEventListener('click',sendMail);
+function restart(){parent.postMessage({xp:'restart'},'*')}
+document.querySelectorAll('.wb.x').forEach(b=>b.addEventListener('click',restart));
 addEventListener('keydown',e=>{if(e.key==='Enter'&&$('#dlg').classList.contains('show'))sendMail()});
 /* hooks for the portfolio page: set the language before the start, then start once (when scrolled into view) */
 window.xpLang=l=>{document.body.classList.remove('en','ja');setLang(l)};
@@ -3832,11 +3833,18 @@ applyLanguage(currentLang);
     w.xpLang(lang());
     if(seen){started=true;w.xpStart(lang())}
   }
+  var runs=0;
+  function doc(){return '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>'+tpl.innerHTML+"<!--"+(runs++)+"-->"}
   function build(){
     if(built)return;built=true;
     fr.addEventListener("load",sync);
-    fr.srcdoc='<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>'+tpl.innerHTML;
+    fr.srcdoc=doc();
   }
+  /* X on any XP window: load a fresh scene; it starts again by itself (the screen is still in view) */
+  addEventListener("message",function(e){
+    if(e.source!==fr.contentWindow||!e.data||e.data.xp!=="restart")return;
+    started=false;seen=true;fr.srcdoc=doc();
+  });
   new IntersectionObserver(function(es){if(es[0].isIntersecting)build()},{rootMargin:"900px 0px"}).observe(sec);
   new IntersectionObserver(function(es){if(es[0].isIntersecting){seen=true;build();sync()}},{threshold:.6}).observe(fr);
   new MutationObserver(sync).observe(document.documentElement,{attributes:true,attributeFilter:["class"]});
