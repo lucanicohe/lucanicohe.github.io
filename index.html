@@ -1990,6 +1990,9 @@ a.gm-pill:focus-visible{outline:2px solid #0071e3;outline-offset:3px}
 
 /* a design screen is open: the others shrink and step aside, the text slides over */
 .gm-copy{transition:translate .55s cubic-bezier(.22,.8,.2,1)}
+
+/* Guilty Lane pill now opens Zenn: arrow icon instead of mail */
+.gl-play::after{background:#0071e3 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.5 10h10M10.5 6l4 4-4 4'/%3E%3C/svg%3E") center/58% no-repeat}
 </style>
 </head>
 
@@ -2037,7 +2040,7 @@ a.gm-pill:focus-visible{outline:2px solid #0071e3;outline-offset:3px}
 <section class="gl" id="work">
 <div class="gl-block gl-1"><div class="gl-media"><img src="trolley.png" alt="The trolley problem" loading="lazy" decoding="async"></div><div class="gl-copy"><p class="i18n gl-text" data-en="At a hackathon, our team was given a simple concept: &lt;b&gt;the trolley problem&lt;/b&gt;. We could have made a simple 2D game. Instead, we built &lt;b&gt;a full first-person 3D world&lt;/b&gt;. Because I don&#x27;t just want to meet expectations. I want to exceed them. Give me a small idea, and I&#x27;ll turn it into something bigger than you imagined." data-ja="ハッカソンで、私たちのチームに与えられたお題はシンプルでした。&lt;b&gt;トロッコ問題&lt;/b&gt;。単純な2Dゲームで済ませることもできました。でも私たちは、&lt;b&gt;本格的な一人称視点の3Dの世界&lt;/b&gt;を作りました。期待に応えるだけでは、満足できないからです。期待を超えたい。小さなアイデアをください。想像よりも大きなものにしてお返しします。">ハッカソンで、私たちのチームに与えられたお題はシンプルでした。<b>トロッコ問題</b>。単純な2Dゲームで済ませることもできました。でも私たちは、<b>本格的な一人称視点の3Dの世界</b>を作りました。期待に応えるだけでは、満足できないからです。期待を超えたい。小さなアイデアをください。想像よりも大きなものにしてお返しします。</p></div></div>
 
-<div class="gl-block gl-2"><div class="gl-media"><video data-src="tracks.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Track spawning system"></video></div><div class="gl-copy"><div class="gl-lhs"><div class="i18n gl-kicker" data-en="Engineering" data-ja="エンジニアリング">Engineering</div><h3 class="i18n gl-big" data-en="4,096 tracks." data-ja="4,096本の道">4,096 tracks.</h3><div class="i18n gl-note" data-en="12 rounds means 2¹² = 4,096 possible tracks" data-ja="トロッコ問題では、左右を選べます。">12 rounds means 2¹² = 4,096 possible tracks</div></div><div class="gl-rhs"><p class="i18n gl-text" data-en="Every time you pull the lever, you decide who lives and who dies. But behind that simple choice lies a technical challenge: how do you build an endless railway without wasting weeks placing tracks and overwhelming memory? I solved it with dominoes: &lt;b&gt;each track triggers the next, spawning only what the player needs.&lt;/b&gt; At forks, the lever determines which track comes next. AI can generate code, but finding the simplest solution to a problem takes human ingenuity." data-ja="レバーを引くたびに、誰が生き、誰が死ぬかを決めることになります。けれど、その単純な選択の裏には技術的な課題がありました。線路を並べるのに何週間もかけず、メモリも圧迫せずに、終わりのない鉄道をどう作るか。私はドミノで解決しました。&lt;b&gt;それぞれの線路が次の線路を動かし、プレイヤーに必要な分だけを出現させます。&lt;/b&gt;分岐では、レバーが次の線路を決めます。AIはコードを書けても、問題への一番シンプルな答えを見つけるには、人の発想が必要です。">レバーを引くたびに、誰が生き、誰が死ぬかを決めることになります。けれど、その単純な選択の裏には技術的な課題がありました。線路を並べるのに何週間もかけず、メモリも圧迫せずに、終わりのない鉄道をどう作るか。私はドミノで解決しました。<b>それぞれの線路が次の線路を動かし、プレイヤーに必要な分だけを出現させます。</b>分岐では、レバーが次の線路を決めます。AIはコードを書けても、問題への一番シンプルな答えを見つけるには、人の発想が必要です。</p><a class="i18n gl-link" href="https://zenn.dev/lucanicohe/articles/5dbe565dccaf1d" target="_blank" rel="noopener" data-en="Read the article" data-ja="記事を読む">記事を読む</a></div></div></div>
+<div class="gl-block gl-2"><div class="gl-media"><video data-src="tracks.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Track spawning system"></video></div><div class="gl-copy"><div class="gl-lhs"><div class="i18n gl-kicker" data-en="Engineering" data-ja="エンジニアリング">Engineering</div><h3 class="i18n gl-big" data-en="4,096 tracks." data-ja="4,096本の道">4,096 tracks.</h3><div class="i18n gl-note" data-en="12 rounds means 2¹² = 4,096 possible tracks" data-ja="トロッコ問題では、左右を選べます。">12 rounds means 2¹² = 4,096 possible tracks</div></div><div class="gl-rhs"><p class="i18n gl-text" data-en="Every time you pull the lever, you decide who lives and who dies. But behind that simple choice lies a technical challenge: how do you build an endless railway without wasting weeks placing tracks and overwhelming memory? I solved it with dominoes: &lt;b&gt;each track triggers the next, spawning only what the player needs.&lt;/b&gt; At forks, the lever determines which track comes next. AI can generate code, but finding the simplest solution to a problem takes human ingenuity." data-ja="レバーを引くたびに、誰が生き、誰が死ぬかを決めることになります。けれど、その単純な選択の裏には技術的な課題がありました。線路を並べるのに何週間もかけず、メモリも圧迫せずに、終わりのない鉄道をどう作るか。私はドミノで解決しました。&lt;b&gt;それぞれの線路が次の線路を動かし、プレイヤーに必要な分だけを出現させます。&lt;/b&gt;分岐では、レバーが次の線路を決めます。AIはコードを書けても、問題への一番シンプルな答えを見つけるには、人の発想が必要です。">レバーを引くたびに、誰が生き、誰が死ぬかを決めることになります。けれど、その単純な選択の裏には技術的な課題がありました。線路を並べるのに何週間もかけず、メモリも圧迫せずに、終わりのない鉄道をどう作るか。私はドミノで解決しました。<b>それぞれの線路が次の線路を動かし、プレイヤーに必要な分だけを出現させます。</b>分岐では、レバーが次の線路を決めます。AIはコードを書けても、問題への一番シンプルな答えを見つけるには、人の発想が必要です。</p></div></div></div>
 <div class="gl-block gl-3">
 <h3 class="i18n gl-alive-h" data-en="I make your games&lt;br&gt;&lt;span class=&quot;gl-alive&quot;&gt;come alive&lt;/span&gt;." data-ja="あなたのゲームに、&lt;br&gt;&lt;span class=&quot;gl-alive&quot;&gt;命を吹き込みます。&lt;/span&gt;">あなたのゲームに、<br><span class="gl-alive">命を吹き込みます。</span></h3>
 <div class="gl-3-row">
@@ -2047,7 +2050,7 @@ a.gm-pill:focus-visible{outline:2px solid #0071e3;outline-offset:3px}
 <p class="i18n gl-text gl-main" data-en="&lt;b&gt;I&#x27;m a game programmer.&lt;/b&gt; I made rough 3D models and unfinished textures, then turned them into something extraordinary. That&#x27;s my craft: &lt;b&gt;making things work, making them feel alive&lt;/b&gt;, and pushing them beyond what they were ever meant to be." data-ja="&lt;b&gt;私はゲームプログラマーです。&lt;/b&gt;粗い3Dモデルと未完成のテクスチャを、素晴らしいものへと変えました。それが私の仕事です。&lt;b&gt;動くようにし、生き生きと感じさせ&lt;/b&gt;、本来の想定を超えるところまで引き上げること。"><b>私はゲームプログラマーです。</b>粗い3Dモデルと未完成のテクスチャを、素晴らしいものへと変えました。それが私の仕事です。<b>動くようにし、生き生きと感じさせ</b>、本来の想定を超えるところまで引き上げること。</p>
 <p class="i18n gl-text gl-aux" data-en="That mindset helped our team win the hackathon. I don&#x27;t just write code. &lt;b&gt;I make your game come alive.&lt;/b&gt;" data-ja="その姿勢が、チームのハッカソン優勝につながりました。私はコードを書くだけではありません。&lt;b&gt;あなたのゲームに命を吹き込みます。&lt;/b&gt;">その姿勢が、チームのハッカソン優勝につながりました。私はコードを書くだけではありません。<b>あなたのゲームに命を吹き込みます。</b></p>
 </div></div>
-<div class="gl-play-wrap"><a class="i18n gl-play" href="mailto:luca.helgert@icloud.com" data-en="Contact" data-ja="お問い合わせ">お問い合わせ</a></div>
+<div class="gl-play-wrap"><a class="i18n gl-play" href="https://zenn.dev/lucanicohe/articles/5dbe565dccaf1d" target="_blank" rel="noopener" data-en="Read on Zenn" data-ja="Zennで読む">Zennで読む</a></div>
 </div>
 </section>
 
@@ -2236,15 +2239,7 @@ a.gm-pill:focus-visible{outline:2px solid #0071e3;outline-offset:3px}
 
 </main>
 
-<!-- ABOUT (hello hero) -->
-<section class="about hello" id="about" aria-label="More about me">
-<h2 class="about-title hello-title i18n" data-en="Hello world." data-ja="Hello world.">Hello world.</h2>
-<div class="dog-pic" id="dogPic"><video data-src="dog.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Luca Helgert and a dog"></video></div>
-<div class="hello-pill">
-<span class="hello-text i18n" data-en="I come from a small town in Germany. What led me to Japan?" data-ja="ドイツの小さな町出身の私が、なぜ日本に来たのでしょうか？">I come from a small town in Germany. What led me to Japan?</span>
-<a class="hello-btn" href="about.html"><span class="i18n" data-en="Click to learn more" data-ja="詳しく見る">Click to learn more</span></a>
-</div>
-</section>
+
 
 <!-- XP ENDING (very bottom of the page): a Windows XP screen that types an interview invitation email.
      The scene lives in the <template id="xpSrc"> below and is loaded into the iframe only when the bottom of the page is close.
@@ -2540,6 +2535,16 @@ window.xpStart=run;
 </section>
 
 
+
+<!-- ABOUT (hello hero) -->
+<section class="about hello" id="about" aria-label="More about me">
+<h2 class="about-title hello-title i18n" data-en="Hello world." data-ja="Hello world.">Hello world.</h2>
+<div class="dog-pic" id="dogPic"><video data-src="dog.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Luca Helgert and a dog"></video></div>
+<div class="hello-pill">
+<span class="hello-text i18n" data-en="I come from a small town in Germany. What led me to Japan?" data-ja="ドイツの小さな町出身の私が、なぜ日本に来たのでしょうか？">I come from a small town in Germany. What led me to Japan?</span>
+<a class="hello-btn" href="about.html"><span class="i18n" data-en="Click to learn more" data-ja="詳しく見る">Click to learn more</span></a>
+</div>
+</section>
 
 <!-- FOOTER: very quiet copyright left, mail icon right -->
 <footer class="sf">
@@ -3472,17 +3477,29 @@ applyLanguage(currentLang);
       away = false; ending = true; playClip(endOf(curLang));
     }
   }, { passive: true });
+  /* warm everything up the moment the pointer is on the button, so the click itself has no work left to do */
+  let primed = false;
+  const prime = () => {
+    if (primed) return; primed = true;
+    ensureSrc(startOf(curLang));
+    tiles.forEach((o) => { if (o.v && !o.v.src) { o.v.preload = "auto"; attach(o); } });
+  };
+  if (zoomHit) ["pointerenter", "pointerdown", "touchstart", "focus"].forEach((n) => zoomHit.addEventListener(n, prime, { passive: true }));
+  setTimeout(prime, 2500);
   if (zoomHit) zoomHit.addEventListener("click", (e) => {
     e.preventDefault();
     if (anim) return;
+    prime();
     const to = endY(), from = scrollY, dist = to - from;
     if (dist <= 2) return;
     anim = true;
-    playStart();
-    const t0 = performance.now();
+    let t0 = 0, started = false;
     const step = (now) => {
+      if (!t0) t0 = now;                                          /* the clock starts at the first drawn frame, so nothing is skipped */
       const k = Math.min(1, (now - t0) / ZOOM_MS);
-      scrollTo({ top: from + dist * k, behavior: "instant" });   /* the zoom curve itself is already eased */
+      scrollTo({ top: from + dist * k, behavior: "instant" });
+      update();                                                   /* draw this frame right now instead of one frame later */
+      if (!started) { started = true; setTimeout(playStart, 60); }/* swap the video after the first frame is already moving */
       if (k < 1) requestAnimationFrame(step);
       else { anim = false; prevY = scrollY; }
     };
