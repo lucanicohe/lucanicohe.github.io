@@ -1915,7 +1915,7 @@ footer.sf .sf-r{display:inline-flex;align-items:center;gap:14px}
 footer.sf .sf-g{white-space:nowrap}
 </style>
 <style>
-/* XP ending: same grey as the Kiwi section above (#f5f5f7). The 4:3 screen is sized so that, at the very bottom of the page, it sits between the fixed 52px nav and the copyright line (52 nav + 32 padding + ~48 footer + gap). */
+/* XP ending: same grey as the Kiwi section above (#f5f5f7). The 4:3 screen is sized to the viewport height minus the fixed 52px nav and some breathing room, so the whole screen fits on one screen. */
 #xpEnd{position:relative;background:#f5f5f7;padding:52px 0 32px}
 #xpEnd .xp-frame{display:block;margin:0 auto;border:0;background:transparent;width:min(100%,calc((100vh - 140px) * 4 / 3));width:min(100%,calc((100svh - 140px) * 4 / 3));aspect-ratio:4/3;height:auto}
 /* scroll hint: small light-grey Apple-style text right next to the down arrow of the intro; the arrow + text pair stays centred where the arrow was (the individual translate property does not touch the arrow's own transform) */
@@ -2114,16 +2114,6 @@ html.lang-ja #ahScroll .ah-scroll-t{letter-spacing:.02em}
 </div>
 </footer>
 </div>
-
-<!-- ABOUT (hello hero) -->
-<section class="about hello" id="about" aria-label="More about me">
-<h2 class="about-title hello-title i18n" data-en="Hello world." data-ja="Hello world.">Hello world.</h2>
-<div class="dog-pic" id="dogPic"><video data-src="dog.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Luca Helgert and a dog"></video></div>
-<div class="hello-pill">
-<span class="hello-text i18n" data-en="I come from a small town in Germany. What led me to Japan?" data-ja="ドイツの小さな町出身の私が、なぜ日本に来たのでしょうか？">I come from a small town in Germany. What led me to Japan?</span>
-<a class="hello-btn" href="about.html"><span class="i18n" data-en="Click to learn more" data-ja="詳しく見る">Click to learn more</span></a>
-</div>
-</section>
 
 <!-- GAME (last section): beat the highscore, win the chance to work with me -->
 <section class="kiwi-sec" id="kiwi">
@@ -2378,7 +2368,7 @@ ja:{internet:'インターネット',chrome:'Google Chrome',email:'電子メー�
 /* ---- the email. {typo>correct} = types the typo, pauses, backspaces, retypes. Last line is cut off on purpose ---- */
 const LINES={
 en:["{Greeitngs>Greetings},","","After looking through your {porfolio>portfolio}, we are very {imprssed>impressed} and {wuold>would} like to invite you to an {inteview>interview}. What ti§mes"],
-ja:["[へるげると　るか|ヘルゲルト　ルカ][さま|様]","","お[せわ|世話]になっております。","[かぶしきがいしゃ|株式会社]{エグザンブル>エグザンプル}カンパニー[さいようたんとう|採用担当]でございます。","{ポートフォリイ>ポートフォリオ}を[はいけん|拝見]し、[たいへん|大変][かんめい|感銘]を[う|受]けました。つきましては、ぜひ[いちど|一度][めんせつ|面接]をお[ねが|願]いしたく[ぞん|存]じます。ご[つごう|都合]のよろしい[にち§じ|日時]を"]
+ja:["[へるげると　るか|ヘルゲルト　ルカ][さま|様]","","お[せわ|世話]になっております。","{ポートフォリイ>ポートフォリオ}を[はいけん|拝見]し、[たいへん|大変][かんめい|感銘]を[う|受]けました。つきましては、ぜひ[いちど|一度][めんせつ|面接]をお[ねが|願]いしたく[ぞん|存]じます。ご[つごう|都合]のよろしい[にち§じ|日時]を"]
 };
 const MAIL='mailto:luca.helgert@icloud.com?subject='+encodeURIComponent('Hello Luca');
 let L='en';
@@ -2448,6 +2438,16 @@ window.xpLang=l=>{document.body.classList.remove('en','ja');setLang(l)};
 window.xpStart=run;
 </script>
 </template>
+</section>
+
+<!-- ABOUT (hello hero) -->
+<section class="about hello" id="about" aria-label="More about me">
+<h2 class="about-title hello-title i18n" data-en="Hello world." data-ja="Hello world.">Hello world.</h2>
+<div class="dog-pic" id="dogPic"><video data-src="dog.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Luca Helgert and a dog"></video></div>
+<div class="hello-pill">
+<span class="hello-text i18n" data-en="I come from a small town in Germany. What led me to Japan?" data-ja="ドイツの小さな町出身の私が、なぜ日本に来たのでしょうか？">I come from a small town in Germany. What led me to Japan?</span>
+<a class="hello-btn" href="about.html"><span class="i18n" data-en="Click to learn more" data-ja="詳しく見る">Click to learn more</span></a>
+</div>
 </section>
 
 <!-- FOOTER: very quiet copyright left, mail icon right -->
