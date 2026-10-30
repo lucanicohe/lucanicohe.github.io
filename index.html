@@ -2060,7 +2060,9 @@ img.fx-load.fx-ok{opacity:1}
 /* phones and iPads: longer scroll tracks so the scroll-driven scenes play slower (desktop untouched) */
 @media (hover:none) and (pointer:coarse){
  html .gm{height:260svh}
- html .tgs:not(.tgs-still){height:720vh;height:720svh}
+ html .sk.sk-native .sk-item{margin-bottom:75svh}
+ html .sk.sk-native .sk-item.sk-head{margin-bottom:60svh}
+ html .tgs:not(.tgs-still){height:1100vh;height:1100svh}
 }
 </style>
 </head>
@@ -3855,6 +3857,7 @@ applyLanguage(currentLang);
   var smallScreen=matchMedia("(pointer: coarse)").matches||innerWidth<700;
 
   function clamp(t){return t<0?0:t>1?1:t}
+  var TCH=matchMedia("(hover: none) and (pointer: coarse)").matches;
   function ease(t){t=clamp(t);return t*t*(3-2*t)}
   function isJa(){return document.documentElement.classList.contains("lang-ja")}
   function fontFor(px){return "700 "+px+"px "+(isJa()?'"Noto Sans JP",Inter':'Inter,"Noto Sans JP"')+',-apple-system,"Helvetica Neue",Arial,sans-serif'}
@@ -3939,6 +3942,7 @@ applyLanguage(currentLang);
     if(!ready)return;
     var r=sec.getBoundingClientRect(),span=r.height-H;
     var p=clamp(-r.top/span);
+    if(TCH){p=p<.3?p/.3*.5:.5+(p-.3)/.7*.5}   /* touch: the zoom gets the first 30% of the scroll, the text half gets the other 70% so it can be read */
     var near=r.top<H*2&&r.bottom>-H,vis=r.top<H&&r.bottom>0;
     sec.classList.toggle("tgs-off",!vis);
     if(near)loadVideo();
