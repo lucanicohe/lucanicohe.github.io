@@ -1995,7 +1995,7 @@ a.gm-pill:focus-visible{outline:2px solid #0071e3;outline-offset:3px}
 @media (hover:none) and (pointer:coarse){
   html,body{touch-action:pan-x pan-y}
 }
-@media (hover:none) and (pointer:coarse) and (max-width:700px),(hover:none) and (pointer:coarse) and (max-height:500px){
+@media (hover:none) and (pointer:coarse){
   html section.ah{height:100vh;height:100svh}
 }
 /* "A little more about me" on phones and iPads: the sticky picture stays, the text flows with normal scrolling over it */
@@ -3033,7 +3033,7 @@ applyLanguage(currentLang);
   if (!hero || !stage || !grid || !center || !vJa || !vEn) return;
 
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
-  const MOBILE = matchMedia("(hover: none) and (pointer: coarse)").matches && Math.min(screen.width, screen.height) < 700;   /* touch devices skip the zoom-in video: the page starts zoomed out */
+  const MOBILE = matchMedia("(hover: none) and (pointer: coarse)").matches;   /* every touch device (phones AND iPads) skips the zoom-in video: the page starts zoomed out */
   const smooth = (t) => t * t * (3 - 2 * t);
   const play = (v) => { const p = v.play(); if (p && p.catch) p.catch(() => {}); };
   const isJa = () => document.documentElement.classList.contains("lang-ja");
@@ -3175,7 +3175,7 @@ applyLanguage(currentLang);
     }
     lastY = scrollY;
     const fitW = .47 * vw / 3.06, fitH = Math.min((.5462 * vh - 86) / 1.68, (.4538 * vh - 18) / 1.68);
-    const Tw = (vw <= 800 ? .49 * vw : Math.min(.1959 * vw, fitW, fitH)), Th = Tw * 10 / 16, px = Tw * 1.2804, py = Th * 1.1836;
+    const Tw = (vw < 700 ? .49 * vw : Math.min(.1959 * vw, fitW, fitH)), Th = Tw * 10 / 16, px = Tw * 1.2804, py = Th * 1.1836;
     const bz0 = Tw * .035, r0 = Tw * .055, rim0 = Tw * .012;
     const S0 = Math.max(vw / (Tw - 2 * bz0), vh / (Th - 2 * bz0)) * 1.02;
     const e = smooth(p), s = Math.exp(Math.log(S0) * (1 - e)), kk = Math.log(s) / Math.log(S0), cy = vh * (.5 + .0462 * (1 - kk));
