@@ -413,6 +413,20 @@ html.lang-ja .gm-pill{letter-spacing:.01em}
   .gm-chip{font-size:max(13px,calc(var(--W)*.0098))}
 }
 </style>
+<style id="polish">
+/* polish layer: one motion language, calmer reveals, sharper typography, clear focus states */
+:root{--ease:cubic-bezier(.22,.8,.2,1);--t-fast:.25s;--t-norm:.6s;--t-slow:.9s}
+h1,h2,h3,.gm-title,.sk-t,.sk-title,.sb-h{text-wrap:balance}
+p,.gm-text{text-wrap:pretty}
+a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline:2px solid #0071e3;outline-offset:3px}
+a,button{transition-timing-function:var(--ease)}
+.glr{transform:translate3d(0,28px,0);transition:opacity var(--t-slow) var(--ease),transform var(--t-slow) var(--ease)}
+.sb-row{transform:translate3d(0,24px,0);transition:opacity var(--t-slow) var(--ease),transform var(--t-slow) var(--ease);transition-delay:calc(var(--n,0) * 90ms)}
+img.fx-load{opacity:0;transition:opacity var(--t-norm) var(--ease)}
+img.fx-load.fx-ok{opacity:1}
+@media (hover:none) and (pointer:coarse){a,button{-webkit-tap-highlight-color:transparent}button,.gm-pill,.gl-play{min-height:44px}}
+@media (prefers-reduced-motion:reduce){img.fx-load{opacity:1;transition:none}.glr,.sb-row{transition:none;transform:none;opacity:1}}
+</style>
 </head>
 <body>
 
@@ -1542,6 +1556,22 @@ document.addEventListener("click",function(e){
   t.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
   try{history.replaceState(null,"",h);}catch(x){}
 });
+</script>
+<script>
+/* polish: images fade in once decoded; far-below-the-fold pictures load lazily */
+(function(){
+  var vh=innerHeight;
+  document.querySelectorAll("img").forEach(function(im){
+    if(im.closest(".hero,.ah,.ah-stage,nav,.tile,.cimg")||im.classList.contains("cimg"))return;
+    var top=im.getBoundingClientRect().top+scrollY;
+    if(top>vh*2&&!im.hasAttribute("loading"))im.loading="lazy";
+    if(!im.complete){
+      im.classList.add("fx-load");
+      var ok=function(){im.classList.add("fx-ok")};
+      im.addEventListener("load",ok,{once:true});im.addEventListener("error",ok,{once:true});
+    }
+  });
+})();
 </script>
 </body>
 </html>
