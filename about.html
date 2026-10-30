@@ -2,7 +2,7 @@
 <html lang="ja" class="lang-ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 <script>
 /* LANGUAGE: open in the visitor's browser language (Japanese = ja, everything else = en). A choice made with the toggle is remembered on all pages. */
 (function(){
@@ -24,7 +24,7 @@
 <style>
 :root{--bg:#f5f5f7;--text:#1d1d1f;--muted:#6e6e73;--slate:#5d6b82;--blue:#0066cc;--line:rgba(17,17,17,.12);--max:1500px;--padding:clamp(28px,5vw,80px)}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%;overflow-x:hidden;overflow-x:clip;overscroll-behavior:none;background:#fff}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;overflow-x:hidden;overflow-x:clip;overscroll-behavior:none;background:#fff}
 body{margin:0;background:#fff;color:var(--text);font-family:"Inter","Noto Sans JP",sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;overflow-x:clip;overscroll-behavior:none}
 img{display:block;max-width:100%}
 a{color:inherit;-webkit-tap-highlight-color:transparent}
@@ -403,6 +403,10 @@ html.lang-ja .gm-pill{letter-spacing:.01em}
 #xpEnd{position:relative;background:#f5f5f7;padding:52px 0 32px}
 #xpEnd .xp-frame{display:block;margin:0 auto;border:0;background:transparent;width:min(100%,calc((100vh - 140px) * 4 / 3));width:min(100%,calc((100svh - 140px) * 4 / 3));aspect-ratio:4/3;height:auto}
 </style>
+<style>
+/* TOUCH DEVICES ONLY: no pinch or double-tap zoom. Desktop is untouched. */
+@media (hover:none) and (pointer:coarse){html,body{touch-action:pan-x pan-y}}
+</style>
 </head>
 <body>
 
@@ -759,6 +763,14 @@ body.typing,body.typing #stage,body.typing #stage *{cursor:var(--xpcur,default)}
   <svg id="cur" viewBox="0 0 12 17"><path d="M.5.5v13l3-2.8 2.2 5 1.9-.9-2.1-4.9H10.5z" fill="#fff" stroke="#000"/></svg>
 </div>
 <script>
+/* touch devices: no pinch zoom (iOS Safari ignores user-scalable=no, so the gesture itself is cancelled) */
+(()=>{
+  if(!matchMedia("(hover: none) and (pointer: coarse)").matches)return;
+  ["gesturestart","gesturechange","gestureend"].forEach(t=>document.addEventListener(t,e=>e.preventDefault(),{passive:false}));
+  document.addEventListener("touchmove",e=>{if(e.touches.length>1&&e.cancelable)e.preventDefault()},{passive:false});
+})();
+</script>
+<script>
 const $=s=>document.querySelector(s),sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const st=$('#stage'),cur=$('#cur');
 function xpCursor(k){const h=Math.max(16,Math.min(32,Math.round(38*k))),w=Math.round(h*26/38),svg="<svg xmlns='http://www.w3.org/2000/svg' width='"+w+"' height='"+h+"' viewBox='0 0 12 17'><path d='M.5.5v13l3-2.8 2.2 5 1.9-.9-2.1-4.9H10.5z' fill='white' stroke='black'/></svg>";document.documentElement.style.setProperty('--xpcur','url("'+'data:image/svg+xml,'+encodeURIComponent(svg)+'") 0 0, default')}
@@ -936,7 +948,7 @@ const heroTiles=HERO_TILES.map(([row,k,type,file,pos])=>{
 
 /* ============ nav ============ */
 const nav=$("#nav");
-addEventListener("scroll",()=>nav.classList.toggle("scrolled",scrollY>20),{passive:true});
+let navSc=null;addEventListener("scroll",()=>{const sc=scrollY>20;if(sc!==navSc){navSc=sc;nav.classList.toggle("scrolled",sc);}},{passive:true});
 (()=>{
   const dds=[...document.querySelectorAll(".nav-dd")].map(dd=>{
     const btn=dd.querySelector(".nav-dd-btn");
@@ -1000,7 +1012,7 @@ vids.forEach(v=>{if(!saveData||v.dataset.eager)nearObs.observe(v);if(!reduceMoti
 },{passive:true}));
 
 /* ============ scroll scenes ============ */
-const hero=$("#hero"),heroText=$("#heroText"),heroShade=$("#heroShade"),heroStage=$(".hero-stage");let heroSpill=false;
+const hero=$("#hero"),heroText=$("#heroText"),heroShade=$("#heroShade"),heroStage=$(".hero-stage");let heroSpill=false,heroBaseKey="";
 const reach=$("#reach"),rT1=$("#rT1"),rT2=$("#rT2"),rReel=$("#rReel"),reachVids=[...rReel.querySelectorAll("video")];
 const craft=$("#craft"),craftLayers=[...document.querySelectorAll("#craftBox .craft-layer")];
 const music=$("#music"),mItems=[...document.querySelectorAll(".m-item")];
@@ -1020,25 +1032,39 @@ function updateHero(){
   const S0=Math.max(vw/(Tw-2*bz0),vh/(Th-2*bz0))*1.02;
   const p=clamp(prog(hero)/0.8),e=smooth(p);
   const s=Math.exp(Math.log(S0)*(1-e)),kk=Math.log(s)/Math.log(S0),cy=vh*(0.5+0.0462*(1-kk));
+  /* fixed base size per tile (rewritten only when the viewport changes); every frame just moves/scales it with transform, so scrolling never triggers layout */
+  const key=Tw+"|"+Th;
+  if(key!==heroBaseKey){
+    heroBaseKey=key;
+    heroTiles.forEach(o=>{
+      const st=o.t.style;
+      st.left="0px";st.top="0px";st.width=Tw+"px";st.height=Th+"px";st.padding=bz0+"px";st.borderRadius=r0+"px";st.transformOrigin="0 0";
+      st.boxShadow="0 0 0 "+rim0+"px #d4d4d6,"+(Tw*.134)+"px "+(Tw*.12)+"px "+(Tw*.157)+"px "+(-Tw*.05)+"px rgba(0,0,0,.4),0 0 "+(Tw*.02)+"px rgba(0,0,0,.2)";
+      o.cam.style.cssText="width:"+(Tw*.023)+"px;height:"+(Tw*.023)+"px;top:"+(bz0*.36-Tw*.0115)+"px";
+      o.dot.style.cssText="width:"+(Tw*.005)+"px;height:"+(Tw*.005)+"px;top:"+(bz0*.36-Tw*.0025)+"px;margin-left:"+(-Tw*.047)+"px";
+      o.s.style.borderRadius=Math.max(0,r0-bz0)+"px";
+    });
+  }
   heroTiles.forEach(o=>{
     const w=Tw*s,h=Th*s;
     const left=vw/2+o.k*px*s-w/2,top=cy+o.row*py*s-h/2;
     const vis=left<vw&&left+w*1.3>0&&top<vh&&top+h*1.3>0;
-    if(!vis){o.t.style.display="none";return;}
-    const bz=bz0*s,r=r0*s,rim=rim0*s;
     const st=o.t.style;
-    st.boxShadow="0 0 0 "+rim+"px #d4d4d6,"+(w*.134)+"px "+(w*.12)+"px "+(w*.157)+"px "+(-w*.05)+"px rgba(0,0,0,.4),0 0 "+(w*.02)+"px rgba(0,0,0,.2)";
-    o.cam.style.cssText="width:"+(w*.023)+"px;height:"+(w*.023)+"px;top:"+(bz*.36-w*.0115)+"px";
-    o.dot.style.cssText="width:"+(w*.005)+"px;height:"+(w*.005)+"px;top:"+(bz*.36-w*.0025)+"px;margin-left:"+(-w*.047)+"px";
-    if(o.img){
-      const sl=left+bz,stp=top+bz,sw=w-2*bz,sh=h-2*bz;
-      const x0=Math.max(0,sl),x1=Math.min(vw,sl+sw),y0=Math.max(0,stp),y1=Math.min(vh,stp+sh),is=o.img.style;
-      is.transform="none";is.left=(x0-sl)+"px";is.top=(y0-stp)+"px";
-      is.width=Math.max(0,x1-x0)+"px";is.height=Math.max(0,y1-y0)+"px";
+    if(!vis){if(o.on!==false){st.display="none";o.on=false;}return;}
+    if(o.on!==true){st.display="block";o.on=true;}
+    st.transform="translate3d("+left+"px,"+top+"px,0) scale("+s+")";
+    if(o.img&&o.img.naturalWidth){
+      /* "cover" fit for the part of the screen that is on stage, done with a transform only (no layout), so the picture moves smoothly and never jitters */
+      const nw=o.img.naturalWidth,nh=o.img.naturalHeight,is=o.img.style;
+      const bz=bz0*s,sl=left+bz,stp=top+bz,sw=w-2*bz,sh=h-2*bz;
+      const x0=Math.max(0,sl),x1=Math.min(vw,sl+sw),y0=Math.max(0,stp),y1=Math.min(vh,stp+sh);
+      const bw=(x1-x0)/s,bh=(y1-y0)/s;
+      if(bw>0&&bh>0){
+        if(!o.imgInit){o.imgInit=true;is.left="0px";is.top="0px";is.width=nw+"px";is.height=nh+"px";is.maxWidth="none";is.objectFit="fill";is.transformOrigin="0 0";}
+        const c=Math.max(bw/nw,bh/nh);
+        is.transform="translate3d("+((x0-sl)/s+(bw-nw*c)/2)+"px,"+((y0-stp)/s+(bh-nh*c)/2)+"px,0) scale("+c+")";
+      }
     }
-    st.display="block";st.left=left+"px";st.top=top+"px";st.width=w+"px";st.height=h+"px";
-    st.padding=bz+"px";st.borderRadius=r+"px";
-    o.s.style.borderRadius=Math.max(0,r-bz)+"px";
   });
   const spill=p>=1;if(spill!==heroSpill){heroSpill=spill;heroStage.style.overflow=spill?"visible":"";}
   const o=1-clamp(p/0.28);
@@ -1494,6 +1520,18 @@ apply(lang);
   new IntersectionObserver(function(es){if(es[0].isIntersecting){seen=true;build();sync()}},{threshold:.6}).observe(fr);
   new MutationObserver(sync).observe(document.documentElement,{attributes:true,attributeFilter:["class"]});
 })();
+</script>
+<script>
+/* in-page links: smooth glide only when a link is clicked (no global scroll-behavior, so wheel / trackpad / keys stay fully native) */
+document.addEventListener("click",function(e){
+  if(e.defaultPrevented||e.button||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
+  var a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a)return;
+  var h=a.getAttribute("href");if(!h||h.length<2)return;
+  var t;try{t=document.getElementById(decodeURIComponent(h.slice(1)));}catch(x){return;}
+  if(!t)return;e.preventDefault();
+  t.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
+  try{history.replaceState(null,"",h);}catch(x){}
+});
 </script>
 </body>
 </html>

@@ -2,7 +2,7 @@
 <html lang="ja" class="lang-ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 <script>
 /* LANGUAGE: open in the visitor's browser language (Japanese = ja, everything else = en). A choice made with the toggle is remembered on all pages. */
 (function(){
@@ -29,7 +29,6 @@
 <style>
 :root{--bg:#f5f5f7;--text:#1d1d1f;--muted:#6e6e73;--line:rgba(17,17,17,.12);--max:1500px;--padding:clamp(28px,5vw,80px)}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--text);font-family:"Inter","Noto Sans JP",sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;overflow-x:clip}
 img{display:block;max-width:100%}
 a{color:inherit}
@@ -1741,7 +1740,7 @@ html.lang-ja #kiwiResumeEndCard .kr-title{letter-spacing:0!important}
 }
 
 /* Guilty Lane reveal: picture/video and text of a block come in together, Apple style */
-.glr{opacity:0;transform:translate3d(0,44px,0) scale(.965);filter:blur(6px);transition:opacity 1.15s cubic-bezier(.28,.11,.32,1),transform 1.25s cubic-bezier(.28,.11,.32,1),filter 1.15s cubic-bezier(.28,.11,.32,1);will-change:opacity,transform}
+.glr{opacity:0;transform:translate3d(0,44px,0) scale(.965);transition:opacity 1.15s cubic-bezier(.28,.11,.32,1),transform 1.25s cubic-bezier(.28,.11,.32,1);will-change:opacity,transform}
 .glr.glr-in{opacity:1;transform:none;filter:none;will-change:auto}
 @media(prefers-reduced-motion:reduce){.glr{opacity:1;transform:none;filter:none;transition:none}}
 
@@ -1817,7 +1816,7 @@ html.lang-ja .gl .gl-3 .gl-text{line-height:1.75;letter-spacing:0;word-break:aut
 .gl-play::after{background:#0071e3 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23fff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='14' height='10' rx='2'/%3E%3Cpath d='M3.8 6.6 10 11l6.2-4.4'/%3E%3C/svg%3E") center/58% no-repeat}
 
 /* skill bars: rows rise in one after another, the bars fill, then a soft light runs over them */
-.sb-row{opacity:0;transform:translate3d(0,26px,0);filter:blur(8px);transition:opacity .85s cubic-bezier(.22,.8,.2,1),transform .95s cubic-bezier(.22,.8,.2,1),filter .85s cubic-bezier(.22,.8,.2,1);transition-delay:calc(var(--n,0) * 120ms);will-change:opacity,transform}
+.sb-row{opacity:0;transform:translate3d(0,26px,0);transition:opacity .85s cubic-bezier(.22,.8,.2,1),transform .95s cubic-bezier(.22,.8,.2,1);transition-delay:calc(var(--n,0) * 120ms);will-change:opacity,transform}
 .sb-row.in{opacity:1;transform:none;filter:none}
 .sb-row.out{opacity:0;transform:translate3d(0,-12px,0);filter:blur(5px);transition-duration:.26s;transition-delay:0s}
 .sb-fill{position:relative;overflow:hidden;transition:width 1.6s cubic-bezier(.16,.84,.24,1) calc(var(--n,0) * 120ms + 320ms)}
@@ -1990,6 +1989,13 @@ a.gm-pill:focus-visible{outline:2px solid #0071e3;outline-offset:3px}
 
 /* Guilty Lane pill now opens Zenn: arrow icon instead of mail */
 .gl-play::after{background:#0071e3 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.5 10h10M10.5 6l4 4-4 4'/%3E%3C/svg%3E") center/58% no-repeat}
+</style>
+<style>
+/* TOUCH DEVICES ONLY (phones / tablets): no pinch or double-tap zoom, and the front page is a single screen that is already zoomed out (the "Welcome to my portfolio" / ようこそ view). Desktop is untouched. */
+@media (hover:none) and (pointer:coarse){
+  html,body{touch-action:pan-x pan-y}
+  html section.ah{height:100vh;height:100svh}
+}
 </style>
 </head>
 
@@ -2263,15 +2269,19 @@ const nav = document.getElementById("nav");
 const navLinks = [...document.querySelectorAll('.nav-links > a[href^="#"], .nav-links > .nav-dd > .nav-dd-btn')];
 const navTarget = (a) => a.getAttribute("href") || a.dataset.target;
 const navSections = navLinks.map((a) => navTarget(a) === "#top" ? null : document.querySelector(navTarget(a)));
+let navScrolled = null, navActive = -1, navTick = false;
 function updateNav() {
-    nav.classList.toggle("scrolled", window.scrollY > 20);
+    navTick = false;
+    const y = window.scrollY;
+    const sc = y > 20;
+    if (sc !== navScrolled) { navScrolled = sc; nav.classList.toggle("scrolled", sc); }
     let active = 0;
     navSections.forEach((section, i) => {
         if (section && section.getBoundingClientRect().top <= 140) active = i;
     });
-    navLinks.forEach((a, i) => a.classList.toggle("current", i === active));
+    if (active !== navActive) { navActive = active; navLinks.forEach((a, i) => a.classList.toggle("current", i === active)); }
 }
-window.addEventListener("scroll", updateNav, { passive: true });
+window.addEventListener("scroll", () => { if (!navTick) { navTick = true; requestAnimationFrame(updateNav); } }, { passive: true });
 updateNav();
 
 /* NAV DROPDOWNS (hover on desktop, tap on touch, Esc / outside click closes; opening one closes the others) */
@@ -2754,6 +2764,14 @@ applyLanguage(currentLang);
 </script>
 
 <script>
+/* touch devices: no pinch zoom (iOS Safari ignores user-scalable=no, so the gesture itself is cancelled) */
+(()=>{
+  if(!matchMedia("(hover: none) and (pointer: coarse)").matches)return;
+  ["gesturestart","gesturechange","gestureend"].forEach(t=>document.addEventListener(t,e=>e.preventDefault(),{passive:false}));
+  document.addEventListener("touchmove",e=>{if(e.touches.length>1&&e.cancelable)e.preventDefault()},{passive:false});
+})();
+</script>
+<script>
 /* iPad / iOS: the page stops at its real top and bottom (no rubber-band scrolling into empty space).
    Sideways rails, the nav dropdown and pinch-zoom keep working normally. */
 (()=>{
@@ -2979,6 +2997,7 @@ applyLanguage(currentLang);
   if (!hero || !stage || !grid || !center || !vJa || !vEn) return;
 
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const MOBILE = matchMedia("(hover: none) and (pointer: coarse)").matches;   /* touch devices skip the zoom-in video: the page starts zoomed out */
   const smooth = (t) => t * t * (3 - 2 * t);
   const play = (v) => { const p = v.play(); if (p && p.catch) p.catch(() => {}); };
   const isJa = () => document.documentElement.classList.contains("lang-ja");
@@ -3099,7 +3118,8 @@ applyLanguage(currentLang);
   setTimeout(prefetch, 7000);
 
   /* ---------- zoom: same maths as the codex version, but it runs over the whole scroll track ---------- */
-  let navOn = null, wFs = 0;
+  let hold = false, holdT = 0, lastY = scrollY, endCache = 1e9;
+  let navOn = null, wFs = 0, baseKey = "", welcomeOn = null, arrowTop = -1;
   const syncNav = (on) => {
     if (!nav || on === navOn) return; navOn = on;
     nav.classList.toggle("show", on);
@@ -3109,22 +3129,39 @@ applyLanguage(currentLang);
   function update() {
     const vw = stage.clientWidth || innerWidth, vh = stage.clientHeight || innerHeight;
     const r = hero.getBoundingClientRect();
-    const p = clamp(-r.top / Math.max(1, r.height - vh));
+    const p = MOBILE ? 1 : clamp(-r.top / Math.max(1, r.height - vh));
+    /* trackpad momentum: when you scroll out by hand and arrive at the fully zoomed-out view, extra scrolling is ignored for 0.5 s so a fast flick cannot shoot past it */
+    endCache = r.top + scrollY + r.height - vh;
+    if (!MOBILE && !anim) {
+      const y = scrollY;
+      if (!hold && lastY < endCache - 1 && y >= endCache - 1 && y - lastY < 4000) startHold();
+    }
+    lastY = scrollY;
     const fitW = .47 * vw / 3.06, fitH = Math.min((.5462 * vh - 86) / 1.68, (.4538 * vh - 18) / 1.68);
     const Tw = (vw <= 800 ? .49 * vw : Math.min(.1959 * vw, fitW, fitH)), Th = Tw * 10 / 16, px = Tw * 1.2804, py = Th * 1.1836;
     const bz0 = Tw * .035, r0 = Tw * .055, rim0 = Tw * .012;
     const S0 = Math.max(vw / (Tw - 2 * bz0), vh / (Th - 2 * bz0)) * 1.02;
     const e = smooth(p), s = Math.exp(Math.log(S0) * (1 - e)), kk = Math.log(s) / Math.log(S0), cy = vh * (.5 + .0462 * (1 - kk));
+    /* fixed base size per tile (only rewritten when the viewport changes); every frame only moves/scales it with transform, so scrolling never triggers layout */
+    const key = Tw + "|" + Th;
+    if (key !== baseKey) {
+      baseKey = key;
+      tiles.forEach((o) => {
+        const st = o.t.style;
+        st.left = "0px"; st.top = "0px"; st.width = Tw + "px"; st.height = Th + "px"; st.padding = bz0 + "px"; st.borderRadius = r0 + "px"; st.transformOrigin = "0 0";
+        st.boxShadow = "0 0 0 " + rim0 + "px #d4d4d6," + (Tw * .09) + "px " + (Tw * .12) + "px " + (Tw * .15) + "px " + (-Tw * .05) + "px rgba(0,0,0,.4),0 0 " + (Tw * .02) + "px rgba(0,0,0,.2)";
+        o.s.style.borderRadius = Math.max(0, r0 - bz0) + "px";
+        o.cam.style.cssText = "width:" + (Tw * .045) + "px;height:" + Math.max(2, Th * .014) + "px;top:" + (bz0 * .34) + "px";
+      });
+    }
     tiles.forEach((o) => {
       const w = Tw * s, h = Th * s, left = vw / 2 + o.k * px * s - w / 2, top = cy + o.row * py * s - h / 2;
       const sm = w * .26;                                          /* the shadow reaches this far past the screen, so it must already be drawn before the screen itself is on stage */
       const visible = left - sm < vw && left + w + sm > 0 && top - sm < vh && top + h + sm > 0;
-      const st = o.t.style; if (!visible) { st.display = "none"; return; }
-      const bz = bz0 * s, rad = r0 * s, rim = rim0 * s;
-      st.boxShadow = "0 0 0 " + rim + "px #d4d4d6," + (w * .09) + "px " + (w * .12) + "px " + (w * .15) + "px " + (-w * .05) + "px rgba(0,0,0,.4),0 0 " + (w * .02) + "px rgba(0,0,0,.2)";
-      st.display = "block"; st.left = left + "px"; st.top = top + "px"; st.width = w + "px"; st.height = h + "px"; st.padding = bz + "px"; st.borderRadius = rad + "px";
-      o.s.style.borderRadius = Math.max(0, rad - bz) + "px";
-      o.cam.style.cssText = "width:" + (w * .045) + "px;height:" + Math.max(2, h * .014) + "px;top:" + (bz * .34) + "px";
+      const st = o.t.style;
+      if (!visible) { if (o.on !== false) { st.display = "none"; o.on = false; } return; }
+      if (o.on !== true) { st.display = "block"; o.on = true; }
+      st.transform = "translate3d(" + left + "px," + top + "px,0) scale(" + s + ")";
     });
     /* title: anchored in the scene above the top row, with the same scale as the screens (so it zooms with them) */
     const topEdge1 = .5462 * vh - (py + Th / 2);                 /* top of the top row when fully zoomed out */
@@ -3133,52 +3170,59 @@ applyLanguage(currentLang);
     if (fs !== wFs) { wFs = fs; welcome.style.fontSize = fs + "px"; }
     const wy = cy - s * (py + Th / 2 + room / 2);                /* centre of the title in the scene */
     const half = fs * s * .6;
-    if (wy + half < 0 || wy - half > vh) welcome.style.display = "none";
-    else { welcome.style.display = "block"; welcome.style.top = wy + "px"; welcome.style.transform = "translate(-50%,-50%) scale(" + s + ")"; }
+    if (wy + half < 0 || wy - half > vh) { if (welcomeOn !== false) { welcome.style.display = "none"; welcomeOn = false; } }
+    else {
+      if (welcomeOn !== true) { welcome.style.display = "block"; welcome.style.top = "0px"; welcomeOn = true; }
+      welcome.style.transform = "translate3d(-50%," + wy + "px,0) translate(0,-50%) scale(" + s + ")";
+    }
     syncNav(p >= .985);
     /* scroll arrow: sits centred between the bottom row of screens and the bottom edge; shows once fully zoomed out, leaves on the first scroll */
     if (arrow) {
       const bottomEdge = .5462 * vh + py + Th / 2, free = Math.max(0, vh - bottomEdge);
-      arrow.style.top = (bottomEdge + free / 2) + "px";
+      const aTop = bottomEdge + free / 2; if (aTop !== arrowTop) { arrowTop = aTop; arrow.style.top = aTop + "px"; }
       const on = p >= .985 && (scrollY - endY()) < 14;
       arrow.classList.toggle("on", on); arrow.disabled = !on;
     }
   }
-  /* ---------- start lock ----------
-     Scrolling is blocked only while you are fully on the starting video (top of the page). Press the lower-right button to zoom out
-     automatically (about 3 s). Anywhere else, including halfway through the zoom, scrolling works normally in both directions. */
+  /* ---------- start ----------
+     Scrolling works exactly like on the About page: the zoom follows the scroll position directly (wheel, trackpad, touch, keys, scrollbar),
+     in both directions, with nothing blocked. The first move away from the starting video plays the start clip, and coming back to the top plays
+     the end clip. The lower-right button still zooms out by itself (about 2 s) with the same start clip. */
   const zoomHit = $("ahZoomHit");
-  const ZOOM_MS = 2000;                                          /* how long the automatic zoom-out takes */
-  let anim = false, prevY = scrollY, touchY = 0, wasAtTop = scrollY < 2;
+  const ZOOM_MS = 2000;                                          /* how long the automatic (button) zoom-out takes */
+  let anim = false;
   const endY = () => hero.getBoundingClientRect().top + scrollY + hero.offsetHeight - stage.offsetHeight;
-  const inZoom = () => scrollY < 2;                              /* true only on the starting video */
-  addEventListener("wheel", (e) => { if (anim || (e.deltaY > 0 && inZoom())) e.preventDefault(); }, { passive: false });
-  addEventListener("touchstart", (e) => { touchY = e.touches[0].clientY; }, { passive: true });
-  addEventListener("touchmove", (e) => {
-    const down = e.touches[0].clientY < touchY;                  /* finger moves up = page scrolls down */
-    touchY = e.touches[0].clientY;
-    if (anim || (down && inZoom())) e.preventDefault();
-  }, { passive: false });
-  const DOWN_KEYS = [" ", "Spacebar", "ArrowDown", "PageDown", "End"];
+  /* only the button's automatic zoom locks the input, so the two never fight */
+  /* these blockers are only attached while the button zoom runs: a permanent non-passive wheel listener makes every trackpad scroll wait for the main thread */
+  const blockInput = (e) => { e.preventDefault(); };
+  const HOLD_MS = 500;
+  function startHold() {
+    hold = true;
+    addEventListener("wheel", blockInput, { passive: false }); addEventListener("touchmove", blockInput, { passive: false });
+    clearTimeout(holdT);
+    holdT = setTimeout(() => {
+      hold = false; lastY = scrollY;
+      removeEventListener("wheel", blockInput); removeEventListener("touchmove", blockInput);
+    }, HOLD_MS);
+  }
+  const LOCK_KEYS = [" ", "Spacebar", "ArrowDown", "ArrowUp", "PageDown", "PageUp", "End", "Home"];
   addEventListener("keydown", (e) => {
     if (e.target.closest && e.target.closest(".ah-hit,.ah-zoomhit")) return;
-    if (anim && (DOWN_KEYS.indexOf(e.key) > -1 || e.key === "ArrowUp" || e.key === "PageUp" || e.key === "Home")) e.preventDefault();
-    else if (DOWN_KEYS.indexOf(e.key) > -1 && inZoom()) e.preventDefault();
+    if ((anim || hold) && LOCK_KEYS.indexOf(e.key) > -1) e.preventDefault();
   });
-  addEventListener("scroll", () => {                             /* safety net: undo a scroll away from the starting video (scrollbar drag etc.) */
-    if (!anim && prevY < 2 && scrollY > 2 && !location.hash) scrollTo({ top: 0, behavior: "instant" });
-    else prevY = scrollY;
-  }, { passive: true });
-  /* coming back to the top plays the end clip once. It needs a real trip away first (more than 60px), so small bounces at the top can never restart it. */
-  let away = scrollY > 60;
+  /* the start clip plays once as soon as you leave the top (scrolling or button); coming back to the top plays the end clip once.
+     The end clip needs a real trip away first (more than 60px), so small bounces at the top can never restart it. */
+  let startPlayed = false, away = scrollY > 60;
+  const playStartOnce = () => { if (startPlayed) return; startPlayed = true; prime(); playStart(); };
   addEventListener("scroll", () => {
     const y = scrollY;
+    if (!MOBILE && y > 2 && heroVisible) playStartOnce();
     if (y > 60) {
       away = true;
       if (ending) toLoop();                                      /* left the top while the end clip was running */
-    } else if (y < 2 && away) {
-      away = false; ending = true; playClip(endOf(curLang));
-    }
+    } else if (!MOBILE && y < 2 && away) {
+      away = false; startPlayed = false; ending = true; playClip(endOf(curLang));
+    } else if (y < 2) startPlayed = false;
   }, { passive: true });
   /* warm everything up the moment the pointer is on the button, so the click itself has no work left to do */
   let primed = false;
@@ -3189,25 +3233,26 @@ applyLanguage(currentLang);
   };
   if (zoomHit) ["pointerenter", "pointerdown", "touchstart", "focus"].forEach((n) => zoomHit.addEventListener(n, prime, { passive: true }));
   setTimeout(prime, 2500);
-  if (zoomHit) zoomHit.addEventListener("click", (e) => {
-    e.preventDefault();
+  function startZoom() {                                       /* the button: zoom out by itself */
     if (anim) return;
     prime();
     const to = endY(), from = scrollY, dist = to - from;
     if (dist <= 2) return;
     anim = true;
+    addEventListener("wheel", blockInput, { passive: false }); addEventListener("touchmove", blockInput, { passive: false });
     let t0 = 0, started = false;
     const step = (now) => {
       if (!t0) t0 = now;                                          /* the clock starts at the first drawn frame, so nothing is skipped */
       const k = Math.min(1, (now - t0) / ZOOM_MS);
       scrollTo({ top: from + dist * k, behavior: "instant" });
       update();                                                   /* draw this frame right now instead of one frame later */
-      if (!started) { started = true; setTimeout(playStart, 60); }/* swap the video after the first frame is already moving */
+      if (!started) { started = true; setTimeout(playStartOnce, 60); }/* swap the video after the first frame is already moving */
       if (k < 1) requestAnimationFrame(step);
-      else { anim = false; prevY = scrollY; }
+      else { anim = false; removeEventListener("wheel", blockInput); removeEventListener("touchmove", blockInput); }
     };
     requestAnimationFrame(step);
-  });
+  }
+  if (zoomHit) zoomHit.addEventListener("click", (e) => { e.preventDefault(); startZoom(); });
 
   let ticking = false;
   const request = () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { ticking = false; update(); }); } };
@@ -3286,7 +3331,6 @@ applyLanguage(currentLang);
       var a=clamp((p-(.6+i*.07))/.2), e=1-Math.pow(1-a,3);
       el.style.opacity=e;
       el.style.transform="translate3d(0,"+((1-e)*22).toFixed(1)+"px,0)";
-      el.style.filter=a>=1?"":"blur("+((1-e)*6).toFixed(1)+"px)";
     });
   }
   function render(){
@@ -3878,5 +3922,17 @@ applyLanguage(currentLang);
 
 
 
+<script>
+/* in-page links: smooth glide only when a link is clicked (no global scroll-behavior, so wheel / trackpad / keys stay fully native) */
+document.addEventListener("click",function(e){
+  if(e.defaultPrevented||e.button||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
+  var a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a)return;
+  var h=a.getAttribute("href");if(!h||h.length<2)return;
+  var t;try{t=document.getElementById(decodeURIComponent(h.slice(1)));}catch(x){return;}
+  if(!t)return;e.preventDefault();
+  t.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
+  try{history.replaceState(null,"",h);}catch(x){}
+});
+</script>
 </body>
 </html>
