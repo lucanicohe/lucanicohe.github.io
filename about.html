@@ -321,6 +321,84 @@ footer.sf{width:min(100% - 48px,980px);margin:0 auto;padding:16px 0 20px;border-
 footer.sf .sf-m{display:inline-flex;align-items:center;color:inherit;opacity:.8;transition:opacity .2s,color .2s}
 footer.sf .sf-m:hover,footer.sf .sf-m:focus-visible{opacity:1;color:#1d1d1f}
 footer.sf svg{display:block;width:1.35em;height:1.35em}
+
+#gm,#games,#programming{scroll-margin-top:76px}
+.gm{position:relative;background:#fff;color:#1d1d1f;height:165svh}
+.gm-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.gm-canvas{--W:min(100vw,calc((100svh - 70px)*1.5995));position:absolute;top:64px;left:calc(50% - var(--W)/2);width:var(--W);height:calc(var(--W)/1.5995)}
+.gm-tile{--tw:calc(var(--W)*var(--wn));position:absolute;left:var(--l);top:var(--t);bottom:auto;width:var(--tw);aspect-ratio:1360/880;will-change:transform,opacity;opacity:0}
+.gm-media{position:absolute;inset:0;box-sizing:border-box;border:max(2px,calc(var(--tw)*.024)) solid #000;border-radius:calc(var(--tw)*.06);background:#000;overflow:hidden;box-shadow:0 0 0 1px #3a3a3d,0 14px 30px -8px rgba(0,0,0,.35);transform:translateZ(0)}
+.gm-media video{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;border-radius:calc(var(--tw)*.035)}
+.gm-copy{position:absolute;left:50%;bottom:calc(var(--W)*.06);width:calc(var(--W)*.5);transform:translateX(-50%);text-align:center}
+.gm-title{margin:0;font-size:calc(var(--W)*.05246);line-height:1.05;font-weight:600;letter-spacing:-.035em;color:#1d1d1f}
+.gm-title .gm-l1{display:block;color:#2a58af;font-size:.6em;line-height:1.3}
+.gm-title .gm-l2{display:block;color:#1d1d1f}
+.gm-text{margin:calc(var(--W)*.0315) auto 0;max-width:calc(var(--W)*.426);font-size:calc(var(--W)*.0131);line-height:1.25;font-weight:600;letter-spacing:-.01em;color:#6e6e73}
+.gm-btn{display:inline-block;margin-top:calc(var(--W)*.017);padding:.65em 1.25em;border-radius:980px;background:#0071e3;color:#fff!important;font-size:max(14px,calc(var(--W)*.0111));line-height:1.18;font-weight:500;letter-spacing:-.01em;text-decoration:none;transition:background .2s ease}
+.gm-btn:hover{background:#0077ed}
+.gm-btn:active{background:#006edb}
+.gm-btn:focus-visible{outline:2px solid #0071e3;outline-offset:3px}
+html.lang-ja .gm-title{font-weight:700;letter-spacing:-.02em;line-height:1.15}
+html.lang-ja .gm-text{font-weight:500;line-height:1.55}
+.gm-copy>*{will-change:transform,opacity}
+@media (max-width:700px){.gm{height:150svh}.gm-canvas{--W:100vw;top:56px;left:0;width:100vw;height:calc(100svh - 56px)}.gm-tile{--tw:calc(var(--mw)*1vw);left:var(--ml);top:var(--mtop);bottom:var(--mbot)}.gm-copy{top:46%;bottom:auto;width:min(90vw,520px);transform:translate(-50%,-50%)}.gm-title{font-size:min(8.6vw,34px)}.gm-text{margin-top:12px;max-width:none;font-size:13.5px;line-height:1.3}.gm-btn{margin-top:14px;padding:10px 19px;font-size:15px}}
+@media (prefers-reduced-motion:reduce){.gm{height:auto}.gm-tile{opacity:1}}
+:is(.hello-btn,.kr-btn,.play-button.story-button,.hero-more,.gm-btn,.gt-btn.main,.fx-pill){transition:background-color .2s ease,border-color .2s ease,transform .2s ease!important}
+:is(.hello-btn,#kiwiResumeEndCard .kr-btn,.about .play-button.story-button,.hero .play-button.hero-more,.gm-btn,.gt-btn.main):hover{background-color:#2a8bf2!important;border-color:#2a8bf2!important;transform:none!important}
+.gm::after,.sk::after,.sb::after{content:"";display:block;grid-column:1/-1;width:100%;height:clamp(40px,5vw,76px)}
+.gm::before{content:"";display:block;grid-column:1/-1;width:100%;height:1cm}
+.gm::after{height:calc(clamp(40px,5vw,76px) + 1cm)}
+.gm .gm-tile{pointer-events:none;cursor:pointer;-webkit-tap-highlight-color:transparent;outline:none}
+.gm.gm-live .gm-tile{pointer-events:auto}
+.gm-tile.gm-p{aspect-ratio:3/4}
+.gm .gm-media{right:auto;bottom:auto;left:0;top:0;width:100%;height:100%;transform:translate(var(--ox,0px),var(--oy,0px)) translateZ(0) scale(var(--hs,1));transition:transform .55s cubic-bezier(.22,.8,.2,1),box-shadow .4s ease,left .55s cubic-bezier(.22,.8,.2,1),top .55s cubic-bezier(.22,.8,.2,1),width .55s cubic-bezier(.22,.8,.2,1),height .55s cubic-bezier(.22,.8,.2,1)}
+.gm-media img.gm-pg{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;border-radius:calc(var(--tw)*.035);background:#111}
+.gm.gm-live .gm-tile:hover{z-index:20}
+.gm.gm-live .gm-tile:hover .gm-media{--hs:1.07}
+.gm.gm-live .gm-tile.gm-t:hover .gm-media{--hs:1.18}
+.gm .gm-tile.sel{z-index:30}
+.gm .gm-tile.sel .gm-media,.gm.gm-live .gm-tile.sel:hover .gm-media,.gm.gm-live .gm-tile.gm-t.sel:hover .gm-media{--hs:1;box-shadow:0 0 0 1px #3a3a3d,0 22px 44px -10px rgba(0,0,0,.45)}
+.gm .gm-tile.sel .gm-media img.gm-pg{object-fit:contain}
+.gm.has-sel .gm-media{cursor:pointer}
+.gm.has-sel.gm-live .gm-tile{pointer-events:none}
+.gm.has-sel.gm-live .gm-media{pointer-events:auto}
+.gm.has-sel .gm-tile:not(.sel) .gm-media{--hs:var(--sc,.7)!important}
+.gm.has-sel .gm-tile:not(.sel):hover .gm-media{--hs:calc(var(--sc,.7)*1.05)!important}
+.gm-tile:focus-visible .gm-media{outline:2px solid #0071e3;outline-offset:3px}
+.gm-pn{position:absolute;top:50%;width:34px;height:34px;margin-top:-17px;padding:0;border:0;border-radius:50%;background:rgba(30,30,32,.62);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);color:#fff;display:grid;place-items:center;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s ease,background .2s ease}
+.gm-pn.prev{left:10px}
+.gm-pn.next{right:10px}
+.gm-pn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.gm-pn:hover{background:rgba(60,60,64,.8)}
+.gm-pn[disabled]{opacity:0!important;pointer-events:none}
+.gm-pc{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);padding:5px 11px;border-radius:980px;background:rgba(30,30,32,.62);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);color:#fff;font-size:12px;font-weight:500;letter-spacing:.02em;line-height:1;opacity:0;pointer-events:none;transition:opacity .3s ease;white-space:nowrap}
+.gm-tile.rd.sel .gm-pn,.gm-tile.rd.sel .gm-pc{opacity:1;pointer-events:auto}
+.gm-tile.rd.sel .gm-pc{pointer-events:none}
+.gm-hint,.gm-pillrow{display:flex;justify-content:center;margin-top:calc(var(--W)*.024)}
+.gm-pill{box-sizing:border-box;display:inline-flex;align-items:center;gap:.75em;height:2.95em;padding:0 .55em 0 1.45em;border-radius:999px;font-size:max(13.5px,calc(var(--W)*.0113));font-weight:500;letter-spacing:-.01em;line-height:1.2;white-space:nowrap;color:#1d1d1f!important;text-decoration:none;background:rgba(120,120,128,.14);-webkit-backdrop-filter:saturate(180%) blur(24px);backdrop-filter:saturate(180%) blur(24px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.75),0 0 0 1px rgba(0,0,0,.05),0 8px 26px -10px rgba(0,0,0,.28);transition:background .25s ease,transform .25s ease}
+html.lang-ja .gm-pill{letter-spacing:.01em}
+.gm-pi{flex:none;width:1.95em;height:1.95em;border-radius:50%;background:#0071e3 center/58% no-repeat}
+.gm-pi.gm-plus,.gm-hint .gm-pi{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 14.5l6-6 6 6'/%3E%3C/svg%3E")}
+.gm-pillrow .gm-pi{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M8 5.5l4.5 4.5L8 14.5' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E")}
+.gm-pill.box{padding:0 1.7em}
+@media (prefers-reduced-transparency:reduce){.gm-pill{-webkit-backdrop-filter:none;backdrop-filter:none;background:#e8e8ed}}
+.gm-def{transition:opacity .35s ease,transform .35s ease,filter .35s ease}
+.gm-copy.is-info .gm-def{opacity:0;transform:translateY(-10px);filter:blur(5px);pointer-events:none}
+.gm-def>*{will-change:transform,opacity}
+.gm-info{position:absolute;left:0;right:0;bottom:0;opacity:0;transform:translateY(14px);filter:blur(5px);pointer-events:none;transition:opacity .4s ease .08s,transform .4s ease .08s,filter .4s ease .08s}
+.gm-copy.is-info .gm-info{opacity:1;transform:none;filter:none;pointer-events:auto}
+.gm-info.swap>*{animation:gmSwap .45s cubic-bezier(.22,.8,.2,1) both}
+@keyframes gmSwap{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.gm-info .gm-text b{color:#1d1d1f;font-weight:600}
+.gm-chips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:calc(var(--W)*.016) auto 0;max-width:calc(var(--W)*.5);text-align:left}
+.gm-chip{display:flex;align-items:center;gap:9px;padding:6px 10px 6px 6px;border-radius:14px;background:#f5f5f7;color:#1d1d1f!important;text-decoration:none;font-size:max(12.5px,calc(var(--W)*.0098));font-weight:600;letter-spacing:-.01em;line-height:1.2;transition:background .2s ease}
+.gm-chip:hover{background:#e8e8ed}
+.gm-chip img{flex:none;width:calc(var(--W)*.047);min-width:48px;aspect-ratio:16/10;object-fit:cover;border-radius:9px;background:#d2d2d7}
+@media (max-width:700px){.gm-copy.is-info{top:auto;bottom:14px;transform:translateX(-50%);z-index:40;width:min(94vw,540px);padding:14px 14px 12px;border-radius:24px;background:rgba(255,255,255,.93);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:0 10px 40px -10px rgba(0,0,0,.28)}.gm-copy.is-info .gm-def{display:none}.gm-copy.is-info .gm-info{position:relative}.gm-chips{grid-template-columns:repeat(2,1fr);max-width:none}.gm-chip{font-size:12.5px}.gm-chip img{width:46px;min-width:46px}.gm-hint{margin-top:14px}}
+@media (prefers-reduced-motion:reduce){.gm-hint-t{animation:none}}
+.gm-copy{transition:translate .55s cubic-bezier(.22,.8,.2,1)}
+#gm2{scroll-margin-top:76px}
+#gm2 .gm-l2{text-wrap:balance}
 </style>
 </head>
 <body>
@@ -407,8 +485,27 @@ footer.sf svg{display:block;width:1.35em;height:1.35em}
    <div class="craft-layer"><video data-src="squid2.mp4#t=0.1" muted loop playsinline preload="none"></video></div>
    <div class="craft-layer"><video data-src="squid3.mp4#t=0.1" muted loop playsinline preload="none"></video></div>
   </div>
-  <div class="craft-text"><p class="craft-copy two-tone i18n" data-en="I study <b>game dev at TECH.C</b> and I’m 2 years in. On YouTube and Instagram I show my work to my fans." data-ja="<b>TECH.Cでゲーム開発</b>を学んでいます（現在2年目）。YouTubeとInstagramでは、制作した作品をファンに向けて発信しています。">I study <b>game dev at TECH.C</b> and I’m 2 years in. On YouTube and Instagram I show my work to my fans.</p><a class="craft-link i18n" href="index.html" data-en="View my portfolio" data-ja="ポートフォリオを見る">View my portfolio</a></div>
+  <div class="craft-text"><p class="craft-copy two-tone i18n" data-en="I study <b>game programming</b> and I’m 2 years in. I presented my own game at <b>Tokyo Game Show</b>. On YouTube and Instagram I share my journey of connecting the tech industry with social media. Find out more below." data-ja="<b>ゲームプログラミング</b>を学んで現在2年目。自作のゲームを<b>東京ゲームショウ</b>に出展しました。YouTubeとInstagramでは、テック業界とSNSをつなぐ挑戦を発信しています。詳しくは、下へ。">I study <b>game programming</b> and I’m 2 years in. I presented my own game at <b>Tokyo Game Show</b>. On YouTube and Instagram I share my journey of connecting the tech industry with social media. Find out more below.</p><a class="craft-link i18n" href="index.html" data-en="View my portfolio" data-ja="ポートフォリオを見る">View my portfolio</a></div>
  </div>
+</section>
+
+<!-- 5c. DESIGN (same section, design projects only) -->
+<section class="gm" id="gm2" aria-labelledby="gmTitle2">
+<div class="gm-stage">
+<div class="gm-canvas">
+<div class="gm-tile gm-t rd" data-g="cardgame" aria-label="Prefecture Card Game" data-pages="cardgame{n}.jpg" data-ar="1.545" style="--l:5%;--t:24%;--wn:0.22;--ml:5vw;--mw:46;--mtop:11vw;--mbot:auto"><div class="gm-media"><img class="gm-pg" src="cardgame1.jpg" alt=""><button class="gm-pn prev" type="button" aria-label="Previous page" disabled><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.5 2.5 5 8l5.5 5.5"/></svg></button><button class="gm-pn next" type="button" aria-label="Next page" disabled><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></button><span class="gm-pc"></span></div></div>
+<div class="gm-tile gm-p gm-t rd" data-g="rena" aria-label="れい Magazine Article" data-pages="rena-p{n}.jpg" data-ar=".707" style="--l:38%;--t:4%;--wn:0.14;--ml:57vw;--mw:30;--mtop:10vw;--mbot:auto"><div class="gm-media"><img class="gm-pg" src="rena-p1.jpg" alt=""><button class="gm-pn prev" type="button" aria-label="Previous page" disabled><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.5 2.5 5 8l5.5 5.5"/></svg></button><button class="gm-pn next" type="button" aria-label="Next page" disabled><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></button><span class="gm-pc"></span></div></div>
+<div class="gm-tile gm-p gm-t rd" data-g="saitama" aria-label="To Saitama" data-pages="saitama-p{n}.jpg" data-ar=".707" style="--l:72%;--t:18%;--wn:0.14;--ml:33vw;--mw:30;--mtop:auto;--mbot:5vw"><div class="gm-media"><img class="gm-pg" src="saitama-p1.jpg" alt=""><button class="gm-pn prev" type="button" aria-label="Previous page" disabled><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.5 2.5 5 8l5.5 5.5"/></svg></button><button class="gm-pn next" type="button" aria-label="Next page" disabled><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2.5 11 8l-5.5 5.5"/></svg></button><span class="gm-pc"></span></div></div>
+<div class="gm-copy">
+<div class="gm-def">
+<h2 class="i18n gm-title" id="gmTitle2" data-en="&lt;span class=&quot;gm-l1&quot;&gt;I design too.&lt;/span&gt; &lt;span class=&quot;gm-l2&quot;&gt;From magazines to cards.&lt;/span&gt;" data-ja="&lt;span class=&quot;gm-l1&quot;&gt;デザインもできます&lt;/span&gt; &lt;span class=&quot;gm-l2&quot;&gt;雑誌からカードまで&lt;/span&gt;"><span class="gm-l1">I design too.</span> <span class="gm-l2">From magazines to cards.</span></h2>
+<p class="i18n gm-text" data-en="I work with Clip Studio Paint, Photoshop, Illustrator and Pages. I don’t just make games and videos, I also create impressive graphic design." data-ja="Clip Studio Paint、Photoshop、Illustrator、Pagesを使います。ゲームや動画だけでなく、印象に残るグラフィックデザインも作ります。">I work with Clip Studio Paint, Photoshop, Illustrator and Pages. I don’t just make games and videos, I also create impressive graphic design.</p>
+<div class="gm-hint"><span class="gm-pill"><span class="i18n" data-en="Click on a design to learn more" data-ja="デザインをクリックして詳しく見る">Click on a design to learn more</span><i class="gm-pi" aria-hidden="true"></i></span></div>
+</div>
+<div class="gm-info" id="gmInfo2" aria-live="polite"></div>
+</div>
+</div>
+</div>
 </section>
 
 <!-- 6. MUSIC -->
@@ -731,6 +828,300 @@ apply(lang);
     if((y<=0&&step>0)||(y>=max-1&&step<0))e.preventDefault();
   },{passive:false});
 })();
+</script>
+<script>
+/* 27 projects: tiles start at the middle of the stage and burst out to their places as you scroll (same idea as apple.com), then the text arrives. */
+["gm","gm2"].forEach(function(gid){
+  var sec=document.getElementById(gid); if(!sec)return;
+  var stage=sec.querySelector(".gm-stage"), canvas=sec.querySelector(".gm-canvas");
+  var tiles=[].slice.call(sec.querySelectorAll(".gm-tile"));
+  var copy=[].slice.call(sec.querySelectorAll(".gm-def>*:not(.gm-hint)")), hint=sec.querySelector(".gm-def .gm-hint"), hintDy=0;
+  var still=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var geo=[],last=-1;
+  function clamp(x){return x<0?0:x>1?1:x;}
+  function measure(){
+    var W=canvas.clientWidth,H=canvas.clientHeight;
+    geo=tiles.map(function(t){return {x:W/2-(t.offsetLeft+t.offsetWidth/2),y:H/2-(t.offsetTop+t.offsetHeight/2)};});
+    if(hint){ /* how far the glass pill sits below the middle of the stage when it is in its final place */
+      hint.style.transform="none";
+      var hr=hint.getBoundingClientRect(),sr=stage.getBoundingClientRect();
+      if(hr.width>0)hintDy=sr.height-(hr.top-sr.top)+8; /* distance from its final spot down to just below the bottom edge */
+    }
+    last=-1; render();
+  }
+  function progress(){
+    var r=sec.getBoundingClientRect(),vh=window.innerHeight;
+    return clamp((vh*.6-r.top)/((r.height-vh)+vh*.6)*1.25);
+  }
+  function paint(p){
+    sec.classList.toggle("gm-live",p>.7);
+    if(p<.55&&sec._gmDeselect&&sec.classList.contains("has-sel"))sec._gmDeselect();
+    tiles.forEach(function(t,i){
+      var l=clamp((p-i*.014)/.5), e=1-Math.pow(1-l,3), g=geo[i]; if(!g)return;
+      t.style.opacity=Math.min(1,l*4);
+      t.style.transform="translate3d("+(g.x*(1-e)).toFixed(1)+"px,"+(g.y*(1-e)).toFixed(1)+"px,0) scale("+(.08+.92*e).toFixed(3)+")";
+    });
+    if(hint){ /* the glass pill comes in from the bottom edge, rides up with the scroll (1:1 at first), eases to a stop and locks in its final place, like the top glass bar */
+      var hR=Math.min(Math.max(2*hintDy/window.innerHeight,.25),.6);
+      var ht=clamp((p-.2)/hR), hE=ht*(2-ht);
+      hint.style.opacity=clamp(ht/.2).toFixed(3);
+      hint.style.transform="translate3d(0,"+(hintDy*(1-hE)).toFixed(1)+"px,0)";
+      hint.style.filter="";
+    }
+    copy.forEach(function(el,i){
+      var a=clamp((p-(.6+i*.07))/.2), e=1-Math.pow(1-a,3);
+      el.style.opacity=e;
+      el.style.transform="translate3d(0,"+((1-e)*22).toFixed(1)+"px,0)";
+      el.style.filter=a>=1?"":"blur("+((1-e)*6).toFixed(1)+"px)";
+    });
+  }
+  function render(){
+    var p=still?1:progress();
+    if(Math.abs(p-last)<.0005&&last>=0)return;
+    last=p; paint(p);
+  }
+  var ticking=false;
+  function onScroll(){ if(ticking)return; ticking=true; requestAnimationFrame(function(){ticking=false;render();}); }
+  window.addEventListener("scroll",onScroll,{passive:true});
+  window.addEventListener("resize",function(){measure();},{passive:true});
+  window.addEventListener("load",measure);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(measure);
+  measure();
+});
+</script>
+<script>
+/* 27 projects: click a screen to read about it here, click it again to go back. The open screen grows, every other screen shrinks and is moved clear so no two screens ever touch or overlap. */
+["gm","gm2"].forEach(function(gid){
+  var sec=document.getElementById(gid); if(!sec)return;
+  var stage=sec.querySelector(".gm-stage"), canvas=sec.querySelector(".gm-canvas"), copy=sec.querySelector(".gm-copy"), info=sec.querySelector(".gm-info");
+  var tiles=[].slice.call(sec.querySelectorAll(".gm-tile[data-g]"));
+  var isJa=function(){return document.documentElement.classList.contains("lang-ja");};
+  var L={play:["Play","プレイ"],dl:["Download","ダウンロード"],gh:["View code on GitHub","GitHubでコードを見る"],cards:["Look at all cards","すべてのカードを見る"]};
+  var BACK=["Click the screen again to go back","もう一度画面をクリックすると戻ります"];
+  var SMALL=[
+   ["Earth is a Toy","地球はおもちゃ","aliencatchball.jpg","https://lucanicohe.github.io/aliensandstuff/index.html"],
+   ["Frog Kamizumo","カエル紙相撲","kamizumo.jpg","https://lucanicohe.github.io/kamizumo/"],
+   ["Olympus Dodge","オリンポス・ドッジ","olympus.jpg","https://lucanicohe.github.io/OlympusDodgeBall/"],
+   ["Underwater Pinball","水中ピンボール","pin.jpg","https://lucanicohe.github.io/PinBall/"],
+   ["Tron Rhythm","トロン・リズム","rhythm.jpg","https://lucanicohe.github.io/rhythmgame/index.html"],
+   ["Lost in the Cold","極寒の迷路","maze.jpg","https://lucanicohe.github.io/smallmazegame/index.html"]
+  ];
+  /* l1 = blue line: the main tool.  t = black headline.  p = the text under it (team or not, where and why, what I did).
+     k = the ONE button [type,url]; no k = the button turns into a plain "click again to go back" box. */
+  var G={
+   toypair:{l1:["Unity","Unity"],t:["Toy Pair","トイ・ペア"],
+    p:["Team project of 21 people, made over 6 months at my school and shown as our top exhibition at the <b>Tokyo Game Show</b>. I was a programmer, building the rotating and moving lifts, the extending piston and the two-player lift.","21人のチームで、学校で6か月かけて作ったプロジェクト。学校のトップ展示として<b>東京ゲームショウ</b>に出展しました。プログラマーとして、回転・移動リフト、伸びるピストン、2人用リフトを作りました。"],k:null},
+   mysterybox:{l1:["Unreal Engine","Unreal Engine"],t:["Mystery Box","ミステリーボックス"],
+    p:["Team project, and my very first one in <b>Unreal Engine</b>. I gave the whole environment its Tron look, building the Blueprints, the materials and the overall design.","チームで作った、初めての<b>Unreal Engine</b>のプロジェクト。環境全体をTron風に仕上げ、Blueprint、マテリアル、全体のデザインを担当しました。"],
+    k:["gh","https://github.com/NathanAung/MysteryBox"]},
+   onlybadguys:{l1:["Unity","Unity"],t:["Only Bad Guys on the Train","電車の中の悪者たち"],
+    p:["Solo project, <b>made alone in 4 weeks</b>. Every model, texture and 2D element is mine, all built from my own photos of real Japanese trains.","ひとりで4週間かけて作った個人制作。モデルもテクスチャも2D素材もすべて自作で、実際の日本の電車を撮影した写真から作りました。"],
+    k:["play","https://lucanicohe.github.io/onlybadguysonthetrain/"]},
+   great:{l1:["Unity","Unity"],t:["Great Foot Okhan","グレート-フット-O-カーン"],
+    p:["Team project with a company and the pro wrestler Great O-Khan, and it won <b>1st place out of 7 teams</b>. As the technical artist, I built the Mongolian world, the lighting and the shaders.","企業とプロレスラーのグレート-O-カーン選手と取り組んだチームプロジェクトで、<b>7チーム中1位</b>。テクニカルアーティストとして、モンゴルの世界観、ライティング、シェーダーを担当しました。"],
+    k:["dl","https://lucahelgert.itch.io/great-foot-o-khan"]},
+   artwork:{l1:["Unity","Unity"],t:["Artwork Restoration","アートワークの復元"],
+    p:["Client project, made in 3 weeks for an illustrator with 10k followers. I <b>brought her artwork back to life</b> as an interactive piece, with programming and animation.","フォロワー1万人のイラストレーターのために、3週間で作った依頼制作。プログラミングとアニメーションで、彼女のイラストを<b>インタラクティブな作品に蘇らせました</b>。"],
+    k:["play","https://lucanicohe.github.io/chipartwork/"]},
+   dekamenoippai:{l1:["Unity","Unity"],t:["Lots of Big Ones","デカめの一杯"],
+    p:["Team project of 5 people, made in 2 months in my first year at school, and it <b>won our school’s hackathon</b>. I wrote the fish behavior scripts and made the art, the sound and the lighting.","5人のチームで、学校の1年生のときに2か月かけて作り、<b>学内のハッカソンで優勝</b>しました。魚の動きのスクリプトを書き、アート、サウンド、ライティングも作りました。"],
+    k:["play","https://lucahelgert.itch.io/dekameippai"]},
+   ikaikasu:{l1:["Unity","Unity"],t:["Squid to the Max","Squid to the Max"],
+    p:["Team project of 5 people, made at a hackathon. I made the water look real and modeled the 3D models in Blender and Photoshop. Shader Graph gave it its reflections and underwater feel, all matched to a real nature documentary.","ハッカソンで作った、5人のチームプロジェクト。水をリアルに見せる担当で、3DモデルはBlenderとPhotoshopで作りました。反射と水中の雰囲気はShader Graphで表現し、実際の自然ドキュメンタリーを手本に本物らしさを追求しました。"],k:null},
+   boukyakunoyakata:{l1:["Unity","Unity"],t:["House of Forgetting","忘却の館"],
+    p:["Team project, and my first one in <b>Unity</b>: a pixel art horror escape game. I did 90% of the programming and made the sprite art.","<b>Unity</b>で初めて作ったチームプロジェクトで、ピクセルアートのホラー脱出ゲーム。プログラミングの9割を担当し、スプライトのアートも作りました。"],
+    k:["play","https://lucahelgert.itch.io/boukyaku-no-yakata"]},
+   kumovsmahou:{l1:["Unity","Unity"],t:["Kumo vs. Mahou","クモ vs. マホウ"],
+    p:["Team project of 5 people, made at school as a class project. I was the <b>leader and planner</b>, and also did some minor 3D modeling and wrote some scripts.","5人のチームで、学校の授業のプロジェクトとして作りました。<b>リーダー兼プランナー</b>を務め、簡単な3Dモデリングとスクリプトも担当しました。"],
+    k:["dl","https://lucahelgert.itch.io/kumovsmahou"]},
+   bongo:{l1:["Unity","Unity"],t:["Bongo 3D","ボンゴ3D"],
+    p:["A one-week project: the Bongo Cat internet phenomenon rebuilt as a 3D interactive piece, <b>finished and playable right in your browser</b>.","わずか1週間で作った作品。話題のボンゴキャットを3Dのインタラクティブな作品にして、<b>ブラウザで遊べる形</b>に仕上げました。"],
+    k:["play","https://lucanicohe.github.io/bongo3d/"]},
+   bouzocart:{l1:["Unity","Unity"],t:["Bouzou Cart","ボウゾウ・カート"],
+    p:["Hackathon project inspired by 90s video games. As the technical artist, I <b>designed the overall look</b> and made everything feel like an old-school 90s game.","90年代のビデオゲームに影響を受けた、ハッカソンのプロジェクト。テクニカルアーティストとして<b>全体のビジュアルを設計</b>し、オールドスクールな90年代らしさに仕上げました。"],
+    k:["play","https://lucahelgert.itch.io/bousou-cart"]},
+   small:{l1:["Unity","Unity"],t:["Small games","小さなゲーム"],
+    p:["Small games made in <b>1 week</b> at the Saturday game jam at my school. These are some of my favorites, and you can play every one right in your browser.","学校の土曜ゲームジャムで、<b>1週間</b>で作った小さなゲームたち。その中から特にお気に入りを集めました。どれもブラウザですぐに遊べます。"],
+    chips:SMALL,k:null},
+   cardgame:{l1:["Clip Studio Paint","Clip Studio Paint"],t:["Prefecture Card Game","都道府県カードゲーム"],
+    p:["Team project of 7 people, made over 3 months. A Pokémon-style card game with a card for every prefecture of Japan. I came up with the idea and <b>drew every card myself</b>, and it became the most popular analog game at the school festival.","7人のチームで、3か月かけて作りました。日本の都道府県ごとにカードがあるポケモン風のカードゲーム。アイデアを考え、<b>すべてのカードを自分で描き</b>、学園祭では一番人気のアナログゲームになりました。"],
+    k:["cards","https://lucanicohe.github.io/cardsofjapan/"]},
+   rena:{l1:["Apple Pages","Apple Pages"],t:["れい Magazine Article","れい 雑誌記事"],
+    p:["Solo project, made as an assignment at language school. I interviewed れい, a hostess at a kyabakura, <b>wrote the article in Japanese</b> and made the pages and photos myself with Pages, GIMP and Photoshop.","日本語学校の課題として、ひとりで作りました。キャバクラで働くれいさんに取材し、<b>日本語で記事を書き</b>、ページ制作と写真編集までPages、GIMP、Photoshopで仕上げました。"],k:null},
+   saitama:{l1:["Apple Pages","Apple Pages"],t:["To Saitama","埼玉へ"],
+    p:["Team project of 2 people, made at language school as a class project: <b>a full magazine</b> comparing life in Saitama and Tokyo. I wrote the text, made the inside pages and edited the photos with Pages, GIMP and Photoshop.","日本語学校の授業課題として、2人で作りました。埼玉と東京の暮らしを比べる、<b>まるごと1冊の雑誌</b>です。文章を書き、中面のページを作り、写真の編集もPages、GIMP、Photoshopで行いました。"],k:null}
+  };
+  var cur=null;
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");}
+  function render(key,animate){
+    var g=G[key]; if(!g)return; var i=isJa()?1:0, h="";
+    h+='<h2 class="gm-title"><span class="gm-l1">'+g.l1[i]+'</span><span class="gm-l2">'+g.t[i]+'</span></h2>';
+    h+='<p class="gm-text">'+g.p[i]+'</p>';
+    if(g.chips){h+='<div class="gm-chips">'+g.chips.map(function(c){return '<a class="gm-chip" href="'+c[3]+'" target="_blank" rel="noopener"><img src="'+c[2]+'" alt="" loading="lazy" decoding="async"><span>'+esc(c[i])+'</span></a>';}).join("")+'</div>';}
+    /* the glass pill: exactly ONE link, or a plain box when there is nothing to link to */
+    if(g.k){h+='<div class="gm-pillrow"><a class="gm-pill" href="'+g.k[1]+'" target="_blank" rel="noopener"><span>'+L[g.k[0]][i]+'</span><i class="gm-pi" aria-hidden="true"></i></a></div>';}
+    else{h+='<div class="gm-pillrow"><span class="gm-pill box"><span>'+BACK[i]+'</span></span></div>';}
+    info.innerHTML=h;
+    if(animate){info.classList.remove("swap");void info.offsetWidth;info.classList.add("swap");}
+  }
+  /* ---- design screens: page images instead of a PDF (rena-p1.jpg, rena-p2.jpg ...) ---- */
+  function pageSrc(tile,n){return tile.dataset.pages.replace("{n}",n);}
+  function updatePager(tile){
+    var st=tile._pg; if(!st)return;
+    var img=tile.querySelector(".gm-pg"), pc=tile.querySelector(".gm-pc"), pv=tile.querySelector(".gm-pn.prev"), nx=tile.querySelector(".gm-pn.next");
+    var want=pageSrc(tile,st.i+1);
+    if(img.getAttribute("src")!==want)img.src=want;
+    pc.textContent=(st.i+1)+" / "+(st.done?st.n:st.n+"+");
+    pv.disabled=st.i<=0; nx.disabled=st.i>=st.n-1;
+    var pre=new Image(); if(st.i+1<st.n)pre.src=pageSrc(tile,st.i+2);
+  }
+  function probe(tile){
+    var st=tile._pg; if(st.done||st.busy)return; st.busy=true;
+    (function next(){
+      var n=st.n+1;
+      if(n>60){st.done=true;st.busy=false;updatePager(tile);return;}
+      var im=new Image();
+      im.onload=function(){st.n=n;updatePager(tile);next();};
+      im.onerror=function(){st.done=true;st.busy=false;updatePager(tile);};
+      im.src=pageSrc(tile,n);
+    })();
+  }
+  function initPages(tile){
+    if(tile._pg||!tile.dataset.pages)return;
+    var fixed=parseInt(tile.dataset.count,10)||0;
+    tile._pg={i:0,n:fixed||1,done:!!fixed,busy:false};
+    updatePager(tile); if(!fixed)probe(tile);
+  }
+  function turn(tile,d){
+    var st=tile._pg; if(!st)return;
+    st.i=Math.min(Math.max(0,st.i+d),st.n-1); updatePager(tile);
+  }
+
+  /* ---- layout: the open screen gets its own space, all others shrink and are pushed clear ---- */
+  function ratioOf(tile){
+    if(tile.dataset.ar)return parseFloat(tile.dataset.ar)||1.545;
+    var img=tile.querySelector(".gm-pg");
+    if(img&&img.naturalWidth&&img.naturalHeight)return img.naturalWidth/img.naturalHeight;
+    return tile.offsetWidth/tile.offsetHeight;
+  }
+  function hit(a,b,g){return Math.abs(a.x-b.x)<(a.w+b.w)/2+g-.5&&Math.abs(a.y-b.y)<(a.h+b.h)/2+g-.5;}
+  /* every other screen gets the free spot nearest to where it was (biggest first), checked against the open screen, the text and the screens already placed, so overlap cannot happen */
+  function solve(items,fixed,W,H,s,gap){
+    var mx=Math.max(8,W*.01), step=Math.max(4,W*.007), ok=true;
+    var P=items.map(function(it){var si=it.w0<W*.09?Math.min(1,s+.2):s;return {x:it.cx,y:it.cy,w:it.w0*si,h:it.h0*si,s:si,i:it.i,done:false};});
+    var order=P.slice().sort(function(a,b){return b.w*b.h-a.w*a.h;});
+    var placed=fixed.slice();
+    order.forEach(function(p){
+      var ox=p.x,oy=p.y,x0=mx+p.w/2,x1=W-mx-p.w/2,y0=mx+p.h/2,y1=H-mx-p.h/2,best=null,bd=1e18,x,y,d,k,free;
+      for(y=y0;y<=y1+.01;y+=step){
+        for(x=x0;x<=x1+.01;x+=step){
+          d=(x-ox)*(x-ox)+(y-oy)*(y-oy); if(d>=bd)continue;
+          p.x=x;p.y=y; free=true;
+          for(k=0;k<placed.length;k++){if(hit(p,placed[k],gap)){free=false;break;}}
+          if(free){bd=d;best=[x,y];}
+        }
+      }
+      if(best){p.x=best[0];p.y=best[1];p.done=true;placed.push(p);}
+      else{p.x=Math.min(Math.max(ox,x0),x1);p.y=Math.min(Math.max(oy,y0),y1);ok=false;}
+    });
+    return {P:P,ok:ok};
+  }
+  function place(tile){
+    var W=canvas.clientWidth,H=canvas.clientHeight,mob=window.innerWidth<=700;
+    var ar=ratioOf(tile), left=(tile.offsetLeft+tile.offsetWidth/2)<W*.5, side=left?1:-1;
+    var maxW,maxH,cx,cy;
+    if(mob){maxW=W*.78;maxH=H*.33;cx=W*.5;cy=H*.2;}
+    else{maxW=W*.29;maxH=H*.78;cx=left?W*.17:W*.83;cy=H*.47;}
+    var w=Math.min(maxW,maxH*ar),h=w/ar;
+    /* the open screen */
+    var m=tile.querySelector(".gm-media");
+    m.style.setProperty("--tw",w+"px");
+    m.style.left=(cx-w/2-tile.offsetLeft)+"px"; m.style.top=(cy-h/2-tile.offsetTop)+"px";
+    m.style.width=w+"px"; m.style.height=h+"px";
+    m.style.removeProperty("--ox"); m.style.removeProperty("--oy"); m.style.removeProperty("--sc");
+    /* the text slides to the other side */
+    var shift=mob?0:side*W*.08;
+    copy.style.translate=shift?shift+"px 0":"";
+    var sel={x:cx,y:cy,w:w,h:h}, txt;
+    if(mob){txt={x:copy.offsetLeft,y:copy.offsetTop+copy.offsetHeight/2,w:copy.offsetWidth,h:copy.offsetHeight};}
+    else{var ih=info.offsetHeight,bt=copy.offsetTop+copy.offsetHeight;txt={x:copy.offsetLeft+shift,y:bt-ih/2,w:copy.offsetWidth,h:ih};}
+    var items=[];
+    tiles.forEach(function(o){
+      if(o===tile)return;
+      var mm=o.querySelector(".gm-media");
+      mm.style.left=mm.style.top=mm.style.width=mm.style.height=""; mm.style.removeProperty("--tw");
+      items.push({o:o,i:items.length,cx:o.offsetLeft+o.offsetWidth/2,cy:o.offsetTop+o.offsetHeight/2,w0:o.offsetWidth,h0:o.offsetHeight});
+    });
+    var gap=W*.014,s0=mob?.5:.68,res,s,tries=[[sel,txt],[sel]];
+    for(var t=0;t<tries.length;t++){
+      s=s0;
+      while(s>=.27){res=solve(items,tries[t],W,H,s,gap); if(res.ok)break; s*=.92;}
+      if(res&&res.ok)break;
+    }
+    items.forEach(function(it,i){
+      var r=res.P[i],mm=it.o.querySelector(".gm-media");
+      mm.style.setProperty("--ox",(r.x-it.cx).toFixed(1)+"px"); mm.style.setProperty("--oy",(r.y-it.cy).toFixed(1)+"px"); mm.style.setProperty("--sc",r.s.toFixed(3));
+    });
+  }
+  function resetAll(){
+    tiles.forEach(function(o){
+      var mm=o.querySelector(".gm-media"); if(!mm)return;
+      mm.style.removeProperty("--tw"); mm.style.removeProperty("--ox"); mm.style.removeProperty("--oy"); mm.style.removeProperty("--sc");
+      mm.style.left=mm.style.top=mm.style.width=mm.style.height="";
+    });
+    copy.style.translate="";
+  }
+  function deselect(){
+    if(!cur)return;
+    cur.classList.remove("sel"); cur.setAttribute("aria-pressed","false");
+    resetAll(); cur=null; sec.classList.remove("has-sel"); copy.classList.remove("is-info");
+  }
+  function select(tile){
+    if(cur===tile){deselect();return;}
+    var wasInfo=!!cur;
+    if(cur){cur.classList.remove("sel");cur.setAttribute("aria-pressed","false");}
+    cur=tile; tile.classList.add("sel"); tile.setAttribute("aria-pressed","true"); sec.classList.add("has-sel");
+    if(tile.classList.contains("rd"))initPages(tile);
+    render(tile.dataset.g,wasInfo); copy.classList.add("is-info");
+    place(tile);
+    var img=tile.querySelector(".gm-pg");
+    if(img&&(!img.complete||!img.naturalWidth))img.addEventListener("load",function(){if(cur===tile)place(tile);},{once:true});
+  }
+  sec._gmDeselect=deselect;
+  tiles.forEach(function(t){
+    t.setAttribute("role","button"); t.setAttribute("tabindex","0"); t.setAttribute("aria-pressed","false");
+    t.addEventListener("click",function(e){ if(e.target.closest(".gm-pn"))return; select(t); });
+    t.addEventListener("keydown",function(e){
+      if(e.key==="Enter"||e.key===" "){e.preventDefault();select(t);}
+      else if(t.classList.contains("rd")&&t.classList.contains("sel")){
+        if(e.key==="ArrowRight"){e.preventDefault();turn(t,1);} if(e.key==="ArrowLeft"){e.preventDefault();turn(t,-1);}
+      }
+    });
+    if(t.classList.contains("rd")){
+      var pv=t.querySelector(".gm-pn.prev"), nx=t.querySelector(".gm-pn.next");
+      pv.addEventListener("click",function(e){e.stopPropagation();turn(t,-1);});
+      nx.addEventListener("click",function(e){e.stopPropagation();turn(t,1);});
+      var x0=null;
+      t.addEventListener("touchstart",function(e){x0=e.touches[0].clientX;},{passive:true});
+      t.addEventListener("touchend",function(e){
+        if(x0===null||!t.classList.contains("sel"))return;
+        var dx=e.changedTouches[0].clientX-x0; x0=null;
+        if(Math.abs(dx)>50){turn(t,dx<0?1:-1);t._swiped=true;setTimeout(function(){t._swiped=false;},350);}
+      },{passive:true});
+      t.addEventListener("click",function(e){ if(t._swiped){e.stopImmediatePropagation();e.preventDefault();} },true);
+    }
+  });
+  /* a click on empty space also closes the open screen */
+  stage.addEventListener("click",function(e){
+    if(!cur)return;
+    if(e.target.closest(".gm-tile")||e.target.closest(".gm-info"))return;
+    deselect();
+  });
+  document.addEventListener("keydown",function(e){ if(e.key==="Escape")deselect(); });
+  window.addEventListener("resize",function(){ if(cur)place(cur); },{passive:true});
+  var lt=document.getElementById("langToggle");
+  if(lt)lt.addEventListener("click",function(){ setTimeout(function(){ if(cur){render(cur.dataset.g,false);place(cur);} },0); });
+});
 </script>
 </body>
 </html>
