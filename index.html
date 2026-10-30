@@ -1994,6 +1994,8 @@ a.gm-pill:focus-visible{outline:2px solid #0071e3;outline-offset:3px}
 /* TOUCH DEVICES ONLY (phones / tablets): no pinch or double-tap zoom, and the front page is a single screen that is already zoomed out (the "Welcome to my portfolio" / ようこそ view). Desktop is untouched. */
 @media (hover:none) and (pointer:coarse){
   html,body{touch-action:pan-x pan-y}
+}
+@media (hover:none) and (pointer:coarse) and (max-width:700px),(hover:none) and (pointer:coarse) and (max-height:500px){
   html section.ah{height:100vh;height:100svh}
 }
 /* "A little more about me" on phones and iPads: the sticky picture stays, the text flows with normal scrolling over it */
@@ -2001,7 +2003,8 @@ a.gm-pill:focus-visible{outline:2px solid #0071e3;outline-offset:3px}
 .sk.sk-native .sk-stick{z-index:1}
 .sk.sk-native .sk-track{position:relative;left:auto;top:auto;z-index:2;margin:-100svh 0 0 22.5vw;padding:30svh 0 42svh;width:min(55vw,820px);will-change:auto;transform:none}
 @media(max-width:900px){.sk.sk-native .sk-track{margin-left:8vw;width:84vw}}
-.sk.sk-native .sk-item{will-change:auto}
+.sk.sk-native .sk-item{will-change:auto;margin-bottom:36svh}
+.sk.sk-native .sk-item.sk-head{margin-bottom:30svh}
 /* 24 games on a tall tablet screen: keep the wide layout, centre it vertically and keep the text readable */
 @media (min-width:701px) and (orientation:portrait){
   .gm-canvas{top:max(64px,calc((100svh - var(--W)/1.5995)/2))}
@@ -2410,7 +2413,7 @@ const teamVideos = [...document.querySelectorAll(".team-video video, .xcard-visu
 const conn = navigator.connection || {};
 const saveData = !!conn.saveData || /(^|-)2g$/.test(conn.effectiveType || "");
 const isPhone = window.matchMedia("(pointer: coarse)").matches; /* phones and tablets (iPad included) */
-const smallScreen = (isPhone && Math.min(screen.width, screen.height) < 700) || window.innerWidth < 700; /* only real phones get the lighter name-m.mp4 file (made by optimize-media.sh); iPad gets the sharp full-quality video */
+const smallScreen = isPhone || window.innerWidth < 700; /* only real phones get the lighter name-m.mp4 file (made by optimize-media.sh); iPad gets the sharp full-quality video */
 function srcFor(v) { return (smallScreen && !v._full) ? v.dataset.src.replace(/\.mp4(?=#|$)/, "-m.mp4") : v.dataset.src; }
 
 function attach(v, mode) {
@@ -3030,7 +3033,7 @@ applyLanguage(currentLang);
   if (!hero || !stage || !grid || !center || !vJa || !vEn) return;
 
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
-  const MOBILE = matchMedia("(hover: none) and (pointer: coarse)").matches;   /* touch devices skip the zoom-in video: the page starts zoomed out */
+  const MOBILE = matchMedia("(hover: none) and (pointer: coarse)").matches && Math.min(screen.width, screen.height) < 700;   /* touch devices skip the zoom-in video: the page starts zoomed out */
   const smooth = (t) => t * t * (3 - 2 * t);
   const play = (v) => { const p = v.play(); if (p && p.catch) p.catch(() => {}); };
   const isJa = () => document.documentElement.classList.contains("lang-ja");
@@ -3117,7 +3120,7 @@ applyLanguage(currentLang);
   /* ---------- the wall of game screens ---------- */
   const games = [{"src": "toypair.mp4", "poster": "toypair-poster.jpg", "label": "Toy Pair"}, {"src": "mysterybox.mp4", "poster": "mysterybox-poster.jpg", "label": "Mystery Box"}, {"src": "onlybadguys.mp4", "poster": "onlybadguys-poster.jpg", "label": "Only Bad Guys on the Train"}, {"src": "great.mp4", "poster": "great-poster.jpg", "label": "Great Foot Okhan"}, {"src": "artwork.mp4", "poster": "artwork-poster.jpg", "label": "Artwork Restoration"}, {"src": "dekamenoippai.mp4", "poster": "dekamenoippai-poster.jpg", "label": "Lots of Big Ones"}, {"src": "ikaikasu.mp4", "poster": "ikaikasu-poster.jpg", "label": "Squid to the Max"}, {"src": "boukyakunoyakata.mp4", "poster": "boukyakunoyakata-poster.jpg", "label": "House of Forgetting"}, {"src": "kumovsmahou.mp4", "poster": "kumovsmahou-poster.jpg", "label": "Kumo vs. Mahou"}, {"src": "bongo.mp4", "poster": "bongo-poster.jpg", "label": "Bongo 3D"}, {"src": "bouzocart.mp4", "poster": "bouzocart-poster.jpg", "label": "Bouzou Cart"}, {"src": "reee2.mp4", "poster": "", "label": "Toy Pair"}];
   const coords = [[-1,-1.5],[-1,-.5],[-1,.5],[-1,1.5],[0,-2],[0,-1],[0,0],[0,1],[0,2],[1,-1.5],[1,-.5],[1,.5],[1,1.5]];
-  const smallScreen = innerWidth < 700 || (matchMedia("(pointer: coarse)").matches && Math.min(screen.width, screen.height) < 700);
+  const smallScreen = innerWidth < 700 || matchMedia("(pointer: coarse)").matches;
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   let gi = 0;
   const tiles = coords.map(([row, k]) => {
@@ -3819,7 +3822,7 @@ applyLanguage(currentLang);
   var sub=sec.querySelectorAll(".tgs-sub"),par=sec.querySelectorAll(".tgs-p");
   var ctx=cv.getContext("2d");
   var W=0,H=0,dpr=1,small=false,txt="",hs0=100,hs1=60,Hy1=0,Dmax=0,S0=50,Fx=0,Fy=0,langKey="",lastP=-1,dirty=true,userPaused=false,ready=false;
-  var smallScreen=(matchMedia("(pointer: coarse)").matches&&Math.min(screen.width,screen.height)<700)||innerWidth<700;
+  var smallScreen=matchMedia("(pointer: coarse)").matches||innerWidth<700;
 
   function clamp(t){return t<0?0:t>1?1:t}
   function ease(t){t=clamp(t);return t*t*(3-2*t)}

@@ -989,7 +989,7 @@ const vids=[...document.querySelectorAll("video[data-src]")];
 const conn=navigator.connection||{};
 const saveData=!!conn.saveData||/(^|-)2g$/.test(conn.effectiveType||"");
 const isPhone=matchMedia("(pointer: coarse)").matches;
-const smallScreen=(isPhone&&Math.min(screen.width,screen.height)<700)||innerWidth<700;
+const smallScreen=isPhone||innerWidth<700;
 const srcFor=v=>(smallScreen&&!v._full&&!v.dataset.eager)?v.dataset.src.replace(/\.mp4(?=#|$)/,"-m.mp4"):v.dataset.src;
 function attach(v,mode){
   if(!v.getAttribute("src")){v.preload=mode;v.src=srcFor(v);v.load();}
