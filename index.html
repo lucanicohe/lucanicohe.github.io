@@ -2056,6 +2056,13 @@ img.fx-load.fx-ok{opacity:1}
  .sk-t{font-size:clamp(1.5rem,3.8vw,2.2rem)}
 }
 </style>
+<style id="touch-scroll-length">
+/* phones and iPads: longer scroll tracks so the scroll-driven scenes play slower (desktop untouched) */
+@media (hover:none) and (pointer:coarse){
+ html .gm{height:260svh}
+ html .tgs:not(.tgs-still){height:720vh;height:720svh}
+}
+</style>
 </head>
 
 <body>
