@@ -102,6 +102,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:48px;background:rgba(
 .tile .cam{position:absolute;left:50%;transform:translateX(-50%);z-index:3;border-radius:50%;background:radial-gradient(circle at 50% 50%,#1b2233 0%,#10131b 55%,#000 100%);box-shadow:0 0 0 1px rgba(255,255,255,.05);pointer-events:none}
 .tile .cam.dot{background:#14161c;box-shadow:none}
 .tile .screen{position:relative;width:100%;height:100%;overflow:hidden;background:#1c1c1e}
+.tile .screen img.cimg{opacity:0}
+.tile .screen img.cimg.ready{opacity:1;transition:opacity .45s ease}
 .tile .screen img.cimg{position:absolute;left:50%;top:50%;width:100%;height:100%;max-width:none;transform:translate(-50%,-50%);object-fit:cover;object-position:center}
 .tile .screen img,.tile .screen video{display:block;width:100%;height:100%;object-fit:cover}
 .hero-shade{position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(120% 100% at 50% 55%,rgba(0,0,0,.34) 0%,rgba(0,0,0,.48) 100%)}
@@ -579,6 +581,36 @@ img.fx-load.fx-ok{opacity:1}
  .bs-box{font-size:clamp(17px,2.4vw,20px)}
 }
 @media (prefers-reduced-motion:reduce){.bs-body{transition:none}}
+</style>
+<style id="screen-look">
+/* big screens get the same look as the intro tiles: dark bezel, light rim, camera, soft shadow falling to the lower right */
+.ipad,.tile2,.craft-box{
+ background-color:#0b0b0c;
+ background-image:radial-gradient(circle calc(var(--bz)*.2) at 50% calc(var(--bz)*.5),#1b2233 0,#10131b 55%,#000 99%,transparent 100%);
+ background-origin:border-box;background-repeat:no-repeat;
+ box-shadow:0 0 0 2px #d4d4d6,2.6vw 2.3vw 3vw -1vw rgba(0,0,0,.4),0 0 .6vw rgba(0,0,0,.2)}
+.ipad{--bz:clamp(8px,1.1vw,18px);padding:var(--bz)}
+.tile2{--bz:clamp(8px,.75vw,14px);padding:var(--bz)}
+.craft-box{--bz:clamp(9px,.95vw,18px);padding:0;border:var(--bz) solid transparent;box-sizing:border-box;overflow:hidden}
+/* design screens (magazines and cards): real iPad Air 11" proportions (178.5 x 247.6 mm, about 5:7), slim bezel, modest corner radius, all measured from the SHORT side */
+.gm-tile{aspect-ratio:247.6/178.5}
+.gm-tile.gm-p{aspect-ratio:178.5/247.6}
+.gm .gm-tile.gm-p .gm-media{--sd:var(--tw)}
+.gm .gm-tile:not(.gm-p) .gm-media{--sd:calc(var(--tw)*.721)}
+.gm .gm-media,.gm .gm-tile.sel .gm-media,.gm.gm-live .gm-tile.sel:hover .gm-media,.gm.gm-live .gm-tile.gm-t.sel:hover .gm-media{
+ --bz:max(5px,calc(var(--sd)*.042));
+ border:var(--bz) solid transparent;border-radius:calc(var(--sd)*.076);
+ background-color:#0b0b0c;
+ background-image:radial-gradient(circle calc(var(--bz)*.2) at 50% calc(var(--bz)*.5),#1b2233 0,#10131b 55%,#000 99%,transparent 100%);
+ background-origin:border-box;background-repeat:no-repeat;
+ box-shadow:0 0 0 max(1px,calc(var(--sd)*.012)) #d4d4d6,calc(var(--sd)*.13) calc(var(--sd)*.12) calc(var(--sd)*.157) calc(var(--sd)*-.05) rgba(0,0,0,.4),0 0 calc(var(--sd)*.02) rgba(0,0,0,.2)}
+.gm-media img.gm-pg{border-radius:calc(var(--sd)*.034)}
+/* a slight tilt at rest, straight when opened */
+.gm-tile[data-g="cardgame"]{--rot:-2.5deg}
+.gm-tile[data-g="rena"]{--rot:2deg}
+.gm-tile[data-g="saitama"]{--rot:-1.5deg}
+.gm .gm-tile.sel{--rot:0deg}
+.gm .gm-media{transform:translate(var(--ox,0px),var(--oy,0px)) rotate(var(--rot,0deg)) translateZ(0) scale(var(--hs,1))}
 </style>
 </head>
 <body>
@@ -1150,7 +1182,7 @@ const heroTiles=HERO_TILES.map(([row,k,type,file,pos])=>{
   const t=document.createElement("div");t.className="tile"+(type==="c"?" center":"");
   const s=document.createElement("div");s.className="screen";
   let m;
-  if(type==="c"){m=document.createElement("img");m.src=file;m.alt="Luca Helgert";m.decoding="async";m.className="cimg";}
+  if(type==="c"){m=document.createElement("img");m.alt="Luca Helgert";m.decoding="async";m.className="cimg";m.addEventListener("load",()=>{if(typeof update==="function")update();});setTimeout(()=>m.classList.add("ready"),2500);m.src=file;}
   else if(type==="i"){m=document.createElement("img");m.src=file;m.alt="";m.loading="eager";m.fetchPriority="low";m.decoding="async";}
   else{
     m=document.createElement("video");m.dataset.src=type==="c"?file:file+"#t=0.1";
@@ -1279,6 +1311,7 @@ function updateHero(){
       if(bw>0&&bh>0){
         if(!o.imgInit){o.imgInit=true;is.left="0px";is.top="0px";is.width=nw+"px";is.height=nh+"px";is.maxWidth="none";is.objectFit="fill";is.transformOrigin="0 0";}
         const c=Math.max(bw/nw,bh/nh);
+        if(!o.ready){o.ready=true;o.img.classList.add("ready");}
         is.transform="translate3d("+((x0-sl)/s+(bw-nw*c)/2)+"px,"+((y0-stp)/s+(bh-nh*c)/2)+"px,0) scale("+c+")";
       }
     }
