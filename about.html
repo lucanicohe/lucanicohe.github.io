@@ -492,6 +492,94 @@ img.fx-load.fx-ok{opacity:1}
  html .gm{height:calc(100svh + 1.4 * var(--beat))}
 }
 </style>
+<style id="edit-round-2">
+/* "60% of my viewers": calmer line breaks */
+.fact b{text-wrap:balance}
+.fact b .ph{display:inline-block}
+
+/* platform captions: bold lead-in */
+.pcard-video .video-caption b{font-weight:600;color:var(--text)}
+
+/* REACH: small light grey captions next to the phone */
+.reach .rcap{position:absolute;z-index:2;margin:0;font-size:clamp(12px,.95vw,15px);line-height:1.35;font-weight:400;color:#a1a1a6;text-align:right;text-wrap:balance;opacity:0;visibility:hidden;pointer-events:none}
+@media (min-width:801px) and (orientation:landscape),(min-width:801px) and (pointer:fine){
+ .reach .rcap{left:24px;width:calc(27.9vw - var(--pw)/2 - 1.6vw - 24px);text-align:right;top:calc(19vh + var(--ph)/2);transform:translateY(-50%)}
+}
+@media (max-width:800px),(orientation:portrait) and (pointer:coarse){
+ .reach .rcap{left:0;right:0;width:auto;padding:0 var(--padding);text-align:center;top:calc(84px + var(--ph) + 8px);font-size:clamp(10.5px,3vw,12px);white-space:nowrap}
+}
+@media (max-width:700px){
+ .reach .rt1,.reach .rt2{top:calc(84px + var(--ph) + 36px)}
+}
+@media (min-width:701px) and (orientation:portrait) and (pointer:coarse){
+ .reach .rcap{left:calc(25vw - var(--pw)/2 - 3vw);right:auto;width:calc(var(--pw) + 6vw);padding:0;top:calc(max(15svh,96px) + var(--ph) + 14px);font-size:clamp(12px,1.7vw,15px);white-space:normal}
+}
+
+/* MUSIC: profit card next to the YouTube iPad */
+.m-stats{position:absolute;z-index:3;display:flex;flex-direction:column;gap:12px}
+.pcard.m-stat{min-height:0;background:var(--bg)}
+.m-stat .m2nd{margin-top:2.4vh}
+.m-stat .b1{white-space:nowrap}
+@media (min-width:801px) and (orientation:landscape),(min-width:801px) and (pointer:fine){
+ .music-stage{--iw:min(70vw,99vh);--cw:min(19vw,260px);--it:calc(max(8vh,64px) + max(15vh,104px) + 1.2vh);--gap:1.6vw;--gl:calc(50% - (var(--iw) + var(--gap) + var(--cw))/2)}
+ .ipad{width:var(--iw);left:var(--gl);transform:none}
+ .m-zone{top:max(8vh,64px);height:max(15vh,104px);left:var(--gl);right:auto;width:var(--iw)}
+ .m-item{padding:0}
+ .m-title{font-size:min(4.2vw,calc(var(--iw)*.065))}
+ .m-sub{font-size:min(1.9vw,calc(var(--iw)*.03))}
+ .m-line{font-size:min(3.4vw,calc(var(--iw)*.05))}
+ .ipad{top:var(--it)}
+ .m-stats{left:calc(var(--gl) + var(--iw) + var(--gap));top:var(--it);width:var(--cw)}
+ .pcard.m-stat{padding:2.2vh 1.2vw 2.4vh}
+ .m-stat small{margin-bottom:.4vh}
+ .m-stat .b1,.m-stat .b2{font-size:clamp(1.5rem,min(2.5vw,4.2vh),2.7rem)}
+}
+@media (max-width:800px),(orientation:portrait) and (pointer:coarse){
+ .m-stats{left:50%;transform:translateX(-50%);top:calc(28vh + 58.8vw + 18px);width:min(94vw,560px);flex-direction:row;gap:10px}
+ .pcard.m-stat{flex:1;min-width:0;padding:14px 6px 16px}
+ .m-stat .b1,.m-stat .b2{font-size:clamp(1rem,4.8vw,1.5rem)}
+ .m-stat .lab{font-size:11px}
+ .m-stat .m2nd{margin-top:14px}
+}
+@media (min-width:701px) and (orientation:portrait) and (pointer:coarse){
+ .m-stats{top:calc(30vh + 56.25vw + 24px);width:min(90vw,560px)}
+}
+</style>
+
+<style id="brands-section">
+/* ================= 3b. BRANDS: white, phone (same size as Reach phone) + grey plus-pills that open (Apple "Take a closer look") ================= */
+.bs{position:relative;background:#fff;overflow:hidden;--ph:65vh;--ph:65svh;--pw:calc(var(--ph)*.48)}
+.bs-stage{height:100vh;height:100svh;display:grid;grid-template-columns:min(28vw,400px) var(--pw);column-gap:min(14vw,220px);justify-content:center;align-items:center}
+.bs-boxes{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.bs-box{background:#ececef;border-radius:28px;font-size:clamp(15px,1.25vw,20px);line-height:1.4;color:var(--text);letter-spacing:-.01em;max-width:100%;transition:background .25s}
+.bs-box.open{width:100%}
+.bs-head{display:flex;align-items:center;gap:12px;width:100%;margin:0;padding:.8em 1.5em .8em .75em;border:0;background:none;font:inherit;font-weight:500;color:inherit;letter-spacing:inherit;text-align:left;cursor:pointer;-webkit-appearance:none;appearance:none}
+.bs-plus{position:relative;flex:none;width:1.6em;height:1.6em;border:1.5px solid var(--text);border-radius:50%}
+.bs-plus::before,.bs-plus::after{content:"";position:absolute;left:50%;top:50%;background:var(--text);border-radius:1px;transform:translate(-50%,-50%)}
+.bs-plus::before{width:.7em;height:1.5px}
+.bs-plus::after{width:1.5px;height:.7em}
+.bs-box.open .bs-plus{display:none}
+.bs-box.open .bs-head{padding:1.15em 1.5em 0 1.5em;font-weight:600;cursor:pointer}
+.bs-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease}
+.bs-body>div{overflow:hidden;min-height:0;padding:0 1.5em;color:var(--text)}
+.bs-box.open .bs-body{grid-template-rows:1fr}
+.bs-box.open .bs-body>div{padding-bottom:1.15em}
+.bs-phone-col{position:relative;height:var(--ph)}
+.bs .rphone{left:0;top:0;transform:none}
+@media (max-width:800px),(orientation:portrait) and (pointer:coarse){
+ .bs{--ph:min(50vh,520px);--ph:min(50svh,520px)}
+ .bs-stage{height:auto;display:block;padding:clamp(70px,10svh,110px) var(--padding) clamp(40px,6svh,70px)}
+ .bs-boxes{width:min(100%,560px);margin:0 auto}
+ .bs-box{font-size:clamp(15px,4.2vw,18px)}
+ .bs-phone-col{margin-top:clamp(24px,4svh,44px)}
+ .bs .rphone{left:50%;transform:translateX(-50%)}
+}
+@media (min-width:701px) and (orientation:portrait) and (pointer:coarse){
+ .bs{--ph:min(54svh,620px)}
+ .bs-box{font-size:clamp(17px,2.4vw,20px)}
+}
+@media (prefers-reduced-motion:reduce){.bs-body{transition:none}}
+</style>
 </head>
 <body>
 
@@ -529,6 +617,8 @@ img.fx-load.fx-ok{opacity:1}
     <video data-src="insta2.mp4#t=0.1" data-manual="1" muted loop playsinline preload="none" aria-label="Instagram reel"></video>
    </div></div>
   </div>
+  <div class="rcap i18n" id="rC1" data-en="Romanticising Germany, 4 million views" data-ja="ドイツをロマンチックに紹介、400万回再生">Romanticising Germany, 4 million views</div>
+  <div class="rcap i18n" id="rC2" data-en="Game dev in Japan, 60k views" data-ja="日本でゲーム開発、6万回再生">Game dev in Japan, 60k views</div>
   <div class="rtext rt1" id="rT1"><p class="rline i18n" data-en="I’m from a small town in Germany that nobody knows.&lt;span class=&quot;s&quot;&gt;Anime and manga led me to Japan.&lt;/span&gt;" data-ja="&lt;span class=&quot;p&quot;&gt;ドイツの、&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;誰も知らない&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;小さな町の出身です。&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;p&quot;&gt;アニメとマンガが、&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;私を日本へ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;導いてくれました。&lt;/span&gt;&lt;/span&gt;">I’m from a small town in Germany that nobody knows.<span class="s">Anime and manga led me to Japan.</span></p><div class="rpin"><i class="rdot"></i><span class="i18n" data-en="Germany" data-ja="ドイツ">Germany</span></div></div>
   <div class="rtext rt2" id="rT2"><div class="rpin"><i class="rdot"></i><span class="i18n" data-en="Japan" data-ja="日本">Japan</span></div><p class="rline i18n" data-en="Now I live in Japan,&lt;span class=&quot;s&quot;&gt;sharing it on Instagram and YouTube&lt;br&gt;with a mostly international audience.&lt;/span&gt;" data-ja="&lt;span class=&quot;p&quot;&gt;今は日本で暮らし、&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;p&quot;&gt;InstagramとYouTubeで発信を始め、&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;p&quot;&gt;海外の方が日常に関心を寄せています。&lt;/span&gt;&lt;/span&gt;">Now I live in Japan,<span class="s">sharing it on Instagram and YouTube<br>with a mostly international audience.</span></p></div>
  </div>
@@ -540,13 +630,50 @@ img.fx-load.fx-ok{opacity:1}
  <div class="jp-stage">
   <div class="phone"><video data-src="sadou.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Luca Helgert"></video></div>
   <div class="jp-col l">
-   <div class="fact"><b class="i18n" data-en="60% of my viewers are German and European." data-ja="視聴者の6割は、ドイツとヨーロッパの人。">60% of my viewers are German and European.</b><small class="i18n" data-en="On Instagram and YouTube, my content is in English and mostly watched by Europeans and people in the US." data-ja="InstagramとYouTubeでは英語でコンテンツを発信していて、主にヨーロッパとアメリカの人に見られています。">On Instagram and YouTube, my content is in English and mostly watched by Europeans and people in the US.</small></div>
+   <div class="fact"><b class="i18n" data-en="60% of my viewers&lt;br&gt;are German and European." data-ja="&lt;span class=&quot;ph&quot;&gt;視聴者の6割は、&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;ph&quot;&gt;ドイツと&lt;/span&gt;&lt;span class=&quot;ph&quot;&gt;ヨーロッパの人。&lt;/span&gt;">60% of my viewers<br>are German and European.</b><small class="i18n" data-en="On Instagram and YouTube, my content is in English and mostly watched by Europeans and people in the US." data-ja="InstagramとYouTubeでは英語でコンテンツを発信していて、主にヨーロッパとアメリカの人に見られています。">On Instagram and YouTube, my content is in English and mostly watched by Europeans and people in the US.</small></div>
   </div>
   <div class="jp-col r">
-   <div class="fact"><b class="i18n" data-en="I also make content in Japanese for Japanese people." data-ja="日本語のコンテンツも、日本の人に向けて作っています。">I also make content in Japanese for Japanese people.</b><small class="i18n" data-en="Lately on TikTok, I make content in Japanese for Japanese people curious about Germany." data-ja="最近はTikTokで、ドイツに興味のある日本人向けに日本語でコンテンツを作っています。">Lately on TikTok, I make content in Japanese for Japanese people curious about Germany.</small></div>
+   <div class="fact"><b class="i18n" data-en="100% of my viewers&lt;br&gt;on TikTok are Japanese." data-ja="&lt;span class=&quot;ph&quot;&gt;TikTokの視聴者の&lt;/span&gt;&lt;span class=&quot;ph&quot;&gt;100%は、&lt;/span&gt;&lt;span class=&quot;ph&quot;&gt;日本人です。&lt;/span&gt;">100% of my viewers<br>on TikTok are Japanese.</b><small class="i18n" data-en="On my TikTok I make content in Japanese for Japanese people curious about Germany." data-ja="ドイツに興味のある日本人向けに日本語でコンテンツを作っています。">On my TikTok I make content in Japanese for Japanese people curious about Germany.</small></div>
   </div>
  </div>
 </section>
+
+<!-- 3b. BRANDS -->
+<section class="bs" id="brands" aria-label="Brand collaborations">
+ <div class="bs-stage">
+  <div class="bs-boxes">
+   <div class="bs-box"><button type="button" class="bs-head" aria-expanded="false" aria-controls="bsb2"><i class="bs-plus" aria-hidden="true"></i><span class="i18n" data-en="Clever promotion" data-ja="賢いプロモーション">Clever promotion</span></button><div class="bs-body" id="bsb2" aria-hidden="true"><div><span class="i18n" data-en="I never promote a product just because I have to. I weave it into a story that connects with the viewer. Take the video on the right: it’s for a printing service, but I turned it into an emotional story about my cat in Germany." data-ja="商品を、ただ義務のように宣伝することはしません。物語の中に溶け込ませて、見る人の心に届けます。右の動画は印刷サービスのPRですが、ドイツにいる愛猫との感動的なストーリーに仕上げました。">I never promote a product just because I have to. I weave it into a story that connects with the viewer. Take the video on the right: it’s for a printing service, but I turned it into an emotional story about my cat in Germany.</span></div></div></div>
+   <div class="bs-box"><button type="button" class="bs-head" aria-expanded="false" aria-controls="bsb1"><i class="bs-plus" aria-hidden="true"></i><span class="i18n" data-en="16 million views" data-ja="合計1,600万回再生">16 million views</span></button><div class="bs-body" id="bsb1" aria-hidden="true"><div><span class="i18n" data-en="All my platforms combined have reached 16 million views since I started. 150k of them came from brand deals alone. Not from posting the bare minimum, but from posting multiple videos for brands to give their product maximum exposure." data-ja="全プラットフォーム合計で、開始以来1,600万回以上再生されています。そのうち15万回は、ブランド案件だけで生まれました。最低限の投稿ではなく、ブランドの商品を最大限に届けるため、複数の動画を投稿しています。">All my platforms combined have reached 16 million views since I started. 150k of them came from brand deals alone. Not from posting the bare minimum, but from posting multiple videos for brands to give their product maximum exposure.</span></div></div></div>
+   <div class="bs-box"><button type="button" class="bs-head" aria-expanded="false" aria-controls="bsb0"><i class="bs-plus" aria-hidden="true"></i><span class="i18n" data-en="25 brands so far" data-ja="これまで25ブランド">25 brands so far</span></button><div class="bs-body" id="bsb0" aria-hidden="true"><div><span class="i18n" data-en="Since I started Instagram, I’ve worked with 25 brands. From Konbini Cut, which you can see in the video on the right, to Sushi Bus, an upcoming experience where you eat conveyor belt sushi on a bus. And many more." data-ja="Instagramを始めてから、25のブランドと仕事をしました。右の動画のKonbini Cutから、バスの中で回転寿司が食べられる近日公開の体験、Sushi Busまで。ほかにも多数。">Since I started Instagram, I’ve worked with 25 brands. From Konbini Cut, which you can see in the video on the right, to Sushi Bus, an upcoming experience where you eat conveyor belt sushi on a bus. And many more.</span></div></div></div>
+   <div class="bs-box"><button type="button" class="bs-head" aria-expanded="false" aria-controls="bsb3"><i class="bs-plus" aria-hidden="true"></i><span class="i18n" data-en="My technique" data-ja="私のやり方">My technique</span></button><div class="bs-body" id="bsb3" aria-hidden="true"><div><span class="i18n" data-en="I want every brand to get the most out of its product. So I research before I shoot, and I test engagement with trial reels before uploading the final video. That way, the customer gets the most for their money." data-ja="ブランドには、商品の価値を最大限に活かしてほしい。だから撮影前にしっかりリサーチし、本番の動画を公開する前にトライアルのリールで反応をテストします。お客様のお金に、最大限の価値を。">I want every brand to get the most out of its product. So I research before I shoot, and I test engagement with trial reels before uploading the final video. That way, the customer gets the most for their money.</span></div></div></div>
+   <div class="bs-box"><button type="button" class="bs-head" aria-expanded="false" aria-controls="bsb4"><i class="bs-plus" aria-hidden="true"></i><span class="i18n" data-en="Work ethic" data-ja="仕事への姿勢">Work ethic</span></button><div class="bs-body" id="bsb4" aria-hidden="true"><div><span class="i18n" data-en="I grew up in Germany, where being late or lazy is a big no. Since I was young, I finish things on time, even if it means working late into the night. Paid content always gets delivered on time." data-ja="ドイツで育った私は、遅刻や怠けが大嫌いです。小さい頃から、夜遅くまでかかっても期限までに仕上げてきました。有料案件は、いつも期限どおりに納品します。">I grew up in Germany, where being late or lazy is a big no. Since I was young, I finish things on time, even if it means working late into the night. Paid content always gets delivered on time.</span></div></div></div>
+  </div>
+  <div class="bs-phone-col">
+   <div class="rphone">
+    <i class="risland"></i>
+    <div class="rscreen"><video style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#111" data-src="hexe.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Hexe"></video></div>
+   </div>
+  </div>
+ </div>
+</section>
+<script>
+(function(){
+  var boxes=[].slice.call(document.querySelectorAll("#brands .bs-box"));
+  boxes.forEach(function(box){
+    var btn=box.querySelector(".bs-head"),body=box.querySelector(".bs-body");
+    btn.addEventListener("click",function(){
+      var open=!box.classList.contains("open");
+      boxes.forEach(function(o){
+        var on=o===box&&open;
+        o.classList.toggle("open",on);
+        o.querySelector(".bs-head").setAttribute("aria-expanded",on?"true":"false");
+        o.querySelector(".bs-body").setAttribute("aria-hidden",on?"false":"true");
+      });
+    });
+  });
+})();
+</script>
+
 
 <!-- 4. PLATFORMS -->
 <section class="plat" id="social">
@@ -561,9 +688,9 @@ img.fx-load.fx-ok{opacity:1}
    <div class="pcard"><small>YouTube</small><span class="b1 i18n" data-en="85k+" data-ja="8.5万">85k+</span><span class="b2 i18n" data-en="views" data-ja="回以上再生">views</span><span class="lab i18n" data-en="in the last 90 days" data-ja="過去90日間">in the last 90 days</span></div>
    <div class="pcard"><small>Instagram</small><span class="b1 i18n" data-en="8M+" data-ja="800万">8M+</span><span class="b2 i18n" data-en="views" data-ja="回以上再生">views</span><span class="lab i18n" data-en="in the last 90 days" data-ja="過去90日間">in the last 90 days</span></div>
    <div class="pcard"><small>TikTok</small><span class="b1 i18n" data-en="69k+" data-ja="6.9万">69k+</span><span class="b2 i18n" data-en="views" data-ja="回以上再生">views</span><span class="lab i18n" data-en="in the last 60 days" data-ja="過去60日間">in the last 60 days</span></div>
-   <div class="pcard pcard-video"><div class="video-caption"><span class="i18n" data-en="1.100 subscribers<br>enjoy my game dev content" data-ja="1,100人の登録者<br>ゲーム開発コンテンツを楽しんでいます">1.100 subscribers<br>enjoy my game dev content</span></div><div class="mini-phone"><video data-src="insta3.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Most popular video about games made in Japan"></video></div></div>
-   <div class="pcard pcard-video"><div class="video-caption"><span class="i18n" data-en="3400 followers<br>want to see a German perspective on Japan" data-ja="3,400人のフォロワー<br>ドイツ人から見た日本に関心があります">3400 followers<br>want to see a German perspective on Japan</span></div><div class="mini-phone"><video data-src="insta1.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Video romanticising Germany like Japan"></video></div></div>
-   <div class="pcard pcard-video"><div class="video-caption"><span class="i18n" data-en="30k Japanese viewers<br>enjoyed a video about my hometown" data-ja="3万人の日本人視聴者<br>地元を紹介する動画を楽しみました">30k Japanese viewers<br>enjoyed a video about my hometown</span></div><div class="mini-phone"><video data-src="tiktokjapanese.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Japanese viewers enjoying my hometown in Germany"></video></div></div>
+   <div class="pcard pcard-video"><div class="video-caption"><span class="i18n" data-en="<b>More than 1,000 subscribers</b><br>enjoy my game dev content" data-ja="<b>1,000人以上の登録者</b><br>ゲーム開発コンテンツを楽しんでいます"><b>More than 1,000 subscribers</b><br>enjoy my game dev content</span></div><div class="mini-phone"><video data-src="insta3.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Most popular video about games made in Japan"></video></div></div>
+   <div class="pcard pcard-video"><div class="video-caption"><span class="i18n" data-en="<b>More than 3,000 followers</b><br>want to see a German perspective on Japan" data-ja="<b>3,000人以上のフォロワー</b><br>ドイツ人から見た日本に関心があります"><b>More than 3,000 followers</b><br>want to see a German perspective on Japan</span></div><div class="mini-phone"><video data-src="insta1.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Video romanticising Germany like Japan"></video></div></div>
+   <div class="pcard pcard-video"><div class="video-caption"><span class="i18n" data-en="<b>30k Japanese viewers</b><br>enjoyed a video about my hometown" data-ja="<b>3万人の日本人視聴者</b><br>地元を紹介する動画を楽しみました"><b>30k Japanese viewers</b><br>enjoyed a video about my hometown</span></div><div class="mini-phone"><video data-src="tiktokjapanese.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Japanese viewers enjoying my hometown in Germany"></video></div></div>
   </div>
  </div>
 </section>
@@ -577,7 +704,7 @@ img.fx-load.fx-ok{opacity:1}
    <div class="craft-layer"><video data-src="squid2.mp4#t=0.1" muted loop playsinline preload="none"></video></div>
    <div class="craft-layer"><video data-src="squid3.mp4#t=0.1" muted loop playsinline preload="none"></video></div>
   </div>
-  <div class="craft-text"><p class="craft-copy two-tone i18n" data-en="I study <b>game programming</b> and I’m 2 years in. I presented my own game at <b>Tokyo Game Show</b>. On YouTube and Instagram I share my journey of connecting the tech industry with social media. Find out more below." data-ja="<b>ゲームプログラミング</b>を学んで現在2年目。自作のゲームを<b>東京ゲームショウ</b>に出展しました。YouTubeとInstagramでは、テック業界とSNSをつなぐ挑戦を発信しています。詳しくは、下へ。">I study <b>game programming</b> and I’m 2 years in. I presented my own game at <b>Tokyo Game Show</b>. On YouTube and Instagram I share my journey of connecting the tech industry with social media. Find out more below.</p><a class="craft-link i18n" href="index.html" data-en="View my portfolio" data-ja="ポートフォリオを見る">View my portfolio</a></div>
+  <div class="craft-text"><p class="craft-copy two-tone i18n" data-en="I study <b>game programming</b> and I’m 2 years in. I presented my own game at <b>Tokyo Game Show</b>. I share my journey of connecting the tech industry with social media. Find out more below." data-ja="<b>ゲームプログラミング</b>を学んで現在2年目。自作のゲームを<b>東京ゲームショウ</b>に出展しました。テック業界とSNSをつなぐ挑戦を発信しています。詳しくは、下へ。">I study <b>game programming</b> and I’m 2 years in. I presented my own game at <b>Tokyo Game Show</b>. I share my journey of connecting the tech industry with social media. Find out more below.</p><a class="craft-link i18n" href="index.html" data-en="View my portfolio" data-ja="ポートフォリオを見る">View my portfolio</a></div>
  </div>
 </section>
 
@@ -591,7 +718,7 @@ img.fx-load.fx-ok{opacity:1}
 <div class="gm-copy">
 <div class="gm-def">
 <h2 class="i18n gm-title" id="gmTitle2" data-en="&lt;span class=&quot;gm-l1&quot;&gt;I design too.&lt;/span&gt; &lt;span class=&quot;gm-l2&quot;&gt;From magazines to cards.&lt;/span&gt;" data-ja="&lt;span class=&quot;gm-l1&quot;&gt;デザインもできます&lt;/span&gt; &lt;span class=&quot;gm-l2&quot;&gt;雑誌からカードまで&lt;/span&gt;"><span class="gm-l1">I design too.</span> <span class="gm-l2">From magazines to cards.</span></h2>
-<p class="i18n gm-text" data-en="I work with Clip Studio Paint, Photoshop, Illustrator and Pages. I don’t just make games and videos, I also create impressive graphic design." data-ja="Clip Studio Paint、Photoshop、Illustrator、Pagesを使います。ゲームや動画だけでなく、印象に残るグラフィックデザインも作ります。">I work with Clip Studio Paint, Photoshop, Illustrator and Pages. I don’t just make games and videos, I also create impressive graphic design.</p>
+<p class="i18n gm-text" data-en="I work with Clip Studio Paint, Photoshop, Illustrator and Pages. My design skills make everything I make look pretty and bring a profit." data-ja="Clip Studio Paint、Photoshop、Illustrator、Pagesを使います。デザインスキルで、作るものすべてを美しく見せ、利益にもつなげます。">I work with Clip Studio Paint, Photoshop, Illustrator and Pages. My design skills make everything I make look pretty and bring a profit.</p>
 <div class="gm-hint"><span class="gm-pill"><span class="i18n" data-en="Click on a design to learn more" data-ja="デザインをクリックして詳しく見る">Click on a design to learn more</span><i class="gm-pi" aria-hidden="true"></i></span></div>
 </div>
 <div class="gm-info" id="gmInfo2" aria-live="polite"></div>
@@ -612,6 +739,11 @@ img.fx-load.fx-ok{opacity:1}
    <div class="m-item"><h3 class="m-line g-all i18n" data-en="Next: your promo, your talent, your campaign." data-ja="次は、あなたのプロモーションへ。">Next: your promo, your talent, your campaign.</h3></div>
   </div>
   <div class="ipad"><div class="ipad-screen"><iframe id="ytFrame" src="https://www.youtube.com/embed/0YXh3OqUJhc?playsinline=1&amp;rel=0&amp;enablejsapi=1&amp;origin=https%3A%2F%2Flucanicohe.github.io" title="Luca Helgert — music" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="origin" allowfullscreen></iframe></div></div>
+  <div class="m-stats">
+      <div class="pcard m-stat"><small>YouTube</small><span class="b1 i18n" data-en="8.5M+" data-ja="850万">8.5M+</span><span class="b2 i18n" data-en="views" data-ja="回以上再生">views</span><span class="lab i18n" data-en="since start of channel" data-ja="チャンネル開設から">since start of channel</span></div>
+  <div class="pcard m-stat"><small>YouTube</small><span class="b1 i18n" data-en="700k+" data-ja="70万">700k+</span><span class="b2 i18n" data-en="hours" data-ja="時間以上">hours</span><span class="lab i18n" data-en="watchtime in total" data-ja="総再生時間">watchtime in total</span></div>
+  <div class="pcard m-stat"><small>YouTube</small><span class="b1 i18n" data-en="All" data-ja="あらゆる">All</span><span class="b2 i18n" data-en="genres" data-ja="ジャンル">genres</span><span class="lab i18n" data-en="from film music to rap beats" data-ja="映画音楽からラップのビートまで">from film music to rap beats</span></div>
+  </div>
  </div>
 </section>
 
@@ -1098,7 +1230,7 @@ vids.forEach(v=>{if(!saveData||v.dataset.eager)nearObs.observe(v);if(!reduceMoti
 
 /* ============ scroll scenes ============ */
 const hero=$("#hero"),heroText=$("#heroText"),heroShade=$("#heroShade"),heroStage=$(".hero-stage");let heroSpill=false,heroBaseKey="";
-const reach=$("#reach"),rT1=$("#rT1"),rT2=$("#rT2"),rReel=$("#rReel"),reachVids=[...rReel.querySelectorAll("video")];
+const reach=$("#reach"),rT1=$("#rT1"),rT2=$("#rT2"),rC1=$("#rC1"),rC2=$("#rC2"),rReel=$("#rReel"),reachVids=[...rReel.querySelectorAll("video")];
 const craft=$("#craft"),craftLayers=[...document.querySelectorAll("#craftBox .craft-layer")];
 const music=$("#music"),mItems=[...document.querySelectorAll(".m-item")];
 const ytFrame=$("#ytFrame");
@@ -1170,6 +1302,7 @@ function update(){
     const o1=1-smooth(clamp(t/0.45)),o2=smooth(clamp((t-0.55)/0.45));
     rT1.style.opacity=o1;rT1.style.transform="translateY("+(-14*(1-o1))+"px)";rT1.style.visibility=o1<=0?"hidden":"visible";
     rT2.style.opacity=o2;rT2.style.transform="translateY("+(14*(1-o2))+"px)";rT2.style.visibility=o2<=0?"hidden":"visible";
+    rC1.style.opacity=o1;rC1.style.visibility=o1<=0?"hidden":"visible";rC2.style.opacity=o2;rC2.style.visibility=o2<=0?"hidden":"visible";
     reachVids.forEach((v,i)=>{
       const want=on&&!reduceMotion&&(i===0?t<1:t>0);
       if(want&&!v._visible){v._visible=true;try{if(v.readyState>0)v.currentTime=0;}catch(e){}playVideo(v);}
