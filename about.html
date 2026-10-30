@@ -704,6 +704,10 @@ body.typing,body.typing #stage,body.typing #stage *{cursor:var(--xpcur,default)}
 #bl u{text-decoration:none;position:absolute;right:8px;top:8px;width:20px;height:20px;border:1px solid #b9b9a8;border-radius:3px;text-align:center;line-height:17px;color:#999;background:#fffff0;font-size:14px}
 #bl.show{display:block;animation:pop .2s ease-out;transform-origin:95% 100%}
 #cur{position:absolute;left:520px;top:420px;z-index:100;width:26px;height:38px;transition:left .9s cubic-bezier(.4,0,.2,1),top .9s cubic-bezier(.4,0,.2,1),opacity .3s;filter:drop-shadow(1px 2px 1px rgba(0,0,0,.4))}
+/* draggable windows + closable balloon */
+#ttl,#dt{touch-action:none;-webkit-user-select:none;user-select:none}
+#bl u{cursor:pointer}
+#bl u:hover{background:#fff;color:#000;border-color:#777}
 </style>
 <div id="stage">
   <div id="bg"></div>
@@ -827,7 +831,7 @@ async function run(l){
   try{
     for(let n=0;n<ls.length;n++){
       await line(ls[n],n===ls.length-1);
-      if(n===0){$('#sh').style.visibility='visible';$('#bl').classList.add('show');setTimeout(()=>$('#bl').classList.remove('show'),5000)}
+      if(n===0){$('#sh').style.visibility='visible';$('#bl').classList.add('show')}
       await sleep(120);
     }
   }catch(e){if(e!==STOP)throw e}
@@ -838,6 +842,29 @@ $('#dok').addEventListener('click',sendMail);
 function restart(){parent.postMessage({xp:'restart'},'*')}
 document.querySelectorAll('.wb.x').forEach(b=>b.addEventListener('click',restart));
 addEventListener('keydown',e=>{if(e.key==='Enter'&&$('#dlg').classList.contains('show'))sendMail()});
+/* drag a window by its title bar (the stage is scaled, so divide by the scale) */
+function drag(win,bar){
+  let sx,sy,ox,oy,k=1,id=null;
+  bar.addEventListener('pointerdown',e=>{
+    if(e.button!==0||e.target.closest('.wb'))return;
+    k=st.getBoundingClientRect().width/1024||1;
+    sx=e.clientX;sy=e.clientY;ox=win.offsetLeft;oy=win.offsetTop;id=e.pointerId;
+    bar.setPointerCapture(id);e.preventDefault();
+  });
+  bar.addEventListener('pointermove',e=>{
+    if(e.pointerId!==id)return;
+    let x=ox+(e.clientX-sx)/k,y=oy+(e.clientY-sy)/k;
+    x=Math.max(120-win.offsetWidth,Math.min(1024-120,x));
+    y=Math.max(0,Math.min(768-35-37,y));
+    win.style.left=x+'px';win.style.top=y+'px';
+  });
+  const end=e=>{if(e.pointerId===id)id=null};
+  bar.addEventListener('pointerup',end);bar.addEventListener('pointercancel',end);
+}
+drag($('#np'),$('#ttl'));
+drag($('#dlg'),$('#dt'));
+/* antivirus balloon: the x closes it */
+$('#bl u').addEventListener('click',e=>{e.stopPropagation();$('#bl').classList.remove('show')});
 /* hooks for the portfolio page: set the language before the start, then start once (when scrolled into view) */
 window.xpLang=l=>{document.body.classList.remove('en','ja');setLang(l)};
 window.xpStart=run;
