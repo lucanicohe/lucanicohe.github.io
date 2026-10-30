@@ -1996,6 +1996,25 @@ a.gm-pill:focus-visible{outline:2px solid #0071e3;outline-offset:3px}
   html,body{touch-action:pan-x pan-y}
   html section.ah{height:100vh;height:100svh}
 }
+/* "A little more about me" on phones and iPads: the sticky picture stays, the text flows with normal scrolling over it */
+.sk.sk-native{height:auto;isolation:isolate}
+.sk.sk-native .sk-stick{z-index:1}
+.sk.sk-native .sk-track{position:relative;left:auto;top:auto;z-index:2;margin:-100svh 0 0 22.5vw;padding:30svh 0 42svh;width:min(55vw,820px);will-change:auto;transform:none}
+@media(max-width:900px){.sk.sk-native .sk-track{margin-left:8vw;width:84vw}}
+.sk.sk-native .sk-item{will-change:auto}
+/* 24 games on a tall tablet screen: keep the wide layout, centre it vertically and keep the text readable */
+@media (min-width:701px) and (orientation:portrait){
+  .gm-canvas{top:max(64px,calc((100svh - var(--W)/1.5995)/2))}
+  .gm-text{font-size:max(14px,calc(var(--W)*.0131))}
+  .gm-chip{font-size:max(13px,calc(var(--W)*.0098))}
+}
+/* touch devices: big blurred glass layers are very expensive to scroll, so use a solid soft fill there (looks the same on a flat background) */
+@media (hover:none) and (pointer:coarse){
+  .fact,.fact.solid,.skill-row,.skills-deep .team-card,.team-badge,.team-badge.award,.hello-pill,.more-glass,button.xmore,.tool-tag.strong,.game-chip.strong,.skills-deep .team-chips .team-chip.strong,.skills-deep .lang-row.l1 .lang-level{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  .fact,.fact.solid,.skill-row,.skills-deep .team-card{background:rgba(255,255,255,.92)!important}
+  .more-glass{background:rgba(240,240,244,.94)!important}
+  .hello-pill{background:rgba(232,232,237,.9)!important}
+}
 </style>
 </head>
 
@@ -3118,6 +3137,7 @@ applyLanguage(currentLang);
   setTimeout(prefetch, 7000);
 
   /* ---------- zoom: same maths as the codex version, but it runs over the whole scroll track ---------- */
+  const HOLD_ON = false;   /* the 0.5 s stop at the zoomed-out view is switched off: scrolling never pauses */
   let hold = false, holdT = 0, lastY = scrollY, endCache = 1e9;
   let navOn = null, wFs = 0, baseKey = "", welcomeOn = null, arrowTop = -1;
   const syncNav = (on) => {
@@ -3132,7 +3152,7 @@ applyLanguage(currentLang);
     const p = MOBILE ? 1 : clamp(-r.top / Math.max(1, r.height - vh));
     /* trackpad momentum: when you scroll out by hand and arrive at the fully zoomed-out view, extra scrolling is ignored for 0.5 s so a fast flick cannot shoot past it */
     endCache = r.top + scrollY + r.height - vh;
-    if (!MOBILE && !anim) {
+    if (HOLD_ON && !MOBILE && !anim) {
       const y = scrollY;
       if (!hold && lastY < endCache - 1 && y >= endCache - 1 && y - lastY < 4000) startHold();
     }
@@ -3196,14 +3216,23 @@ applyLanguage(currentLang);
   /* these blockers are only attached while the button zoom runs: a permanent non-passive wheel listener makes every trackpad scroll wait for the main thread */
   const blockInput = (e) => { e.preventDefault(); };
   const HOLD_MS = 500;
+  let prevWheelT = 0;
+  function endHold() {
+    if (!hold) return;
+    hold = false; clearTimeout(holdT); lastY = scrollY;
+    removeEventListener("wheel", blockWheel);
+  }
+  /* only the tail of the flick is swallowed: a new swipe (a pause between wheel events) is let through at once, so the page never feels stuck */
+  function blockWheel(e) {
+    const t = performance.now(), gap = t - prevWheelT; prevWheelT = t;
+    if (gap > 90) { endHold(); return; }
+    e.preventDefault();
+  }
   function startHold() {
-    hold = true;
-    addEventListener("wheel", blockInput, { passive: false }); addEventListener("touchmove", blockInput, { passive: false });
+    hold = true; prevWheelT = performance.now();
+    addEventListener("wheel", blockWheel, { passive: false });
     clearTimeout(holdT);
-    holdT = setTimeout(() => {
-      hold = false; lastY = scrollY;
-      removeEventListener("wheel", blockInput); removeEventListener("touchmove", blockInput);
-    }, HOLD_MS);
+    holdT = setTimeout(endHold, HOLD_MS);
   }
   const LOCK_KEYS = [" ", "Spacebar", "ArrowDown", "ArrowUp", "PageDown", "PageUp", "End", "Home"];
   addEventListener("keydown", (e) => {
@@ -3341,7 +3370,11 @@ applyLanguage(currentLang);
   var ticking=false;
   function onScroll(){ if(ticking)return; ticking=true; requestAnimationFrame(function(){ticking=false;render();}); }
   window.addEventListener("scroll",onScroll,{passive:true});
-  window.addEventListener("resize",function(){measure();},{passive:true});
+  var lastW=window.innerWidth,coarse=matchMedia("(pointer: coarse)").matches;
+  window.addEventListener("resize",function(){
+    if(coarse&&window.innerWidth===lastW){onScroll();return;}  /* iPad toolbar sliding in/out only changes the height */
+    lastW=window.innerWidth;measure();
+  },{passive:true});
   window.addEventListener("load",measure);
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(measure);
   measure();
@@ -3587,6 +3620,9 @@ applyLanguage(currentLang);
   var track=sk.querySelector(".sk-track"),items=[].slice.call(sk.querySelectorAll(".sk-item"));
   var videos={first:sk.querySelector(".sk-video-first"),middle:sk.querySelector(".sk-video-middle"),finished:sk.querySelector(".sk-video-finished")};
   var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches,tick=false;
+  /* phones and iPads: the text scrolls with the page itself (native scrolling, exactly under the finger) instead of being moved by script, which always lags behind touch scrolling */
+  var nat=matchMedia("(hover: none) and (pointer: coarse)").matches;
+  if(nat){sk.classList.add("sk-native");sk.appendChild(track);}
   var clamp=function(v){return Math.max(0,Math.min(1,v))};
   function load(video){
     if(!video.getAttribute("src")&&video.dataset.src){video.src=video.dataset.src;video.load();}
@@ -3615,8 +3651,10 @@ applyLanguage(currentLang);
         Object.keys(videos).forEach(function(key){videos[key].pause()});
       }
     }
-    var th=track.offsetHeight,start=vh*.3,end=Math.min(start,vh*.5-items[items.length-1].offsetTop);
-    track.style.transform="translate3d(0,"+(start+(end-start)*p)+"px,0)";
+    if(!nat){
+      var start=vh*.3,end=Math.min(start,vh*.5-items[items.length-1].offsetTop);
+      track.style.transform="translate3d(0,"+(start+(end-start)*p)+"px,0)";
+    }
     if(reduce)return;
     items.forEach(function(it){
       var y=it.getBoundingClientRect().top/vh;

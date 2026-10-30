@@ -406,6 +406,12 @@ html.lang-ja .gm-pill{letter-spacing:.01em}
 <style>
 /* TOUCH DEVICES ONLY: no pinch or double-tap zoom. Desktop is untouched. */
 @media (hover:none) and (pointer:coarse){html,body{touch-action:pan-x pan-y}}
+/* 24 games on a tall tablet screen: keep the wide layout, centre it vertically and keep the text readable */
+@media (min-width:701px) and (orientation:portrait){
+  .gm-canvas{top:max(64px,calc((100svh - var(--W)/1.5995)/2))}
+  .gm-text{font-size:max(14px,calc(var(--W)*.0131))}
+  .gm-chip{font-size:max(13px,calc(var(--W)*.0098))}
+}
 </style>
 </head>
 <body>
@@ -1119,7 +1125,7 @@ function update(){
 let ticking=false;
 const req=()=>{if(!ticking){ticking=true;requestAnimationFrame(()=>{ticking=false;update();});}};
 addEventListener("scroll",req,{passive:true});
-addEventListener("resize",()=>{measure();req();});
+let lastRW=innerWidth;addEventListener("resize",()=>{if(matchMedia("(pointer: coarse)").matches&&innerWidth===lastRW){req();return;}lastRW=innerWidth;measure();req();});
 addEventListener("load",()=>{measure();update();});
 measure();update();
 
@@ -1240,7 +1246,11 @@ apply(lang);
   var ticking=false;
   function onScroll(){ if(ticking)return; ticking=true; requestAnimationFrame(function(){ticking=false;render();}); }
   window.addEventListener("scroll",onScroll,{passive:true});
-  window.addEventListener("resize",function(){measure();},{passive:true});
+  var lastW=window.innerWidth,coarse=matchMedia("(pointer: coarse)").matches;
+  window.addEventListener("resize",function(){
+    if(coarse&&window.innerWidth===lastW)return;  /* iPad toolbar sliding in/out only changes the height */
+    lastW=window.innerWidth;measure();
+  },{passive:true});
   window.addEventListener("load",measure);
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(measure);
   measure();
