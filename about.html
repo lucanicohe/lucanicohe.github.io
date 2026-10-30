@@ -138,7 +138,7 @@ html.lang-ja .hero-name{font-size:clamp(2rem,3.8vw,4rem);line-height:1.2;letter-
 .rdot{position:relative;flex:none;width:.72em;height:.72em;border-radius:50%;background:linear-gradient(135deg,#2f6fe4,#23919a);box-shadow:0 0 0 .22em rgba(47,111,228,.16)}
 html.lang-ja .reach .rtext{line-height:1.4;font-size:clamp(1.2rem,1.6vw,2.2rem)}
 html.lang-ja .reach .rtext .rpin{line-height:1.2}
-@media (max-width:800px),(orientation:portrait){
+@media (max-width:800px),(orientation:portrait) and (pointer:coarse){
  .reach-stage{--ph:50vh;--ph:50svh}
  .rphone{left:calc(50% - var(--pw)/2);top:84px}
  .reach .rtext{left:0;right:0;width:auto;padding:0 var(--padding);font-size:clamp(1.15rem,5vw,1.5rem)}
@@ -155,14 +155,14 @@ html.lang-ja .reach .rtext .rpin{line-height:1.2}
 .phone video{width:100%;height:100%;object-fit:cover;display:block;border-radius:2.8vw;background:#222}
 .fact small{display:block;font-size:max(13px,1.2vw);color:var(--muted);line-height:1.4}
 .fact b{display:block;margin:.3vh 0;font-size:max(18px,1.55vw);line-height:1.2;letter-spacing:-.02em}
-@media (min-width:801px) and (orientation:landscape){
+@media (min-width:801px) and (orientation:landscape),(min-width:801px) and (pointer:fine){
  .jp h2{position:absolute;top:9vh;left:0;right:0}
  .phone{position:absolute;left:50%;top:28.5vh;height:66vh;aspect-ratio:.476;transform:translateX(-50%)}
  .jp-col{position:absolute;top:53vh;width:26vw;display:grid;gap:7vh}
  .jp-col.l{right:66vw;text-align:right}
  .jp-col.r{left:66vw;text-align:left}
 }
-@media (max-width:800px),(orientation:portrait){
+@media (max-width:800px),(orientation:portrait) and (pointer:coarse){
  .jp{padding:96px var(--padding) 40px}
  .jp h2{font-size:clamp(1.8rem,7vw,2.4rem);margin-bottom:22px}
  .jp-stage{display:grid;grid-template-columns:1fr 1fr;gap:26px 18px}
@@ -192,12 +192,12 @@ html.lang-ja .reach .rtext .rpin{line-height:1.2}
 .pcard-video .mini-phone{position:absolute;top:33.333%;left:50%;transform:translateX(-50%);height:100%;width:auto;aspect-ratio:9/19;box-sizing:border-box;padding:5px;border:1px solid #aeb5bd;border-radius:24px;background:linear-gradient(110deg,#34363a,#090a0c 18%,#111214 82%,#383a3e);box-shadow:0 0 0 1px rgba(0,0,0,.12),0 8px 20px -14px rgba(0,0,0,.35);overflow:hidden;flex:none}
 .pcard-video .mini-phone:before{content:"";position:absolute;z-index:2;top:7px;left:50%;transform:translateX(-50%);width:29%;height:8px;border-radius:999px;background:#050506}
 .pcard-video .mini-phone video{width:100%;height:100%;display:block;object-fit:cover;border-radius:18px;background:#222}
-@media (min-width:801px) and (orientation:landscape){
+@media (min-width:801px) and (orientation:landscape),(min-width:801px) and (pointer:fine){
  .plat-box{width:min(82.3vw,1256px);margin:7.6vh auto 0;padding:8.5vh 6.9vw 2.4vh}
  .plat-top{display:block}
  .plat-grid{grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:30vh}
 }
-@media (max-width:800px),(orientation:portrait){
+@media (max-width:800px),(orientation:portrait) and (pointer:coarse){
  .plat{padding:50px 0 2cm}
  .plat-box{margin:0 22px;border-radius:26px;padding:30px 18px 20px}
  .plat h2{font-size:clamp(1.65rem,6.4vw,2.2rem)}
@@ -224,12 +224,12 @@ html.lang-ja .reach .rtext .rpin{line-height:1.2}
 .craft-layer video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .craft-copy{font-size:1.45vw;line-height:1.5;letter-spacing:-.01em}
 .craft-link{display:inline-block;font-size:1.3vw;margin-top:1.4vh;color:#06c;text-decoration:none;letter-spacing:-.015em;transition:color .2s ease}.craft-link:hover{color:#0077ed;text-decoration:underline}.craft-link:focus-visible{outline:2px solid #06c;outline-offset:4px;border-radius:3px}
-@media (min-width:801px) and (orientation:landscape){
+@media (min-width:801px) and (orientation:landscape),(min-width:801px) and (pointer:fine){
  .craft h2{position:absolute;left:29.6vw;top:9.4vh;max-width:14em}
  .craft-box{position:absolute;left:29.6vw;top:31vh;height:37vh;aspect-ratio:16/9}
  .craft-text{position:absolute;left:29.6vw;top:75vh;width:42vw}
 }
-@media (max-width:800px),(orientation:portrait){
+@media (max-width:800px),(orientation:portrait) and (pointer:coarse){
  .craft-stage{padding:92px var(--padding) 28px;display:flex;flex-direction:column;gap:14px}
  .craft h2{font-size:clamp(1.7rem,7vw,2.4rem)}
  .craft-box{width:100%;aspect-ratio:16/9;border-radius:24px;flex:none}
@@ -240,7 +240,7 @@ html.lang-ja .reach .rtext .rpin{line-height:1.2}
 /* Japanese game-dev headline: exactly two intentional lines */
 html.lang-ja .craft h2{max-width:none;width:max-content;max-width:calc(100vw - 2 * var(--padding));font-size:clamp(1.35rem,2.55vw,2.65rem);line-height:1.22;letter-spacing:-.045em;word-break:keep-all;overflow-wrap:normal}
 html.lang-ja .craft h2 span{white-space:nowrap}
-@media(max-width:800px),(orientation:portrait){html.lang-ja .craft h2{font-size:clamp(1rem,4.65vw,1.55rem);max-width:calc(100vw - 2 * var(--padding));line-height:1.25}}
+@media(max-width:800px),(orientation:portrait) and (pointer:coarse){html.lang-ja .craft h2{font-size:clamp(1rem,4.65vw,1.55rem);max-width:calc(100vw - 2 * var(--padding));line-height:1.25}}
 
 /* ================= 6. MUSIC (screenshots 8-9) ================= */
 .music{position:relative;height:560vh}
@@ -254,7 +254,7 @@ html.lang-ja .craft h2 span{white-space:nowrap}
 .ipad-screen{width:100%;height:100%;border-radius:1.9vw;overflow:hidden;background:#000}
 .ipad-screen iframe{width:100%;height:100%;border:0;display:block}
 .m-link{position:absolute;left:0;right:0;top:calc(24vh + 62vh + 1.6vh);text-align:center;font-size:max(13px,1.05vw);z-index:3}
-@media (max-width:800px),(orientation:portrait){
+@media (max-width:800px),(orientation:portrait) and (pointer:coarse){
  .m-zone{left:3vw;right:3vw;top:84px;height:16vh}
  .m-title{font-size:clamp(2.2rem,10vw,3.4rem)}.m-sub{font-size:clamp(1rem,4.4vw,1.5rem)}.m-line{font-size:clamp(1.5rem,6.6vw,2.4rem)}
  .ipad{top:28vh;width:94vw;padding:8px;border-radius:24px}
@@ -279,7 +279,7 @@ html.lang-ja .craft h2 span{white-space:nowrap}
 .arrows button[disabled]{opacity:.3;cursor:default}
 .tog-item b{display:block;font-size:max(18px,1.6vw);line-height:1.15;letter-spacing:-.025em;font-weight:600}
 .tog-item span{display:block;font-size:max(13px,1.2vw);color:var(--text);line-height:1.5;margin-top:.3vh;max-width:20em}
-@media (min-width:801px) and (orientation:landscape){
+@media (min-width:801px) and (orientation:landscape),(min-width:801px) and (pointer:fine){
  .tog-lead{position:absolute;left:25.7vw;top:10vh;width:28vw}
  .tog-tl{position:absolute;left:25.7vw;top:31vh}
  .tog-tl .tile2,.tog-tr .tile2{height:46vh;width:calc(46vh*.688)}
@@ -288,7 +288,7 @@ html.lang-ja .craft h2 span{white-space:nowrap}
  .cap-row{display:flex;align-items:center;justify-content:space-between;margin-top:1.4vh}
  .tog-list{display:grid;gap:2.2vh;margin-top:3.4vh}
 }
-@media (max-width:800px),(orientation:portrait){
+@media (max-width:800px),(orientation:portrait) and (pointer:coarse){
  .tog{padding:96px var(--padding) 44px}
  .tog-lead{font-size:clamp(1.2rem,5.2vw,1.6rem);margin-bottom:24px}
  .tile2{width:min(72vw,300px);padding:8px;border-radius:30px}
@@ -426,6 +426,60 @@ img.fx-load{opacity:0;transition:opacity var(--t-norm) var(--ease)}
 img.fx-load.fx-ok{opacity:1}
 @media (hover:none) and (pointer:coarse){a,button{-webkit-tap-highlight-color:transparent}button,.gm-pill,.gl-play{min-height:44px}}
 @media (prefers-reduced-motion:reduce){img.fx-load{opacity:1;transition:none}.glr,.sb-row{transition:none;transform:none;opacity:1}}
+</style>
+<style id="ipad-about">
+/* iPAD PORTRAIT (touch, 701px and wider): a mix of the phone and the web layout. Phones and desktop are untouched. */
+@media (min-width:701px) and (orientation:portrait) and (pointer:coarse){
+ .reach-stage{--ph:54vh;--ph:54svh}
+ .rphone{left:calc(25vw - var(--pw)/2);top:max(15svh,96px)}
+ .reach .rtext{left:48vw;right:auto;width:44vw;padding:0;font-size:clamp(1.5rem,3.3vw,2rem)}
+ html.lang-ja .reach .rtext{font-size:clamp(1.3rem,3vw,1.8rem)}
+ .rpin{font-size:clamp(.9rem,1.9vw,1.15rem)}
+ .reach .rt1{top:max(16svh,120px);bottom:auto}
+ .reach .rt2{top:auto;bottom:16svh}
+ .jp{padding:clamp(110px,14svh,150px) var(--padding) 60px}
+ .jp h2{font-size:clamp(2.2rem,5.2vw,3rem);margin-bottom:34px}
+ .jp-stage{gap:40px 32px}
+ .phone{height:min(46svh,520px);padding:9px;border-radius:44px}
+ .phone video{border-radius:36px}
+ .jp-col{gap:28px}
+ .fact b{font-size:clamp(19px,2.4vw,24px)}
+ .fact small{font-size:clamp(14px,1.9vw,17px)}
+ .plat{padding:70px 0 2cm}
+ .plat-box{margin:0 var(--padding);padding:44px 28px 28px;border-radius:30px}
+ .plat h2{font-size:clamp(2rem,4.4vw,2.6rem)}
+ .plat-sub{font-size:16px;margin-top:14px}
+ .plat-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:30px}
+ .pcard{min-height:250px;border-radius:24px;padding:26px 10px 0}
+ .pcard .b1,.pcard .b2{font-size:clamp(2.1rem,4.6vw,3rem)}
+ .pcard small,.pcard .lab{font-size:14px}
+ .pcard-video{min-height:290px}
+ .pcard-video .video-caption{top:24px;font-size:13px}
+ .pcard-video .mini-phone{top:46%;height:130%}
+ .craft-stage{padding:clamp(100px,12svh,140px) var(--padding) 40px;gap:22px}
+ .craft h2{font-size:clamp(2.2rem,5.2vw,3rem)}
+ html.lang-ja .craft h2{font-size:clamp(1.4rem,4.4vw,2.6rem)}
+ .craft-box{border-radius:30px}
+ .craft-copy,.craft-link{font-size:18px}
+ .m-zone{top:96px;height:17vh}
+ .m-title{font-size:clamp(2.6rem,7vw,4.4rem)}
+ .m-sub{font-size:clamp(1.1rem,3vw,1.7rem)}
+ .m-line{font-size:clamp(1.8rem,5.2vw,3rem)}
+ .ipad{top:30vh;width:90vw;padding:12px;border-radius:34px}
+ .ipad-screen{border-radius:24px}
+ .m-link{top:calc(30vh + 56.25vw + 20px);font-size:15px}
+ .tog{padding:clamp(110px,14svh,150px) var(--padding) 60px;display:grid;grid-template-columns:1fr 1fr;column-gap:36px;align-items:start}
+ .tog-lead,.tog-list{grid-column:1/-1}
+ .tog-lead{font-size:clamp(1.5rem,3.4vw,2rem);margin-bottom:34px;max-width:20em}
+ .tile2{width:min(100%,340px);padding:10px;border-radius:34px}
+ .tile2 .screen{border-radius:26px}
+ .tog-tl,.tog-tr{margin-bottom:34px;justify-self:center;width:min(100%,340px)}
+ .cap-row{width:100%}
+ .cap{font-size:14px}
+ .tog-list{grid-template-columns:1fr 1fr;gap:24px 36px;margin-top:10px}
+ .tog-item b{font-size:clamp(20px,2.6vw,24px)}
+ .tog-item span{font-size:16px}
+}
 </style>
 </head>
 <body>

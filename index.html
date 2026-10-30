@@ -2033,6 +2033,29 @@ img.fx-load.fx-ok{opacity:1}
 @media (hover:none) and (pointer:coarse){a,button{-webkit-tap-highlight-color:transparent}button,.gm-pill,.gl-play{min-height:44px}}
 @media (prefers-reduced-motion:reduce){img.fx-load{opacity:1;transition:none}.glr,.sb-row{transition:none;transform:none;opacity:1}}
 </style>
+<style id="ipad-index">
+/* iPAD PORTRAIT (touch, 701 to 900px): a mix of the phone and the web layout. Phones and desktop are untouched. */
+@media (min-width:701px) and (max-width:900px) and (pointer:coarse){
+ .sb{padding:80px 0 90px}
+ .sb-in{width:min(76vw,640px)}
+ .sb-cats{font-size:clamp(1.6rem,3.6vw,2.2rem)}
+ .sb-h{font-size:clamp(1.15rem,2.6vw,1.5rem);margin:56px 0 36px}
+ .sb-row{grid-template-columns:1fr 80px;margin-bottom:36px;column-gap:24px}
+ .sb-line{height:8px}
+ .sb-num{font-size:18px}
+ .sb-lab{font-size:18px;margin-top:10px}
+ .gl .gl-3{width:88vw;padding-left:0;padding-right:0}
+ .gl-alive-h{width:75vw}
+ .gl-3-row{grid-template-columns:minmax(0,55fr) minmax(0,26fr);column-gap:5vw;row-gap:0}
+ .gl .gl-3 .gl-text{font-size:1.15rem}
+ .gl .gl-who{width:min(62vw,480px)}
+ .gl .gl-say{padding:0 var(--padding) 32px}
+ .sk-title{font-size:clamp(2.4rem,6.5vw,3.6rem)}
+ .sk-track{left:12vw;width:76vw}
+ .sk.sk-native .sk-track{margin-left:12vw;width:76vw}
+ .sk-t{font-size:clamp(1.5rem,3.8vw,2.2rem)}
+}
+</style>
 </head>
 
 <body>
