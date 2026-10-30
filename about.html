@@ -484,11 +484,12 @@ img.fx-load.fx-ok{opacity:1}
 <style id="touch-scroll-length">
 /* phones and iPads: longer scroll tracks so the scroll-driven scenes play about 1.5x slower (desktop untouched) */
 @media (hover:none) and (pointer:coarse){
- html .hero{height:400vh}
- html .reach{height:480vh}
- html .craft{height:640vh}
- html .music{height:780vh}
- html .gm{height:290svh}
+ :root{--beat:136svh}   /* ONE scroll length for every pinned scene: height = 1 screen + (number of steps x --beat). Change this one number to speed up or slow down the whole page evenly. */
+ html .hero{height:calc(100svh + 2.2 * var(--beat))}
+ html .reach{height:calc(100svh + 2.8 * var(--beat))}
+ html .craft{height:calc(100svh + 4 * var(--beat))}
+ html .music{height:calc(100svh + 5 * var(--beat))}
+ html .gm{height:calc(100svh + 1.4 * var(--beat))}
 }
 </style>
 </head>

@@ -2059,10 +2059,11 @@ img.fx-load.fx-ok{opacity:1}
 <style id="touch-scroll-length">
 /* phones and iPads: longer scroll tracks so the scroll-driven scenes play slower (desktop untouched) */
 @media (hover:none) and (pointer:coarse){
- html .gm{height:260svh}
+ :root{--beat:136svh}   /* ONE scroll length for every pinned scene: height = 1 screen + (number of steps x --beat) */
+ html .gm{height:calc(100svh + 1.4 * var(--beat))}
  html .sk.sk-native .sk-item{margin-bottom:54svh}
  html .sk.sk-native .sk-item.sk-head{margin-bottom:46svh}
- html .tgs:not(.tgs-still){height:780vh;height:780svh}
+ html .tgs:not(.tgs-still){height:calc(100svh + 5 * var(--beat))}
 }
 </style>
 </head>
