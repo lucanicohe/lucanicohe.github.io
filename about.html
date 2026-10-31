@@ -1351,6 +1351,8 @@ function updateHero(){
   const S0=mob?Math.min(.5*vh/Th,.7*vw/Tw):.78*vh/Th;
   const p=clamp(prog(hero)/0.8),e=smooth(p);
   const s=Math.exp(Math.log(S0)*(1-e)),cy=vh*0.5,fly=1+(1-e)*2.5;
+  /* at the start the phone + greeting pair is centred (phone shifted left); on zoom-out everything glides back to the middle */
+  const gapX=Math.max(28,vw*.035),sx=mob?0:-Math.min(vw*.2,(gapX+1.25*Tw*S0)/2)*(1-e);
   /* fixed base size per tile (rewritten only when the viewport changes); every frame just moves/scales it with transform, so scrolling never triggers layout */
   const key=Tw+"|"+Th;
   if(key!==heroBaseKey){
@@ -1365,7 +1367,7 @@ function updateHero(){
   }
   heroTiles.forEach(o=>{
     const w=Tw*s,h=Th*s;
-    const left=vw/2+o.k*px*s*fly-w/2,top=cy+o.row*py*s*fly-h/2;
+    const left=vw/2+sx+o.k*px*s*fly-w/2,top=cy+o.row*py*s*fly-h/2;
     const vis=(!mob||Math.abs(o.k)<2)&&left<vw&&left+w*1.3>0&&top<vh&&top+h*1.3>0;
     const st=o.t.style;
     if(!vis){if(o.on!==false){st.display="none";o.on=false;}return;}
@@ -1394,7 +1396,7 @@ function updateHero(){
       hb.classList.add("mob");hb.style.setProperty("--pw",(pwS*.62)+"px");
       hb.style.left="0px";hb.style.right="0px";hb.style.width="auto";hb.style.top=(cy+phH/2+vh*.01)+"px";hb.style.transform="none";
     }else{
-      const left=vw/2+pwS/2+Math.max(28,vw*.035),base=Math.min(pwS,(vw-left-24)/1.4);
+      const left=vw/2+sx+pwS/2+gapX,base=Math.min(pwS,(vw-left-24)/1.4);
       hb.classList.remove("mob");hb.style.setProperty("--pw",base+"px");
       hb.style.left=left+"px";hb.style.right="auto";hb.style.width="";hb.style.top=cy+"px";hb.style.transform="translateY(-50%)";
     }
