@@ -21,6 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sacramento&family=Klee+One:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#f5f5f7;--text:#1d1d1f;--muted:#6e6e73;--slate:#5d6b82;--blue:#0066cc;--line:rgba(17,17,17,.12);--max:1500px;--padding:clamp(28px,5vw,80px)}
 *{box-sizing:border-box}
@@ -100,20 +101,43 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:48px;background:rgba(
 .tile{position:absolute;background:#000;z-index:1}
 .tile.center{z-index:2}
 .tile .cam{position:absolute;left:50%;transform:translateX(-50%);z-index:3;border-radius:50%;background:radial-gradient(circle at 50% 50%,#1b2233 0%,#10131b 55%,#000 100%);box-shadow:0 0 0 1px rgba(255,255,255,.05);pointer-events:none}
-.tile .cam.dot{background:#14161c;box-shadow:none}
+.tile .cam.dot{display:none}
+.tile .cam{border-radius:999px;background:#000;box-shadow:none}
+.tile::before,.tile::after{content:"";position:absolute;width:calc(var(--pw)*.014);border-radius:2px;background:linear-gradient(90deg,#4b4b4f,#1d1d1f)}
+.tile::before{left:calc(var(--pw)*-.0225);top:21%;height:15%;background:linear-gradient(180deg,#2a2a2c 0 42%,transparent 42% 58%,#2a2a2c 58%)}
+.tile::after{right:calc(var(--pw)*-.0225);top:27%;height:11%;background:linear-gradient(270deg,#4b4b4f,#1d1d1f)}
 .tile .screen{position:relative;width:100%;height:100%;overflow:hidden;background:#1c1c1e}
 .tile .screen img.cimg{opacity:0}
 .tile .screen img.cimg.ready{opacity:1;transition:opacity .45s ease}
 .tile .screen img.cimg{position:absolute;left:50%;top:50%;width:100%;height:100%;max-width:none;transform:translate(-50%,-50%);object-fit:cover;object-position:center}
 .tile .screen img,.tile .screen video{display:block;width:100%;height:100%;object-fit:cover}
+.hero-stage .hi{position:absolute;inset:0;z-index:2;text-align:center;pointer-events:none}
+.hero-stage .hi-hello{display:block;position:absolute;left:50%;top:43%;translate:-50% -50%;width:max-content;font-family:"Sacramento","Brush Script MT",cursive;font-weight:400;font-size:calc(var(--pw)*.40);line-height:.74;letter-spacing:0;padding:.6em .6em .6em .12em;margin:0;
+ background:linear-gradient(96deg,#f8f1ff 0%,#e4d3ff 30%,#ffc2e7 64%,#ffdab4 100%);background-repeat:no-repeat;background-size:100% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 14px rgba(0,0,0,.35));
+ clip-path:inset(-150% 100% -150% -60%);animation:hiwrite 1.9s .25s cubic-bezier(.45,.05,.3,1) forwards}
+.hero-stage .hi-hello.w-ja{font-family:"Klee One","Zen Kurenaido","Hiragino Maru Gothic ProN",cursive;font-weight:600;font-size:calc(var(--pw)*.17);line-height:1.1;padding:.3em .25em .3em .06em;margin:0}
+.hero-stage .hi-line{display:block;position:absolute;left:0;right:0;top:57%;margin:0;white-space:nowrap;font-size:calc(var(--pw)*.15);line-height:1.18;letter-spacing:-.034em;font-weight:600;color:#fff;opacity:0;animation:hirise 1.1s 1.15s cubic-bezier(.2,.7,.2,1) forwards}
+html.lang-ja .hero-stage .hi-line{font-size:calc(var(--pw)*.13);letter-spacing:0}
+@keyframes hiwrite{to{clip-path:inset(-150% -150% -150% -60%)}}
+@keyframes hirise{from{opacity:0;transform:translateY(22px);filter:blur(8px)}to{opacity:1;transform:none;filter:blur(0)}}
+@media(prefers-reduced-motion:reduce){.hero-stage .hi-hello{animation:none;clip-path:none}.hero-stage .hi-line{animation:none;opacity:1}}
+/* greeting sits NEXT TO the phone (right side) on the white stage. Fixed geometry: "hello" and "I'm Luca." are each pinned, so swapping the word never moves the line below. */
+.hero-stage .hi{position:absolute;inset:auto;z-index:4;pointer-events:none;will-change:opacity;text-align:center;width:calc(var(--pw)*1.4);height:calc(var(--pw)*1.1);overflow:visible}
+.hero-stage .hi-hello,.hero-stage .hi-hello.w-latin{position:absolute;left:50%;top:33%;translate:-50% -50%;width:max-content;margin:0;padding:.5em .6em;text-align:center;font-size:calc(var(--pw)*.62);line-height:.74;filter:none;background-image:linear-gradient(96deg,#6d4cff 0%,#c43fb0 60%,#f2843a 100%)}
+.hero-stage .hi-hello.w-ja{font-size:calc(var(--pw)*.26);line-height:1.1;padding:.4em .5em}
+.hero-stage .hi-line{position:absolute;left:0;right:0;top:64%;margin:0;padding:0;text-align:center;color:var(--text);font-size:calc(var(--pw)*.25)}
+html.lang-ja .hero-stage .hi-line{font-size:calc(var(--pw)*.21)}
+.hero-stage .hi.mob .hi-hello{left:50%;translate:-50% -50%}
+.hero-stage .hi.mob .hi-line{left:0;right:0;padding-left:0;text-align:center}
+
 .hero-shade{position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(120% 100% at 50% 55%,rgba(0,0,0,.34) 0%,rgba(0,0,0,.48) 100%)}
-.hero-text{position:absolute;inset:0;z-index:4;pointer-events:none;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;text-align:center;padding:58vh var(--padding) 0}
+.hero-text{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip-path:inset(50%)!important;opacity:0!important;pointer-events:none!important;inset:0;z-index:4;pointer-events:none;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;text-align:center;padding:58vh var(--padding) 0}
 /* original about-page fonts: name + big gradient 19k */
 .hero-name{margin:0 0 clamp(16px,2vw,30px);font-size:clamp(2.2rem,4.4vw,4.6rem);font-weight:600;line-height:1.02;letter-spacing:-.06em;padding-bottom:.08em;background:linear-gradient(95deg,#ffffff 0%,#ffffff 22%,#8cc2f2 62%,#6ad8de 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
 html.lang-ja .hero-name{font-size:clamp(2rem,3.8vw,4rem);line-height:1.2;letter-spacing:-.03em}
 .blast{display:flex;flex-direction:column;align-items:center}
-.blast-num{display:block;padding:.06em .06em .08em 0;font-size:clamp(5rem,9vw,10rem);font-weight:600;line-height:.9;letter-spacing:-.075em;white-space:nowrap;background:none;-webkit-text-fill-color:#fff;color:#fff}
-.blast-lab{margin-top:6px;font-size:clamp(17px,1.6vw,24px);font-weight:600;letter-spacing:-.025em;color:#fff}
+.blast-num{display:block;padding:.06em .06em .08em 0;font-size:clamp(5rem,9vw,10rem);font-weight:600;line-height:.9;letter-spacing:-.075em;white-space:nowrap;background:none;-webkit-text-fill-color:var(--text);color:var(--text)}
+.blast-lab{margin-top:6px;font-size:clamp(17px,1.6vw,24px);font-weight:600;letter-spacing:-.025em;color:var(--slate)}
 @media (max-width:699px){.blast-num{font-size:clamp(5.5rem,28vw,9rem)}}
 
 /* ================= 2. REACH (Apple Card "Family" layout: phone left, text right) ================= */
@@ -604,7 +628,14 @@ img.fx-load.fx-ok{opacity:1}
  background-image:radial-gradient(circle calc(var(--bz)*.2) at 50% calc(var(--bz)*.5),#1b2233 0,#10131b 55%,#000 99%,transparent 100%);
  background-origin:border-box;background-repeat:no-repeat;
  box-shadow:0 0 0 max(1px,calc(var(--sd)*.012)) #d4d4d6,calc(var(--sd)*.13) calc(var(--sd)*.12) calc(var(--sd)*.157) calc(var(--sd)*-.05) rgba(0,0,0,.4),0 0 calc(var(--sd)*.02) rgba(0,0,0,.2)}
-.gm-media img.gm-pg{border-radius:calc(var(--sd)*.034)}
+.gm-media img.gm-pg{border-radius:calc((var(--R) - var(--B))/var(--hs,1))}
+/* same bezel and corner on every design iPad, small or open: the size is fixed in screen pixels and divided by the current scale so shrunk screens match the open one */
+.gm .gm-media,.gm .gm-tile.sel .gm-media,.gm.gm-live .gm-tile.sel:hover .gm-media,.gm.gm-live .gm-tile.gm-t.sel:hover .gm-media{
+ --B:clamp(6px,.6vw,10px);--R:clamp(14px,1.4vw,24px);
+ --bz:calc(var(--B)/var(--hs,1));
+ border-width:var(--bz);border-radius:calc(var(--R)/var(--hs,1));
+ box-shadow:0 0 0 calc(1.5px/var(--hs,1)) #d4d4d6,calc(var(--sd)*.13) calc(var(--sd)*.12) calc(var(--sd)*.157) calc(var(--sd)*-.05) rgba(0,0,0,.4),0 0 calc(var(--sd)*.02) rgba(0,0,0,.2)}
+.gm .gm-media{--B:clamp(6px,.6vw,10px);--R:clamp(14px,1.4vw,24px)}
 /* a slight tilt at rest, straight when opened */
 .gm-tile[data-g="cardgame"]{--rot:-2.5deg}
 .gm-tile[data-g="rena"]{--rot:2deg}
@@ -634,7 +665,7 @@ img.fx-load.fx-ok{opacity:1}
   <div id="heroGrid"></div>
   <div class="hero-shade" id="heroShade"></div>
   <div class="hero-text" id="heroText">
-   <div class="blast"><span class="blast-num i18n" role="heading" aria-level="1" data-en="Luca" data-ja="るか">Luca</span><div class="blast-lab i18n" data-en="Artist / Creator" data-ja="アーティスト / クリエイター">Artist / Creator</div></div>
+   <div class="blast"><span class="blast-num i18n" role="heading" aria-level="1" data-en="Luca" data-ja="るか">Luca</span><div class="blast-lab i18n" data-en="Artist" data-ja="アーティスト">Artist</div></div>
   </div>
  </div>
 </header>
@@ -656,16 +687,56 @@ img.fx-load.fx-ok{opacity:1}
  </div>
 </section>
 
+<!-- 4. PLATFORMS -->
+<section class="plat" id="social">
+ <div class="plat-box">
+  <div class="plat-top">
+   <div>
+    <h2 class="i18n" data-en="I produce successful videos that promote talents, brands and campaigns." data-ja="タレント、ブランド、キャンペーンを広める動画を制作。">I produce successful videos that promote talents, brands and campaigns.</h2>
+    <p class="plat-sub i18n" data-en="I am active on &lt;b&gt;3 platforms&lt;/b&gt;" data-ja="&lt;b&gt;3つのプラットフォーム&lt;/b&gt;で活動しています。">I am active on <b>3 platforms</b></p>
+   </div>
+  </div>
+  <div class="plat-grid">
+   <div class="pcard"><small>YouTube</small><span class="b1 i18n" data-en="85k+" data-ja="8.5万">85k+</span><span class="b2 i18n" data-en="views" data-ja="回以上再生">views</span><span class="lab i18n" data-en="in the last 90 days" data-ja="過去90日間">in the last 90 days</span></div>
+   <div class="pcard"><small>Instagram</small><span class="b1 i18n" data-en="8M+" data-ja="800万">8M+</span><span class="b2 i18n" data-en="views" data-ja="回以上再生">views</span><span class="lab i18n" data-en="in the last 90 days" data-ja="過去90日間">in the last 90 days</span></div>
+   <div class="pcard"><small>TikTok</small><span class="b1 i18n" data-en="69k+" data-ja="6.9万">69k+</span><span class="b2 i18n" data-en="views" data-ja="回以上再生">views</span><span class="lab i18n" data-en="in the last 60 days" data-ja="過去60日間">in the last 60 days</span></div>
+   <div class="pcard pcard-video"><div class="video-caption"><span class="i18n" data-en="<b>More than 1,000 subscribers</b><br>enjoy my game dev content" data-ja="<b>1,000人以上の登録者</b><br>ゲーム開発コンテンツを楽しんでいます"><b>More than 1,000 subscribers</b><br>enjoy my game dev content</span></div><div class="mini-phone"><video data-src="insta3.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Most popular video about games made in Japan"></video></div></div>
+   <div class="pcard pcard-video"><div class="video-caption"><span class="i18n" data-en="<b>More than 3,000 followers</b><br>want to see a German perspective on Japan" data-ja="<b>3,000人以上のフォロワー</b><br>ドイツ人から見た日本に関心があります"><b>More than 3,000 followers</b><br>want to see a German perspective on Japan</span></div><div class="mini-phone"><video data-src="insta1.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Video romanticising Germany like Japan"></video></div></div>
+   <div class="pcard pcard-video"><div class="video-caption"><span class="i18n" data-en="<b>30k Japanese viewers</b><br>enjoyed a video about my hometown" data-ja="<b>3万人の日本人視聴者</b><br>地元を紹介する動画を楽しみました"><b>30k Japanese viewers</b><br>enjoyed a video about my hometown</span></div><div class="mini-phone"><video data-src="tiktokjapanese.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Japanese viewers enjoying my hometown in Germany"></video></div></div>
+  </div>
+ </div>
+</section>
+
+<!-- 6. MUSIC -->
+<section class="music" id="music">
+ <div class="music-stage">
+  <div class="m-zone">
+   <div class="m-item"><h2 class="m-title i18n" data-en="Original music" data-ja="オリジナル曲を、">Original music</h2><div class="m-sub g-all i18n" data-en="for videos, talents and campaigns." data-ja="映像、タレント、キャンペーンのために。">for videos, talents and campaigns.</div></div>
+   <div class="m-item"><h3 class="m-line g-blue i18n" data-en="15k subscribers on my YouTube channel." data-ja="YouTubeチャンネル登録者1.5万人。">15k subscribers on my YouTube channel.</h3></div>
+   <div class="m-item"><h3 class="m-line g-purple i18n" data-en="One video, 2M+ views." data-ja="1本で200万回以上再生。">One video, 2M+ views.</h3></div>
+   <div class="m-item"><h3 class="m-line g-pink i18n" data-en="Film music and background tracks." data-ja="映画音楽とBGMを制作。">Film music and background tracks.</h3></div>
+   <div class="m-item"><h3 class="m-line g-warm i18n" data-en="For YouTubers and small film studios." data-ja="YouTuberや小さな映画スタジオへ。">For YouTubers and small film studios.</h3></div>
+   <div class="m-item"><h3 class="m-line g-all i18n" data-en="Next: your promo, your talent, your campaign." data-ja="次は、あなたのプロモーションへ。">Next: your promo, your talent, your campaign.</h3></div>
+  </div>
+  <div class="ipad"><div class="ipad-screen"><iframe id="ytFrame" src="https://www.youtube.com/embed/0YXh3OqUJhc?playsinline=1&amp;rel=0&amp;enablejsapi=1&amp;origin=https%3A%2F%2Flucanicohe.github.io" title="Luca Helgert — music" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="origin" allowfullscreen></iframe></div></div>
+  <div class="m-stats">
+      <div class="pcard m-stat"><small>YouTube</small><span class="b1 i18n" data-en="8.5M+" data-ja="850万">8.5M+</span><span class="b2 i18n" data-en="views" data-ja="回以上再生">views</span><span class="lab i18n" data-en="since start of channel" data-ja="チャンネル開設から">since start of channel</span></div>
+  <div class="pcard m-stat"><small>YouTube</small><span class="b1 i18n" data-en="700k+" data-ja="70万">700k+</span><span class="b2 i18n" data-en="hours" data-ja="時間以上">hours</span><span class="lab i18n" data-en="watchtime in total" data-ja="総再生時間">watchtime in total</span></div>
+  <div class="pcard m-stat"><small>YouTube</small><span class="b1 i18n" data-en="All" data-ja="あらゆる">All</span><span class="b2 i18n" data-en="genres" data-ja="ジャンル">genres</span><span class="lab i18n" data-en="from film music to rap beats" data-ja="映画音楽からラップのビートまで">from film music to rap beats</span></div>
+  </div>
+ </div>
+</section>
+
 <!-- 3. JAPANESE -->
 <section class="jp" id="japanese">
  <h2 class="i18n" data-en="Connecting Japanese brands with international audiences&lt;span&gt;and Japanese audiences with global brands.&lt;/span&gt;" data-ja="日本のブランドを、海外の視聴者へ。&lt;span&gt;日本の視聴者を、世界のブランドへ。&lt;/span&gt;">Connecting Japanese brands with international audiences<span>and Japanese audiences with global brands.</span></h2>
  <div class="jp-stage">
   <div class="phone"><video data-src="sadou.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Luca Helgert"></video></div>
   <div class="jp-col l">
-   <div class="fact"><b class="i18n" data-en="60% of my viewers&lt;br&gt;are German and European." data-ja="&lt;span class=&quot;ph&quot;&gt;視聴者の6割は、&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;ph&quot;&gt;ドイツと&lt;/span&gt;&lt;span class=&quot;ph&quot;&gt;ヨーロッパの人。&lt;/span&gt;">60% of my viewers<br>are German and European.</b><small class="i18n" data-en="On Instagram and YouTube, my content is in English and mostly watched by Europeans and people in the US." data-ja="InstagramとYouTubeでは英語でコンテンツを発信していて、主にヨーロッパとアメリカの人に見られています。">On Instagram and YouTube, my content is in English and mostly watched by Europeans and people in the US.</small></div>
+   <div class="fact"><b class="i18n" data-en="60% of my audience&lt;br&gt;is international." data-ja="&lt;span class=&quot;ph&quot;&gt;視聴者の6割は、&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;ph&quot;&gt;海外の人です。&lt;/span&gt;">60% of my audience<br>is international.</b><small class="i18n" data-en="On Instagram and YouTube, my content is in English and mostly watched by Europeans and people in the US." data-ja="InstagramとYouTubeでは英語でコンテンツを発信していて、主にヨーロッパとアメリカの人に見られています。">On Instagram and YouTube, my content is in English and mostly watched by Europeans and people in the US.</small></div>
   </div>
   <div class="jp-col r">
-   <div class="fact"><b class="i18n" data-en="100% of my viewers&lt;br&gt;on TikTok are Japanese." data-ja="&lt;span class=&quot;ph&quot;&gt;TikTokの視聴者の&lt;/span&gt;&lt;span class=&quot;ph&quot;&gt;100%は、&lt;/span&gt;&lt;span class=&quot;ph&quot;&gt;日本人です。&lt;/span&gt;">100% of my viewers<br>on TikTok are Japanese.</b><small class="i18n" data-en="On my TikTok I make content in Japanese for Japanese people curious about Germany." data-ja="ドイツに興味のある日本人向けに日本語でコンテンツを作っています。">On my TikTok I make content in Japanese for Japanese people curious about Germany.</small></div>
+   <div class="fact"><b class="i18n" data-en="40% of my viewers&lt;br&gt;are Japanese." data-ja="&lt;span class=&quot;ph&quot;&gt;視聴者の4割は、&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;ph&quot;&gt;日本人です。&lt;/span&gt;">40% of my viewers<br>are Japanese.</b><small class="i18n" data-en="On my TikTok I make content in Japanese for Japanese people curious about foreigners and life abroad." data-ja="外国人や海外生活に興味のある日本人向けに日本語でコンテンツを作っています。">On my TikTok I make content in Japanese for Japanese people curious about foreigners and life abroad.</small></div>
   </div>
  </div>
 </section>
@@ -707,43 +778,16 @@ img.fx-load.fx-ok{opacity:1}
 </script>
 
 
-<!-- 4. PLATFORMS -->
-<section class="plat" id="social">
- <div class="plat-box">
-  <div class="plat-top">
-   <div>
-    <h2 class="i18n" data-en="Producing successful videos that promote talents, brands and campaigns." data-ja="タレント、ブランド、キャンペーンを広める動画を制作。">Producing successful videos that promote talents, brands and campaigns.</h2>
-    <p class="plat-sub i18n" data-en="A few ways &lt;b&gt;three platforms&lt;/b&gt; give you more." data-ja="&lt;b&gt;3つのプラットフォーム&lt;/b&gt;で、より多くの人へ。">A few ways <b>three platforms</b> give you more.</p>
-   </div>
+<!-- 5. GAME DEV -->
+<section class="craft" id="craft">
+ <div class="craft-stage">
+  <h2 class="i18n" data-en="Connect brands with gaming,&lt;span&gt;tech and the game industry.&lt;/span&gt;" data-ja="ゲームやテクノロジー、&lt;span&gt;ゲーム業界のブランドとつながる。&lt;/span&gt;">Connect brands with gaming,<span>tech and the game industry.</span></h2>
+  <div class="craft-box" id="craftBox">
+   <div class="craft-layer"><video data-src="squid1.mp4#t=0.1" muted loop playsinline preload="none"></video></div>
+   <div class="craft-layer"><video data-src="squid2.mp4#t=0.1" muted loop playsinline preload="none"></video></div>
+   <div class="craft-layer"><video data-src="squid3.mp4#t=0.1" muted loop playsinline preload="none"></video></div>
   </div>
-  <div class="plat-grid">
-   <div class="pcard"><small>YouTube</small><span class="b1 i18n" data-en="85k+" data-ja="8.5万">85k+</span><span class="b2 i18n" data-en="views" data-ja="回以上再生">views</span><span class="lab i18n" data-en="in the last 90 days" data-ja="過去90日間">in the last 90 days</span></div>
-   <div class="pcard"><small>Instagram</small><span class="b1 i18n" data-en="8M+" data-ja="800万">8M+</span><span class="b2 i18n" data-en="views" data-ja="回以上再生">views</span><span class="lab i18n" data-en="in the last 90 days" data-ja="過去90日間">in the last 90 days</span></div>
-   <div class="pcard"><small>TikTok</small><span class="b1 i18n" data-en="69k+" data-ja="6.9万">69k+</span><span class="b2 i18n" data-en="views" data-ja="回以上再生">views</span><span class="lab i18n" data-en="in the last 60 days" data-ja="過去60日間">in the last 60 days</span></div>
-   <div class="pcard pcard-video"><div class="video-caption"><span class="i18n" data-en="<b>More than 1,000 subscribers</b><br>enjoy my game dev content" data-ja="<b>1,000人以上の登録者</b><br>ゲーム開発コンテンツを楽しんでいます"><b>More than 1,000 subscribers</b><br>enjoy my game dev content</span></div><div class="mini-phone"><video data-src="insta3.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Most popular video about games made in Japan"></video></div></div>
-   <div class="pcard pcard-video"><div class="video-caption"><span class="i18n" data-en="<b>More than 3,000 followers</b><br>want to see a German perspective on Japan" data-ja="<b>3,000人以上のフォロワー</b><br>ドイツ人から見た日本に関心があります"><b>More than 3,000 followers</b><br>want to see a German perspective on Japan</span></div><div class="mini-phone"><video data-src="insta1.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Video romanticising Germany like Japan"></video></div></div>
-   <div class="pcard pcard-video"><div class="video-caption"><span class="i18n" data-en="<b>30k Japanese viewers</b><br>enjoyed a video about my hometown" data-ja="<b>3万人の日本人視聴者</b><br>地元を紹介する動画を楽しみました"><b>30k Japanese viewers</b><br>enjoyed a video about my hometown</span></div><div class="mini-phone"><video data-src="tiktokjapanese.mp4#t=0.1" muted loop playsinline preload="none" aria-label="Japanese viewers enjoying my hometown in Germany"></video></div></div>
-  </div>
- </div>
-</section>
-
-<!-- 6. MUSIC -->
-<section class="music" id="music">
- <div class="music-stage">
-  <div class="m-zone">
-   <div class="m-item"><h2 class="m-title i18n" data-en="Original music" data-ja="オリジナル曲を、">Original music</h2><div class="m-sub g-all i18n" data-en="for videos, talents and campaigns." data-ja="映像、タレント、キャンペーンのために。">for videos, talents and campaigns.</div></div>
-   <div class="m-item"><h3 class="m-line g-blue i18n" data-en="15k subscribers on my YouTube channel." data-ja="YouTubeチャンネル登録者1.5万人。">15k subscribers on my YouTube channel.</h3></div>
-   <div class="m-item"><h3 class="m-line g-purple i18n" data-en="One video, 2M+ views." data-ja="1本で200万回以上再生。">One video, 2M+ views.</h3></div>
-   <div class="m-item"><h3 class="m-line g-pink i18n" data-en="Film music and background tracks." data-ja="映画音楽とBGMを制作。">Film music and background tracks.</h3></div>
-   <div class="m-item"><h3 class="m-line g-warm i18n" data-en="For YouTubers and small film studios." data-ja="YouTuberや小さな映画スタジオへ。">For YouTubers and small film studios.</h3></div>
-   <div class="m-item"><h3 class="m-line g-all i18n" data-en="Next: your promo, your talent, your campaign." data-ja="次は、あなたのプロモーションへ。">Next: your promo, your talent, your campaign.</h3></div>
-  </div>
-  <div class="ipad"><div class="ipad-screen"><iframe id="ytFrame" src="https://www.youtube.com/embed/0YXh3OqUJhc?playsinline=1&amp;rel=0&amp;enablejsapi=1&amp;origin=https%3A%2F%2Flucanicohe.github.io" title="Luca Helgert — music" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="origin" allowfullscreen></iframe></div></div>
-  <div class="m-stats">
-      <div class="pcard m-stat"><small>YouTube</small><span class="b1 i18n" data-en="8.5M+" data-ja="850万">8.5M+</span><span class="b2 i18n" data-en="views" data-ja="回以上再生">views</span><span class="lab i18n" data-en="since start of channel" data-ja="チャンネル開設から">since start of channel</span></div>
-  <div class="pcard m-stat"><small>YouTube</small><span class="b1 i18n" data-en="700k+" data-ja="70万">700k+</span><span class="b2 i18n" data-en="hours" data-ja="時間以上">hours</span><span class="lab i18n" data-en="watchtime in total" data-ja="総再生時間">watchtime in total</span></div>
-  <div class="pcard m-stat"><small>YouTube</small><span class="b1 i18n" data-en="All" data-ja="あらゆる">All</span><span class="b2 i18n" data-en="genres" data-ja="ジャンル">genres</span><span class="lab i18n" data-en="from film music to rap beats" data-ja="映画音楽からラップのビートまで">from film music to rap beats</span></div>
-  </div>
+  <div class="craft-text"><p class="craft-copy two-tone i18n" data-en="I study <b>game programming</b> and I’m 2 years in. I presented my own game at <b>Tokyo Game Show</b>. I share my journey of connecting the tech industry with social media. Find out more below." data-ja="<b>ゲームプログラミング</b>を学んで現在2年目。自作のゲームを<b>東京ゲームショウ</b>に出展しました。テック業界とSNSをつなぐ挑戦を発信しています。詳しくは、下へ。">I study <b>game programming</b> and I’m 2 years in. I presented my own game at <b>Tokyo Game Show</b>. I share my journey of connecting the tech industry with social media. Find out more below.</p><a class="craft-link i18n" href="index.html" data-en="View my portfolio" data-ja="ポートフォリオを見る">View my portfolio</a></div>
  </div>
 </section>
 
@@ -764,19 +808,6 @@ img.fx-load.fx-ok{opacity:1}
 </div>
 </div>
 </div>
-</section>
-
-<!-- 5. GAME DEV -->
-<section class="craft" id="craft">
- <div class="craft-stage">
-  <h2 class="i18n" data-en="Connect brands with gaming,&lt;span&gt;tech and the game industry.&lt;/span&gt;" data-ja="ゲームやテクノロジー、&lt;span&gt;ゲーム業界のブランドとつながる。&lt;/span&gt;">Connect brands with gaming,<span>tech and the game industry.</span></h2>
-  <div class="craft-box" id="craftBox">
-   <div class="craft-layer"><video data-src="squid1.mp4#t=0.1" muted loop playsinline preload="none"></video></div>
-   <div class="craft-layer"><video data-src="squid2.mp4#t=0.1" muted loop playsinline preload="none"></video></div>
-   <div class="craft-layer"><video data-src="squid3.mp4#t=0.1" muted loop playsinline preload="none"></video></div>
-  </div>
-  <div class="craft-text"><p class="craft-copy two-tone i18n" data-en="I study <b>game programming</b> and I’m 2 years in. I presented my own game at <b>Tokyo Game Show</b>. I share my journey of connecting the tech industry with social media. Find out more below." data-ja="<b>ゲームプログラミング</b>を学んで現在2年目。自作のゲームを<b>東京ゲームショウ</b>に出展しました。テック業界とSNSをつなぐ挑戦を発信しています。詳しくは、下へ。">I study <b>game programming</b> and I’m 2 years in. I presented my own game at <b>Tokyo Game Show</b>. I share my journey of connecting the tech industry with social media. Find out more below.</p><a class="craft-link i18n" href="index.html" data-en="View my portfolio" data-ja="ポートフォリオを見る">View my portfolio</a></div>
- </div>
 </section>
 
 <!-- 7. TOGETHER -->
@@ -1173,17 +1204,16 @@ let lang=window.__lang||"ja";
    [row, column offset, "v" video | "i" image | "c" center video, file, optional object-position]
    row 0 = middle row. Rows -1 and 1 are shifted half a tile (like the screenshot). */
 const HERO_TILES=[
- [-1,-1.5,"v","sadou.mp4"],[-1,-0.5,"i","me7.jpg","50% 30%"],[-1,0.5,"v","boat2.mp4"],[-1,1.5,"i","helen.jpg","50% 30%"],
- [0,-2,"i","me1.jpg","50% 30%"],[0,-1,"v","gym.mp4"],[0,0,"c","wideshot.jpg"],[0,1,"i","me13.jpg","50% 30%"],[0,2,"v","austria.mp4"],
- [1,-1.5,"i","me11.jpg","50% 30%"],[1,-0.5,"v","intro.mp4"],[1,0.5,"i","me4.jpg","50% 30%"],[1,1.5,"i","me14.jpg","50% 30%"]
+ [-1,-1.5,"i","me1.jpg","50% 30%"],[-1,-0.5,"v","sadou.mp4"],[-1,0.5,"v","boat2.mp4"],[-1,1.5,"i","me11.jpg","50% 30%"],
+ [0,-2,"i","me7.jpg","50% 30%"],[0,-1,"i","helen.jpg","50% 30%"],[0,0,"c","intro.mp4"],[0,1,"i","me4.jpg","50% 30%"],[0,2,"i","me2.jpg","50% 30%"],
+ [1,-1.5,"i","me14.jpg","50% 30%"],[1,-0.5,"v","gym.mp4"],[1,0.5,"v","korea1.mp4"],[1,1.5,"i","me13.jpg","50% 30%"]
 ];
 const heroGrid=$("#heroGrid");
 const heroTiles=HERO_TILES.map(([row,k,type,file,pos])=>{
   const t=document.createElement("div");t.className="tile"+(type==="c"?" center":"");
   const s=document.createElement("div");s.className="screen";
   let m;
-  if(type==="c"){m=document.createElement("img");m.alt="Luca Helgert";m.decoding="async";m.className="cimg";m.addEventListener("load",()=>{if(typeof update==="function")update();});setTimeout(()=>m.classList.add("ready"),2500);m.src=file;}
-  else if(type==="i"){m=document.createElement("img");m.src=file;m.alt="";m.loading="eager";m.fetchPriority="low";m.decoding="async";}
+  if(type==="i"){m=document.createElement("img");m.src=file;m.alt="";m.loading="eager";m.fetchPriority="low";m.decoding="async";}
   else{
     m=document.createElement("video");m.dataset.src=type==="c"?file:file+"#t=0.1";
     m.muted=true;m.loop=true;m.playsInline=true;m.preload=type==="c"?"auto":"none";
@@ -1192,8 +1222,49 @@ const heroTiles=HERO_TILES.map(([row,k,type,file,pos])=>{
   if(pos)m.style.objectPosition=pos;
   const cam=document.createElement("i"),dot=document.createElement("i");cam.className="cam";dot.className="cam dot";
   s.appendChild(m);t.appendChild(s);t.appendChild(cam);t.appendChild(dot);heroGrid.appendChild(t);
-  return {row,k,t,s,cam,dot,center:type==="c",img:type==="c"?m:null};
+  return {row,k,t,s,cam,dot,center:type==="c",img:null};
 });
+
+/* ============ greeting on the centre phone: hello -> こんにちは -> Hallo, then "I’m Luca." (copied from the index hero) ============ */
+(function(){
+  const c=heroTiles.find(o=>o.center);if(!c)return;
+  const box=document.createElement("div");box.className="hi";
+  const el=document.createElement("div"),line=document.createElement("div");
+  el.className="hi-hello w-latin";el.textContent="hello";line.className="hi-line";
+  box.appendChild(el);box.appendChild(line);document.querySelector(".hero-stage").appendChild(box);window.__heroHi=box;
+  const rm=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const LIST={en:[["hello","w-latin"],["こんにちは","w-ja"],["Hallo","w-latin"]],ja:[["こんにちは","w-ja"],["hello","w-latin"],["Hallo","w-latin"]]};
+  let gen=0,inView=true;
+  const lang=()=>document.documentElement.classList.contains("lang-ja")?"ja":"en";
+  const wait=ms=>new Promise(r=>setTimeout(r,ms));
+  function setLine(){line.textContent=lang()==="ja"?"るかです。":"I’m Luca.";}
+  function first(){const w=LIST[lang()][0];el.textContent=w[0];el.className="hi-hello "+w[1];}
+  if(document.fonts&&document.fonts.load){document.fonts.load('400 100px "Sacramento"',"helloHallo");document.fonts.load('600 100px "Klee One"',"こんにちは");}
+  new IntersectionObserver(e=>{inView=e[0].isIntersecting;},{threshold:.05}).observe(document.querySelector(".hero-stage"));
+  function swap(w){
+    el.style.transition="opacity .35s ease";el.style.opacity="0";
+    return wait(380).then(()=>{
+      el.textContent=w[0];el.className="hi-hello "+w[1];
+      el.style.animation="none";el.style.opacity="1";void el.offsetWidth;
+      el.style.animation="hiwrite 1.3s cubic-bezier(.45,.05,.3,1) forwards";
+    });
+  }
+  async function loop(){
+    const my=++gen;let i=0;const list=LIST[lang()];
+    await wait(3600);
+    while(my===gen){
+      if(!inView||document.hidden){await wait(400);continue;}
+      i=(i+1)%list.length;
+      await swap(list[i]);
+      if(my!==gen)return;
+      await wait(3200);
+    }
+  }
+  setLine();first();
+  if(!rm)loop();
+  let cur=lang();
+  new MutationObserver(()=>{if(lang()===cur)return;cur=lang();setLine();first();el.style.animation="";el.style.opacity="";if(!rm)loop();}).observe(document.documentElement,{attributes:true,attributeFilter:["class"]});
+})();
 
 /* ============ nav ============ */
 const nav=$("#nav");
@@ -1272,32 +1343,30 @@ function measure(){}
 
 function updateHero(){
   const vw=innerWidth,vh=innerHeight;
-  /* measured from the Apple screenshot (3058px wide): black bezel 599x598 = 19.59% of width, square;
-     column pitch 767px = 1.2804 x tile; row pitch 709px = 1.1836 x tile; centre row at 54.6% of the height;
-     rim 10px (1.67%), bezel 33px (5.5%), corner radius 120px (20%) */
-  const fitW=0.47*vw/3.06,fitH=Math.min((0.5462*vh-86)/1.68,(0.4538*vh-18)/1.68);
-  const Tw=(vw<700?0.49*vw:Math.min(0.1959*vw,fitW,fitH)),Th=Tw,px=Tw*1.2804,py=Tw*1.1836;
-  const bz0=Tw*0.055,r0=Tw*0.20,rim0=Tw*0.0167;
-  const S0=Math.max(vw/(Tw-2*bz0),vh/(Th-2*bz0))*1.02;
+  /* phones: same shape as the phone in the reach section (width : height = .48, bezel 3.4%, corner radius 17% of the width).
+     Rows are staggered like bricks. The centre phone starts as one full phone and zooms out to the wall. */
+  const PR=.48,mob=vw<700;
+  const Tw=mob?0.2*vw:Math.min(.094*vw,.192*vh),Th=Tw/PR,px=Tw*2.2,py=Th*.58;
+  const bz0=Tw*.034,r0=Tw*.17,rim0=Tw*.0125,sh=Th*.8;
+  const S0=mob?Math.min(.5*vh/Th,.7*vw/Tw):.78*vh/Th;
   const p=clamp(prog(hero)/0.8),e=smooth(p);
-  const s=Math.exp(Math.log(S0)*(1-e)),kk=Math.log(s)/Math.log(S0),cy=vh*(0.5+0.0462*(1-kk));
+  const s=Math.exp(Math.log(S0)*(1-e)),cy=vh*0.5,fly=1+(1-e)*2.5;
   /* fixed base size per tile (rewritten only when the viewport changes); every frame just moves/scales it with transform, so scrolling never triggers layout */
   const key=Tw+"|"+Th;
   if(key!==heroBaseKey){
     heroBaseKey=key;
     heroTiles.forEach(o=>{
       const st=o.t.style;
-      st.left="0px";st.top="0px";st.width=Tw+"px";st.height=Th+"px";st.padding=bz0+"px";st.borderRadius=r0+"px";st.transformOrigin="0 0";
-      st.boxShadow="0 0 0 "+rim0+"px #d4d4d6,"+(Tw*.134)+"px "+(Tw*.12)+"px "+(Tw*.157)+"px "+(-Tw*.05)+"px rgba(0,0,0,.4),0 0 "+(Tw*.02)+"px rgba(0,0,0,.2)";
-      o.cam.style.cssText="width:"+(Tw*.023)+"px;height:"+(Tw*.023)+"px;top:"+(bz0*.36-Tw*.0115)+"px";
-      o.dot.style.cssText="width:"+(Tw*.005)+"px;height:"+(Tw*.005)+"px;top:"+(bz0*.36-Tw*.0025)+"px;margin-left:"+(-Tw*.047)+"px";
-      o.s.style.borderRadius=Math.max(0,r0-bz0)+"px";
+      st.left="0px";st.top="0px";st.width=Tw+"px";st.height=Th+"px";st.padding=bz0+"px";st.borderRadius=r0+"px";st.transformOrigin="0 0";st.setProperty("--pw",Tw+"px");
+      st.boxShadow="0 0 0 "+(Tw*.008)+"px #36363a,0 0 0 "+rim0+"px #9a9a9f,"+(sh*.134)+"px "+(sh*.12)+"px "+(sh*.157)+"px "+(-sh*.05)+"px rgba(0,0,0,.4),0 0 "+(sh*.02)+"px rgba(0,0,0,.2)";
+      o.cam.style.cssText="width:"+(Tw*.29)+"px;height:"+(Tw*.088)+"px;top:"+(Tw*.058)+"px";
+      o.s.style.borderRadius=Math.max(0,Tw*.138)+"px";
     });
   }
   heroTiles.forEach(o=>{
     const w=Tw*s,h=Th*s;
-    const left=vw/2+o.k*px*s-w/2,top=cy+o.row*py*s-h/2;
-    const vis=left<vw&&left+w*1.3>0&&top<vh&&top+h*1.3>0;
+    const left=vw/2+o.k*px*s*fly-w/2,top=cy+o.row*py*s*fly-h/2;
+    const vis=(!mob||Math.abs(o.k)<2)&&left<vw&&left+w*1.3>0&&top<vh&&top+h*1.3>0;
     const st=o.t.style;
     if(!vis){if(o.on!==false){st.display="none";o.on=false;}return;}
     if(o.on!==true){st.display="block";o.on=true;}
@@ -1310,17 +1379,27 @@ function updateHero(){
       const bw=(x1-x0)/s,bh=(y1-y0)/s;
       if(bw>0&&bh>0){
         if(!o.imgInit){o.imgInit=true;is.left="0px";is.top="0px";is.width=nw+"px";is.height=nh+"px";is.maxWidth="none";is.objectFit="fill";is.transformOrigin="0 0";}
-        const c=Math.max(bw/nw,bh/nh);
+        const c=Math.max(bw/nw,bh/nh)*(o.center?1.35:1);
         if(!o.ready){o.ready=true;o.img.classList.add("ready");}
         is.transform="translate3d("+((x0-sl)/s+(bw-nw*c)/2)+"px,"+((y0-stp)/s+(bh-nh*c)/2)+"px,0) scale("+c+")";
       }
     }
   });
   const spill=p>=1;if(spill!==heroSpill){heroSpill=spill;heroStage.style.overflow=spill?"visible":"";}
-  const o=1-clamp(p/0.28);
-  heroText.style.opacity=o;heroShade.style.opacity=o;
-  heroText.style.transform="translateY("+(-p*50)+"px)";
-  heroText.style.visibility=o<=0?"hidden":"visible";
+  heroShade.style.display="none";
+  const hb=window.__heroHi;
+  if(hb){
+    const pwS=Tw*S0,phH=Th*S0,fade=1-clamp(p/0.22);
+    if(mob){
+      hb.classList.add("mob");hb.style.setProperty("--pw",(pwS*.62)+"px");
+      hb.style.left="0px";hb.style.right="0px";hb.style.width="auto";hb.style.top=(cy+phH/2+vh*.01)+"px";hb.style.transform="none";
+    }else{
+      const left=vw/2+pwS/2+Math.max(28,vw*.035),base=Math.min(pwS,(vw-left-24)/1.4);
+      hb.classList.remove("mob");hb.style.setProperty("--pw",base+"px");
+      hb.style.left=left+"px";hb.style.right="auto";hb.style.width="";hb.style.top=cy+"px";hb.style.transform="translateY(-50%)";
+    }
+    hb.style.opacity=fade;hb.style.visibility=fade<=0?"hidden":"visible";
+  }
 }
 
 function update(){
