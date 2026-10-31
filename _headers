@@ -1,0 +1,13 @@
+# Netlify / Cloudflare Pages. Use this file OR .htaccess, depending on your host.
+/*.html
+  Cache-Control: no-cache
+/
+  Cache-Control: no-cache
+/*.mp4
+  Cache-Control: public, max-age=86400, stale-while-revalidate=2592000
+/*.jpg
+  Cache-Control: public, max-age=86400, stale-while-revalidate=2592000
+/*.png
+  Cache-Control: public, max-age=86400, stale-while-revalidate=2592000
+/kiwijavascript/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=2592000
