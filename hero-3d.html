@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ja" class="lang-ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>Luca Helgert — Game Programmer</title>
+<script>(function(){var a=null,n=document.documentElement;try{a=localStorage.getItem("luca-lang")}catch(e){}if(a!=="ja"&&a!=="en"){var g=(navigator.languages&&navigator.languages.length?navigator.languages[0]:navigator.language)||"";a=/^ja\b/i.test(g)?"ja":"en"}window.__lang=a;n.lang=a;n.classList.toggle("lang-ja",a==="ja")})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Instrument+Serif:ital@1&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#f1e8ff;--pink:#14123d;--dk:#1a1747}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pink);color:var(--ink);font-family:"Inter","Noto Sans JP",sans-serif;-webkit-font-smoothing:antialiased}
+html.lang-ja *{letter-spacing:0!important}
+.uh{position:relative;height:100svh;min-height:520px;overflow:hidden;background:var(--pink);touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab}
+.uh.drag{cursor:grabbing}
+.uh canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.nav{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:22px clamp(18px,2.2vw,32px);font-size:15px}
+.nav a{color:inherit;text-decoration:none}
+.logo{font-size:22px;font-weight:400;letter-spacing:-.04em}
+.nr{display:flex;gap:22px;align-items:center}
+.lg{width:38px;height:38px;border:0;border-radius:50%;background:#fff;color:var(--dk);font:inherit;font-size:12px;font-weight:500;cursor:pointer}
+.uc{position:absolute;left:0;right:0;top:64%;transform:translateY(-50%);z-index:3;text-align:center;pointer-events:none;opacity:0;transition:opacity 1.4s ease 2.4s}
+.on .uc{opacity:1}.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.ring{position:absolute;left:0;top:0;width:22px;height:26px;margin:-13px 0 0 -11px;border:1.5px solid var(--ink);border-radius:50%;z-index:6;pointer-events:none;opacity:0;transition:opacity .5s}.on .ring{opacity:1}
+.eb{margin:0 0 10px;font-size:13px;letter-spacing:.02em;text-transform:uppercase}
+.hd{margin:0;font-weight:400;font-size:clamp(46px,9.2vw,134px);line-height:.98}
+.l1,.l2{display:block;white-space:nowrap}
+.l1{font-family:"Instrument Serif","Noto Serif JP",serif;font-style:italic;letter-spacing:-.02em}
+.l2{font-weight:500;letter-spacing:-.05em}
+html.lang-ja .l1{font-style:normal;font-weight:500;font-size:.8em}
+.pill{display:inline-flex;align-items:center;gap:8px;height:34px;margin-top:26px;padding:0 17px;border-radius:17px;background:#fff;color:var(--dk);font-size:13px;text-decoration:none;pointer-events:auto;transition:transform .25s}
+.pill:hover{transform:scale(1.06)}
+.bl{position:absolute;left:clamp(18px,2.2vw,32px);bottom:24px;z-index:4;height:34px;padding:0 17px;display:flex;align-items:center;border:1px solid var(--ink);border-radius:17px;font-size:13px;pointer-events:none;opacity:0;transition:opacity 1s ease 2.6s}
+.br{position:absolute;right:clamp(18px,2.2vw,32px);bottom:32px;z-index:4;font-size:12px;color:#fff;opacity:0;transition:opacity 1s ease 2.6s}
+.on .bl,.on .br{opacity:1}
+.in{position:absolute;inset:0;z-index:10;background:var(--pink);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:default;transition:opacity 1.3s ease,visibility 1.3s}
+.on .in{opacity:0;visibility:hidden;pointer-events:none}
+.ld{display:flex;gap:.55em;font-size:clamp(30px,5.5vw,60px);font-weight:500}
+.ld span{opacity:0;transform:translateY(.7em);animation:up .9s cubic-bezier(.2,.8,.2,1) forwards}
+.ld span:nth-child(2){animation-delay:.1s}.ld span:nth-child(3){animation-delay:.2s}.ld span:nth-child(4){animation-delay:.3s}
+@keyframes up{to{opacity:1;transform:none}}
+.st{height:46px;margin-top:34px;display:flex;align-items:center;font-size:13px}
+.st b{font-weight:400}
+.go{display:none;height:46px;padding:0 34px;border:0;border-radius:23px;background:#fff;color:var(--dk);font:inherit;font-size:15px;cursor:pointer;transition:transform .25s}
+.go:hover{transform:scale(1.06)}
+.ready .go{display:block}.ready .ldn{display:none}
+</style>
+</head>
+<body>
+<section class="uh" id="uh" aria-label="Introduction">
+<canvas id="gl"></canvas>
+<nav class="nav"><a class="logo i18n" href="#uh" data-en="luca helgert" data-ja="ヘルゲルト・るか">luca helgert</a>
+<div class="nr"><a class="i18n" href="mailto:luca.helgert@icloud.com" data-en="Contact" data-ja="お問い合わせ">Contact</a><button type="button" class="lg" id="lang"></button></div></nav>
+<div class="uc"><h1 class="sr i18n" data-en="A game programmer in Tokyo. Making dreams come true." data-ja="東京のゲームプログラマー。ゲームで、夢をかたちにする。"></h1>
+<a class="pill i18n" href="#work" data-en="View my work ↘" data-ja="作品を見る ↘"></a></div>
+<div class="bl i18n" data-en="Drag to explore" data-ja="ドラッグして探検"></div><div class="br">©2026</div><div class="ring" id="ring"></div>
+<div class="in" id="intro"><div class="ld" aria-label="Luca"><span>L</span><span>U</span><span>C</span><span>A</span></div>
+<div class="st"><span class="ldn"><b id="pct">0</b>%</span><button type="button" class="go i18n" id="enter" data-en="Enter" data-ja="入る"></button></div></div>
+</section>
+
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
+<script type="module">
+import * as THREE from "three";
+const $=id=>document.getElementById(id),root=$("uh"),html=document.documentElement;
+
+/* language */
+function setLang(l){window.__lang=l;html.lang=l;html.classList.toggle("lang-ja",l==="ja");try{localStorage.setItem("luca-lang",l)}catch(e){}
+document.querySelectorAll(".i18n").forEach(e=>e.innerHTML=e.dataset[l]);$("lang").textContent=l==="ja"?"EN":"JA";window.__draw&&window.__draw()}
+$("lang").onclick=()=>setLang(window.__lang==="ja"?"en":"ja");setLang(window.__lang);
+
+/* loader -> enter */
+let n=0,started=false,t0=0;const iv=setInterval(()=>{n=Math.min(100,n+3+Math.random()*5|0);$("pct").textContent=n;if(n>=100){clearInterval(iv);setTimeout(()=>$("intro").classList.add("ready"),200)}},60);
+$("enter").onclick=()=>{started=true;t0=performance.now();root.classList.add("on")};
+
+/* renderer, targets */
+let dpr=Math.min(devicePixelRatio||1,1.5);const R=new THREE.WebGLRenderer({canvas:$("gl"),antialias:false,powerPreference:"high-performance"});
+R.setPixelRatio(dpr);R.shadowMap.enabled=true;R.shadowMap.type=THREE.PCFShadowMap;R.shadowMap.autoUpdate=false;
+const rt=new THREE.WebGLRenderTarget(4,4,{samples:4}),rr=new THREE.WebGLRenderTarget(4,4);
+const C=h=>new THREE.Color(h),fogC=C("#1f1d62");
+const scene=new THREE.Scene();scene.fog=new THREE.Fog(fogC,25,110);
+const cam=new THREE.PerspectiveCamera(46,1,.1,400);cam.rotation.order="YXZ";
+const T0={uTime:{value:0},uHold:{value:0}};
+const rc=new THREE.PerspectiveCamera(46,1,.1,400),tm=new THREE.Matrix4(),clipP=new THREE.Plane(new THREE.Vector3(0,1,0),0),fw=new THREE.Vector3(),tg=new THREE.Vector3(),CP=[clipP],NP=[];let warm=false,ema=.016,fc=0;
+
+/* sky (also used for image-based light) */
+function sky(){return new THREE.Mesh(new THREE.SphereGeometry(200,32,24),new THREE.ShaderMaterial({side:THREE.BackSide,depthWrite:false,fog:false,
+uniforms:{a:{value:C("#7b4fb0")},b:{value:C("#2d2a7a")},c:{value:C("#080a2e")},uTime:T0.uTime},
+vertexShader:"varying vec3 v;void main(){v=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}",
+fragmentShader:"varying vec3 v;uniform vec3 a,b,c;uniform float uTime;float H(vec3 p){return fract(sin(dot(p,vec3(12.9898,78.233,37.719)))*43758.5453);}"+
+"void main(){vec3 n=normalize(v);float h=n.y;vec3 x=mix(a,b,smoothstep(0.,.3,h));x=mix(x,c,smoothstep(.25,.85,h));vec3 g=floor(n*700.);float st=step(.9988,H(g))*(.5+.5*sin(uTime*2.+H(g+1.)*40.))*smoothstep(.05,.3,h);"+
+"float au=pow(max(0.,sin(n.x*4.+sin(n.z*3.+uTime*.12)*1.5+uTime*.08)),3.)*smoothstep(.18,.4,h)*(1.-smoothstep(.45,.85,h));x+=vec3(.15,.9,.75)*au*.28+vec3(.6,.25,.95)*au*au*.3+vec3(1.,.95,.85)*st;gl_FragColor=vec4(x,1.);}"}))}
+scene.add(sky());const moon=new THREE.Mesh(new THREE.SphereGeometry(7,48,32),new THREE.MeshBasicMaterial({color:"#fff4d6",fog:false})),halo=new THREE.Mesh(new THREE.SphereGeometry(16,32,24),new THREE.MeshBasicMaterial({color:"#9a86ff",transparent:true,opacity:.2,fog:false,depthWrite:false}));moon.position.set(50,37,-95);halo.position.copy(moon.position);scene.add(moon,halo);const es=new THREE.Scene();es.add(sky());const env=new THREE.PMREMGenerator(R).fromScene(es).texture;
+
+/* light */
+scene.add(new THREE.HemisphereLight("#7f7bf0","#2a1d5a",1.1));
+const dl=new THREE.DirectionalLight("#a9b9ff",2.8);dl.position.set(-16,12,8);dl.target.position.set(0,0,-3);scene.add(dl,dl.target);const dr=new THREE.PointLight("#ff8fd0",60,18,2);dr.position.set(0,4.8,-5.6);const tl=new THREE.PointLight("#5fe6ff",40,16,2);tl.position.set(-2,.8,-2.5);scene.add(dr,tl);
+dl.castShadow=true;dl.shadow.mapSize.set(2048,2048);Object.assign(dl.shadow.camera,{left:-26,right:26,top:26,bottom:-26,near:1,far:70});dl.shadow.camera.updateProjectionMatrix();dl.shadow.radius=4;dl.shadow.bias=-.0004;dl.shadow.normalBias=.05;
+
+/* plaster */
+const cn=document.createElement("canvas");cn.width=cn.height=256;const cx=cn.getContext("2d");cx.fillStyle="#fff";cx.fillRect(0,0,256,256);
+for(let i=0;i<5000;i++){cx.fillStyle="rgba("+(150+Math.random()*60|0)+",110,115,"+Math.random()*.1+")";cx.fillRect(Math.random()*256,Math.random()*256,2+Math.random()*7,2+Math.random()*7)}
+const tex=new THREE.CanvasTexture(cn);tex.wrapS=tex.wrapT=THREE.RepeatWrapping;tex.repeat.set(.12,.12);tex.colorSpace=THREE.SRGBColorSpace;
+const plaster=new THREE.MeshStandardMaterial({color:"#b9aef0",map:tex,roughness:1,envMap:env,envMapIntensity:.8,side:THREE.DoubleSide});
+function add(g,x,y,z,m=plaster){const o=new THREE.Mesh(g,m);o.position.set(x,y,z);o.castShadow=o.receiveShadow=true;scene.add(o);return o}
+
+/* walls with arched openings and window */
+function wall(w,h,holes,d){const s=new THREE.Shape();s.moveTo(0,-1);s.lineTo(w,-1);s.lineTo(w,h);s.lineTo(0,h);s.closePath();
+holes.forEach(o=>{const p=new THREE.Path();if(o.arch){const r=o.w/2;p.moveTo(o.x,0);p.lineTo(o.x+o.w,0);p.lineTo(o.x+o.w,o.h-r);p.absarc(o.x+r,o.h-r,r,0,Math.PI,false);p.lineTo(o.x,0)}
+else{p.moveTo(o.x,o.y);p.lineTo(o.x+o.w,o.y);p.lineTo(o.x+o.w,o.y+o.h);p.lineTo(o.x,o.y+o.h);p.closePath()}s.holes.push(p)});
+return new THREE.ExtrudeGeometry(s,{depth:d,bevelEnabled:false})}
+add(wall(11,9,[{arch:1,x:2.2,w:2.4,h:5.4},{arch:1,x:6,w:2.4,h:5.4}],1.6),-14,0,1);
+add(wall(34,11,[{x:17,y:5.6,w:2.8,h:4.4},{x:9.2,y:3.4,w:1.4,h:2.8}],1.5),-10,0,-7.5);
+add(new THREE.BoxGeometry(14,2.6,3),9,.3,-5);
+for(let i=0;i<6;i++){const h=(i+1)*.27+1;add(new THREE.BoxGeometry(6.5,h,.85),-1.25,-1+h/2,-2.2-i*.85)}
+
+/* boulders */
+function rock(r,x,y,z,sx,sy,sz){const g=new THREE.IcosahedronGeometry(r,4),p=g.attributes.position;
+for(let i=0;i<p.count;i++){const x1=p.getX(i),y1=p.getY(i),z1=p.getZ(i),k=1+.14*Math.sin(x1*1.7)*Math.sin(y1*1.5+1)*Math.sin(z1*1.9);p.setXYZ(i,x1*k,y1*k,z1*k)}
+g.computeVertexNormals();const m=add(g,x,y,z,new THREE.MeshStandardMaterial({color:"#8c78a8",roughness:1,envMap:env,envMapIntensity:.7}));m.scale.set(sx,sy,sz)}
+rock(1.7,6.8,.25,1,1.3,.85,1);rock(2.6,15,.3,3.5,1.2,.8,1);
+
+/* hills seen through the openings */
+const hg=new THREE.PlaneGeometry(220,90,220,90);hg.rotateX(-Math.PI/2);const hp=hg.attributes.position,hc=[],col=new THREE.Color();
+for(let i=0;i<hp.count;i++){const x=hp.getX(i),z=hp.getZ(i),h=Math.max(0,Math.sin(x*.045+.5)*7+Math.sin(x*.11+z*.05)*3.5+Math.sin(z*.09)*4-1.5);hp.setY(i,h);col.setHSL(.7+Math.random()*.05,.5,.26+Math.random()*.08+h*.02);hc.push(col.r,col.g,col.b)}
+hg.setAttribute("color",new THREE.Float32BufferAttribute(hc,3));hg.computeVertexNormals();
+const hills=new THREE.Mesh(hg,new THREE.MeshBasicMaterial({vertexColors:true,side:THREE.DoubleSide}));hills.position.set(0,-.3,-60);scene.add(hills);
+
+/* pearl */
+const pearl=add(new THREE.SphereGeometry(1.05,64,48),3.1,3.5,-3.2,new THREE.MeshPhysicalMaterial({color:"#f5e7ef",roughness:.1,metalness:.1,iridescence:1,iridescenceIOR:1.5,iridescenceThicknessRange:[200,700],clearcoat:1,transparent:true,opacity:.92,emissive:"#8f7dff",emissiveIntensity:.55,envMap:env,envMapIntensity:1.3}));
+
+/* water: planar reflection + cursor ripples */
+const RP=[];for(let i=0;i<8;i++)RP.push(new THREE.Vector4(0,0,-99,0));
+const water=new THREE.Mesh(new THREE.PlaneGeometry(400,400),new THREE.ShaderMaterial({uniforms:{uRef:{value:rr.texture},uTexM:{value:new THREE.Matrix4()},uTime:T0.uTime,uRp:{value:RP},uTint:{value:C("#2a2f8c")}},
+vertexShader:"varying vec3 w;void main(){vec4 p=modelMatrix*vec4(position,1.);w=p.xyz;gl_Position=projectionMatrix*viewMatrix*p;}",
+fragmentShader:"uniform sampler2D uRef;uniform mat4 uTexM;uniform float uTime;uniform vec4 uRp[8];uniform vec3 uTint;varying vec3 w;void main(){vec2 d=vec2(sin(w.x*2.3+uTime*.6)*.5+sin(w.z*5.+uTime*.9)*.5,sin(w.z*3.1-uTime*.5)*.6)*.22;"+
+"for(int i=0;i<8;i++){vec4 p=uRp[i];float a=uTime-p.z;if(p.w<.5||a<0.||a>4.)continue;vec2 v=w.xz-p.xy;float r=length(v),f=r-a*1.6;d+=normalize(v+1e-4)*sin(f*16.)*exp(-f*f*5.)*exp(-a*.9)*.7;}"+
+"vec4 q=uTexM*vec4(w,1.);vec2 uv=q.xy/q.w+d*vec2(.006,.022);vec3 rf=texture2D(uRef,uv).rgb;float fr=pow(1.-max(normalize(cameraPosition-w).y,0.),3.);vec3 c=mix(uTint,rf,.62+.35*fr);c+=vec3(.5,.45,1.)*pow(abs(d.y),2.)*.5;gl_FragColor=vec4(c,1.);}"}));
+water.rotation.x=-Math.PI/2;scene.add(water);
+
+/* 3D headline: canvas text on a plane inside the scene, glass ripples where the cursor passes */
+const tc=document.createElement("canvas");tc.width=2048;tc.height=1024;const tx=tc.getContext("2d"),ttex=new THREE.CanvasTexture(tc);ttex.anisotropy=8;
+const TXT={en:["A GAME PROGRAMMER IN TOKYO","Making dreams","come true."],ja:["東京のゲームプログラマー","ゲームで、夢を","かたちにする。"]};
+function line(s,f,ls,max,size,y){tx.letterSpacing=ls;tx.font=f.replace("#",size+"px");const w=tx.measureText(s).width;if(w>max){size=size*max/w;tx.font=f.replace("#",size+"px")}tx.fillText(s,1024,y)}
+function drawText(){const l=window.__lang,j=l==="ja",a=TXT[l];tx.clearRect(0,0,2048,1024);tx.fillStyle="#f4eaff";tx.textAlign="center";tx.textBaseline="alphabetic";
+line(a[0],'400 # Inter,"Noto Sans JP",sans-serif',j?"2px":"1px",1100,40,205);
+line(a[1],j?'500 # "Noto Serif JP",serif':'italic 400 # "Instrument Serif","Noto Serif JP",serif',j?"0px":"-3px",1880,300,480);
+line(a[2],'500 # Inter,"Noto Sans JP",sans-serif',j?"0px":"-15px",1880,290,790);ttex.needsUpdate=true}
+window.__draw=()=>{drawText();const f=window.__lang==="ja"?['500 100px "Noto Serif JP"','500 100px "Noto Sans JP"']:['italic 100px "Instrument Serif"','500 100px Inter'];Promise.all(f.map(x=>document.fonts.load(x,TXT[window.__lang].join("")))).then(drawText)};window.__draw();
+const TP=[];for(let i=0;i<6;i++)TP.push(new THREE.Vector4(0,0,-99,0));let ti=0;const lu=new THREE.Vector2(9,9);
+const textMat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,uniforms:{t:{value:ttex},uTime:T0.uTime,uRev:{value:0},uTp:{value:TP},uA:{value:new THREE.Vector2(2,1)},uInk:{value:C("#f4eaff")},uGlass:{value:C("#7ff0ff")}},
+vertexShader:"varying vec2 u;void main(){u=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}",
+fragmentShader:"uniform sampler2D t;uniform float uTime,uRev;uniform vec4 uTp[6];uniform vec2 uA;uniform vec3 uInk,uGlass;varying vec2 u;float M(vec2 p){return texture2D(t,p).a;}"+
+"void main(){vec2 d=vec2(0.);float g=0.;for(int i=0;i<6;i++){vec4 q=uTp[i];float a=uTime-q.z;if(q.w<.5||a<0.||a>2.6)continue;vec2 v=(u-q.xy)*uA;float r=length(v),f=exp(-r*r*12.)*exp(-a*1.1);d+=normalize(v+1e-4)*sin(r*22.-a*5.)*f*.014;g+=f;}g=min(g,1.);"+
+"d+=vec2(sin(u.y*30.+uTime*1.3),cos(u.x*24.+uTime*1.1))*.0012;float rv=clamp(uRev*1.5-u.x*.5,0.,1.);d.y+=(1.-rv)*.06+(1.-rv)*sin(u.x*18.)*.02;"+
+"float a0=M(u+d),aR=M(u+d*1.6+vec2(.002*g,0.)),aB=M(u+d*.5-vec2(.002*g,0.));vec3 c=mix(uInk,uGlass,g*.9);c+=vec3(aR-a0,.0,aB-a0)*g*.5;gl_FragColor=vec4(c,a0*rv*(1.-g*.5));}"});
+const textMesh=new THREE.Mesh(new THREE.PlaneGeometry(8.5,4.25),textMat);textMesh.position.set(0,3.5,-4.5);textMesh.renderOrder=1;scene.add(textMesh);pearl.renderOrder=2;pearl.add(new THREE.PointLight("#a99bff",45,18,2));
+const ringEl=$("ring"),rg={x:-99,y:-99,tx:-99,ty:-99};
+
+/* dream lanterns + kiwi */
+const LN=240,lp=new Float32Array(LN*3),lr=new Float32Array(LN*4);
+for(let i=0;i<LN;i++){lp.set([(Math.random()-.5)*34,Math.random()*11,-8+Math.random()*20],i*3);lr.set([Math.random(),Math.random(),Math.random(),.5+Math.random()],i*4)}
+const lg=new THREE.BufferGeometry();lg.setAttribute("position",new THREE.BufferAttribute(lp,3));lg.setAttribute("aR",new THREE.BufferAttribute(lr,4));
+const lanterns=new THREE.Points(lg,new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,uniforms:{uTime:T0.uTime,uPx:{value:dpr}},
+vertexShader:"uniform float uTime,uPx;attribute vec4 aR;varying vec3 vC;varying float vA;void main(){vec3 p=position;p.y=mod(p.y+uTime*(.15+aR.x*.25),11.);p.x+=sin(uTime*.4+aR.y*6.28)*.8;p.z+=cos(uTime*.35+aR.z*6.28)*.8;vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;gl_PointSize=aR.w*uPx*(18.+aR.y*22.)/-mv.z*5.;vC=mix(vec3(1.,.55,.85),vec3(.45,.9,1.),aR.z);vC=mix(vC,vec3(1.,.85,.5),step(.8,aR.x));vA=.5+.5*sin(uTime*1.5+aR.x*30.);}",
+fragmentShader:"varying vec3 vC;varying float vA;void main(){float d=length(gl_PointCoord-.5);float a=smoothstep(.5,0.,d);gl_FragColor=vec4(vC,a*a*(.35+.65*vA));}"}));
+lanterns.frustumCulled=false;scene.add(lanterns);
+const kiwi=new THREE.Group(),km=new THREE.MeshStandardMaterial({color:"#8a6140",roughness:1,envMap:env,envMapIntensity:.5}),bm=new THREE.MeshStandardMaterial({color:"#ecdcb4",roughness:.6}),dk=new THREE.MeshBasicMaterial({color:"#120d20"});
+const body=new THREE.Mesh(new THREE.SphereGeometry(.5,32,24),km);body.scale.set(1.25,1,1.05);body.position.y=.82;
+const head=new THREE.Group();head.position.set(-.55,1.02,0);
+const beak=new THREE.Mesh(new THREE.ConeGeometry(.03,.85,10),bm);beak.rotation.z=Math.PI/2+.22;beak.position.set(-.5,-.08,0);
+[.12,-.12].forEach(z=>{const e=new THREE.Mesh(new THREE.SphereGeometry(.028,10,8),dk);e.position.set(-.1,.06,z);head.add(e)});
+head.add(new THREE.Mesh(new THREE.SphereGeometry(.17,24,16),km),beak);
+const legs=[.16,-.16].map(z=>{const l=new THREE.Mesh(new THREE.CylinderGeometry(.025,.025,.34,8),bm);l.position.set(-.08,.17,z);return l});
+kiwi.add(body,head,...legs);kiwi.traverse(o=>{if(o.isMesh)o.receiveShadow=true});kiwi.scale.setScalar(.8);kiwi.position.set(-2.4,.54,-3.05);scene.add(kiwi);
+
+/* post: chromatic aberration, vignette, grain */
+const post=new THREE.Scene(),pcam=new THREE.OrthographicCamera(-1,1,1,-1,0,1);
+post.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2),new THREE.ShaderMaterial({depthTest:false,uniforms:{t:{value:rt.texture},uTime:T0.uTime,uHold:T0.uHold},
+vertexShader:"varying vec2 u;void main(){u=uv;gl_Position=vec4(position.xy,0.,1.);}",
+fragmentShader:"uniform sampler2D t;uniform float uTime,uHold;varying vec2 u;float h(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453);}void main(){vec2 d=u-.5;float r=dot(d,d);vec2 o=d*r*(.03+uHold*.03);vec3 c=vec3(texture2D(t,u+o).r,texture2D(t,u).g,texture2D(t,u-o).b);c*=1.-r*.6;c+=(h(u*vec2(1920.,1080.)+uTime)-.5)*.03;gl_FragColor=vec4(c,1.);\n#include <colorspace_fragment>\n}"})));
+
+/* interaction */
+let yaw=0,pitch=0,ty=0,tp=0,mx=0,my=0,drag=false,hold=0,holding=false,lx=0,ly=0,ri=0,sx=1e9,sz=1e9;
+const hit=new THREE.Vector3(),ray=new THREE.Raycaster(),pl=new THREE.Plane(new THREE.Vector3(0,1,0),0),ndc=new THREE.Vector2();
+root.addEventListener("pointerdown",ev=>{if(ev.target.closest("button,a")||!started)return;drag=holding=true;lx=ev.clientX;ly=ev.clientY;root.classList.add("drag");root.setPointerCapture(ev.pointerId)});
+const up=()=>{drag=holding=false;root.classList.remove("drag")};root.addEventListener("pointerup",up);root.addEventListener("pointercancel",up);
+root.addEventListener("pointermove",ev=>{const b=root.getBoundingClientRect();ndc.set((ev.clientX-b.left)/b.width*2-1,-((ev.clientY-b.top)/b.height)*2+1);mx=ndc.x;my=ndc.y;rg.tx=ev.clientX-b.left;rg.ty=ev.clientY-b.top;
+if(drag){ty=Math.max(-.4,Math.min(.4,ty+(ev.clientX-lx)*.0016));tp=Math.max(-.06,Math.min(.12,tp+(ev.clientY-ly)*.0008));lx=ev.clientX;ly=ev.clientY}
+ray.setFromCamera(ndc,cam);const th=started?ray.intersectObject(textMesh)[0]:null;if(th&&th.uv&&Math.hypot(th.uv.x-lu.x,th.uv.y-lu.y)>.012){lu.copy(th.uv);TP[ti].set(th.uv.x,th.uv.y,T0.uTime.value,1);ti=(ti+1)%6}
+if(started&&ray.ray.intersectPlane(pl,hit)&&Math.hypot(hit.x-sx,hit.z-sz)>.5&&hit.z>-6&&hit.z<9){sx=hit.x;sz=hit.z;RP[ri].set(hit.x,hit.z,T0.uTime.value,1);ri=(ri+1)%8}});
+
+/* size + loop */
+function size(){const w=root.clientWidth,h=root.clientHeight;R.setPixelRatio(dpr);R.setSize(w,h,false);rt.setSize(w*dpr,h*dpr);rr.setSize(w*dpr*.5,h*dpr*.5);cam.aspect=w/h;cam.updateProjectionMatrix()}
+addEventListener("resize",size);size();
+let vis=true,last=performance.now();new IntersectionObserver(a=>vis=a[0].isIntersecting).observe(root);
+function frame(now){requestAnimationFrame(frame);if(!vis)return;const dt=Math.min(.05,(now-last)/1000);last=now;ema+=(dt-ema)*.05;if(started&&++fc%90===0&&ema>.026&&dpr>.7){dpr=Math.max(.7,dpr*.85);size()}T0.uTime.value+=dt;const T=T0.uTime.value;
+const it=started?Math.min(1,(now-t0)/3800):0,ie=1-Math.pow(1-it,3);
+hold+=((holding?1:0)-hold)*Math.min(1,dt*3);T0.uHold.value=hold;yaw+=(ty-yaw)*.06;pitch+=(tp-pitch)*.06;
+cam.position.set(-yaw*5+mx*.45+Math.sin(T*.2)*.15,1.55+my*.12+(1-ie)*1.2,11+(1-ie)*7-hold*2.4);
+cam.rotation.set(.085+pitch-my*.012,yaw-mx*.02,0);
+cam.fov=46+(1-ie)*8-hold*7;cam.updateProjectionMatrix();
+pearl.position.set(3.1+mx*.25,3.5+Math.sin(T*.8)*.2,-3.2);pearl.rotation.y=T*.15;head.rotation.z=Math.pow(Math.max(0,Math.sin(T*1.6)),6)*.7;body.scale.y=1+Math.sin(T*2)*.02;
+textMat.uniforms.uRev.value=started?Math.min(1,Math.max(0,(now-t0-1500)/2600)):0;textMesh.rotation.set(my*.03,-mx*.06+yaw*.5,0);rg.x+=(rg.tx-rg.x)*.2;rg.y+=(rg.ty-rg.y)*.2;ringEl.style.transform="translate("+rg.x+"px,"+rg.y+"px) rotate(-12deg)";
+/* reflection pass: mirror the whole world about the water plane */
+if(!warm){warm=true;R.shadowMap.needsUpdate=true;R.setRenderTarget(rt);R.render(scene,cam)}
+cam.updateMatrixWorld();rc.position.set(cam.position.x,-cam.position.y,cam.position.z);fw.set(0,0,-1).applyQuaternion(cam.quaternion);fw.y*=-1;rc.up.set(0,-1,0);rc.lookAt(tg.copy(rc.position).add(fw));rc.fov=cam.fov;rc.aspect=cam.aspect;rc.updateProjectionMatrix();rc.updateMatrixWorld();
+tm.set(.5,0,0,.5,0,.5,0,.5,0,0,.5,.5,0,0,0,1).multiply(rc.projectionMatrix).multiply(rc.matrixWorldInverse);water.material.uniforms.uTexM.value.copy(tm);
+water.visible=textMesh.visible=false;R.clippingPlanes=CP;R.setRenderTarget(rr);R.render(scene,rc);R.clippingPlanes=NP;water.visible=textMesh.visible=true;
+R.setRenderTarget(rt);R.render(scene,cam);R.setRenderTarget(null);R.render(post,pcam)}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
